@@ -29,7 +29,7 @@ console.log("dd",dd)
 
 //document.getElementById('button_label_svg').addEventListener('click', label_svg, false);
 
-//document.getElementById("material_equal").addEventListener('change', setMaterialEqual);
+
 
 //------------------------------------------------------------------------------------------------
 
@@ -80,8 +80,6 @@ function setMaterialEqual(ev) {
      */
 }
 
-// @ts-ignore
-//window.setMaterialEqual = setMaterialEqual;   // jetzt auch in html sichtbar
 
 export let node = []
 export let truss = []
@@ -1227,3 +1225,7 @@ btn2.addEventListener('click', resizeTable);
 
 const btn3 = document.getElementById("clearTable");
 btn3.addEventListener('click', clear_Tabelle);
+
+document.getElementById("material_equal").addEventListener('change', setMaterialEqual);
+// @ts-ignore
+window.setMaterialEqual = setMaterialEqual;   // jetzt auch in html sichtbar
