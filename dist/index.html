@@ -1,11 +1,414 @@
-<html>
-  <head>
-    <title>esbuild tutorial</title>
+<!DOCTYPE html>
+<html lang="de" xmlns="http://www.w3.org/1999/html">
 
-    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
-    <link rel="shortcut icon" href="#" />
+<head>
+    <title>Querschnittswerte und Spannungen dünnwandiger Querschnitte</title>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta charset="UTF-8"/>
+    <!-- <meta name="apple-mobile-web-app-capable" content="yes"> -->
+
+    <link rel="stylesheet" href="main.css" >
+    <link rel="stylesheet" href="contextMenu.css" >
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="manifest" href="/manifest.webmanifest">
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
 
     <script type="module" src="./index.js"></script>
-  </head>
-  <body></body>
+
+</head>
+
+<body>
+
+<div class="grid-container">
+    <!--
+        <div id="rand"  class="rand" style="background-color:#D6D8D8;"></div>
+        <div id="rand1" class="rand1" style="background-color:#D6D8D8;"></div>
+    -->
+    <div class="header">
+        <div id="input-container">
+
+            <!-- <h2>Statik Werkzeugkasten</h2> -->
+            <div class="topnav" id="myTopnav">
+                <a href="javascript:eingabe1();">Eingabe</a>
+
+                <a href="javascript:ergebnisse();">Ergebnisse</a>
+                <a href="javascript:duennQuer();">System</a>
+                <a href="javascript:duenn3D();">3D</a>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="topLeft" style="background-color:#D8D8D8;">
+
+        <div id="eingabe_duennQ_top">
+
+            <p>Querschnittswerte und Spannungen dünnwandiger Querschnitte</p>
+            <p>
+                <label>Anzahl Knoten :</label>
+                <input type="number" id="input_nodes" name="nnodes" class="input_int" value="6" width="10px">
+                <label>&nbsp;&nbsp; Anzahl Elemente :</label>
+                <input type="number" id="input_nelem" name="nelem" class="input_int" value="5">
+                <br>
+            </p>
+            
+            <table>
+                <tbody>
+                <tr>
+                    <td>
+                        <button type="button" class="buttonTable" id="resize">resize Tabellen</button>
+                    </td>
+                    <td>
+                        <button type="button" class="buttonTable" id="clearTable">clear Tabellen</button>
+                    </td>
+                    <td>
+                        <button type="button" class="buttonTable" id="rechnen">Rechnen</button>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+
+            <p><b>Schnittgrößen</b></p>
+
+            <table class="table_eng">
+                <tbody>
+                <tr class="td_eng">
+                    <td class="zelle0">V<sub>y</sub>=</td>
+                    <td><input type="text" id="Vy" name="Vy" class="input_kdtab" pattern="[0-9.,eE+-]*"></td>
+                    <td class="td_eng">kN</td>
+                    <td align="right">M<sub>xp</sub>=</td>
+                    <td><input type="text" id="Mxp" name="Mxp" class="input_kdtab" pattern="[0-9.,eE+-]*">
+                    </td>
+                    <td>kNcm</td>
+                    <td align="right">N=</td>
+                    <td><input type="text" id="Nx" name="Nx" class="input_kdtab" pattern="[0-9.,eE+-]*">
+                    </td>
+                    <td>kN</td>
+                </tr>
+                <tr>
+                    <td class="zelle0">V<sub>z</sub>=</td>
+                    <td><input type="text" id="Vz" name="Vz" class="input_kdtab" pattern="[0-9.,eE+-]*"></td>
+                    <td>kN</td>
+                    <td align="right">M<sub>xs</sub>=</td>
+                    <td><input type="text" id="Mxs" name="Mxs" class="input_kdtab" pattern="[0-9.,eE+-]*">
+                    </td>
+                    <td>kNcm</td>
+                    <td align="right">M<sub>y</sub>=</td>
+                    <td><input type="text" id="My" name="My" class="input_kdtab" pattern="[0-9.,eE+-]*">
+                    </td>
+                    <td>kNcm</td>
+                </tr>
+                <tr>
+                    <td class="zelle0"></td>
+                    <td></td>
+                    <td></td>
+                    <td align="right">M<sub>&omega;</sub>=</td>
+                    <td><input type="text" id="Momega" name="Momega" class="input_kdtab" pattern="[0-9.,eE+-]*">
+                    </td>
+                    <td>kNcm²</td>
+                    <td align="right">M<sub>z</sub>=</td>
+                    <td><input type="text" id="Mz" name="Mz" class="input_kdtab" pattern="[0-9.,eE+-]*">
+                    </td>
+                    <td>kNcm</td>
+                </tr>
+                </tbody>
+            </table>
+
+            <p><b>Bezugswerte</b></p>
+
+            <form name="form_bezugswerte">
+                <table class="table_eng">
+                    <tbody>
+                    <tr>
+                        <td colspan="5">
+                            <input type="checkbox" id="material_equal" name="material_equal"
+                                   value="material_is_equal">
+                            <label for="material_equal"> alle Elemente haben gleiche Materialdaten</label>
+                        </td>
+                        <td></td>
+
+                    <tr>
+                        <td class="zelle0">&nbsp;</td>
+                    </tr>
+                    <tr>
+                        <td class="zelle0">E-Modul=</td>
+                        <td><input type="text" id="EMod_ref" name="EMod_ref" value="21000" class="input_kdtab"
+                                   pattern="[0-9.,eE+-]*"></td>
+                        <td>kN/cm²</td>
+                        <td align="right" title="Querdehnzahl">&nu;=</td>
+                        <td><input type="text" id="mue_ref" name="mue_ref" value="0.3" class="input_kdtab"
+                                   pattern="[0-9.,eE+-]*"></td>
+                    </tr>
+                    </tbody>
+                </table>
+            </form>
+
+
+            <p><b>Vergleichsspannung</b></p>
+            <table class="table_eng">
+                <tbody>
+                <tr>
+                    <td class="zelle0">f<sub>y,Rd</sub> =</td>
+                    <td><input type="text" id="fyRd" name="fyRd" value="23.5" class="input_kdtab"
+                               pattern="[0-9.,eE+-]*"></td>
+                    <td>kN/cm²</td>
+                </tbody>
+            </table>
+
+
+            <div id="knotentabelle">
+                <div id="matrix_knoten">
+                    <p>Knoten </p>
+                </div>
+            </div>
+
+            <div id="elementtabelle">
+                <div id="matrix_elemente">
+                    <p>Elemente </p>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+
+
+    <div class="topRight" style="background-color:#D8D8D8;">
+
+        <div id="duennQ_save_daten">
+            <p>
+                <button type="button" id="readFile">Daten einlesen</button>
+
+                <button type="button" id="saveFile">Daten speichern</button>
+            </p>
+
+        </div>
+
+    </div>
+
+
+    <div class="left" style="background-color:#aaa;">
+
+                <!-- <div id="eingabe">
+                   <p>Eingabe</p>
+
+                </div>
+                -->
+
+
+        <div id="ergebnisse">
+
+            <p>Ergebnisse</p>
+
+
+            <div id="querschnittswerte">
+                <h3>ideelle Querschnittswerte</h3>
+                <table id="querschnittwerte_table">
+
+                    <tbody>
+                    <tr>
+                        <td class="querschnittwerte_table_z0">y<sub>s</sub>=</td>
+                        <td class="zelle" id="ys"></td>
+                        <td class="zelle">cm</td>
+                    </tr>
+                    <tr>
+                        <td class="querschnittwerte_table_z0">z<sub>s</sub>=</td>
+                        <td class="zelle" id="zs"></td>
+                        <td class="zelle">cm</td>
+                    </tr>
+                    <tr>
+                        <td class="querschnittwerte_table_z0">A=</td>
+                        <td class="zelle" id="area"></td>
+                        <td class="zelle">cm²</td>
+                    </tr>
+                    <tr>
+                        <td class="querschnittwerte_table_z0">I<sub>y,s</sub>=</td>
+                        <td class="zelle" id="Iys"></td>
+                        <td class="zelle">cm<sup>4</sup></td>
+                    </tr>
+                    <tr>
+                        <td class="querschnittwerte_table_z0">I<sub>z,s</sub>=</td>
+                        <td class="zelle" id="Izs"></td>
+                        <td class="zelle">cm<sup>4</sup></td>
+                    </tr>
+                    <tr>
+                        <td class="querschnittwerte_table_z0">I<sub>yz,s</sub>=</td>
+                        <td class="zelle" id="Iyzs"></td>
+                        <td class="zelle">cm<sup>4</sup></td>
+                    </tr>
+                    <tr>
+                        <td class="querschnittwerte_table_z0">I<sub>11</sub>=</td>
+                        <td class="zelle" id="I11"></td>
+                        <td class="zelle">cm<sup>4</sup></td>
+                    </tr>
+                    <tr>
+                        <td class="querschnittwerte_table_z0">I<sub>22</sub>=</td>
+                        <td class="zelle" id="I22"></td>
+                        <td class="zelle">cm<sup>4</sup></td>
+                    </tr>
+                    <tr>
+                        <td class="querschnittwerte_table_z0">&phi;<sub>h</sub>=</td>
+                        <td class="zelle" id="phi_h"></td>
+                        <td class="zelle">°</td>
+                    </tr>
+                    <tr>
+                        <td class="querschnittwerte_table_z0">y<sub>M</sub>=</td>
+                        <td class="zelle" id="yM"></td>
+                        <td class="zelle">cm</td>
+                    </tr>
+                    <tr>
+                        <td class="querschnittwerte_table_z0">z<sub>M</sub>=</td>
+                        <td class="zelle" id="zM"></td>
+                        <td class="zelle">cm</td>
+                    </tr>
+                    <tr>
+                        <td class="querschnittwerte_table_z0">I<sub>t</sub>=</td>
+                        <td class="zelle" id="I_t"></td>
+                        <td class="zelle">cm<sup>4</sup></td>
+                    </tr>
+                    <tr>
+                        <td class="querschnittwerte_table_z0">I<sub>&omega;</sub>=</td>
+                        <td class="zelle" id="I_omega"></td>
+                        <td class="zelle">cm<sup>6</sup></td>
+                    </tr>
+
+                    <tr>
+                        <td class="querschnittwerte_table_z0">r<sub>1</sub>=</td>
+                        <td class="zelle" id="r_1"></td>
+                        <td class="zelle">cm</td>
+                    </tr>
+                    <tr>
+                        <td class="querschnittwerte_table_z0">r<sub>2</sub>=</td>
+                        <td class="zelle" id="r_2"></td>
+                        <td class="zelle">cm</td>
+                    </tr>
+                    <tr>
+                        <td class="querschnittwerte_table_z0">r<sub>&omega;</sub>=</td>
+                        <td class="zelle" id="r_omega"></td>
+                        <td class="zelle">-</td>
+                    </tr>
+                    <tr>
+                        <td class="querschnittwerte_table_z0">i<sub>M</sub><sup>2</sup>=</td>
+                        <td class="zelle" id="i_M2"></td>
+                        <td class="zelle">cm<sup>2</sup></td>
+                    </tr>
+                    <tr>
+                        <td class="querschnittwerte_table_z0">i<sub>p</sub><sup>2</sup>=</td>
+                        <td class="zelle" id="i_p2"></td>
+                        <td class="zelle">cm<sup>2</sup></td>
+                    </tr>
+
+                    </tbody>
+                </table>
+            </div>
+
+        </div>
+
+
+        <div id="spannung_mxp"></div>
+        <div id="spannung_mxs"></div>
+        <div id="schubspannung"></div>
+        <div id="normalspannung"></div>
+        <div id="vergleichsspannung"></div>
+
+    </div>
+
+
+    <div class="middle" style="background-color:#bbb;">
+
+
+    </div>
+
+
+    <div class="right" style="background-color:#ccc;">
+
+    </div>
+
+
+    <div id="my-svg" class="unten_grafik">
+
+        <svg id="dataviz_area">  <!-- height=1000 width=700 -->
+
+            <defs>
+                <!-- arrowhead marker definition -->
+                <marker id="arrow" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="6" markerHeight="4"
+                        orient="auto-start-reverse">
+                    <path d="M 0 0 L 10 5 L 0 10 z" style="fill: black"/>
+                </marker>
+
+                <marker id="arrow_blue" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="6" markerHeight="4"
+                        orient="auto-start-reverse">
+                    <path d="M 0 0 L 10 5 L 0 10 z" style="fill: blue"/>
+                </marker>
+
+                <marker id="arrow_darkslategrey" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="6" markerHeight="4"
+                        orient="auto-start-reverse">
+                    <path d="M 0 0 L 10 5 L 0 10 z" style="fill: darkslategrey"/>
+                </marker>
+
+                <!-- simple dot marker definition -->
+                <marker id="dot" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="5" markerHeight="5">
+                    <circle cx="5" cy="5" r="5" fill="red"/>
+                </marker>
+
+                <marker id="arrow1" markerUnits="strokeWidth" markerWidth="12" markerHeight="12" viewBox="0 0 12 12"
+                        refX="6" refY="6" orient="auto">
+                    <path d="M2,2 L10,6 L2,10 L6,6 L2,2" style="fill: #000;"></path>
+                </marker>
+
+            </defs>
+
+
+        </svg>
+
+        <div id="cursor_coordy">y&#772;:</div>
+        <div id="cursor_coordz">z&#772;:</div>
+        <button id="button_label_svg">Label</button>
+
+    </div>
+
+    <div id="my-webgl" class="unten_webgl" style="background-color:#bbb;">
+        <canvas id="c3"></canvas>
+        <button id="button_label_webgl">Label</button>
+        <div id="label_x_achse">x</div>
+        <!-- <div id="label_y_achse">y</div>
+        <div id="label_z_achse">z</div> -->
+    </div>
+
+    <div class="footer">
+        <p>Querschnittswerte und Spannungen dünnwandiger Querschnitte, 30-Januar-2023, <a
+                href="https://statikverstehen.de"> statikverstehen.de </a></p>
+    </div>
+
+</div>
+
+<nav id="context-menu" class="context-menu">
+    <ul class="context-menu__items">
+        <li class="context-menu__item">
+            <a href="#" class="context-menu__link" data-action="copyFirst"><i class="fa fa-clone"></i> copy first
+                cell
+                value</a>
+        </li>
+        <li class="context-menu__item">
+            <a href="#" class="context-menu__link" data-action="increment_1"><i class="fa fa-plus-square-o"></i>
+                increment by
+                1</a>
+        </li>
+        <li class="context-menu__item">
+            <a href="#" class="context-menu__link" data-action="copy"><i class="fa fa-clipboard"></i> copy to clipboard</a>
+        </li>
+        <li class="context-menu__item">
+            <a href="#" class="context-menu__link" data-action="insert"><i class="fa fa-clipboard"></i> insert from
+                clipboard</a>
+        </li>
+    </ul>
+</nav>
+
+
+</body>
+
 </html>
