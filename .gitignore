@@ -1,4 +1,6 @@
 /dist/index.js
 /dist/index.js.map
+/dist/index.css
+/dist/index.css.map
 /node_modules
 /package-lock.json
