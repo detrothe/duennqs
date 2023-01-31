@@ -4,7 +4,7 @@
   "description": "Querschnittswerte und Spannungen duennwandiger Querschnitte",
     "main": "index.js",
   "scripts": {
-       "build": "esbuild src/index.js --bundle --outfile=dist/index.js --loader:.html=text",
+       "build": "esbuild src/index.js --sourcemap --bundle --outfile=dist/index.js --loader:.html=text",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "me",
