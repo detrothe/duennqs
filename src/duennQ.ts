@@ -27,7 +27,6 @@ console.log("dd",dd)
 */
 
 
-//document.getElementById('button_label_svg').addEventListener('click', label_svg, false);
 
 
 
@@ -1227,5 +1226,7 @@ const btn3 = document.getElementById("clearTable");
 btn3.addEventListener('click', clear_Tabelle);
 
 document.getElementById("material_equal").addEventListener('change', setMaterialEqual);
+document.getElementById('button_label_svg').addEventListener('click', label_svg, false);
+
 // @ts-ignore
 window.setMaterialEqual = setMaterialEqual;   // jetzt auch in html sichtbar

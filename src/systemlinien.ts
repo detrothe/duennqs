@@ -3,7 +3,7 @@
 import * as d3 from "d3";
 
 import {CTrans} from './trans.js';
-import {truss} from "./duennQ"
+import {truss, node} from "./duennQ"
 import {myScreen} from "./index";
 import {nnodes, nelem} from "./duennQ_tabelle.js"
 
