@@ -16,14 +16,14 @@
   "devDependencies": {
     "@types/d3": "^7.4.0",
     "@types/three": "^0.148.0",
- "esbuild": "^0.12.29"
+    "esbuild": "^0.12.29"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/detrothe/duennwqs.git"
+    "url": "git+https://github.com/detrothe/duennqs.git"
   },
   "bugs": {
-    "url": "https://github.com/detrothe/duennwqs/issues"
+    "url": "https://github.com/detrothe/duennqs/issues"
   },
-  "homepage": "https://github.com/detrothe/duennwqs#readme"
+  "homepage": "https://github.com/detrothe/duennqs#readme"
 }
