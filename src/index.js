@@ -1,5 +1,5 @@
-//import css from './styles/main.css';
-//import css from './styles/contextMenu.css';
+import './main.css';
+import './contextMenu.css';
 
 import "./duenn3D.js";
 import './ergebnisse.js'
