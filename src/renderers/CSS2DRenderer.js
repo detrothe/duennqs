@@ -59,7 +59,6 @@ class CSS2DRenderer {
 
     constructor(parameters = {}) {
 
-        //console.log("in CSS2DRenderer, parameters.element", parameters.element)
         const _this = this;
 
         let _width, _height;
@@ -71,7 +70,6 @@ class CSS2DRenderer {
 
         const domElement = parameters.element !== undefined ? parameters.element : document.createElement('div');
 
-        //console.log("domElement", domElement, parameters.element)
         domElement.style.overflow = 'hidden';
 
         this.domElement = domElement;
@@ -87,8 +85,8 @@ class CSS2DRenderer {
 
         this.render = function (scene, camera) {
 
-            if (scene.autoUpdate === true) scene.updateMatrixWorld();
-            if (camera.parent === null) camera.updateMatrixWorld();
+            if (scene.matrixWorldAutoUpdate === true) scene.updateMatrixWorld();
+            if (camera.parent === null && camera.matrixWorldAutoUpdate === true) camera.updateMatrixWorld();
 
             _viewMatrix.copy(camera.matrixWorldInverse);
             _viewProjectionMatrix.multiplyMatrices(camera.projectionMatrix, _viewMatrix);
@@ -112,27 +110,25 @@ class CSS2DRenderer {
         };
 
         function renderObject(object, scene, camera) {
-//console.log("in renderObject",object.isCSS2DObject)
+
             if (object.isCSS2DObject) {
-//console.log("renderObject",object)
 
                 _vector.setFromMatrixPosition(object.matrixWorld);
                 _vector.applyMatrix4(_viewProjectionMatrix);
-//console.log("vector", object.visible,_vector.z,object.layers.test( camera.layers ))
 
-                const visible = (object.visible === true) && (_vector.z >= -1 && _vector.z <= 1) && (object.layers.test(camera.layers) === true);
+                const visible = (object.visible === true) && (_vector.z >= - 1 && _vector.z <= 1) && (object.layers.test(camera.layers) === true);
                 object.element.style.display = (visible === true) ? '' : 'none';
-//console.log("renderObject",visible, object.element,_vector.x,_vector.y,_vector.z, _widthHalf, _heightHalf)
+
                 if (visible === true) {
 
                     object.onBeforeRender(_this, scene, camera);
 
                     const element = object.element;
-//console.log("element",element,element.parentNode, domElement)
-                    element.style.transform = 'translate(-50%,-50%) translate(' + (_vector.x * _widthHalf + _widthHalf) + 'px,' + (-_vector.y * _heightHalf + _heightHalf) + 'px)';
+
+                    element.style.transform = 'translate(-50%,-50%) translate(' + (_vector.x * _widthHalf + _widthHalf) + 'px,' + (- _vector.y * _heightHalf + _heightHalf) + 'px)';
 
                     if (element.parentNode !== domElement) {
-//console.log("parentNode",element.parentNode, " | ",domElement)
+
                         domElement.appendChild(element);
 
                     }
@@ -211,4 +207,4 @@ class CSS2DRenderer {
 
 }
 
-export {CSS2DObject, CSS2DRenderer};
+export { CSS2DObject, CSS2DRenderer };
