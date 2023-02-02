@@ -83,6 +83,7 @@ export function sichtbar(displayName) {
     if (displayName === 'duenn3D') {
 
         document.getElementById("my-webgl").style.display = "block";
+        window.dispatchEvent(new Event("resize"));
     } else {
 
         document.getElementById("my-webgl").style.display = "none";
