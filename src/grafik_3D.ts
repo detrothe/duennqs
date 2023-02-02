@@ -64,6 +64,7 @@ export let maxSigma: number;
 
 //let canvas
 let scene = null
+let camera = null;
 
 
 //--------------------------------------------------------------------------------------------------------
@@ -98,10 +99,11 @@ export function main_3D() {
         const far = 500;
         const camera = new THREE.PerspectiveCamera(fov, aspect, near, far);
     */
-    const width = 1000;
-    const height = 1000;
+    const width = 100;
+    const height = 100;
     //console.log("ortho", -ymax, -ymin, -zmax, -zmin)
-    const camera = new THREE.OrthographicCamera(-ymax, -ymin, -zmin, -zmax, -2000, 2000);
+    //    camera = new THREE.OrthographicCamera(-ymax, -ymin, -zmin, -zmax, -2000, 2000);
+    camera = new THREE.OrthographicCamera(-1000, 1000, 1000, -1000, -2000, 2000);
     camera.layers.enableAll();
     camera.position.z = 500;
 
@@ -109,6 +111,8 @@ export function main_3D() {
     controls.enableDamping = true;
     controls.target.set(0, 0, 0);
     controls.update();
+
+    //camera.left = -2*ymax;
 
     scene = new THREE.Scene();
 
@@ -293,6 +297,8 @@ export function logo_3D() {
 
         geometry.computeBoundingBox();
 
+        console.log("boundingBox", geometry.boundingBox);
+
         const xMid = - 0.5 * (geometry.boundingBox.max.x - geometry.boundingBox.min.x);
 
         geometry.translate(xMid, 0, 0);
@@ -350,7 +356,7 @@ export function logo_3D() {
     }); //end load function
 
 
- 
+
 }
 
 //--------------------------------------------------------------------------------------------------------
@@ -375,7 +381,16 @@ export function draw_elements(y_s: number, z_s: number, y_M: number, z_M: number
         el.remove();
     });
 
+
     if (scene !== null) {
+
+        console.log("minMax", -ymax, -ymin, -zmin, -zmax);
+        let rand = slmax / 10.0;
+        
+        camera.left = -ymax - rand;
+        camera.right = -ymin + rand;
+        camera.top = -zmin + rand;
+        camera.bottom = -zmax - rand;
 
         maxWoelb = 0.0
         for (let i = 0; i < nnodes; i++) {
