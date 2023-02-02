@@ -1,13 +1,13 @@
 // Option 1: Import the entire three.js core library.
 import * as THREE from 'three';
 
-import {OrbitControls} from './OrbitControls.js';
+import { OrbitControls } from './OrbitControls.js';
 
-import {node, truss, I_omega} from "./duennQ"
-import {nnodes, nelem} from "./duennQ_tabelle.js"
-import {ymin, ymax, zmin, zmax, slmax} from "./systemlinien";
-import {myScreen} from "./index.js";
-import {CSS2DObject, CSS2DRenderer} from "./renderers/CSS2DRenderer.js"
+import { node, truss, I_omega } from "./duennQ"
+import { nnodes, nelem } from "./duennQ_tabelle.js"
+import { ymin, ymax, zmin, zmax, slmax } from "./systemlinien";
+import { myScreen } from "./index.js";
+import { CSS2DObject, CSS2DRenderer } from "./renderers/CSS2DRenderer.js"
 
 
 /*
@@ -64,7 +64,10 @@ export let maxSigma: number;
 let scene = null
 
 
+//--------------------------------------------------------------------------------------------------------
 export function main_3D() {
+    //--------------------------------------------------------------------------------------------------------
+
     console.log("main_3D")
 
     const container = document.getElementById("my-webgl");
@@ -73,7 +76,7 @@ export function main_3D() {
     canvas.height = leng
     canvas.width = leng
 
-    const renderer = new THREE.WebGLRenderer({canvas: canvas, antialias: true});  // canvas,
+    const renderer = new THREE.WebGLRenderer({ canvas: canvas, antialias: true });  // canvas,
     renderer.setSize(leng, leng);
     container.appendChild(renderer.domElement);
     //console.log("renderer.domElement", renderer.domElement)
@@ -108,7 +111,6 @@ export function main_3D() {
     scene = new THREE.Scene();
 
     {
-
         const color = 0xFFFFFF;
         const intensity = 1;
         const light = new THREE.DirectionalLight(color, intensity);
@@ -125,8 +127,8 @@ export function main_3D() {
     const boxDepth = 1;
     const geometry = new THREE.BoxGeometry(boxWidth, boxHeight, boxDepth);
 
-    function makeInstance(geometry, color, x) {
-        const material = new THREE.MeshPhongMaterial({color});
+    function makeInstance(geometry, color, x:number) {
+        const material = new THREE.MeshPhongMaterial({ color });
 
         const cube = new THREE.Mesh(geometry, material);
         scene.add(cube);
@@ -136,7 +138,8 @@ export function main_3D() {
         return cube;
     }
 
-    makeInstance(geometry, 0x44aa88, 0);
+    //  makeInstance(geometry, 0x44aa88, 0);  // Würfel 
+
     //makeInstance(geometry, 0x8844aa, -2);
     //makeInstance(geometry, 0xaa8844,  2);
     /*
@@ -208,7 +211,7 @@ export function main_3D() {
 
 //--------------------------------------------------------------------------------------------------------
 function removeObject3D(object: THREE.Mesh | THREE.Line) {
-//--------------------------------------------------------------------------------------------------------
+    //--------------------------------------------------------------------------------------------------------
 
     if (!(object instanceof THREE.Object3D)) return false;
     // for better memory management and performance
@@ -231,7 +234,9 @@ function removeObject3D(object: THREE.Mesh | THREE.Line) {
     return true;
 }
 
+//--------------------------------------------------------------------------------------------------------
 export function add_element() {
+    //--------------------------------------------------------------------------------------------------------
 
     //create a blue LineBasicMaterial
     const material_line = new THREE.LineBasicMaterial({
@@ -258,7 +263,7 @@ export function add_element() {
 
 //--------------------------------------------------------------------------------------------------------
 export function draw_elements(y_s: number, z_s: number, y_M: number, z_M: number, phi: number) {
-//--------------------------------------------------------------------------------------------------------
+    //--------------------------------------------------------------------------------------------------------
 
     let i: number, j: number
     let y1: number, y2: number, x1: number, x2: number, xm: number, ym: number
@@ -632,7 +637,7 @@ export function draw_elements(y_s: number, z_s: number, y_M: number, z_M: number
 
         let geometry_line = new THREE.BufferGeometry().setFromPoints(pointsx);
 
-        material_line.setValues({color: 0xff0000});
+        material_line.setValues({ color: 0xff0000 });
         const line = new THREE.Line(geometry_line, material_line);
         scene.add(line);
 
@@ -655,21 +660,21 @@ export function draw_elements(y_s: number, z_s: number, y_M: number, z_M: number
 
         const geometry = new THREE.ConeGeometry(1.2, 4, 16);   // x-Achse
 
-        let material = new THREE.MeshPhongMaterial({color: 0xff0000});
+        let material = new THREE.MeshPhongMaterial({ color: 0xff0000 });
         let cone = new THREE.Mesh(geometry, material);
         cone.rotateX(1.570795)
         cone.position.set(-y_s, -z_s, 20)
         scene.add(cone);
 
-//        const geometry = new THREE.ConeGeometry( 2, 5, 16 );   // y-Achse
+        //        const geometry = new THREE.ConeGeometry( 2, 5, 16 );   // y-Achse
 
-        material = new THREE.MeshPhongMaterial({color: 0x00ff00});
+        material = new THREE.MeshPhongMaterial({ color: 0x00ff00 });
         cone = new THREE.Mesh(geometry, material);
         cone.rotateZ(1.570795)
         cone.position.set(-y_s - 10, -z_s, 10)
         scene.add(cone);
 
-        material = new THREE.MeshPhongMaterial({color: 0x0000ff});     // z-Achse
+        material = new THREE.MeshPhongMaterial({ color: 0x0000ff });     // z-Achse
         cone = new THREE.Mesh(geometry, material);
         cone.rotateX(3.14159)
         cone.position.set(-y_s, -z_s - 10, 10)

@@ -1,31 +1,13 @@
 
-import {resizeTable, tabulate} from "./base_tabelle.js"
+import { resizeTable, tabulate } from "./base_tabelle.js"
 import './dateien.js';
-import {gauss} from "./gauss.js"
-import {testeZahl, sichtbar, testNumber} from './utility.js';
-import { clear_Tabelle,nelem,nnodes} from "./duennQ_tabelle.js";
-import {systemlinien, label_svg} from "./systemlinien";
-import {set_myScreen} from "./index.js"
-import {draw_elements} from "./grafik_3D";
+import { gauss } from "./gauss.js"
+import { testeZahl, sichtbar, testNumber } from './utility.js';
+import { clear_Tabelle, nelem, nnodes } from "./duennQ_tabelle.js";
+import { systemlinien, label_svg } from "./systemlinien";
+import { set_myScreen } from "./index.js"
+import { draw_elements } from "./grafik_3D";
 //import {set_nnodes, set_nelem} from "./duennQ_tabelle.js"
-
-/*
-class test {
-    index = 0;
-    feld = []
-};
-
-const dd = []
-
-dd.push(new test);
-
-dd[0].index = 11
-//dd[0].feld = new Array(4)
-dd[0].feld.push(true)
-//dd[0].feld[0]=1
-console.log("dd",dd)
-*/
-
 
 
 
@@ -158,7 +140,7 @@ for (let i = 1; i <= nnodes; i++) {
     }
 
     // @ts-ignore
-//    nodeObj.nodeArray.push(punkt);
+    //    nodeObj.nodeArray.push(punkt);
     nodeArray.push(punkt);
 }
 
@@ -172,17 +154,17 @@ for (let i = 1; i <= nelem; i++) {
     }
 
     // @ts-ignore
-//    elemObj.elemArray.push(punkt);
+    //    elemObj.elemArray.push(punkt);
     elemArray.push(punkt);
 }
 
-const xx = [0.0, 20.0, 40.0, 20.0, 40.0, 0.0];
+const xx = [-10.0, 20.0, 50.0, 20.0, 40.0, 0.0];
 const yy = [0.0, 0.0, 0.0, 40.0, 40.0, 40.0];
 
 
-// @  ts  -ignore
+
 tabulate('#knotentabelle', 'nodeTable', nodeArray, ['No', 'y [cm]', 'z [cm]']);  // nodeObj.
-// @ ts-ignore
+
 tabulate('#elementtabelle', 'elemTable', elemArray, ["El No", 'E-Modul [kN/cm²]', 'ν', 'Dicke t [cm]', 'nod1', 'nod2']);  // elemObj.
 
 
@@ -262,7 +244,7 @@ eTabelle.rows[5].cells[5].innerText = "6";
 //----------------------------------------------------------------------------------------------
 
 export function duennQ() {
-//----------------------------------------------------------------------------------------------
+    //----------------------------------------------------------------------------------------------
 
     //let node = []
     //let truss = []
@@ -549,8 +531,8 @@ export function duennQ() {
     // Aufstellen der Steifigkeitsmatrix
 
     //    ReDim stiff(neq, neq), R(neq), u(neq), stiff2(neq, neq)
-//    TFMatrix2D<double> stiff(neq, neq), stiff2(neq, neq);
-//    TFVector<double>   R(neq), u(neq);
+    //    TFMatrix2D<double> stiff(neq, neq), stiff2(neq, neq);
+    //    TFVector<double>   R(neq), u(neq);
 
     const stiff = Array.from(Array(neq), () => new Array(neq).fill(0.0));
     const stiff2 = Array.from(Array(neq), () => new Array(neq).fill(0.0));
