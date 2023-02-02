@@ -11,8 +11,7 @@ import DetectOS from './detectos.js'
 import {init_contextmenu} from './contextMenu.js';
 
 
-import {add_element, main_3D} from "./grafik_3D";
-
+import {logo_3D, main_3D} from "./grafik_3D";
 
 export const myScreen = {
     clientWidth: 0,
@@ -22,7 +21,6 @@ export const myScreen = {
 
 // myScreen.clientWidth = document.documentElement.clientWidth;
 // myScreen.clientHeight = document.documentElement.clientHeight;
-
 
 
 export function set_myScreen() {
@@ -82,7 +80,7 @@ main_3D();
 
 eingabe1();  // Tabellenblatt eingabe sichtbar schalten
 
-
+logo_3D();
 
 // add_element();  // zwei Linien zeichnen
 

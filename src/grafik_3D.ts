@@ -9,7 +9,9 @@ import { ymin, ymax, zmin, zmax, slmax } from "./systemlinien";
 import { myScreen } from "./index.js";
 import { CSS2DObject, CSS2DRenderer } from "./renderers/CSS2DRenderer.js"
 
+import { FontLoader } from "./renderers/FontLoaders.js";
 
+//import { OBJLoader } from 'three-addons';
 /*
 export function main_3D() {
     const canvas = document.querySelector('#c3');
@@ -127,7 +129,7 @@ export function main_3D() {
     const boxDepth = 1;
     const geometry = new THREE.BoxGeometry(boxWidth, boxHeight, boxDepth);
 
-    function makeInstance(geometry, color, x:number) {
+    function makeInstance(geometry, color, x: number) {
         const material = new THREE.MeshPhongMaterial({ color });
 
         const cube = new THREE.Mesh(geometry, material);
@@ -259,6 +261,128 @@ export function add_element() {
 
     window.dispatchEvent(new Event("resize"));
 
+}
+
+//--------------------------------------------------------------------------------------------------------
+export function logo_3D() {
+    //--------------------------------------------------------------------------------------------------------
+
+    const loader = new FontLoader();
+
+    loader.load('./fonts/helvetiker_regular.typeface.json', function (font) {
+
+        const color = 0x006699;
+
+        const matDark = new THREE.LineBasicMaterial({
+            color: color,
+            side: THREE.DoubleSide
+        });
+
+        const matLite = new THREE.MeshBasicMaterial({
+            color: color,
+            transparent: true,
+            opacity: 0.4,
+            side: THREE.DoubleSide
+        });
+
+        const message = '   duennQs\nDuennwandiger Querschnitt';
+
+        const shapes = font.generateShapes(message, 100);
+
+        const geometry = new THREE.ShapeGeometry(shapes);
+
+        geometry.computeBoundingBox();
+
+        const xMid = - 0.5 * (geometry.boundingBox.max.x - geometry.boundingBox.min.x);
+
+        geometry.translate(xMid, 0, 0);
+
+        // make shape ( N.B. edge view not visible )
+
+        const text = new THREE.Mesh(geometry, matLite);
+        text.position.z = - 150;
+        scene.add(text);
+
+        // make line shape ( N.B. edge view remains visible )
+
+        const holeShapes = [];
+
+        for (let i = 0; i < shapes.length; i++) {
+
+            const shape = shapes[i];
+
+            if (shape.holes && shape.holes.length > 0) {
+
+                for (let j = 0; j < shape.holes.length; j++) {
+
+                    const hole = shape.holes[j];
+                    holeShapes.push(hole);
+
+                }
+
+            }
+
+        }
+
+        shapes.push.apply(shapes, holeShapes);
+
+        const lineText = new THREE.Object3D();
+
+        for (let i = 0; i < shapes.length; i++) {
+
+            const shape = shapes[i];
+
+            const points = shape.getPoints();
+            const geometry = new THREE.BufferGeometry().setFromPoints(points);
+
+            geometry.translate(xMid, 0, 0);
+
+            const lineMesh = new THREE.Line(geometry, matDark);
+            lineText.add(lineMesh);
+
+        }
+
+        scene.add(lineText);
+
+        //render();
+        window.dispatchEvent(new Event("resize"));
+
+    }); //end load function
+
+
+    /*
+        var params = {
+            material: 0,
+            extrudeMaterial: 1,
+            bevelEnabled: control.bevelEnabled,
+            bevelThickness: control.bevelThickness,
+            bevelSize: control.bevelSize,
+            font: control.font,
+            style: control.style,
+            height: control.height,
+            size: control.size,
+            curveSegments: control.curveSegments
+        };
+    
+        var textGeo = new THREE.TextGeometry(text, params);
+        textGeo.computeBoundingBox();
+        textGeo.computeVertexNormals();
+        var material = new THREE.MeshFaceMaterial([
+            new THREE.MeshPhongMaterial({
+                color: 0xff22cc,
+                shading: THREE.FlatShading
+            }), // front
+            new THREE.MeshPhongMaterial({
+                color: 0xff22cc,
+                shading: THREE.SmoothShading
+            }) // side
+        ]);
+        var textMesh = new THREE.Mesh(textGeo, material);
+        textMesh.position.x = -textGeo.boundingBox.max.x / 2;
+        textMesh.position.y = -200;
+        textMesh.name = 'text';
+        scene.add(textMesh);
+    */
 }
 
 //--------------------------------------------------------------------------------------------------------

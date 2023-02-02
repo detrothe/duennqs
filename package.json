@@ -2,9 +2,9 @@
   "name": "duennwqs",
   "version": "1.0.0",
   "description": "Querschnittswerte und Spannungen duennwandiger Querschnitte",
-    "main": "index.js",
+  "main": "index.js",
   "scripts": {
-       "build": "esbuild src/index.js --sourcemap --minify --bundle --outfile=dist/index.js --loader:.html=text",
+    "build": "esbuild src/index.js --sourcemap --minify --bundle --outfile=dist/index.js --loader:.html=text",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "me",
