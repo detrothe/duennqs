@@ -98,8 +98,8 @@ export function main_3D() {
         const far = 500;
         const camera = new THREE.PerspectiveCamera(fov, aspect, near, far);
     */
-    const width = 100;
-    const height = 100;
+    const width = 1000;
+    const height = 1000;
     //console.log("ortho", -ymax, -ymin, -zmax, -zmin)
     const camera = new THREE.OrthographicCamera(-ymax, -ymin, -zmin, -zmax, -2000, 2000);
     camera.layers.enableAll();
@@ -300,7 +300,7 @@ export function logo_3D() {
         // make shape ( N.B. edge view not visible )
 
         const text = new THREE.Mesh(geometry, matLite);
-        text.position.z = - 150;
+        text.position.z = - 250;
         scene.add(text);
 
         // make line shape ( N.B. edge view remains visible )
@@ -350,39 +350,7 @@ export function logo_3D() {
     }); //end load function
 
 
-    /*
-        var params = {
-            material: 0,
-            extrudeMaterial: 1,
-            bevelEnabled: control.bevelEnabled,
-            bevelThickness: control.bevelThickness,
-            bevelSize: control.bevelSize,
-            font: control.font,
-            style: control.style,
-            height: control.height,
-            size: control.size,
-            curveSegments: control.curveSegments
-        };
-    
-        var textGeo = new THREE.TextGeometry(text, params);
-        textGeo.computeBoundingBox();
-        textGeo.computeVertexNormals();
-        var material = new THREE.MeshFaceMaterial([
-            new THREE.MeshPhongMaterial({
-                color: 0xff22cc,
-                shading: THREE.FlatShading
-            }), // front
-            new THREE.MeshPhongMaterial({
-                color: 0xff22cc,
-                shading: THREE.SmoothShading
-            }) // side
-        ]);
-        var textMesh = new THREE.Mesh(textGeo, material);
-        textMesh.position.x = -textGeo.boundingBox.max.x / 2;
-        textMesh.position.y = -200;
-        textMesh.name = 'text';
-        scene.add(textMesh);
-    */
+ 
 }
 
 //--------------------------------------------------------------------------------------------------------
