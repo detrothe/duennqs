@@ -62,10 +62,11 @@ export function main_3D() {
 export let maxWoelb: number;
 export let maxSigma: number;
 
-//let canvas
-let scene = null
-let camera = null;
+// modul variablen
 
+let scene = null
+let camera = null as THREE.OrthographicCamera;
+let controls = null as OrbitControls;
 
 //--------------------------------------------------------------------------------------------------------
 export function main_3D() {
@@ -107,7 +108,7 @@ export function main_3D() {
     camera.layers.enableAll();
     camera.position.z = 500;
 
-    const controls = new OrbitControls(camera, labelRenderer.domElement);
+    controls = new OrbitControls(camera, labelRenderer.domElement);
     controls.enableDamping = true;
     controls.target.set(0, 0, 0);
     controls.update();
@@ -387,10 +388,15 @@ export function draw_elements(y_s: number, z_s: number, y_M: number, z_M: number
         console.log("minMax", -ymax, -ymin, -zmin, -zmax);
         let rand = slmax / 10.0;
         
-        camera.left = -ymax - rand;
-        camera.right = -ymin + rand;
-        camera.top = -zmin + rand;
-        camera.bottom = -zmax - rand;
+        camera.left = -ymax - rand + 20;
+        camera.right = -ymin + rand + 20;
+        camera.top = -zmin + rand  + 20;
+        camera.bottom = -zmax - rand + 20;
+
+        let dx = ymax - ymin;
+        let dy = zmax - zmin;
+
+        controls.target.set(-20, -20, 0);
 
         maxWoelb = 0.0
         for (let i = 0; i < nnodes; i++) {
