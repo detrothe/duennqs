@@ -30,6 +30,7 @@ class TextGeometry extends ExtrudeGeometry {
 			super(); // generate default extrude geometry
 
 		} else {
+console.log("in TextGeometry",text,parameters.size);
 
 			const shapes = font.generateShapes( text, parameters.size );
 

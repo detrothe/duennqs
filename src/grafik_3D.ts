@@ -9,7 +9,7 @@ import { ymin, ymax, zmin, zmax, slmax } from "./systemlinien";
 import { myScreen } from "./index.js";
 import { CSS2DObject, CSS2DRenderer } from "./renderers/CSS2DRenderer.js"
 
-import { FontLoader } from "./renderers/FontLoaders.js";
+import { FontLoader, Font } from "./renderers/FontLoaders.js";
 import { TTFLoader } from "./renderers/TTFLoader.js";
 import { TextGeometry } from './renderers/TextGeometry.js';
 
@@ -279,13 +279,13 @@ export function ttf_logo_3D() {
     //loader.load('./hobby-of-night.ttf', fnt => font = fontLoader.parse(fnt))
     //let font: FontLoader = null;
 
-    let text:string = 'three.js';
+    let text:string = 'dßnnQs.js';
 
 
     loader.load('./fonts/ttf/kenpixel.ttf', function (json) {
 
         console.log("json", json)
-        const font = new FontLoader(json);
+        const font = new Font(json);
         console.log("font", font)
         createText(font, text);
         //const shapes = font   //.generateShapes("Hallo", 100);
