@@ -281,10 +281,10 @@ export function ttf_logo_3D() {
 
     let text:string = 'dünnQs.js';
 
-// DejaVuSans.ttf
+// FreeSans.ttf
 // NotoMono-Regular.ttf
 
-    loader.load('./fonts/ttf/DejaVuSans.ttf', function (json) {
+    loader.load('./fonts/ttf/FreeSans.ttf', function (json) {
 
         console.log("json", json)
         const font = new Font(json);
@@ -301,7 +301,7 @@ export function ttf_logo_3D() {
 
 function createText(font:FontLoader, text) {
 
-    let textMesh1, textMesh2, textGeo, material;
+    let textMesh1, textGeo, material;
 
     material = new THREE.MeshPhongMaterial( { color: 0xffffff, flatShading: true } );
 
@@ -334,7 +334,7 @@ function createText(font:FontLoader, text) {
     textMesh1 = new THREE.Mesh(textGeo, material);
 
     textMesh1.position.x = centerOffset;
-    textMesh1.position.y = hover;
+    textMesh1.position.y = 2*hover;
     textMesh1.position.z = 10;
 
     textMesh1.rotation.x = 0;
@@ -496,6 +496,25 @@ export function draw_elements(y_s: number, z_s: number, y_M: number, z_M: number
         });
 
         maxSigma = 0.0
+        for (let i = 0; i < nelem; i++) {
+            maxSigma = Math.max(Math.abs(truss[i].sigma_x[0]), Math.abs(truss[i].sigma_x[2]), maxSigma)
+        }
+
+        let maxTau = 0.0, tau_j: number, depthBeam : number
+
+        for (i = 0; i < nelem; i++) {
+            for (j = 0; j < 3; j++) {
+                tau_j = truss[i].tau_p1[j] + truss[i].tau_s[j]
+                if (Math.abs(tau_j) > maxTau) maxTau = Math.abs(tau_j)
+            }
+        }
+
+        if ( maxTau > 1e-12 || maxSigma > 1e-12 ) {
+            depthBeam = 0;
+        } else {
+            depthBeam = 5;
+        }
+        
 
         for (let i = 0; i < nelem; i++) {
             //console.log("elem i=", i)
@@ -525,7 +544,7 @@ export function draw_elements(y_s: number, z_s: number, y_M: number, z_M: number
 
 
             const extrudeSettings = {
-                depth: 0,
+                depth: depthBeam,
                 bevelEnabled: false,
                 bevelSegments: 5,
                 steps: 1,
@@ -553,7 +572,6 @@ export function draw_elements(y_s: number, z_s: number, y_M: number, z_M: number
             mesh.add(xLabel);
             xLabel.layers.set(1);
 
-            maxSigma = Math.max(Math.abs(truss[i].sigma_x[0]), Math.abs(truss[i].sigma_x[2]), maxSigma)
         }
 
         console.log("maxSigma", maxSigma)
@@ -694,20 +712,12 @@ export function draw_elements(y_s: number, z_s: number, y_M: number, z_M: number
         {
             let tau = Array(3)
 
-            let xi: number, tau_i: number, tau_j: number, sl: number, nod1: number
+            let xi: number, tau_i: number, sl: number, nod1: number
 
             const teilung = 5
             const n = (teilung + 1) * 2
             //const stress_poly = Array.from(Array(teilung + 4), () => new Array(2).fill(0.0));
             //const stress_area = Array.from(Array(n + 1), () => new Array(2).fill(0.0));
-            let maxTau = 0.0
-
-            for (i = 0; i < nelem; i++) {
-                for (j = 0; j < 3; j++) {
-                    tau_j = truss[i].tau_p1[j] + truss[i].tau_s[j]
-                    if (Math.abs(tau_j) > maxTau) maxTau = Math.abs(tau_j)
-                }
-            }
 
             if (maxTau > 0.0) {
 
