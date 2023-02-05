@@ -65,7 +65,8 @@ function setMaterialEqual(ev) {
 export let node = []
 export let truss = []
 export let I_omega: number
-
+export let Gesamt_ys: number
+export let Gesamt_zs: number
 
 class TNode {
     y: number = 1.0
@@ -263,7 +264,6 @@ export function duennQ() {
 
     let Gesamtflaeche: number, I11: number, I22: number, phi0: number,
         Gesamt_Iyy: number, Gesamt_Izz: number, Gesamt_Iyz: number, Gesamt_It: number, It_offen: number,
-        Gesamt_ys: number, Gesamt_zs: number,
         yMh: number, zMh: number,                             // Schubmittelpunkt bezogen auf Schwerpunkt im Hauptachsensystem
         yM: number, zM: number;                               // Schubmittelpunkt bezogen auf Schwerpunkt im yz-Koordinatensystem
 

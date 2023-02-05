@@ -3,13 +3,15 @@ import * as THREE from 'three';
 
 import { OrbitControls } from './OrbitControls.js';
 
-import { node, truss, I_omega } from "./duennQ"
+import { node, truss, Gesamt_ys, Gesamt_zs } from "./duennQ"
 import { nnodes, nelem } from "./duennQ_tabelle.js"
 import { ymin, ymax, zmin, zmax, slmax } from "./systemlinien";
 import { myScreen } from "./index.js";
 import { CSS2DObject, CSS2DRenderer } from "./renderers/CSS2DRenderer.js"
 
 import { FontLoader } from "./renderers/FontLoaders.js";
+import { TTFLoader } from "./renderers/TTFLoader.js";
+import { TextGeometry } from './renderers/TextGeometry.js';
 
 //import { OBJLoader } from 'three-addons';
 /*
@@ -269,12 +271,86 @@ export function add_element() {
 }
 
 //--------------------------------------------------------------------------------------------------------
+export function ttf_logo_3D() {
+    //--------------------------------------------------------------------------------------------------------
+
+    const loader = new TTFLoader()
+    //const FONT = new FontLoader()
+    //loader.load('./hobby-of-night.ttf', fnt => font = fontLoader.parse(fnt))
+    //let font: FontLoader = null;
+
+    let text:string = 'three.js';
+
+
+    loader.load('./fonts/ttf/kenpixel.ttf', function (json) {
+
+        console.log("json", json)
+        const font = new FontLoader(json);
+        console.log("font", font)
+        createText(font, text);
+        //const shapes = font   //.generateShapes("Hallo", 100);
+
+    });
+
+    //render();
+    //window.dispatchEvent(new Event("resize"));
+
+}
+
+function createText(font:FontLoader, text) {
+
+    let textMesh1, textMesh2, textGeo, material;
+
+
+    const height = 20,
+        size = 70,
+        hover = 30,
+        curveSegments = 4,
+        bevelThickness = 2,
+        bevelSize = 1.5;
+
+    textGeo = new TextGeometry(text, {
+
+        font: font,
+
+        size: size,
+        height: height,
+        curveSegments: curveSegments,
+
+        bevelThickness: bevelThickness,
+        bevelSize: bevelSize,
+        bevelEnabled: true
+
+    });
+
+    textGeo.computeBoundingBox();
+    textGeo.computeVertexNormals();
+
+    const centerOffset = - 0.5 * (textGeo.boundingBox.max.x - textGeo.boundingBox.min.x);
+
+    textMesh1 = new THREE.Mesh(textGeo, material);
+
+    textMesh1.position.x = centerOffset;
+    textMesh1.position.y = hover;
+    textMesh1.position.z = 0;
+
+    textMesh1.rotation.x = 0;
+    textMesh1.rotation.y = Math.PI * 2;
+
+    scene.add(textMesh1);
+
+
+}
+
+//--------------------------------------------------------------------------------------------------------
 export function logo_3D() {
     //--------------------------------------------------------------------------------------------------------
 
     const loader = new FontLoader();
 
     loader.load('./fonts/helvetiker_regular.typeface.json', function (font) {
+
+        console.log("logo_3D font", font)
 
         const color = 0x006699;
 
@@ -387,16 +463,16 @@ export function draw_elements(y_s: number, z_s: number, y_M: number, z_M: number
 
         console.log("minMax", -ymax, -ymin, -zmin, -zmax);
         let rand = slmax / 10.0;
-        
-        camera.left = -ymax - rand + 20;
-        camera.right = -ymin + rand + 20;
-        camera.top = -zmin + rand  + 20;
-        camera.bottom = -zmax - rand + 20;
 
-        let dx = ymax - ymin;
-        let dy = zmax - zmin;
+        let dx = Gesamt_ys;
+        let dy = Gesamt_zs;
 
-        controls.target.set(-20, -20, 0);
+        camera.left = -ymax - rand + dx;
+        camera.right = -ymin + rand + dx;
+        camera.top = -zmin + rand + dy;
+        camera.bottom = -zmax - rand + dy;
+
+        controls.target.set(-dx, -dy, 0);
 
         maxWoelb = 0.0
         for (let i = 0; i < nnodes; i++) {
