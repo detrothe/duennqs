@@ -279,10 +279,12 @@ export function ttf_logo_3D() {
     //loader.load('./hobby-of-night.ttf', fnt => font = fontLoader.parse(fnt))
     //let font: FontLoader = null;
 
-    let text:string = 'dßnnQs.js';
+    let text:string = 'dünnQs.js';
 
+// DejaVuSans.ttf
+// NotoMono-Regular.ttf
 
-    loader.load('./fonts/ttf/kenpixel.ttf', function (json) {
+    loader.load('./fonts/ttf/DejaVuSans.ttf', function (json) {
 
         console.log("json", json)
         const font = new Font(json);
@@ -301,6 +303,7 @@ function createText(font:FontLoader, text) {
 
     let textMesh1, textMesh2, textGeo, material;
 
+    material = new THREE.MeshPhongMaterial( { color: 0xffffff, flatShading: true } );
 
     const height = 20,
         size = 70,
@@ -326,13 +329,13 @@ function createText(font:FontLoader, text) {
     textGeo.computeBoundingBox();
     textGeo.computeVertexNormals();
 
-    const centerOffset = - 0.5 * (textGeo.boundingBox.max.x - textGeo.boundingBox.min.x);
+    const centerOffset = - 0.5 * (textGeo.boundingBox.max.x - textGeo.boundingBox.min.x) + 100;
 
     textMesh1 = new THREE.Mesh(textGeo, material);
 
     textMesh1.position.x = centerOffset;
     textMesh1.position.y = hover;
-    textMesh1.position.z = 0;
+    textMesh1.position.z = 10;
 
     textMesh1.rotation.x = 0;
     textMesh1.rotation.y = Math.PI * 2;
