@@ -279,10 +279,10 @@ export function ttf_logo_3D() {
     //loader.load('./hobby-of-night.ttf', fnt => font = fontLoader.parse(fnt))
     //let font: FontLoader = null;
 
-    let text:string = 'dünnQs.js';
+    let text: string = 'dünnQs.js';
 
-// FreeSans.ttf
-// NotoMono-Regular.ttf
+    // FreeSans.ttf
+    // NotoMono-Regular.ttf
 
     loader.load('./fonts/ttf/FreeSans.ttf', function (json) {
 
@@ -299,11 +299,11 @@ export function ttf_logo_3D() {
 
 }
 
-function createText(font:FontLoader, text) {
+function createText(font: FontLoader, text) {
 
     let textMesh1, textGeo, material;
 
-    material = new THREE.MeshPhongMaterial( { color: 0xffffff, flatShading: true } );
+    material = new THREE.MeshPhongMaterial({ color: 0xffffff, flatShading: true });
 
     const height = 20,
         size = 70,
@@ -334,7 +334,7 @@ function createText(font:FontLoader, text) {
     textMesh1 = new THREE.Mesh(textGeo, material);
 
     textMesh1.position.x = centerOffset;
-    textMesh1.position.y = 2*hover;
+    textMesh1.position.y = 2 * hover;
     textMesh1.position.z = 10;
 
     textMesh1.rotation.x = 0;
@@ -500,7 +500,7 @@ export function draw_elements(y_s: number, z_s: number, y_M: number, z_M: number
             maxSigma = Math.max(Math.abs(truss[i].sigma_x[0]), Math.abs(truss[i].sigma_x[2]), maxSigma)
         }
 
-        let maxTau = 0.0, tau_j: number, depthBeam : number
+        let maxTau = 0.0, tau_j: number, depthBeam: number
 
         for (i = 0; i < nelem; i++) {
             for (j = 0; j < 3; j++) {
@@ -509,12 +509,12 @@ export function draw_elements(y_s: number, z_s: number, y_M: number, z_M: number
             }
         }
 
-        if ( maxTau > 1e-12 || maxSigma > 1e-12 ) {
+        if (maxTau > 1e-12 || maxSigma > 1e-12) {
             depthBeam = 0;
         } else {
             depthBeam = 5;
         }
-        
+
 
         for (let i = 0; i < nelem; i++) {
             //console.log("elem i=", i)
@@ -888,3 +888,30 @@ export function draw_elements(y_s: number, z_s: number, y_M: number, z_M: number
 
     //add_element();
 }
+
+//--------------------------------------------------------------------------------------------------------
+function label_webgl() {
+    //--------------------------------------------------------------------------------------------------------
+
+    console.log("in label_webgl")
+}
+
+//--------------------------------------------------------------------------------------------------------
+function tau_webgl() {
+    //--------------------------------------------------------------------------------------------------------
+
+    console.log("in tau_webgl")
+}
+
+//--------------------------------------------------------------------------------------------------------
+function sigma_webgl() {
+    //--------------------------------------------------------------------------------------------------------
+
+    console.log("in sigma_webgl")
+}
+
+//--------------------------------------------------------------------------------------------------------
+
+document.getElementById('button_label_webgl').addEventListener('click', label_webgl, false);
+document.getElementById('button_tau_webgl').addEventListener('click', tau_webgl, false);
+document.getElementById('button_sigma_webgl').addEventListener('click', sigma_webgl, false);

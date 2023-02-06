@@ -316,7 +316,7 @@ input:valid {
 }
 
 .zellew0 {
-    wrap-option: false;
+    white-space: nowrap;
     text-align: right;
     font-size: 1rem;
 }
@@ -563,10 +563,28 @@ td.selected {
     background-color: rgb(110, 180, 180);
     /*z-index: 90;*/
 }
+
 #button_label_webgl {
     position: absolute;
     top: 10px;  /*-15*/
     left: 10px;
+    width: 100px;
+    z-index: 90;
+}
+
+#button_tau_webgl {
+    position: absolute;
+    top: 10px;  /*-15*/
+    left: 120px;
+    width: 100px;
+    z-index: 90;
+}
+
+#button_sigma_webgl {
+    position: absolute;
+    top: 10px;  /*-15*/
+    left: 230px;
+    width: 100px;
     z-index: 90;
 }
 
