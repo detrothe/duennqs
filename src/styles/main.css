@@ -1,5 +1,5 @@
 html {
-font-size:100%
+    font-size: 100%
 }
 
 * {
@@ -47,12 +47,12 @@ a:link {
     width: min(100%, 1500px);
     margin: auto;
     grid-template-areas:
-    'header header header header header'
-    'topLeft topLeft topRight topRight topRight'
-    'left middle middle middle right'
-    'unten_grafik unten_grafik unten_grafik unten_grafik unten_grafik'
-    'unten_webgl unten_webgl unten_webgl unten_webgl unten_webgl'
-    'footer footer footer footer footer';
+        'header header header header header'
+        'topLeft topLeft topRight topRight topRight'
+        'left middle middle middle right'
+        'unten_grafik unten_grafik unten_grafik unten_grafik unten_grafik'
+        'unten_webgl unten_webgl unten_webgl unten_webgl unten_webgl'
+        'footer footer footer footer footer';
     /* grid-column-gap: 10px; - if you want gap between the columns */
 }
 
@@ -107,12 +107,14 @@ a:link {
     /*background-color: #f5f5f5;*/
     /*width: 0px;*/
 }
-.unten_grafik{
+
+.unten_grafik {
     grid-area: unten_grafik;
 }
-.unten_webgl{
-     grid-area: unten_webgl;
- }
+
+.unten_webgl {
+    grid-area: unten_webgl;
+}
 
 /* Style the footer */
 .footer {
@@ -120,22 +122,23 @@ a:link {
     background-color: #f1f1f1;
     padding: 5px;
     text-align: center;
-    font-size: 10px; /*0.7rem*/
+    font-size: 10px;
+    /*0.7rem*/
 }
 
 /* Responsive layout - makes the three columns stack on top of each other instead of next to each other */
 @media (max-width: 770px) {
     .grid-container {
         grid-template-areas:
-      'header header header'
-      'topLeft topLeft topLeft'
-      'topRight topRight topRight'
-      'left left left'
-      'middle middle middle'
-      'right right right'
-      'unten_grafik unten_grafik unten_grafik'
-      'unten_webgl unten_webgl unten_webgl'
-      'footer footer footer';
+            'header header header'
+            'topLeft topLeft topLeft'
+            'topRight topRight topRight'
+            'left left left'
+            'middle middle middle'
+            'right right right'
+            'unten_grafik unten_grafik unten_grafik'
+            'unten_webgl unten_webgl unten_webgl'
+            'footer footer footer';
     }
 }
 
@@ -203,7 +206,8 @@ hr {
     border-radius: 0px 8px 0px 0px;
 }
 
-.topnav a.active {       /* wozu ? */
+.topnav a.active {
+    /* wozu ? */
     background-color: #4CAF50;
     color: green;
 }
@@ -264,7 +268,8 @@ hr {
     display: none;
 }
 
-td, th {
+td,
+th {
     padding: 1px 4px;
     width: 100px;
     /*background-color: orange;*/
@@ -394,6 +399,7 @@ input:valid {
     color: darkslateblue;
     white-space: nowrap;
 }
+
 #elemTable td.unsichtbar {
     background-color: rgb(150, 180, 180);
     color: rgb(150, 180, 180);
@@ -455,14 +461,18 @@ td.selected {
     display: none;
 }
 
-#wind_vertikal td, #wind_satteldach td,
-#wind_vertikal th, #wind_satteldach th {
+#wind_vertikal td,
+#wind_satteldach td,
+#wind_vertikal th,
+#wind_satteldach th {
     background-color: orange;
     border: 0;
 }
 
-.table_eng th, td {
-    border: none; /*1px solid black*/
+.table_eng th,
+td {
+    border: none;
+    /*1px solid black*/
     /*border-collapse: collapse;*/
     padding: 1px;
     width: 90px;
@@ -473,9 +483,7 @@ td.selected {
 
 }
 
-#querschnittwerte_table {
-
-}
+#querschnittwerte_table {}
 
 #querschnittwerte_table td {
     padding-left: 5px;
@@ -488,7 +496,11 @@ td.selected {
     text-align: right;
 }
 
-#spannung_mxp, #spannung_mxs, #normalspannung, #vergleichsspannung, #schubspannung {
+#spannung_mxp,
+#spannung_mxs,
+#normalspannung,
+#vergleichsspannung,
+#schubspannung {
     display: none;
 }
 
@@ -531,7 +543,8 @@ td.selected {
 #cursor_coordz {
     /*display: inline-block;*/
     position: absolute;
-    top: 10px;  /*-15*/
+    top: 10px;
+    /*-15*/
     left: calc(10px + 4em);
     width: 4em;
     height: 25px;
@@ -546,13 +559,16 @@ td.selected {
     z-index: 100;
     /*justify-content: center;}*/
 }
+
 #button_label_svg {
     position: absolute;
-    top: 10px;  /*-15*/
+    top: 10px;
+    /*-15*/
     left: calc(10px + 10em);
 }
 
-#circleBasicTooltip, #circleTooltip_SM {
+#circleBasicTooltip,
+#circleTooltip_SM {
     position: absolute;
     /*z-index: 110;*/
 }
@@ -566,26 +582,32 @@ td.selected {
 
 #button_label_webgl {
     position: absolute;
-    top: 10px;  /*-15*/
+    top: 10px;
+    /*-15*/
     left: 10px;
-    width: 100px;
-    z-index: 90;
 }
 
 #button_tau_webgl {
     position: absolute;
-    top: 10px;  /*-15*/
-    left: 120px;
-    width: 100px;
-    z-index: 90;
+    top: 10px;
+    /*-15*/
+    left: 90px;
 }
 
 #button_sigma_webgl {
     position: absolute;
-    top: 10px;  /*-15*/
-    left: 230px;
-    width: 100px;
+    top: 10px;    /*-15*/
+    left: 170px;
+}
+
+.button_webgl {
+    width: 70px;
     z-index: 90;
+    background-color: black;
+    color: white;
+    border-radius: 3px;
+    border-color: gray;
+    border-style:solid;
 }
 
 #my-webgl {
@@ -607,9 +629,10 @@ td.selected {
     width: 100%;
     text-align: left;
     z-index: 100;
-    display:block;
+    display: block;
     color: #8b0000;
 }
+
 .emotionLabel {
     color: #ff0000;
     /* font-family: Calibri, Candara, Segoe, "Segoe UI", Optima, Arial, sans-serif; */
@@ -618,6 +641,7 @@ td.selected {
     font-size: 1rem;
     z-index: 120;
 }
+
 /*
 .unsichtbar {
     color: rgb(250,250,250);
