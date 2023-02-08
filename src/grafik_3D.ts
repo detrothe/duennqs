@@ -3,7 +3,7 @@ import * as THREE from 'three';
 
 import { OrbitControls } from './OrbitControls.js';
 
-import { node, truss, Gesamt_ys, Gesamt_zs } from "./duennQ"
+import { node, truss, Gesamt_ys, Gesamt_zs, yM, zM, phi0 } from "./duennQ"
 import { nnodes, nelem } from "./duennQ_tabelle.js"
 import { ymin, ymax, zmin, zmax, slmax } from "./systemlinien";
 import { myScreen } from "./index.js";
@@ -12,6 +12,11 @@ import { CSS2DObject, CSS2DRenderer } from "./renderers/CSS2DRenderer.js"
 import { FontLoader, Font } from "./renderers/FontLoaders.js";
 import { TTFLoader } from "./renderers/TTFLoader.js";
 import { TextGeometry } from './renderers/TextGeometry.js';
+
+
+let show_webgl_label = false;
+let show_webgl_tau = false;
+let show_webgl_sigma = false;
 
 //import { OBJLoader } from 'three-addons';
 /*
@@ -509,8 +514,12 @@ export function draw_elements(y_s: number, z_s: number, y_M: number, z_M: number
             }
         }
 
-        if (maxTau > 1e-12 || maxSigma > 1e-12) {
-            depthBeam = 0;
+        if (show_webgl_sigma || show_webgl_tau) {
+            if (maxTau > 1e-12 || maxSigma > 1e-12) {
+                depthBeam = 0;
+            } else {
+                depthBeam = 5;
+            }
         } else {
             depthBeam = 5;
         }
@@ -558,19 +567,20 @@ export function draw_elements(y_s: number, z_s: number, y_M: number, z_M: number
 
             scene.add(mesh);
 
-            //let label = document.getElementById('label_x_achse') //as HTMLCanvasElement;
-            //txt.style.left = '200px'
-            let nameDiv = document.createElement("div");
-            nameDiv.className = "emotionLabel";
-            nameDiv.textContent = String(i + 1);
-            nameDiv.id = "elNo" + i
-            //console.log("nameDiv", nameDiv)
-            const xLabel = new CSS2DObject(nameDiv);
-            xLabel.position.set(xm, ym, 0);
-            xLabel.layers.set(1)
-            //console.log("xLabel", xLabel)
-            mesh.add(xLabel);
-            xLabel.layers.set(1);
+
+            if (show_webgl_label) {
+                let nameDiv = document.createElement("div");
+                nameDiv.className = "emotionLabel";
+                nameDiv.textContent = String(i + 1);
+                nameDiv.id = "elNo" + i
+                //console.log("nameDiv", nameDiv)
+                const xLabel = new CSS2DObject(nameDiv);
+                xLabel.position.set(xm, ym, 0);
+                xLabel.layers.set(1)
+                //console.log("xLabel", xLabel)
+                mesh.add(xLabel);
+                xLabel.layers.set(1);
+            }
 
         }
 
@@ -637,7 +647,7 @@ export function draw_elements(y_s: number, z_s: number, y_M: number, z_M: number
 
                 }
         */
-        if (maxSigma > 0.0000000000001) {
+        if (maxSigma > 0.0000000000001 && show_webgl_sigma) {
 
             let Ueberhoehung = 0.1 * slmax / maxSigma // * scf // Skalieren der Wölblinien
             console.log("Normalspannung", maxSigma, Ueberhoehung)
@@ -719,7 +729,7 @@ export function draw_elements(y_s: number, z_s: number, y_M: number, z_M: number
             //const stress_poly = Array.from(Array(teilung + 4), () => new Array(2).fill(0.0));
             //const stress_area = Array.from(Array(n + 1), () => new Array(2).fill(0.0));
 
-            if (maxTau > 0.0) {
+            if (maxTau > 0.0 && show_webgl_tau) {
 
                 let Ueberhoehung = 0.3 * slmax / maxTau // * scf //
                 console.log("maxTau", maxTau, Ueberhoehung)
@@ -893,21 +903,51 @@ export function draw_elements(y_s: number, z_s: number, y_M: number, z_M: number
 function label_webgl() {
     //--------------------------------------------------------------------------------------------------------
 
-    console.log("in label_webgl")
+    show_webgl_label = !show_webgl_label;
+    let element = document.getElementById("button_label_webgl") ;
+    if ( show_webgl_label ) {
+        element.className = 'button_label_webgl_pressed'
+    } else {
+        element.className = 'button_webgl'
+        console.log("in false");
+    }
+    console.log("in label_webgl", show_webgl_label, element.className);
+    draw_elements(Gesamt_ys, Gesamt_zs, yM, zM, phi0);
+
 }
 
 //--------------------------------------------------------------------------------------------------------
 function tau_webgl() {
     //--------------------------------------------------------------------------------------------------------
 
-    console.log("in tau_webgl")
+    console.log("in tau_webgl");
+    show_webgl_tau = !show_webgl_tau;
+    let element = document.getElementById("button_tau_webgl") ;
+    if ( show_webgl_tau ) {
+        element.className = 'button_tau_webgl_pressed'
+    } else {
+        element.className = 'button_webgl'
+        console.log("in false");
+    }
+
+    draw_elements(Gesamt_ys, Gesamt_zs, yM, zM, phi0);
 }
 
 //--------------------------------------------------------------------------------------------------------
 function sigma_webgl() {
     //--------------------------------------------------------------------------------------------------------
 
-    console.log("in sigma_webgl")
+    console.log("in sigma_webgl");
+    show_webgl_sigma = !show_webgl_sigma;
+    let element = document.getElementById("button_sigma_webgl") ;
+    if ( show_webgl_sigma ) {
+        element.className = 'button_sigma_webgl_pressed'
+    } else {
+        element.className = 'button_webgl'
+        console.log("in false");
+    }
+
+    draw_elements(Gesamt_ys, Gesamt_zs, yM, zM, phi0);
 }
 
 //--------------------------------------------------------------------------------------------------------

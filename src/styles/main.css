@@ -587,6 +587,8 @@ td {
     left: 10px;
 }
 
+
+
 #button_tau_webgl {
     position: absolute;
     top: 10px;
@@ -608,6 +610,43 @@ td {
     border-radius: 3px;
     border-color: gray;
     border-style:solid;
+}
+
+.button_label_webgl_pressed {
+    background-color: orange;
+    width: 70px;
+    z-index: 90;
+    color: white;
+    border-radius: 3px;
+    border-color: gray;
+    border-style:solid;
+}
+
+.button_tau_webgl_pressed {
+    background-color: orange;
+    width: 70px;
+    z-index: 90;
+    color: white;
+    border-radius: 3px;
+    border-color: gray;
+    border-style:solid;
+}
+
+.button_sigma_webgl_pressed {
+    background-color: orange;
+    width: 70px;
+    z-index: 90;
+    color: white;
+    border-radius: 3px;
+    border-color: gray;
+    border-style:solid;
+}
+
+.button_webgl:active {
+    background-color: darkred;
+}
+.button_webgl:after {
+    background-color: yellowgreen;
 }
 
 #my-webgl {

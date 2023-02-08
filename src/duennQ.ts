@@ -67,7 +67,9 @@ export let truss = []
 export let I_omega: number
 export let Gesamt_ys: number
 export let Gesamt_zs: number
-
+export let yM: number
+export let zM: number                              // Schubmittelpunkt bezogen auf Schwerpunkt im yz-Koordinatensystem
+export let phi0: number
 class TNode {
     y: number = 1.0
     z: number = 1.0
@@ -262,10 +264,9 @@ export function duennQ() {
     let It_geschlossen: number, omega_m: number, area: number;
     let rt: number, ry: number, rz: number, y_m: number, z_m: number;
 
-    let Gesamtflaeche: number, I11: number, I22: number, phi0: number,
+    let Gesamtflaeche: number, I11: number, I22: number,
         Gesamt_Iyy: number, Gesamt_Izz: number, Gesamt_Iyz: number, Gesamt_It: number, It_offen: number,
-        yMh: number, zMh: number,                             // Schubmittelpunkt bezogen auf Schwerpunkt im Hauptachsensystem
-        yM: number, zM: number;                               // Schubmittelpunkt bezogen auf Schwerpunkt im yz-Koordinatensystem
+        yMh: number, zMh: number                             // Schubmittelpunkt bezogen auf Schwerpunkt im Hauptachsensystem
 
     let tau_xs1: number, tau_xs2: number, tau_xsm: number, tau_xs_1: number, tau_xs_0: number
     let normalkraft: number, moment_y: number, moment_z: number, moment_1: number, moment_2: number
