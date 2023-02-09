@@ -12,6 +12,11 @@ export function eingabe1() {
     sichtbar('eingabe')
 
     let element = document.getElementById("id_eingabe") ;
+    /*
+    const evt = new MouseEvent("click" );
+    //evt.button = 0;     // linke Maustaste
+    element.dispatchEvent(evt);
+    */
     element.focus({focusVisible: false});
 }
 
