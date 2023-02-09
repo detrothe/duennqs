@@ -84,7 +84,6 @@ logo_3D();
 
 ttf_logo_3D();
 
-// add_element();  // zwei Linien zeichnen
 
 
 

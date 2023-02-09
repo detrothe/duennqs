@@ -49,7 +49,7 @@ a:link {
     grid-template-areas:
         'header header header header header'
         'topLeft topLeft topRight topRight topRight'
-        'left left left left left'
+        /*'left left left left left' */
         'unten_grafik unten_grafik unten_grafik unten_grafik unten_grafik'
         'unten_webgl unten_webgl unten_webgl unten_webgl unten_webgl'
         'footer footer footer footer footer';
@@ -133,7 +133,7 @@ a:link {
             'header header header'
             'topLeft topLeft topLeft'
             'topRight topRight topRight'
-            'left left left'
+            /* 'left left left' */
             'unten_grafik unten_grafik unten_grafik'
             'unten_webgl unten_webgl unten_webgl'
             'footer footer footer';
@@ -214,9 +214,6 @@ hr {
     display: none;
 }
 
-
-
-
 #eingabe {
     display: none;
     /*position: absolute;
@@ -225,15 +222,15 @@ hr {
     width: 100%;*/
     background-color: rgb(110, 180, 180);
 }
-
+/*
 #spannungen {
     display: none;
     background-color: rgb(110, 180, 180);
 }
-
+*/
 #ergebnisse {
     display: none;
-    background-color: rgb(110, 180, 180);
+    background-color: #D8D8D8;
 }
 
 #knotentabelle {
@@ -260,12 +257,12 @@ hr {
     display: none;
     /*background-color: #D8D8D8;*/
 }
-
+/*
 #wind_vertikal,
 #wind_satteldach {
     display: none;
 }
-
+*/
 td,
 th {
     padding: 1px 4px;
@@ -303,15 +300,13 @@ input:valid {
     width: 50px;
     font-size: 1rem;
 }
-
+/*
 .input_sym {
-    /*
     width: 500px;
     padding: 0px;
     margin: 0;
-     */
 }
-
+*/
 .zelle0 {
     /*width: 4em;*/
     text-align: right;
@@ -337,7 +332,7 @@ input:valid {
 .zelle1 {
     width: 60px;
 }
-
+/*
 .input_schnitt {
     width: 50px;
 }
@@ -349,7 +344,7 @@ input:valid {
 .input_wind {
     width: 80px;
 }
-
+*/
 #input-container {
     /*position: absolute;
     top: 10px;
@@ -574,7 +569,7 @@ td {
 #dataviz_area {
     /*position: relative;*/
     /*top: -50px;*/
-    background-color: rgb(110, 180, 180);
+    background-color: rgb(150, 180, 180);
     /*z-index: 90;*/
 }
 

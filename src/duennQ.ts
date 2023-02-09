@@ -70,6 +70,7 @@ export let Gesamt_zs: number
 export let yM: number
 export let zM: number                              // Schubmittelpunkt bezogen auf Schwerpunkt im yz-Koordinatensystem
 export let phi0: number
+
 class TNode {
     y: number = 1.0
     z: number = 1.0
@@ -404,6 +405,11 @@ export function duennQ() {
         dy = y2 - y1;
         dz = z2 - z1;
         truss[i].sl = Math.sqrt(dy * dy + dz * dz);      // Stablänge
+
+        if (truss[i].sl < 1e-12) {
+            alert("Länge von Element " + String(i + 1) + " ist null")
+            return;
+        }
 
         truss[i].alpha = Math.atan2(dz, dy) //*180.0/Math.PI
         console.log("sl=", i, truss[i].sl, truss[i].alpha)

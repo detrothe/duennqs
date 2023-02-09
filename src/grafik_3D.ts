@@ -902,6 +902,8 @@ export function draw_elements(y_s: number, z_s: number, y_M: number, z_M: number
 //--------------------------------------------------------------------------------------------------------
 function label_webgl() {
     //--------------------------------------------------------------------------------------------------------
+//console.log("isNAN",isNaN(Gesamt_ys),yM)
+    if ( Gesamt_ys === undefined || isNaN(yM) ) return; // noch nie gerechnet oder Fehler bei Berechnung
 
     show_webgl_label = !show_webgl_label;
     let element = document.getElementById("button_label_webgl") ;
@@ -920,6 +922,8 @@ function label_webgl() {
 function tau_webgl() {
     //--------------------------------------------------------------------------------------------------------
 
+    if ( Gesamt_ys === undefined || isNaN(yM) ) return;
+
     console.log("in tau_webgl");
     show_webgl_tau = !show_webgl_tau;
     let element = document.getElementById("button_tau_webgl") ;
@@ -936,6 +940,8 @@ function tau_webgl() {
 //--------------------------------------------------------------------------------------------------------
 function sigma_webgl() {
     //--------------------------------------------------------------------------------------------------------
+
+    if ( Gesamt_ys === undefined || isNaN(yM) ) return;
 
     console.log("in sigma_webgl");
     show_webgl_sigma = !show_webgl_sigma;
