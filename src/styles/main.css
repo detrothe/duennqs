@@ -49,7 +49,7 @@ a:link {
     grid-template-areas:
         'header header header header header'
         'topLeft topLeft topRight topRight topRight'
-        'left middle middle middle right'
+        'left left left left left'
         'unten_grafik unten_grafik unten_grafik unten_grafik unten_grafik'
         'unten_webgl unten_webgl unten_webgl unten_webgl unten_webgl'
         'footer footer footer footer footer';
@@ -134,8 +134,6 @@ a:link {
             'topLeft topLeft topLeft'
             'topRight topRight topRight'
             'left left left'
-            'middle middle middle'
-            'right right right'
             'unten_grafik unten_grafik unten_grafik'
             'unten_webgl unten_webgl unten_webgl'
             'footer footer footer';
