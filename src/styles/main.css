@@ -333,16 +333,8 @@ input:valid {
     width: 60px;
 }
 
-.input_schnitt {
-    width: 50px;
-}
-
 .input_kdtab {
     width: 90px;
-}
-
-.input_wind {
-    width: 80px;
 }
 
 #input-container {
