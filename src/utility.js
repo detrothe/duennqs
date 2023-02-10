@@ -88,6 +88,12 @@ export function sichtbar(displayName) {
 
         document.getElementById("my-webgl").style.display = "none";
     }
+    
+    if (displayName === 'hilfe') {
+        document.getElementById("id_hilfe").style.display = "block";
+    } else {
+        document.getElementById("id_hilfe").style.display = "none";
+    }
 }
 
 /*
