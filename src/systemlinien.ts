@@ -4,7 +4,7 @@ import * as d3 from "d3";
 
 import {CTrans} from './trans.js';
 import {truss, node} from "./duennQ"
-import {myScreen} from "./index";
+import {myScreen} from "./index.js";
 import {nnodes, nelem} from "./duennQ_tabelle.js"
 
 let svg = null;

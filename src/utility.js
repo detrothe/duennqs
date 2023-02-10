@@ -1,3 +1,5 @@
+import {myScreen} from "./index.js";
+
 export function testeZahl(wert) {
     wert = wert.replace(/,/g, '.');
     //console.log('Komma entfernt',wert);
@@ -90,6 +92,9 @@ export function sichtbar(displayName) {
     }
     
     if (displayName === 'hilfe') {
+        document.getElementById("id_doc").setAttribute("width", myScreen.svgWidth + "px");
+        document.getElementById("id_doc").setAttribute("height", myScreen.clientHeight + "px");
+    
         document.getElementById("id_hilfe").style.display = "block";
     } else {
         document.getElementById("id_hilfe").style.display = "none";

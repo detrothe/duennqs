@@ -24,6 +24,7 @@
 		}
 
 		p {
+			font-family: "FreeSans", sans-serif;
 			line-height: 115%;
 			text-align: left;
 			orphans: 2;
@@ -48,23 +49,24 @@
 		}
 
 		h1.western {
-			font-family: "Cambria", serif;
+			font-family: "FreeSans", sans-serif;
 			font-size: 14pt;
 			font-weight: bold
 		}
 
+		/*
 		h1.cjk {
-			font-family: "Calibri";
+			font-family: "FreeSans", sans-serif;
 			font-size: 14pt;
 			font-weight: bold
 		}
 
 		h1.ctl {
-			font-family: "DejaVu Sans";
+			font-family: "FreeSans", sans-serif;
 			font-size: 14pt;
 			font-weight: bold
 		}
-
+*/
 		h2 {
 			color: #4f81bd;
 			line-height: 115%;
@@ -80,23 +82,24 @@
 		}
 
 		h2.western {
-			font-family: "Cambria", serif;
+			font-family: "FreeSans", sans-serif;
 			font-size: 13pt;
 			font-weight: bold
 		}
 
+		/*
 		h2.cjk {
-			font-family: "Calibri";
+			font-family: "FreeSans", sans-serif;
 			font-size: 13pt;
 			font-weight: bold
 		}
 
 		h2.ctl {
-			font-family: "DejaVu Sans";
+			font-family: "FreeSans", sans-serif;
 			font-size: 13pt;
 			font-weight: bold
 		}
-
+*/
 		a:link {
 			color: #0000ff;
 			text-decoration: underline
@@ -110,125 +113,123 @@
 		</p>
 	</div>
 	<h1 lang="en-US" class="western">
-		<font face="FreeSans, sans-serif">Übersicht</font>
+		Übersicht
 	</h1>
 	<p style="margin-bottom: 0.35cm">
-		<font face="FreeSans, sans-serif">Mit
-			dem Programm duennQs.netlify.app können Querschnittswerte und
-			Spannungen für dünnwandige Querschnitte berechnet werden. Es wird
-			die finite Element Methode verwendet [1], [2]. Der Querschnitt wird
-			ähnlich wie ein Stabwerk oder Fachwerk durch mehrere gerade Elemente
-			beschrieben, die über Knoten miteinander verbunden sind. Die Theorie
-			erfordert, dass jedes Element mindestens eine Verbindung zu anderen
-			Elementen haben muss. Es dürfen also keine Elemente „alleine“ im
-			Querschnitt sein. Die Elemente haben einen Anfangs- und Endknoten und
-			können quadratische Schubspannungsverläufe exakt darstellen.
-			Deshalb ist keine Verfeinerung erforderlich. Die Richtung der
-			Schubspannungen wird in den Viertelspunkten der Elemente an der
-			rechten und linken Seite mit Pfeilen angezeigt.</font>
+		Mit
+		dem Programm duennQs.netlify.app können Querschnittswerte und
+		Spannungen von dünnwandigen Querschnitten berechnet werden. Es wird
+		die finite Element Methode verwendet [1], [2]. Der Querschnitt wird
+		ähnlich wie ein Stabwerk oder Fachwerk durch mehrere gerade Elemente
+		beschrieben, die über Knoten miteinander verbunden sind. Die Theorie
+		erfordert, dass jedes Element mindestens eine Verbindung zu anderen
+		Elementen haben muss. Es dürfen also keine Elemente „alleine“ im
+		Querschnitt sein. Die Elemente haben einen Anfangs- und Endknoten und
+		können quadratische Schubspannungsverläufe exakt darstellen.
+		Deshalb ist keine Verfeinerung erforderlich. Die Richtung der
+		Schubspannungen wird in den Viertelspunkten der Elemente an der
+		rechten und linken Seite mit Pfeilen angezeigt.
 	</p>
 	<p style="margin-bottom: 0.35cm">
-		<font face="FreeSans, sans-serif">Die
-			Normalspannungen infolge N, M<sub>y</sub> und M<sub>z</sub> werden
-			mit den üblichen Formeln der Mechanik unter Annahme des Ebenbleibens
-			der Querschnitte nach Bernoulli berechnet.</font>
+		Die
+		Normalspannungen infolge N, M<sub>y</sub> und M<sub>z</sub> werden
+		mit den üblichen Formeln der Mechanik unter Annahme des Ebenbleibens
+		der Querschnitte nach Bernoulli berechnet.
 	</p>
 	<p style="margin-bottom: 0.35cm">
-		<font face="FreeSans, sans-serif">Die
-			Schubspannungen sind positiv, wenn sie in Richtung des lokalen
-			Koordinatensystems des Elementes wirken. Die positive lokale Richtung
-			zeigt vom Anfangs- zum Endknoten des Elementes.</font>
+		Die
+		Schubspannungen sind positiv, wenn sie in Richtung des lokalen
+		Koordinatensystems des Elementes wirken. Die positive lokale Richtung
+		zeigt vom Anfangs- zum Endknoten des Elementes.
 	</p>
 	<p style="margin-bottom: 0.35cm">
-		<font face="FreeSans, sans-serif">Eigenschaften
-			des Programms:</font>
+		Eigenschaften des Programms:
 	</p>
 	<ul>
 		<li>
 			<p style="margin-bottom: 0.35cm">
-				<font face="FreeSans, sans-serif">Linear
-					elastisches Material</font>
+				Linear
+				elastisches Material
 			</p>
 		<li>
 			<p style="margin-bottom: 0.35cm">
-				<font face="FreeSans, sans-serif">Die
-					Breite der Elemente ist elementweise konstant</font>
+				Die
+				Breite der Elemente ist elementweise konstant
 			</p>
 		<li>
 			<p style="margin-bottom: 0.35cm">
-				<font face="FreeSans, sans-serif">Jedes
-					Element hat eigene Materialeigenschaften</font>
+				Jedes
+				Element hat eigene Materialeigenschaften
 			</p>
 		<li>
 			<p style="margin-bottom: 0.35cm">
-				<font face="FreeSans, sans-serif">Berechnung
-					aller Querschnittswerte</font>
+				Berechnung
+				aller Querschnittswerte
 			</p>
 		<li>
 			<p style="margin-bottom: 0.35cm">
-				<font face="FreeSans, sans-serif">Spannungsberechnung
-					infolge von Normal- und Querkräften N, V<sub>y</sub> und
-					V<sub>z</sub>,<br />
-					Biegemomente M<sub>y</sub> und M<sub>z</sub>,
-					<br />
-					Primärer und sekundärer Torsion M<sub>xp</sub> , M<sub>xs</sub>
-					sowie Wölbbiment M<sub>ω</sub>.
-				</font>
+				Spannungsberechnung
+				infolge von Normal- und Querkräften N, V<sub>y</sub> und
+				V<sub>z</sub>,<br />
+				Biegemomente M<sub>y</sub> und M<sub>z</sub>,
+				<br />
+				Primärer und sekundärer Torsion M<sub>xp</sub> , M<sub>xs</sub>
+				sowie Wölbbimoment M<sub>ω</sub>.
+
 			</p>
 	</ul>
 	<p style="margin-bottom: 0.35cm">
-		<font face="FreeSans, sans-serif">Der
-			Querschnitt wird in der y-z Ebene und in einer 3D-Ansicht
-			dargestellt. Die Schubspannungen werden parallel zur x-Achse flächig
-			über die Elementdicke gezeichnet.</font>
+		Der
+		Querschnitt wird in der y-z Ebene und in einer 3D-Ansicht
+		dargestellt. Die Schubspannungen werden parallel zur x-Achse flächig
+		über die Elementdicke gezeichnet.
+		<br /><br />
 	</p>
-	<h2 class="western"><a name="_Toc65321583"></a>
-		<font face="FreeSans, sans-serif">Koordinatensystem
-			und Vorzeichen</font>
+	<h2 class="western">
+		Koordinatensystem und Vorzeichen
 	</h2>
-	<p style="margin-bottom: 0.35cm"><img src="Kurzdokumentation%20zu%20Duenne%20Querschnitte_html_ded4854866c1970e.gif"
-			name="Bild1" align="center" width="605" height="283" border="0" />
+	<p style="margin-bottom: 0.35cm">
+		<img src="querschnitt.png" name="Bild1" align="center" width="292" height="265" border="0" />
+		<img src="vorzeichen.png" name="Bild2" align="center" width="264" height="265" border="0" />
 		<br />
 		<br />
 	</p>
-	<h1 class="western"><a name="_Toc65321584"></a>
-		<font face="FreeSans, sans-serif">Beispiele</font>
+	<h1 class="western">
+		Beispiel
 	</h1>
 	<h2 class="western"><a name="_Toc65321585"></a>
-		<font face="FreeSans, sans-serif">Einzelliger
-			Hohlkastenquerschnitt</font>
+		Einzelliger Hohlkastenquerschnitt
 	</h2>
 	<p style="margin-bottom: 0.35cm"><img src="Kurzdokumentation%20zu%20Duenne%20Querschnitte_html_931191862633adf9.gif"
-			name="Bild2" align="center" width="605" height="283" border="0" />
+			name="Bild3" align="center" width="605" height="283" border="0" />
 		<br />
 		<br />
 	</p>
 	<p style="margin-bottom: 0.35cm">
-		<font face="FreeSans, sans-serif">Dieses
-			Beispiel wurde in [2] behandelt.</font>
+		Dieses Beispiel wurde in [2] behandelt.
 	</p>
 	<p style="margin-bottom: 0.35cm"><br />
 		<br />
 
 	</p>
 	<p style="margin-bottom: 0.35cm">
-		<font face="FreeSans, sans-serif">Schnittgrößen:</font>
+		Schnittgrößen:
 	</p>
 	<p style="margin-bottom: 0.35cm">
-		<font face="FreeSans, sans-serif">M<sub>xp</sub>
-			= 25.000 kNcm M<sub>xs</sub> = 15.000 kNcm M<sub>ω</sub> = 100.000
-			kNcm²</font>
+		M<sub>xp</sub>
+		= 25.000 kNcm M<sub>xs</sub> = 15.000 kNcm M<sub>ω</sub> = 100.000
+		kNcm²
 	</p>
 	<p style="margin-bottom: 0.35cm">
-		<font face="FreeSans, sans-serif">V<sub>y</sub>
-			= 1000 kN V<sub>z</sub> = 500 kN</font>
+		V<sub>y</sub>
+		= 1000 kN V<sub>z</sub> = 500 kN
 	</p>
 	<p style="margin-bottom: 0.35cm">
-		<font face="FreeSans, sans-serif">Material:</font>
+		Material:
 	</p>
 	<p style="margin-bottom: 0.35cm">
-		<font face="FreeSans, sans-serif">E
-			= 21.000 kN/cm² G = 8.100 kN/cm² ν = 0,2963</font>
+		E
+		= 21.000 kN/cm² G = 8.100 kN/cm² ν = 0,2963
 	</p>
 	<p style="margin-bottom: 0.35cm"><br />
 		<br />
@@ -238,22 +239,22 @@
 		<br />
 
 	</p>
-	<h1 class="western"><a name="_Toc65321587"></a>
-		<font face="FreeSans, sans-serif">Literatur</font>
+	<h1 class="western">
+		Literatur
 	</h1>
 	<p style="margin-bottom: 0.35cm"><br />
 		<br />
 
 	</p>
 	<p style="margin-left: 1.24cm; text-indent: -1.24cm; margin-bottom: 0.35cm">
-		<font face="FreeSans, sans-serif">[1] Matthias Kraus:
-			Computerorientierte Berechnungsmethoden für beliebige
-			Stabquerschnitte des Stahlbaus, Dissertation, Bochum 2005</font>
+		[1] Matthias Kraus:
+		Computerorientierte Berechnungsmethoden für beliebige
+		Stabquerschnitte des Stahlbaus, Dissertation, Bochum 2005
 	</p>
 	<p style="margin-left: 1.24cm; text-indent: -1.24cm; margin-bottom: 0.35cm">
-		<font face="FreeSans, sans-serif">[2] Matthias Kraus; Rolf Kindmann:
-			Finite-Elemente-Methoden im Stahlbau, 2.Auflage, Ernst W. &amp; Sohn
-			Verlag, 2019</font>
+		[2] Matthias Kraus; Rolf Kindmann:
+		Finite-Elemente-Methoden im Stahlbau, 2.Auflage, Ernst W. &amp; Sohn
+		Verlag, 2019
 	</p>
 </body>
 
