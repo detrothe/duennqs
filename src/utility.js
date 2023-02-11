@@ -1,4 +1,4 @@
-import {myScreen} from "./index.js";
+import {myScreen, set_myScreen} from "./index.js";
 
 export function testeZahl(wert) {
     wert = wert.replace(/,/g, '.');
@@ -20,9 +20,6 @@ export function testNumber(wert, zeile, spalte, id) {
     if (isNaN(wert)) {
         //window.alert("Das ist keine Zahl ");
 
-        //const objCells = document.getElementById(id).rows.item(zeile).cells;
-        //objCells.item(spalte).style.backgroundColor = "darkred";
-        //objCells.item(spalte).style.color = "white";
 
         document.getElementById(id).rows.item(zeile).cells.item(spalte).classList.add("selected");
         return 0;
@@ -92,6 +89,7 @@ export function sichtbar(displayName) {
     }
     
     if (displayName === 'hilfe') {
+        set_myScreen();
         document.getElementById("id_doc").setAttribute("width", myScreen.svgWidth + "px");
         document.getElementById("id_doc").setAttribute("height", myScreen.clientHeight + "px");
     
