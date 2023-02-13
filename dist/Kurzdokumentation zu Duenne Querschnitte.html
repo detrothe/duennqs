@@ -10,6 +10,7 @@
 	<meta name="changed" content="2023-02-10T12:41:09.206468363" />
 	<meta name="AppVersion" content="15.0000" />
 	<style type="text/css">
+		/*
 		@page {
 			size: 21cm 29.7cm;
 			margin-left: 2.5cm;
@@ -22,10 +23,10 @@
 			margin-top: 1cm;
 			margin-bottom: 1.5cm
 		}
-
+*/
 		p {
 			font-family: "FreeSans", sans-serif;
-			line-height: 115%;
+			line-height: 150%;
 			text-align: left;
 			orphans: 2;
 			widows: 2;
@@ -54,19 +55,7 @@
 			font-weight: bold
 		}
 
-		/*
-		h1.cjk {
-			font-family: "FreeSans", sans-serif;
-			font-size: 14pt;
-			font-weight: bold
-		}
 
-		h1.ctl {
-			font-family: "FreeSans", sans-serif;
-			font-size: 14pt;
-			font-weight: bold
-		}
-*/
 		h2 {
 			color: #4f81bd;
 			line-height: 115%;
@@ -87,19 +76,7 @@
 			font-weight: bold
 		}
 
-		/*
-		h2.cjk {
-			font-family: "FreeSans", sans-serif;
-			font-size: 13pt;
-			font-weight: bold
-		}
 
-		h2.ctl {
-			font-family: "FreeSans", sans-serif;
-			font-size: 13pt;
-			font-weight: bold
-		}
-*/
 		a:link {
 			color: #0000ff;
 			text-decoration: underline
@@ -108,14 +85,14 @@
 </head>
 
 <body lang="de-DE" link="#0000ff" vlink="#800000" dir="ltr">
-	<div title="header">
+<!-- 	<div title="header">
 		<p style="line-height: 100%; margin-bottom: 1.4cm">
 		</p>
-	</div>
+	</div> -->
 	<h1 lang="de-DE" class="western">
 		Übersicht
 	</h1>
-	<p style="margin-bottom: 0.35cm">
+	<p>
 		Mit
 		dem Programm duennQs.netlify.app können Querschnittswerte und
 		Spannungen von dünnwandigen Querschnitten berechnet werden. Es wird
@@ -124,47 +101,47 @@
 		beschrieben, die über Knoten miteinander verbunden sind. Die Theorie
 		erfordert, dass jedes Element mindestens eine Verbindung zu einem anderen
 		Element haben muss. Es dürfen also keine Elemente „alleine“ im
-		Querschnitt sein. Dies bedeutet, dass es von jedem Element einen Pfad zu allen anderen Elementen geben muss. 
+		Querschnitt sein. Dies bedeutet, dass es von jedem Element einen Pfad zu allen anderen Elementen geben muss.
 		<br> Die Elemente haben einen Anfangs- und Endknoten und
 		können quadratische Schubspannungsverläufe exakt darstellen.
 		Deshalb ist keine Verfeinerung erforderlich. Die Richtung der
 		Schubspannungen wird in den Viertelspunkten der Elemente an der
 		rechten und linken Seite mit Pfeilen angezeigt.
 	</p>
-	<p style="margin-bottom: 0.35cm">
+	<p>
 		Die
 		Normalspannungen infolge N, M<sub>y</sub> und M<sub>z</sub> werden
 		mit den üblichen Formeln der Mechanik unter Annahme des Ebenbleibens
 		der Querschnitte nach Bernoulli berechnet.
 	</p>
-	<p style="margin-bottom: 0.35cm">
+	<p>
 		Die
 		Schubspannungen sind positiv, wenn sie in Richtung des lokalen
 		Koordinatensystems des Elementes wirken. Die positive lokale Richtung
 		zeigt vom Anfangs- zum Endknoten des Elementes.
 	</p>
-	<p style="margin-bottom: 0.35cm">
+	<p>
 		Eigenschaften des Programms:
 	</p>
 	<ul>
 		<li>
-			<p style="margin-bottom: 0.35cm">
+			<p>
 				Linear elastisches Material
 			</p>
 		<li>
-			<p style="margin-bottom: 0.35cm">
+			<p>
 				Die Breite der Elemente ist elementweise konstant
 			</p>
 		<li>
-			<p style="margin-bottom: 0.35cm">
+			<p>
 				Jedes Element hat eigene Materialeigenschaften
 			</p>
 		<li>
-			<p style="margin-bottom: 0.35cm">
+			<p>
 				Berechnung aller Querschnittswerte
 			</p>
 		<li>
-			<p style="margin-bottom: 0.35cm">
+			<p>
 				Spannungsberechnung infolge von Normal- und Querkräften N, V<sub>y</sub> und
 				V<sub>z</sub>,<br />
 				Biegemomente M<sub>y</sub> und M<sub>z</sub>,
@@ -174,7 +151,7 @@
 
 			</p>
 	</ul>
-	<p style="margin-bottom: 0.35cm">
+	<p>
 		Der Querschnitt wird in der y-z Ebene und in einer 3D-Ansicht
 		dargestellt. Die Schubspannungen werden parallel zur x-Achse flächig
 		über die Elementdicke gezeichnet.
@@ -183,9 +160,9 @@
 	<h2 class="western">
 		Koordinatensystem und Vorzeichen
 	</h2>
-	<p style="margin-bottom: 0.35cm">
-		<img src="querschnitt.png" name="Bild1"  width="292" height="265" border="0" />
-		<img src="vorzeichen.png" name="Bild2"   width="264" height="265" border="0" />
+	<p>
+		<img src="querschnitt.png" name="Bild1" width="292" height="265" border="0" />
+		<img src="vorzeichen.png" name="Bild2" width="264" height="265" border="0" />
 		<br />
 		<br />
 	</p>
@@ -195,48 +172,44 @@
 	<h2 class="western"><a name="_Toc65321585"></a>
 		Einzelliger Hohlkastenquerschnitt
 	</h2>
-	<p style="margin-bottom: 0.35cm">
-		<img src="beispiel_querschnitt.png"
-			name="Bild3" style="width:401px; height:238px; border:0px" />
+	<p>
+		<img src="beispiel_querschnitt.png" name="Bild3" style="width:401px; height:238px; border:0px" />
 		<br />
 		<br />
 	</p>
-	<p style="margin-bottom: 0.35cm">
+	<p>
 		Dieses Beispiel wurde in [2] behandelt.
 	</p>
-	<p style="margin-bottom: 0.35cm"><br />
+	<p><br />
 		<br />
 
 	</p>
-	<p style="margin-bottom: 0.35cm">
+	<p>
 		Schnittgrößen:
 	</p>
-	<p style="margin-bottom: 0.35cm">
+	<p>
 		M<sub>xp</sub>
 		= 25.000 kNcm; M<sub>xs</sub> = 15.000 kNcm; M<sub>ω</sub> = 100.000
 		kNcm²
 	</p>
-	<p style="margin-bottom: 0.35cm">
+	<p>
 		V<sub>y</sub> = 1000 kN; V<sub>z</sub> = 500 kN
 	</p>
-	<p style="margin-bottom: 0.35cm">
+	<p>
 		Material:
 	</p>
-	<p style="margin-bottom: 0.35cm">
+	<p>
 		E = 21.000 kN/cm²; G = 8.100 kN/cm²; ν = 0,2963
 	</p>
-	<p style="margin-bottom: 0.35cm"><br />
-		<br />
-
-	</p>
-	<p style="margin-bottom: 0.35cm"><br />
+	
+	<p><br />
 		<br />
 
 	</p>
 	<h1 class="western">
 		Literatur
 	</h1>
-	<p style="margin-bottom: 0.35cm"><br />
+	<p><br />
 		<br />
 
 	</p>
