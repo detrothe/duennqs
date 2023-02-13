@@ -666,6 +666,9 @@ td {
     z-index: 120;
 }
 
+.c_hilfe {
+    text-align: center;
+}
 /*
 .unsichtbar {
     color: rgb(250,250,250);

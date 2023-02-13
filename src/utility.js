@@ -90,7 +90,8 @@ export function sichtbar(displayName) {
     
     if (displayName === 'hilfe') {
         set_myScreen();
-        document.getElementById("id_doc").setAttribute("width", myScreen.svgWidth + "px");
+        let breite = Math.min(myScreen.clientWidth,700);
+        document.getElementById("id_doc").setAttribute("width", breite + "px");
         document.getElementById("id_doc").setAttribute("height", myScreen.clientHeight + "px");
     
         document.getElementById("id_hilfe").style.display = "block";
