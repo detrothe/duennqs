@@ -14,12 +14,12 @@ body {
     /* remove margins and scroll bars */
     margin: 2px;
     overflow: auto;
-
+    overscroll-behavior: none;
     /* style text */
     text-align: left;
     font-size: 1rem;
     /*12px;  */
-    font-family: Verdana, Arial, Helvetica, sans-serif;
+    font-family: FreeSans, Verdana, Arial, Helvetica, sans-serif;
 
     /* color text */
     color: #444;
@@ -222,6 +222,7 @@ hr {
     width: 100%;*/
     background-color: rgb(110, 180, 180);
 }
+
 /*
 #spannungen {
     display: none;
@@ -257,6 +258,7 @@ hr {
     display: none;
     /*background-color: #D8D8D8;*/
 }
+
 /*
 #wind_vertikal,
 #wind_satteldach {
@@ -300,6 +302,7 @@ input:valid {
     width: 50px;
     font-size: 1rem;
 }
+
 /*
 .input_sym {
     width: 500px;
@@ -583,7 +586,8 @@ td {
 
 #button_sigma_webgl {
     position: absolute;
-    top: 10px;    /*-15*/
+    top: 10px;
+    /*-15*/
     left: 170px;
 }
 
@@ -594,7 +598,7 @@ td {
     color: white;
     border-radius: 3px;
     border-color: gray;
-    border-style:solid;
+    border-style: solid;
 }
 
 .button_label_webgl_pressed {
@@ -604,7 +608,7 @@ td {
     color: white;
     border-radius: 3px;
     border-color: gray;
-    border-style:solid;
+    border-style: solid;
 }
 
 .button_tau_webgl_pressed {
@@ -614,7 +618,7 @@ td {
     color: white;
     border-radius: 3px;
     border-color: gray;
-    border-style:solid;
+    border-style: solid;
 }
 
 .button_sigma_webgl_pressed {
@@ -624,12 +628,13 @@ td {
     color: white;
     border-radius: 3px;
     border-color: gray;
-    border-style:solid;
+    border-style: solid;
 }
 
 .button_webgl:active {
     background-color: darkred;
 }
+
 .button_webgl:after {
     background-color: yellowgreen;
 }
@@ -669,6 +674,7 @@ td {
 .c_hilfe {
     text-align: center;
 }
+
 /*
 .unsichtbar {
     color: rgb(250,250,250);
