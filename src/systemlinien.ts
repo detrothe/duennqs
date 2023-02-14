@@ -3,7 +3,7 @@
 import * as d3 from "d3";
 
 import {CTrans} from './trans.js';
-import {truss, node} from "./duennQ"
+import {truss, node, Gesamt_ys, Gesamt_zs, yM, zM, phi0} from "./duennQ"
 import {myScreen} from "./index.js";
 import {nnodes, nelem} from "./duennQ_tabelle.js"
 
@@ -12,12 +12,19 @@ let tr = null;
 let label_visible = false;
 export let ymin = -50.0, zmin = -50.0, ymax = 50.0, zmax = 50.0, slmax = 0.0;
 
-export function systemlinien(node, truss, y_s: number, z_s: number, y_M: number, z_M: number, phi: number) {
+//--------------------------------------------------------------------------------------------------------
+export function systemlinien() {
+//--------------------------------------------------------------------------------------------------------
 
     let i: number, j: number;
     //let slmax;
     let str = "";
     let y1: number, y2: number, z1: number, z2: number, h: number, si: number, co: number
+
+    if ( Gesamt_ys === undefined || isNaN(yM) ) return;
+
+    const y_s = Gesamt_ys;
+    const z_s = Gesamt_zs;
 
     const pts_y: number[] = Array(4);
     const pts_z: number[] = Array(4);
@@ -78,15 +85,15 @@ export function systemlinien(node, truss, y_s: number, z_s: number, y_M: number,
 
     const sl = Math.min(ymax - ymin, zmax - zmin) / 3;
 
-    si = Math.sin(phi) * sl;
-    co = Math.cos(phi) * sl;
+    si = Math.sin(phi0) * sl;
+    co = Math.cos(phi0) * sl;
     const hauptachse1y = Math.round(tr.yPix(y_s - co));
     const hauptachse1z = Math.round(tr.zPix(z_s - si));
     const hauptachse2y = Math.round(tr.yPix(y_s + co));
     const hauptachse2z = Math.round(tr.zPix(z_s + si));
 
-    si = Math.sin(phi + Math.PI / 2) * sl;
-    co = Math.cos(phi + Math.PI / 2) * sl;
+    si = Math.sin(phi0 + Math.PI / 2) * sl;
+    co = Math.cos(phi0 + Math.PI / 2) * sl;
     const hauptachse3y = Math.round(tr.yPix(y_s - co));
     const hauptachse3z = Math.round(tr.zPix(z_s - si));
     const hauptachse4y = Math.round(tr.yPix(y_s + co));
@@ -142,8 +149,8 @@ export function systemlinien(node, truss, y_s: number, z_s: number, y_M: number,
 
     let ys = Math.round(tr.yPix(y_s));
     let zs = Math.round(tr.zPix(z_s));
-    let yM = Math.round(tr.yPix(y_M + y_s));
-    let zM = Math.round(tr.zPix(z_M + z_s));
+    let y_M = Math.round(tr.yPix(yM + y_s));
+    let z_M = Math.round(tr.zPix(zM + z_s));
 
     console.log("ys,zs", ys, zs);
     console.log("sl", sl, Math.round(tr.yPix(sl / 2)));
@@ -222,9 +229,9 @@ export function systemlinien(node, truss, y_s: number, z_s: number, y_M: number,
         .attr("cx", ys).attr("cy", zs).attr("r", 5).style("fill", "blue")
         .attr("id", "circleBasicTooltip")
 
-    console.log("yM", yM, zM, y_M, z_M)
+    console.log("yM", y_M, z_M, yM, zM)
     svg.append("circle")       // Schubmittelpunkt
-        .attr("cx", yM).attr("cy", zM).attr("r", 5).style("fill", "red")
+        .attr("cx", y_M).attr("cy", z_M).attr("r", 5).style("fill", "red")
         .attr("id", "circleTooltip_SM")
 
 // Hauptachsen
@@ -292,8 +299,8 @@ export function systemlinien(node, truss, y_s: number, z_s: number, y_M: number,
             const svgBox = document.getElementById("my-svg");
             //let yp = Number(vec[0]) + 10 + svgBox.getBoundingClientRect().left;
             //let zp = Number(vec[1]) - 20 + svgBox.getBoundingClientRect().top;
-            const yp = yM + 10; //event.pageX + 10;
-            const zp = zM - 25; //event.pageY - 20;
+            const yp = y_M + 10; //event.pageX + 10;
+            const zp = z_M - 25; //event.pageY - 20;
             //console.log("vec", vec, vec[0], vec[1], yp, zp, event.pageX, event.pageY,"|",svgBox.getBoundingClientRect().left);
             return tooltip_SM.style("top", zp + "px").style("left", yp + "px");
         })

@@ -1,4 +1,5 @@
 import {myScreen, set_myScreen} from "./index.js";
+import { systemlinien } from "./systemlinien";
 
 export function testeZahl(wert) {
     wert = wert.replace(/,/g, '.');
@@ -73,18 +74,17 @@ export function sichtbar(displayName) {
         document.getElementById("schubspannung").style.display = "none";
     }
     if (displayName === 'duennQ') {
-
+        set_myScreen();
+        systemlinien();
         document.getElementById("my-svg").style.display = "block";
     } else {
-
         document.getElementById("my-svg").style.display = "none";
     }
-    if (displayName === 'duenn3D') {
 
+    if (displayName === 'duenn3D') {
         document.getElementById("my-webgl").style.display = "block";
         window.dispatchEvent(new Event("resize"));
     } else {
-
         document.getElementById("my-webgl").style.display = "none";
     }
     
