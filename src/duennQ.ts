@@ -4,7 +4,7 @@ import './dateien.js';
 import { gauss } from "./gauss.js"
 import { testeZahl, sichtbar, testNumber } from './utility.js';
 import { clear_Tabelle, nelem, nnodes } from "./duennQ_tabelle.js";
-import { systemlinien, label_svg } from "./systemlinien";
+import { label_svg } from "./systemlinien";
 import { set_myScreen } from "./index.js"
 import { draw_elements } from "./grafik_3D";
 //import {set_nnodes, set_nelem} from "./duennQ_tabelle.js"
@@ -326,8 +326,16 @@ export function duennQ() {
     } else {
         input = document.getElementById('EMod_ref') as HTMLInputElement | null;
         EModul = Number(testeZahl(input.value));
+        if (EModul < 1e-12) {
+            alert("Referenz-Emodul muss größer 0 sein")
+            return;
+        }
         input = document.getElementById('mue_ref') as HTMLInputElement | null;
         mue = Number(testeZahl(input.value));
+        if (mue < 0) {
+            alert("Referenz-Querdehnung muss größer oder gleich 0 sein")
+            return;
+        }
     }
     const GModul = EModul / 2.0 / (1.0 + mue)
     console.log("Bezugswerte", EModul, mue, GModul)
@@ -357,15 +365,35 @@ export function duennQ() {
         } else {
             wert = eTabelle.rows[i + 1].cells[1].innerText
             truss[i].EModul = Number(testNumber(wert, i + 1, 1, 'elemTable'));
+            if (truss[i].EModul < 1e-12) {
+                alert("Emodul von Element " + String(i + 1) + " muss größer 0 sein")
+                return;
+            }
             wert = eTabelle.rows[i + 1].cells[2].innerText
             truss[i].mue = Number(testNumber(wert, i + 1, 2, 'elemTable'));
+            if (truss[i].mue < 0) {
+                alert("Querdehnung von Element " + String(i + 1) + " muss größer oder gleich 0 sein")
+                return;
+            }
         }
         wert = eTabelle.rows[i + 1].cells[3].innerText
         truss[i].dicke = Number(testNumber(wert, i + 1, 3, 'elemTable'));
+        if (truss[i].dicke < 1e-12) {
+            alert("Dicke von Element " + String(i + 1) + " muss größer 0 sein")
+            return;
+        }
         wert = eTabelle.rows[i + 1].cells[4].innerText
         truss[i].nod[0] = Number(testNumber(wert, i + 1, 4, 'elemTable')) - 1;
+        if (truss[i].nod[0] < 0) {
+            alert("Knoteninzidenz nod1 von Element " + String(i + 1) + " muss größer 0 sein")
+            return;
+        }
         wert = eTabelle.rows[i + 1].cells[5].innerText
         truss[i].nod[1] = Number(testNumber(wert, i + 1, 5, 'elemTable')) - 1;
+        if (truss[i].nod[1] < 0) {
+            alert("Knoteninzidenz nod2 von Element " + String(i + 1) + " muss größer 0 sein")
+            return;
+        }
         console.log("truss", i, truss[i].EModul, truss[i].mue, truss[i].dicke, truss[i].nod[0], truss[i].nod[1])
         truss[i].GModul = truss[i].EModul / 2.0 / (1.0 + truss[i].mue)
         truss[i].ni = truss[i].EModul / EModul
