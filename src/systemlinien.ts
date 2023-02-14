@@ -4,13 +4,15 @@ import * as d3 from "d3";
 
 import {CTrans} from './trans.js';
 import {truss, node, Gesamt_ys, Gesamt_zs, yM, zM, phi0} from "./duennQ"
+import { ymin, ymax, zmin, zmax, slmax } from "./duennQ";
+
 import {myScreen} from "./index.js";
 import {nnodes, nelem} from "./duennQ_tabelle.js"
 
 let svg = null;
 let tr = null;
 let label_visible = false;
-export let ymin = -50.0, zmin = -50.0, ymax = 50.0, zmax = 50.0, slmax = 0.0;
+
 
 //--------------------------------------------------------------------------------------------------------
 export function systemlinien() {
@@ -53,20 +55,6 @@ export function systemlinien() {
             pts_z[3] = z1 + co * h
         }
     */
-    ymin = 1.e30
-    zmin = 1.e30
-    ymax = -1.e30
-    zmax = -1.e30
-
-    for (i = 0; i < nnodes; i++) {
-        //console.log(i, y[i], z[i]);
-        if (node[i].y < ymin) ymin = node[i].y;
-        if (node[i].z < zmin) zmin = node[i].z;
-        if (node[i].y > ymax) ymax = node[i].y;
-        if (node[i].z > zmax) zmax = node[i].z;
-    }
-
-    slmax = Math.sqrt((ymax - ymin) ** 2 + (zmax - zmin) ** 2)
 
     console.log("MAX", slmax, ymin, ymax, zmin, zmax)
 

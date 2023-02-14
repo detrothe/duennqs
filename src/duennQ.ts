@@ -10,7 +10,7 @@ import { draw_elements } from "./grafik_3D";
 //import {set_nnodes, set_nelem} from "./duennQ_tabelle.js"
 
 
-
+export let ymin = -50.0, zmin = -50.0, ymax = 50.0, zmax = 50.0, slmax = 0.0;
 
 //------------------------------------------------------------------------------------------------
 
@@ -1224,6 +1224,23 @@ export function duennQ() {
         newCell.appendChild(newText);
 
     }
+
+    // für die Grafik 
+
+    ymin = 1.e30
+    zmin = 1.e30
+    ymax = -1.e30
+    zmax = -1.e30
+
+    for (i = 0; i < nnodes; i++) {
+        //console.log(i, y[i], z[i]);
+        if (node[i].y < ymin) ymin = node[i].y;
+        if (node[i].z < zmin) zmin = node[i].z;
+        if (node[i].y > ymax) ymax = node[i].y;
+        if (node[i].z > zmax) zmax = node[i].z;
+    }
+
+    slmax = Math.sqrt((ymax - ymin) ** 2 + (zmax - zmin) ** 2)
 
     //systemlinien();
 
