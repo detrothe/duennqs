@@ -18,53 +18,7 @@ let show_webgl_label = false;
 let show_webgl_tau = false;
 let show_webgl_sigma = false;
 
-//import { OBJLoader } from 'three-addons';
-/*
-export function main_3D() {
-    const canvas = document.querySelector('#c3');
-    const renderer = new THREE.WebGLRenderer({canvas});
 
-    const fov = 50;
-    const aspect = 2;  // the canvas default
-    const near = 0.1;
-    const far = 5;
-    const camera = new THREE.PerspectiveCamera(fov, aspect, near, far);
-    camera.position.z = 4;
-
-    const scene = new THREE.Scene();
-
-    {
-        const color = 0xFFFFFF;
-        const intensity = 1;
-        const light = new THREE.DirectionalLight(color, intensity);
-        light.position.set(-1, 2, 4);
-        scene.add(light);
-    }
-
-    const boxWidth = 1;
-    const boxHeight = 1;
-    const boxDepth = 1;
-    const geometry = new THREE.BoxGeometry(boxWidth, boxHeight, boxDepth);
-
-    const material = new THREE.MeshPhongMaterial({color: 0x44aa88});  // greenish blue
-
-    const cube = new THREE.Mesh(geometry, material);
-    scene.add(cube);
-
-    function render(time) {
-        time *= 0.001;  // convert time to seconds
-
-        cube.rotation.x = time;
-        cube.rotation.y = time;
-
-        renderer.render(scene, camera);
-
-        requestAnimationFrame(render);
-    }
-    requestAnimationFrame(render);
-
-}
-*/
 
 export let maxWoelb: number;
 export let maxSigma: number;
@@ -152,37 +106,7 @@ export function main_3D() {
         return cube;
     }
 
-    //  makeInstance(geometry, 0x44aa88, 0);  // Würfel 
 
-    //makeInstance(geometry, 0x8844aa, -2);
-    //makeInstance(geometry, 0xaa8844,  2);
-    /*
-        //create a blue LineBasicMaterial
-        const material_line = new THREE.LineBasicMaterial({
-            color: 0x0000ff,
-            linewidth: 10,
-            linecap: 'round', //ignored by WebGLRenderer
-            linejoin: 'round' //ignored by WebGLRenderer
-        });
-        const points = [];
-        points.push(new THREE.Vector3(-2, 0, 0));
-        points.push(new THREE.Vector3(0, 2, 0));
-        points.push(new THREE.Vector3(2, 0, 0));
-
-        const geometry_line = new THREE.BufferGeometry().setFromPoints(points);
-
-        const line = new THREE.Line(geometry_line, material_line);
-        scene.add(line);
-
-        console.log("scene length", scene.children.length)
-        console.log("scene child", scene.children)
-
-        while (scene.children.length > 1) {  // Licht soll bleiben
-            removeObject3D(scene.children[scene.children.length - 1])
-        }
-
-        scene.add(line);
-    */
     function resizeRendererToDisplaySize(renderer) {
         const canvas = renderer.domElement;
         const width = canvas.clientWidth;
@@ -533,16 +457,7 @@ export function draw_elements(y_s: number, z_s: number, y_M: number, z_M: number
             y2 = -node[truss[i].nod[1]].z
             xm = (x1 + x2) / 2
             ym = (y1 + y2) / 2
-            /*
-                        const points = [];
-                        points.push(new THREE.Vector3(x1, y1, 0));
-                        points.push(new THREE.Vector3(x2, y2, 0));
 
-                        const geometry_line = new THREE.BufferGeometry().setFromPoints(points);
-
-                        const line = new THREE.Line(geometry_line, material_line);
-                        scene.add(line);
-            */
 
             const elemShape = new THREE.Shape();
             elemShape.moveTo(-truss[i].pts_y[0], -truss[i].pts_z[0]);
@@ -770,79 +685,11 @@ export function draw_elements(y_s: number, z_s: number, y_M: number, z_M: number
                     flaeche.rotateZ(truss[i].alpha)
                     flaeche.rotateX(1.570795)
                     scene.add(flaeche)
-                    /*
-                    scene.add(new THREE.Mesh(geometry_poly, new THREE.MeshBasicMaterial({
-                    color: 'red',
-                    opacity: 0.5,
-                    transparent: true,
-                    side: THREE.DoubleSide
-                    })))
-                    */
+     
                 }
             }
         }
-        /*
-                const polyShape = new THREE.Shape()
-                    .moveTo(0, 0)
-                    .lineTo(40, 0)
-                    .lineTo(40, 30)
-                    .lineTo(0, 20)
-                    .lineTo(0, 0); // close path
-
-                const geometry_poly = new THREE.ShapeGeometry(polyShape);
-                scene.add(new THREE.Mesh(geometry_poly, new THREE.MeshBasicMaterial({
-                    color: 'red',
-                    opacity: 0.5,
-                    transparent: true,
-                    side: THREE.DoubleSide
-                })))
-        */
-        /*
-        const geometry1 = new THREE.BufferGeometry();
-// create a simple square shape. We duplicate the top left and bottom right
-// vertices because each vertex needs to appear once per triangle.
-        let d = 2.0
-        const vertices = new Float32Array([
-            -1.0, -1.0, d,
-            1.0, -1.0, 1.0,
-            1.0, 1.0, 3.0,
-
-            1.0, 1.0, 1.0,
-            -1.0, 1.0, 1.0,
-            -1.0, -1.0, 1.0
-        ]);
-
-// itemSize = 3 because there are 3 values (components) per vertex
-        geometry1.setAttribute('position', new THREE.BufferAttribute(vertices, 3));
-        const material1 = new THREE.MeshBasicMaterial({
-            color: 'darkgrey',
-            opacity: 0.5,
-            transparent: true,
-            side: THREE.DoubleSide
-        })
-        const mesh1 = new THREE.Mesh(geometry1, material1);
-        scene.add(mesh1);
-*/
-        /*
-                const heartShape = new THREE.Shape();
-
-                heartShape.moveTo( 25, 25 );
-                heartShape.bezierCurveTo( 25, 25, 20, 0, 0, 0 );
-                heartShape.bezierCurveTo( - 30, 0, - 30, 35, - 30, 35 );
-                heartShape.bezierCurveTo( - 30, 55, - 10, 77, 25, 95 );
-                heartShape.bezierCurveTo( 60, 77, 80, 55, 80, 35 );
-                heartShape.bezierCurveTo( 80, 35, 80, 0, 50, 0 );
-                heartShape.bezierCurveTo( 35, 0, 25, 25, 25, 25 );
-
-                const extrudeSettings = { depth: 8, bevelEnabled: true, bevelSegments: 2, steps: 2, bevelSize: 1, bevelThickness: 1 };
-
-                const geometry = new THREE.ExtrudeGeometry( heartShape, extrudeSettings );
-
-                const mesh = new THREE.Mesh( geometry, new THREE.MeshPhongMaterial() );
-                scene.add(mesh);
-
-         */
-
+       
         const pointsx = [];
         pointsx.push(new THREE.Vector3(-y_s, -z_s, 10));
         pointsx.push(new THREE.Vector3(-y_s, -z_s, 20));
@@ -896,7 +743,7 @@ export function draw_elements(y_s: number, z_s: number, y_M: number, z_M: number
         window.dispatchEvent(new Event("resize"));
     }
 
-    //add_element();
+   
 }
 
 //--------------------------------------------------------------------------------------------------------
