@@ -47,7 +47,7 @@ export function set_myScreen() {
 //-------------------------------------------------------------------------------
 
 export const app = {
-    appName: 'duennwqs',
+    appName: 'duennQs',
     file: {
         handle: null,
         name: null,
