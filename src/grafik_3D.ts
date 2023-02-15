@@ -511,14 +511,14 @@ export function draw_elements(y_s: number, z_s: number, y_M: number, z_M: number
             let origin, dir;
             let length: number;
             let hex: number;
-
-            const material1 = new THREE.MeshBasicMaterial({
-                color: 'darkgrey',
-                opacity: 0.5,
-                transparent: true,
-                side: THREE.DoubleSide
-            })
-
+            /*
+                        const material1 = new THREE.MeshBasicMaterial({
+                            color: 'darkgrey',
+                            opacity: 0.5,
+                            transparent: true,
+                            side: THREE.DoubleSide
+                        })
+            */
 
             for (let i = 0; i < nelem; i++) {
 
@@ -563,15 +563,24 @@ export function draw_elements(y_s: number, z_s: number, y_M: number, z_M: number
 
                     const geometry1 = new THREE.BufferGeometry();
 
-                    geometry1.setAttribute('position', new THREE.BufferAttribute(vertices, 3)); // itemSize = 3 because there are 3 values (components) per vertex
-                    const mesh1 = new THREE.Mesh(geometry1, material1);
-                    scene.add(mesh1);
-
                     if (sigma1 > 0 || sigma2 > 0) {
                         farbe = 0x0000dd;
                     } else {
                         farbe = 0xdd0000;
                     }
+
+                    const material1 = new THREE.MeshBasicMaterial({
+                        color: farbe,
+                        opacity: 0.5,
+                        transparent: true,
+                        side: THREE.DoubleSide
+                    })
+
+                    geometry1.setAttribute('position', new THREE.BufferAttribute(vertices, 3)); // itemSize = 3 because there are 3 values (components) per vertex
+                    const mesh1 = new THREE.Mesh(geometry1, material1);
+                    scene.add(mesh1);
+
+
                     const material = new THREE.LineBasicMaterial({
                         color: farbe,
                         linewidth: 2
@@ -586,9 +595,9 @@ export function draw_elements(y_s: number, z_s: number, y_M: number, z_M: number
                     const line = new THREE.Line(geometry, material);
                     scene.add(line);
 
-                    origin = new THREE.Vector3((x1+x2)/2, (y1+y2)/2, 0);
-                    length = Math.abs((sigma1+sigma2)/2 * Ueberhoehung);
-    
+                    origin = new THREE.Vector3((x1 + x2) / 2, (y1 + y2) / 2, 0);
+                    length = Math.abs((sigma1 + sigma2) / 2 * Ueberhoehung);
+
                     if (sigma1 >= 0) {
                         dir = new THREE.Vector3(0, 0, 1);
                         hex = 0x0000dd;
@@ -596,11 +605,12 @@ export function draw_elements(y_s: number, z_s: number, y_M: number, z_M: number
                         dir = new THREE.Vector3(0, 0, -1);
                         hex = 0xdd0000;
                     }
-    
+
                     let arrowHelper = new THREE.ArrowHelper(dir, origin, length, hex);
+                    // @ts-ignore
                     arrowHelper.line.material.linewidth = 3;
                     scene.add(arrowHelper);
-    
+
                 } else {
                     const dx0 = -sigma1 * truss[i].sl / (sigma2 - sigma1)
                     const x0 = dx0 * (x2 - x1) / truss[i].sl + x1
@@ -628,15 +638,22 @@ export function draw_elements(y_s: number, z_s: number, y_M: number, z_M: number
 
                         const geometry1 = new THREE.BufferGeometry();
 
-                        geometry1.setAttribute('position', new THREE.BufferAttribute(vertices, 3)); // itemSize = 3 because there are 3 values (components) per vertex
-                        const mesh1 = new THREE.Mesh(geometry1, material1);
-                        scene.add(mesh1);
-
                         if (sigma1 > 0) {
                             farbe = 0x0000dd;
                         } else {
                             farbe = 0xdd0000;
                         }
+
+                        const material1 = new THREE.MeshBasicMaterial({
+                            color: farbe,
+                            opacity: 0.5,
+                            transparent: true,
+                            side: THREE.DoubleSide
+                        })
+
+                        geometry1.setAttribute('position', new THREE.BufferAttribute(vertices, 3)); // itemSize = 3 because there are 3 values (components) per vertex
+                        const mesh1 = new THREE.Mesh(geometry1, material1);
+                        scene.add(mesh1);
                         const material = new THREE.LineBasicMaterial({
                             color: farbe,
                             linewidth: 2
@@ -674,16 +691,23 @@ export function draw_elements(y_s: number, z_s: number, y_M: number, z_M: number
 
                         const geometry1 = new THREE.BufferGeometry();
 
-                        geometry1.setAttribute('position', new THREE.BufferAttribute(vertices, 3)); // itemSize = 3 because there are 3 values (components) per vertex
-                        const mesh1 = new THREE.Mesh(geometry1, material1);
-                        scene.add(mesh1);
-
-
                         if (sigma2 > 0) {
                             farbe = 0x0000dd;
                         } else {
                             farbe = 0xdd0000;
                         }
+
+                        const material1 = new THREE.MeshBasicMaterial({
+                            color: farbe,
+                            opacity: 0.5,
+                            transparent: true,
+                            side: THREE.DoubleSide
+                        })
+
+                        geometry1.setAttribute('position', new THREE.BufferAttribute(vertices, 3)); // itemSize = 3 because there are 3 values (components) per vertex
+                        const mesh1 = new THREE.Mesh(geometry1, material1);
+                        scene.add(mesh1);
+
                         const material = new THREE.LineBasicMaterial({
                             color: farbe,
                             linewidth: 2
@@ -716,11 +740,12 @@ export function draw_elements(y_s: number, z_s: number, y_M: number, z_M: number
                 }
 
                 let arrowHelper = new THREE.ArrowHelper(dir, origin, length, hex);
-                //arrowHelper.line.material.linewidth = 3;
-                arrowHelper.line.material = new THREE.LineBasicMaterial({
-                    color: 0x00ff00,
-                    linewidth: 5
-                });
+                // @ts-ignore
+                arrowHelper.line.material.linewidth = 3;
+                //arrowHelper.line.material = new THREE.LineBasicMaterial({
+                //    color: 0x00ff00,
+                //    linewidth: 5
+                //});
 
                 scene.add(arrowHelper);
 
@@ -737,6 +762,7 @@ export function draw_elements(y_s: number, z_s: number, y_M: number, z_M: number
                 }
 
                 arrowHelper = new THREE.ArrowHelper(dir, origin, length, hex);
+                // @ts-ignore
                 arrowHelper.line.material.linewidth = 3;
 
                 scene.add(arrowHelper);

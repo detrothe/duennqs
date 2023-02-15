@@ -65,6 +65,19 @@ export const app = {
 
 };
 
+const portrait = window.matchMedia("(orientation: portrait)");
+
+portrait.addEventListener("change", function(e) {
+    if(e.matches) {
+        // Portrait mode
+        console.log("portrait mode")
+        sichtbar("hilfe")
+    } else {
+        // Landscape
+        console.log("landscape mode")
+        sichtbar("hilfe")
+    }
+})
 
 //-------------------------------------------------------------------------------
 //-------------------------------------------------------------------------------
