@@ -22,6 +22,7 @@ export const myScreen = {
 // myScreen.clientWidth = document.documentElement.clientWidth;
 // myScreen.clientHeight = document.documentElement.clientHeight;
 
+export let currentTab;
 
 export function set_myScreen() {
 
@@ -71,11 +72,11 @@ portrait.addEventListener("change", function(e) {
     if(e.matches) {
         // Portrait mode
         console.log("portrait mode")
-        sichtbar("hilfe")
+        sichtbar(currentTab)
     } else {
         // Landscape
         console.log("landscape mode")
-        sichtbar("hilfe")
+        sichtbar(currentTab)
     }
 })
 

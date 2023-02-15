@@ -1,4 +1,4 @@
-import {myScreen, set_myScreen} from "./index.js";
+import {myScreen, set_myScreen, currentTab} from "./index.js";
 import { systemlinien } from "./systemlinien";
 
 export function testeZahl(wert) {
@@ -40,6 +40,8 @@ export function SDuennTruss() {
 
 export function sichtbar(displayName) {
 
+    currentTab = displayName;
+    
     if (displayName === 'eingabe') {
         //document.getElementById("eingabe").style.display = "block";
         document.getElementById("knotentabelle").style.display = "block";
