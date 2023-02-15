@@ -1,5 +1,8 @@
-import {myScreen, set_myScreen, currentTab} from "./index.js";
+//import {currentTab} from "./globals.js";
+import {myScreen, set_myScreen} from "./index.js";
 import { systemlinien } from "./systemlinien";
+
+export let currentTab;
 
 export function testeZahl(wert) {
     wert = wert.replace(/,/g, '.');

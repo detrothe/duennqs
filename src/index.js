@@ -1,11 +1,12 @@
 import './styles/main.css';
 import './styles/contextMenu.css';
 
+//import "./globals.js";
 import "./duenn3D.js";
 import './ergebnisse.js'
 import './base_tabelle.js'
 
-import {testeZahl, SDuennTruss, sichtbar} from "./utility.js";
+import {testeZahl, SDuennTruss, sichtbar, currentTab} from "./utility.js";
 
 import DetectOS from './detectos.js'
 import {init_contextmenu} from './contextMenu.js';
@@ -22,7 +23,7 @@ export const myScreen = {
 // myScreen.clientWidth = document.documentElement.clientWidth;
 // myScreen.clientHeight = document.documentElement.clientHeight;
 
-export let currentTab;
+
 
 export function set_myScreen() {
 

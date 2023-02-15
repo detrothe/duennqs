@@ -1,6 +1,7 @@
 // Option 1: Import the entire three.js core library.
 import * as THREE from 'three';
 
+
 import { OrbitControls } from './OrbitControls.js';
 
 import { node, truss, Gesamt_ys, Gesamt_zs, yM, zM, phi0 } from "./duennQ"
@@ -77,6 +78,7 @@ export function main_3D() {
     //camera.left = -2*ymax;
 
     scene = new THREE.Scene();
+    scene.background = new THREE.Color( 0xdddddd )
 
     {
         const color = 0xFFFFFF;
@@ -412,15 +414,15 @@ export function draw_elements(y_s: number, z_s: number, y_M: number, z_M: number
         }
         //create a blue LineBasicMaterial
         const material_line = new THREE.LineBasicMaterial({
-            color: 0x0000ff,
+            color: 0x0000dd,
             linewidth: 4
         });
         const material_line_blue = new THREE.LineBasicMaterial({
-            color: 0x0000ff,
+            color: 0x0000dd,
             linewidth: 4
         });
         const material_line_green = new THREE.LineBasicMaterial({
-            color: 0x00ff00,
+            color: 0x00dd00,
             linewidth: 4
         });
 
@@ -478,7 +480,7 @@ export function draw_elements(y_s: number, z_s: number, y_M: number, z_M: number
 
             const geometry = new THREE.ExtrudeGeometry(elemShape, extrudeSettings);
 
-            const mesh = new THREE.Mesh(geometry, new THREE.MeshPhongMaterial());
+            const mesh = new THREE.Mesh(geometry, new THREE.MeshPhongMaterial({color:0x555566}));
 
             scene.add(mesh);
 
@@ -598,7 +600,7 @@ export function draw_elements(y_s: number, z_s: number, y_M: number, z_M: number
                     origin = new THREE.Vector3((x1 + x2) / 2, (y1 + y2) / 2, 0);
                     length = Math.abs((sigma1 + sigma2) / 2 * Ueberhoehung);
 
-                    if (sigma1 >= 0) {
+                    if (sigma1 > 0 || sigma2 > 0) {
                         dir = new THREE.Vector3(0, 0, 1);
                         hex = 0x0000dd;
                     } else {
@@ -838,7 +840,7 @@ export function draw_elements(y_s: number, z_s: number, y_M: number, z_M: number
 
         let geometry_line = new THREE.BufferGeometry().setFromPoints(pointsx);
 
-        material_line.setValues({ color: 0xff0000 });
+        material_line.setValues({ color: 0xdd0000 });
         const line = new THREE.Line(geometry_line, material_line);
         scene.add(line);
 
@@ -861,7 +863,7 @@ export function draw_elements(y_s: number, z_s: number, y_M: number, z_M: number
 
         const geometry = new THREE.ConeGeometry(1.2, 4, 16);             // x-Achse
 
-        let material = new THREE.MeshPhongMaterial({ color: 0xff0000 });
+        let material = new THREE.MeshPhongMaterial({ color: 0xdd0000 });
         let cone = new THREE.Mesh(geometry, material);
         cone.rotateX(1.570795)
         cone.position.set(-y_s, -z_s, 20)
@@ -869,13 +871,13 @@ export function draw_elements(y_s: number, z_s: number, y_M: number, z_M: number
 
         //        const geometry = new THREE.ConeGeometry( 2, 5, 16 );   // y-Achse
 
-        material = new THREE.MeshPhongMaterial({ color: 0x00ff00 });
+        material = new THREE.MeshPhongMaterial({ color: 0x00dd00 });
         cone = new THREE.Mesh(geometry, material);
         cone.rotateZ(1.570795)
         cone.position.set(-y_s - 10, -z_s, 10)
         scene.add(cone);
 
-        material = new THREE.MeshPhongMaterial({ color: 0x0000ff });     // z-Achse
+        material = new THREE.MeshPhongMaterial({ color: 0x0000dd });     // z-Achse
         cone = new THREE.Mesh(geometry, material);
         cone.rotateX(3.14159)
         cone.position.set(-y_s, -z_s - 10, 10)
