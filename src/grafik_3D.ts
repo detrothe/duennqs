@@ -18,11 +18,15 @@ import { TextGeometry } from './renderers/TextGeometry.js';
 let show_webgl_label = false;
 let show_webgl_tau = false;
 let show_webgl_sigma = false;
+let show_webgl_woelb_M = false;
+let show_webgl_woelb_V = false;
 
 
 
-export let maxWoelb: number;
+export let maxWoelb_M: number;
+export let maxWoelb_V: number;
 export let maxSigma: number;
+export let maxTau: number;
 
 // modul variablen
 
@@ -408,10 +412,18 @@ export function draw_elements(y_s: number, z_s: number, y_M: number, z_M: number
 
         controls.target.set(-dx, -dy, 0);
 
-        maxWoelb = 0.0
+        maxWoelb_M = 0.0
         for (let i = 0; i < nnodes; i++) {
-            maxWoelb = Math.max(Math.abs(node[i].omega), maxWoelb)
+            maxWoelb_M = Math.max(Math.abs(node[i].omega), maxWoelb_M)
         }
+
+        maxWoelb_V = 0.0
+        for (let i = 0; i < nelem; i++) {
+            for (j = 0; j < 2; j++) {
+            maxWoelb_V = Math.max(Math.abs(truss[i].u[j]), maxWoelb_V)
+            }
+        }
+
         //create a blue LineBasicMaterial
         const material_line = new THREE.LineBasicMaterial({
             color: 0x0000dd,
@@ -431,7 +443,8 @@ export function draw_elements(y_s: number, z_s: number, y_M: number, z_M: number
             maxSigma = Math.max(Math.abs(truss[i].sigma_x[0]), Math.abs(truss[i].sigma_x[2]), maxSigma)
         }
 
-        let maxTau = 0.0, tau_j: number, depthBeam: number
+        let tau_j: number, depthBeam: number
+        maxTau = 0.0
 
         for (i = 0; i < nelem; i++) {
             for (j = 0; j < 3; j++) {
@@ -440,8 +453,8 @@ export function draw_elements(y_s: number, z_s: number, y_M: number, z_M: number
             }
         }
 
-        if (show_webgl_sigma || show_webgl_tau) {
-            if (maxTau > 1e-12 || maxSigma > 1e-12) {
+        if (show_webgl_sigma || show_webgl_tau || show_webgl_woelb_M || show_webgl_woelb_V) {
+            if (maxTau > 1e-12 || maxSigma > 1e-12 || maxWoelb_M > 1e-12) {
                 depthBeam = 0;
             } else {
                 depthBeam = 5;
@@ -501,7 +514,70 @@ export function draw_elements(y_s: number, z_s: number, y_M: number, z_M: number
 
         }
 
-        console.log("maxSigma", maxSigma)
+
+        if (maxWoelb_M > 0.0000000000001 && show_webgl_woelb_M) {
+
+            let Ueberhoehung = 0.1 * slmax / maxWoelb_M 
+
+            const material = new THREE.LineBasicMaterial({
+                color: 0x00dd00,
+                linewidth: 2
+            });
+
+            for (let i = 0; i < nelem; i++) {
+                //console.log("elem i=", i)
+                x1 = -node[truss[i].nod[0]].y
+                y1 = -node[truss[i].nod[0]].z
+                x2 = -node[truss[i].nod[1]].y
+                y2 = -node[truss[i].nod[1]].z
+                xm = (x1 + x2) / 2
+                ym = (y1 + y2) / 2
+    
+                const points = [];
+                points.push(new THREE.Vector3(x1, y1, node[truss[i].nod[0]].omega * Ueberhoehung));
+                points.push(new THREE.Vector3(x2, y2, node[truss[i].nod[1]].omega * Ueberhoehung));
+
+                const geometry = new THREE.BufferGeometry().setFromPoints(points);
+
+                const line = new THREE.Line(geometry, material);
+                scene.add(line);
+    
+            }
+    
+        }
+
+        if (maxWoelb_V > 0.0000000000001 && show_webgl_woelb_V) {
+
+            let Ueberhoehung = 0.1 * slmax / maxWoelb_V
+
+            const material = new THREE.LineBasicMaterial({
+                color: 0x00dd00,
+                linewidth: 2
+            });
+
+            for (let i = 0; i < nelem; i++) {
+                //console.log("elem i=", i)
+                x1 = -node[truss[i].nod[0]].y
+                y1 = -node[truss[i].nod[0]].z
+                x2 = -node[truss[i].nod[1]].y
+                y2 = -node[truss[i].nod[1]].z
+                xm = (x1 + x2) / 2
+                ym = (y1 + y2) / 2
+    
+                const points = [];
+                points.push(new THREE.Vector3(x1, y1, truss[i].u[0] * Ueberhoehung));
+                points.push(new THREE.Vector3(x2, y2, truss[i].u[1] * Ueberhoehung));
+
+                const geometry = new THREE.BufferGeometry().setFromPoints(points);
+
+                const line = new THREE.Line(geometry, material);
+                scene.add(line);
+    
+            }
+    
+        }
+
+        console.log("maxSigma, maxWoelb", maxSigma, maxWoelb_M, maxWoelb_V)
 
         if (maxSigma > 0.0000000000001 && show_webgl_sigma) {
 
@@ -861,7 +937,7 @@ export function draw_elements(y_s: number, z_s: number, y_M: number, z_M: number
 
         scene.add(new THREE.Line(geometry_line, material_line_blue));
 
-        const geometry = new THREE.ConeGeometry(1.2, 4, 16);             // x-Achse
+        const geometry = new THREE.ConeGeometry(1.0, 3, 16);             // x-Achse
 
         let material = new THREE.MeshPhongMaterial({ color: 0xdd0000 });
         let cone = new THREE.Mesh(geometry, material);
@@ -948,8 +1024,48 @@ function sigma_webgl() {
 }
 
 //--------------------------------------------------------------------------------------------------------
+function woelb_M_webgl() {
+    //--------------------------------------------------------------------------------------------------------
+
+    if (Gesamt_ys === undefined || isNaN(yM)) return;
+
+    console.log("in woelb_M_webgl");
+    show_webgl_woelb_M = !show_webgl_woelb_M;
+    let element = document.getElementById("button_woelb_M_webgl");
+    if (show_webgl_woelb_M) {
+        element.className = 'button_woelb_M_webgl_pressed'
+    } else {
+        element.className = 'button_webgl'
+        console.log("in false");
+    }
+
+    draw_elements(Gesamt_ys, Gesamt_zs, yM, zM, phi0);
+}
+
+//--------------------------------------------------------------------------------------------------------
+function woelb_V_webgl() {
+    //--------------------------------------------------------------------------------------------------------
+
+    if (Gesamt_ys === undefined || isNaN(yM)) return;
+
+    console.log("in woelb_V_webgl");
+    show_webgl_woelb_V = !show_webgl_woelb_V;
+    let element = document.getElementById("button_woelb_V_webgl");
+    if (show_webgl_woelb_V) {
+        element.className = 'button_woelb_V_webgl_pressed'
+    } else {
+        element.className = 'button_webgl'
+        console.log("in false");
+    }
+
+    draw_elements(Gesamt_ys, Gesamt_zs, yM, zM, phi0);
+}
+
+//--------------------------------------------------------------------------------------------------------
 
 document.getElementById('button_label_webgl').addEventListener('click', label_webgl, false);
 document.getElementById('button_tau_webgl').addEventListener('click', tau_webgl, false);
 document.getElementById('button_sigma_webgl').addEventListener('click', sigma_webgl, false);
+document.getElementById('button_woelb_M_webgl').addEventListener('click', woelb_M_webgl, false);
+document.getElementById('button_woelb_V_webgl').addEventListener('click', woelb_V_webgl, false);
 

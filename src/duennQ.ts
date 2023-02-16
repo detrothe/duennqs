@@ -162,8 +162,11 @@ for (let i = 1; i <= nelem; i++) {
     elemArray.push(punkt);
 }
 
-const xx = [-10.0, 20.0, 50.0, 20.0, 40.0, 0.0];
-const yy = [0.0, 0.0, 0.0, 40.0, 40.0, 40.0];
+//const xx = [-10.0, 20.0, 50.0, 20.0, 40.0, 0.0];
+//const yy = [0.0, 0.0, 0.0, 40.0, 40.0, 40.0];
+
+const xx = [0.0, 20.0, 20.0, 0.0];
+const yy = [0.0, 0.0, 20.0, 20.0];
 
 
 
@@ -232,6 +235,7 @@ for (let i = 1; i < eTabelle.rows.length; i++) {
     }
 }
 // Inzidenzen
+/*
 eTabelle.rows[1].cells[4].innerText = "1";
 eTabelle.rows[1].cells[5].innerText = "2";
 eTabelle.rows[2].cells[4].innerText = "2";
@@ -242,7 +246,15 @@ eTabelle.rows[4].cells[4].innerText = "5";
 eTabelle.rows[4].cells[5].innerText = "4";
 eTabelle.rows[5].cells[4].innerText = "4";
 eTabelle.rows[5].cells[5].innerText = "6";
-
+*/
+eTabelle.rows[1].cells[4].innerText = "1";
+eTabelle.rows[1].cells[5].innerText = "2";
+eTabelle.rows[2].cells[4].innerText = "2";
+eTabelle.rows[2].cells[5].innerText = "3";
+eTabelle.rows[3].cells[4].innerText = "3";
+eTabelle.rows[3].cells[5].innerText = "4";
+eTabelle.rows[4].cells[4].innerText = "4";
+eTabelle.rows[4].cells[5].innerText = "1";
 
 
 //----------------------------------------------------------------------------------------------

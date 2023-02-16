@@ -575,8 +575,6 @@ td {
     left: 10px;
 }
 
-
-
 #button_tau_webgl {
     position: absolute;
     top: 10px;
@@ -591,8 +589,22 @@ td {
     left: 170px;
 }
 
+#button_woelb_M_webgl {
+    position: absolute;
+    top: 10px;
+    /*-15*/
+    left: 250px;
+}
+
+#button_woelb_V_webgl {
+    position: absolute;
+    top: 10px;
+    /*-15*/
+    left: 330px;
+}
+
 .button_webgl {
-    width: 70px;
+    width: 75px;
     z-index: 90;
     background-color: black;
     color: white;
@@ -603,7 +615,7 @@ td {
 
 .button_label_webgl_pressed {
     background-color: orange;
-    width: 70px;
+    width: 75px;
     z-index: 90;
     color: white;
     border-radius: 3px;
@@ -613,7 +625,7 @@ td {
 
 .button_tau_webgl_pressed {
     background-color: orange;
-    width: 70px;
+    width: 75px;
     z-index: 90;
     color: white;
     border-radius: 3px;
@@ -623,7 +635,27 @@ td {
 
 .button_sigma_webgl_pressed {
     background-color: orange;
-    width: 70px;
+    width: 75px;
+    z-index: 90;
+    color: white;
+    border-radius: 3px;
+    border-color: gray;
+    border-style: solid;
+}
+
+.button_woelb_M_webgl_pressed {
+    background-color: orange;
+    width: 75px;
+    z-index: 90;
+    color: white;
+    border-radius: 3px;
+    border-color: gray;
+    border-style: solid;
+}
+
+.button_woelb_V_webgl_pressed {
+    background-color: orange;
+    width: 75px;
     z-index: 90;
     color: white;
     border-radius: 3px;
