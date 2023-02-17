@@ -34,6 +34,14 @@ let scene = null
 let camera = null as THREE.OrthographicCamera;
 let controls = null as OrbitControls;
 
+
+class TPunkt {
+    x: number;
+    y: number;
+    z: number;
+}
+
+
 //--------------------------------------------------------------------------------------------------------
 export function main_3D() {
     //--------------------------------------------------------------------------------------------------------
@@ -82,7 +90,7 @@ export function main_3D() {
     //camera.left = -2*ymax;
 
     scene = new THREE.Scene();
-    scene.background = new THREE.Color( 0xdddddd )
+    scene.background = new THREE.Color(0xdddddd)
 
     {
         const color = 0xFFFFFF;
@@ -380,6 +388,11 @@ export function draw_elements(y_s: number, z_s: number, y_M: number, z_M: number
 
     let i: number, j: number
     let y1: number, y2: number, x1: number, x2: number, xm: number, ym: number
+    let punkteL = [] as TPunkt[]
+    let punkteR = [] as TPunkt[]
+
+    const teilung = 5
+
 
     while (scene.children.length > 2) {  // Licht soll bleiben
         removeObject3D(scene.children[scene.children.length - 1])
@@ -420,7 +433,7 @@ export function draw_elements(y_s: number, z_s: number, y_M: number, z_M: number
         maxWoelb_V = 0.0
         for (let i = 0; i < nelem; i++) {
             for (j = 0; j < 2; j++) {
-            maxWoelb_V = Math.max(Math.abs(truss[i].u[j]), maxWoelb_V)
+                maxWoelb_V = Math.max(Math.abs(truss[i].u[j]), maxWoelb_V)
             }
         }
 
@@ -463,8 +476,16 @@ export function draw_elements(y_s: number, z_s: number, y_M: number, z_M: number
             depthBeam = 5;
         }
 
+        for (i = 0; i < teilung + 1; i++) {
+            punkteL.push(new TPunkt())
+            punkteR.push(new TPunkt())
+        }
+
+        //punkteL[0].x = 3
 
         for (let i = 0; i < nelem; i++) {
+
+
             //console.log("elem i=", i)
             x1 = -node[truss[i].nod[0]].y
             y1 = -node[truss[i].nod[0]].z
@@ -493,7 +514,7 @@ export function draw_elements(y_s: number, z_s: number, y_M: number, z_M: number
 
             const geometry = new THREE.ExtrudeGeometry(elemShape, extrudeSettings);
 
-            const mesh = new THREE.Mesh(geometry, new THREE.MeshPhongMaterial({color:0x555566}));
+            const mesh = new THREE.Mesh(geometry, new THREE.MeshPhongMaterial({ color: 0x555566 }));
 
             scene.add(mesh);
 
@@ -517,7 +538,7 @@ export function draw_elements(y_s: number, z_s: number, y_M: number, z_M: number
 
         if (maxWoelb_M > 0.0000000000001 && show_webgl_woelb_M) {
 
-            let Ueberhoehung = 0.1 * slmax / maxWoelb_M 
+            let Ueberhoehung = 0.1 * slmax / maxWoelb_M
 
             const material = new THREE.LineBasicMaterial({
                 color: 0x00dd00,
@@ -532,7 +553,7 @@ export function draw_elements(y_s: number, z_s: number, y_M: number, z_M: number
                 y2 = -node[truss[i].nod[1]].z
                 xm = (x1 + x2) / 2
                 ym = (y1 + y2) / 2
-    
+
                 const points = [];
                 points.push(new THREE.Vector3(x1, y1, node[truss[i].nod[0]].omega * Ueberhoehung));
                 points.push(new THREE.Vector3(x2, y2, node[truss[i].nod[1]].omega * Ueberhoehung));
@@ -541,9 +562,9 @@ export function draw_elements(y_s: number, z_s: number, y_M: number, z_M: number
 
                 const line = new THREE.Line(geometry, material);
                 scene.add(line);
-    
+
             }
-    
+
         }
 
         if (maxWoelb_V > 0.0000000000001 && show_webgl_woelb_V) {
@@ -563,7 +584,7 @@ export function draw_elements(y_s: number, z_s: number, y_M: number, z_M: number
                 y2 = -node[truss[i].nod[1]].z
                 xm = (x1 + x2) / 2
                 ym = (y1 + y2) / 2
-    
+
                 const points = [];
                 points.push(new THREE.Vector3(x1, y1, truss[i].u[0] * Ueberhoehung));
                 points.push(new THREE.Vector3(x2, y2, truss[i].u[1] * Ueberhoehung));
@@ -572,9 +593,9 @@ export function draw_elements(y_s: number, z_s: number, y_M: number, z_M: number
 
                 const line = new THREE.Line(geometry, material);
                 scene.add(line);
-    
+
             }
-    
+
         }
 
         console.log("maxSigma, maxWoelb", maxSigma, maxWoelb_M, maxWoelb_V)
@@ -857,7 +878,7 @@ export function draw_elements(y_s: number, z_s: number, y_M: number, z_M: number
 
             let xi: number, tau_i: number, sl: number, nod1: number
 
-            const teilung = 5
+
             const n = (teilung + 1) * 2
             //const stress_poly = Array.from(Array(teilung + 4), () => new Array(2).fill(0.0));
             //const stress_area = Array.from(Array(n + 1), () => new Array(2).fill(0.0));
@@ -867,52 +888,130 @@ export function draw_elements(y_s: number, z_s: number, y_M: number, z_M: number
                 let Ueberhoehung = 0.3 * slmax / maxTau // * scf //
                 console.log("maxTau", maxTau, Ueberhoehung)
 
-                let dx: number, sl: number
+                let dx: number, sl: number, x0: number, y0: number
 
                 for (i = 0; i < nelem; i++) {
                     sl = truss[i].sl
                     dx = sl / teilung
+                    x1 = node[truss[i].nod[0]].y
+                    y1 = node[truss[i].nod[0]].z
+                    x2 = node[truss[i].nod[1]].y
+                    y2 = node[truss[i].nod[1]].z
+    
                     for (j = 0; j < 3; j++) {
-                        tau[j] = truss[i].tau_p1[j] + truss[i].tau_s[j]
+                        tau[j] = truss[i].stress_R[j];  // truss[i].tau_p1[j] + truss[i].tau_s[j]
                     }
-                    const polyShape = new THREE.Shape()
-                    polyShape.moveTo(0.0, 0.0)
+                    const polyShapeR = new THREE.Shape()
+                    const polyShapeL = new THREE.Shape()
+
+                    polyShapeR.moveTo(0.0, 0.0)
                     for (let istelle = 0; istelle <= teilung; istelle++) {
                         xi = istelle * dx
-                        tau_i = (sl ** 2 - 3 * sl * xi + 2 * xi ** 2) * tau[0] + 4 * xi * (sl - xi) * tau[1]
-                        tau_i = (tau_i + xi * (2 * xi - sl) * tau[2]) / sl / sl * Ueberhoehung
+                        x0 = xi * (x2 - x1) / truss[i].sl
+                        y0 = xi * (y2 - y1) / truss[i].sl
 
-                        polyShape.lineTo(-xi, tau_i)
+                        tau_i = (sl ** 2 - 3 * sl * xi + 2 * xi ** 2) * truss[i].stress_R[0]
+                            + 4 * xi * (sl - xi) * truss[i].stress_R[1]
+                        tau_i = (tau_i + xi * (2 * xi - sl) * truss[i].stress_R[2]) / sl / sl * Ueberhoehung
+
+                        polyShapeR.lineTo(-xi, tau_i)
+
+                        punkteR[istelle].x = -x0 - truss[i].pts_y[0]
+                        punkteR[istelle].y = -y0 - truss[i].pts_z[0]
+                        punkteR[istelle].z = tau_i
+
+                        tau_i = (sl ** 2 - 3 * sl * xi + 2 * xi ** 2) * truss[i].stress_L[0]
+                            + 4 * xi * (sl - xi) * truss[i].stress_L[1]
+                        tau_i = (tau_i + xi * (2 * xi - sl) * truss[i].stress_L[2]) / sl / sl * Ueberhoehung
+
+                        polyShapeL.lineTo(-xi, tau_i)
+
+                        punkteL[istelle].x = -x0 - truss[i].pts_y[3]
+                        punkteL[istelle].y = -y0 - truss[i].pts_z[3]
+                        punkteL[istelle].z = tau_i
 
                         console.log("tau_i", i, istelle, xi, tau_i)
                     }
-                    polyShape.lineTo(-sl, 0.0)
-                    polyShape.lineTo(0.0, 0.0)
+                    polyShapeR.lineTo(-sl, 0.0)
+                    polyShapeR.lineTo(0.0, 0.0)
+                    polyShapeL.lineTo(-sl, 0.0)
+                    polyShapeL.lineTo(0.0, 0.0)
 
-                    const geometry_poly = new THREE.ShapeGeometry(polyShape);
-                    let flaeche = new THREE.Mesh(geometry_poly, new THREE.MeshBasicMaterial({
-                        color: 'red',
-                        opacity: 0.5,
+                    const geometry_polyR = new THREE.ShapeGeometry(polyShapeR);
+                    const flaecheR = new THREE.Mesh(geometry_polyR, new THREE.MeshBasicMaterial({
+                        color: 'rgb(0, 150, 150)',
+                        opacity: 0.1,
                         transparent: true,
                         side: THREE.DoubleSide
                     }))
                     //flaeche.rotateY(-1.570795)
-                    nod1 = truss[i].nod[0];
-                    flaeche.translateX(-node[nod1].y)
-                    flaeche.translateY(-node[nod1].z)
-                    flaeche.rotateZ(truss[i].alpha)
-                    flaeche.rotateX(1.570795)
-                    scene.add(flaeche)
+                    //nod1 = truss[i].nod[0];
+                    //flaeche.translateX(-node[nod1].y)
+                    //flaeche.translateY(-node[nod1].z)
 
+                    flaecheR.translateX(-truss[i].pts_y[0])
+                    flaecheR.translateY(-truss[i].pts_z[0])
+                    flaecheR.rotateZ(truss[i].alpha)
+                    flaecheR.rotateX(1.570795)
+
+                    scene.add(flaecheR)
+
+
+                    const geometry_polyL = new THREE.ShapeGeometry(polyShapeL);
+                    const flaecheL = new THREE.Mesh(geometry_polyL, new THREE.MeshBasicMaterial({
+                        color: 'rgb(0, 150, 150)',
+                        opacity: 0.1,
+                        transparent: true,
+                        side: THREE.DoubleSide
+                    }))
+
+                    flaecheL.translateX(-truss[i].pts_y[3])
+                    flaecheL.translateY(-truss[i].pts_z[3])
+                    flaecheL.rotateZ(truss[i].alpha)
+                    flaecheL.rotateX(1.570795)
+
+                    scene.add(flaecheL)
+
+
+
+                    // jetzt die Spannungsfläche 
+
+                    const positions = [];
+                    const geometry = new THREE.BufferGeometry();
+
+
+                    for (let istelle = 0; istelle < teilung; istelle++) {
+                        console.log("L", istelle, punkteL[istelle].x, punkteL[istelle].y, punkteL[istelle].z)
+                        console.log("R", istelle, punkteR[istelle].x, punkteR[istelle].y, punkteR[istelle].z)
+
+                        positions.push(punkteL[istelle].x, punkteL[istelle].y, punkteL[istelle].z);
+                        positions.push(punkteR[istelle].x, punkteR[istelle].y, punkteR[istelle].z);
+                        positions.push(punkteR[istelle + 1].x, punkteR[istelle + 1].y, punkteR[istelle + 1].z);
+
+                        positions.push(punkteL[istelle].x, punkteL[istelle].y, punkteL[istelle].z);
+                        positions.push(punkteR[istelle + 1].x, punkteR[istelle + 1].y, punkteR[istelle + 1].z);
+                        positions.push(punkteL[istelle + 1].x, punkteL[istelle + 1].y, punkteL[istelle + 1].z);
+                    }
+                    // itemSize = 3 because there are 3 values (components) per vertex
+
+                    geometry.setAttribute('position', new THREE.Float32BufferAttribute(positions, 3));
+                    const material = new THREE.MeshBasicMaterial({
+                        color: 'rgb(0, 150, 150)',
+                        opacity: 0.3,
+                        side: THREE.DoubleSide
+                    });
+                    const mesh = new THREE.Mesh(geometry, material);
+                    scene.add(mesh)
                 }
             }
         }
 
         // Koodinatenkreuz
 
+        const vlen = slmax / 10;
         const pointsx = [];
         pointsx.push(new THREE.Vector3(-y_s, -z_s, 10));
-        pointsx.push(new THREE.Vector3(-y_s, -z_s, 20));
+        pointsx.push(new THREE.Vector3(-y_s, -z_s, 10+vlen));
 
         let geometry_line = new THREE.BufferGeometry().setFromPoints(pointsx);
 
@@ -922,7 +1021,7 @@ export function draw_elements(y_s: number, z_s: number, y_M: number, z_M: number
 
         const pointsy = [];      // y-Achse
         pointsy.push(new THREE.Vector3(-y_s, -z_s, 10));
-        pointsy.push(new THREE.Vector3(-y_s - 10, -z_s, 10));
+        pointsy.push(new THREE.Vector3(-y_s - vlen, -z_s, 10));
 
         geometry_line = new THREE.BufferGeometry().setFromPoints(pointsy);
 
@@ -931,18 +1030,18 @@ export function draw_elements(y_s: number, z_s: number, y_M: number, z_M: number
 
         const pointsz = [];      // z-Achse
         pointsz.push(new THREE.Vector3(-y_s, -z_s, 10));
-        pointsz.push(new THREE.Vector3(-y_s, -z_s - 10, 10));
+        pointsz.push(new THREE.Vector3(-y_s, -z_s - vlen, 10));
 
         geometry_line = new THREE.BufferGeometry().setFromPoints(pointsz);
 
         scene.add(new THREE.Line(geometry_line, material_line_blue));
 
-        const geometry = new THREE.ConeGeometry(1.0, 3, 16);             // x-Achse
+        const geometry = new THREE.ConeGeometry(slmax/100, slmax/20, 16);             // x-Achse
 
         let material = new THREE.MeshPhongMaterial({ color: 0xdd0000 });
         let cone = new THREE.Mesh(geometry, material);
         cone.rotateX(1.570795)
-        cone.position.set(-y_s, -z_s, 20)
+        cone.position.set(-y_s, -z_s, 10+vlen)
         scene.add(cone);
 
         //        const geometry = new THREE.ConeGeometry( 2, 5, 16 );   // y-Achse
@@ -950,13 +1049,13 @@ export function draw_elements(y_s: number, z_s: number, y_M: number, z_M: number
         material = new THREE.MeshPhongMaterial({ color: 0x00dd00 });
         cone = new THREE.Mesh(geometry, material);
         cone.rotateZ(1.570795)
-        cone.position.set(-y_s - 10, -z_s, 10)
+        cone.position.set(-y_s - vlen, -z_s, 10)
         scene.add(cone);
 
         material = new THREE.MeshPhongMaterial({ color: 0x0000dd });     // z-Achse
         cone = new THREE.Mesh(geometry, material);
         cone.rotateX(3.14159)
-        cone.position.set(-y_s, -z_s - 10, 10)
+        cone.position.set(-y_s, -z_s - vlen, 10)
         scene.add(cone);
 
 
