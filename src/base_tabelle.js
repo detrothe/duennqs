@@ -416,9 +416,12 @@ export function KEYDOWN(ev) {
         //tabelle.rows[selectedCellPoly.row].cells[selectedCellPoly.col].removeClass("highlight");
         const row = tableInfo[tableIndex].row;
         const col = tableInfo[tableIndex].col;
-        console.log("KEYDOWN,nSpalten,row,col", nSpalten, row, col)
+        // if ( col === 0 ) return;
+        //console.log("KEYDOWN,nSpalten,row,col", nSpalten, row, col)
         let str = tableId + '-' + row + '-' + col;
         const elem = document.getElementById(str);
+        // console.log("elem", elem);
+        if ( elem === null ) return;   // Zelle kann nicht bearbeitet werden
         //console.log("<RETURN> ID", str, elem.id, elem.classList);
         elem.classList.remove('highlight');  // alle selektierte Zellen löschen
         //for (let i = 0; i < nZeilen; i++) {
@@ -443,9 +446,9 @@ export function KEYDOWN(ev) {
                 str = tableId + '-1-1';
             }
         }
-        console.log("col,nSpalten", col, nSpalten, str)
+        //console.log("col,nSpalten", col, nSpalten, str)
 
-        console.log("idTable", str);
+        //console.log("idTable", str);
         const elemNeu = document.getElementById(str);
         if (elemNeu.contentEditable === 'true') {
             elemNeu.classList.add('highlight');
