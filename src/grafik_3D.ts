@@ -897,7 +897,7 @@ export function draw_elements(y_s: number, z_s: number, y_M: number, z_M: number
                     y1 = node[truss[i].nod[0]].z
                     x2 = node[truss[i].nod[1]].y
                     y2 = node[truss[i].nod[1]].z
-    
+
                     for (j = 0; j < 3; j++) {
                         tau[j] = truss[i].stress_R[j];  // truss[i].tau_p1[j] + truss[i].tau_s[j]
                     }
@@ -1002,6 +1002,41 @@ export function draw_elements(y_s: number, z_s: number, y_M: number, z_M: number
                     });
                     const mesh = new THREE.Mesh(geometry, material);
                     scene.add(mesh)
+
+                    // Linien drumherum, erst links, dann rechts
+
+
+                    const material1 = new THREE.LineBasicMaterial({
+                        color: 'rgb(56, 93, 138)',
+                        linewidth: 2
+                    });
+
+
+                    const pointsR = [];
+                    pointsR.push(new THREE.Vector3(- truss[i].pts_y[0], - truss[i].pts_z[0], 0.0));
+                    for (let istelle = 0; istelle <= teilung; istelle++) {
+                        pointsR.push(new THREE.Vector3(punkteR[istelle].x, punkteR[istelle].y, punkteR[istelle].z));
+                    }
+                    pointsR.push(new THREE.Vector3(- truss[i].pts_y[1], - truss[i].pts_z[1], 0.0));
+
+                    const geometry1 = new THREE.BufferGeometry().setFromPoints(pointsR);
+
+                    const lineR = new THREE.Line(geometry1, material1);
+                    scene.add(lineR);
+
+                    const pointsL = [];
+                    pointsL.push(new THREE.Vector3(- truss[i].pts_y[3], - truss[i].pts_z[3], 0.0));
+                    for (let istelle = 0; istelle <= teilung; istelle++) {
+                        pointsL.push(new THREE.Vector3(punkteL[istelle].x, punkteL[istelle].y, punkteL[istelle].z));
+                    }
+                    pointsL.push(new THREE.Vector3(- truss[i].pts_y[2], - truss[i].pts_z[2], 0.0));
+
+                    const geometryL = new THREE.BufferGeometry().setFromPoints(pointsL);
+
+                    const lineL = new THREE.Line(geometryL, material1);
+                    scene.add(lineL);
+
+                   
                 }
             }
         }
@@ -1011,7 +1046,7 @@ export function draw_elements(y_s: number, z_s: number, y_M: number, z_M: number
         const vlen = slmax / 10;
         const pointsx = [];
         pointsx.push(new THREE.Vector3(-y_s, -z_s, 10));
-        pointsx.push(new THREE.Vector3(-y_s, -z_s, 10+vlen));
+        pointsx.push(new THREE.Vector3(-y_s, -z_s, 10 + vlen));
 
         let geometry_line = new THREE.BufferGeometry().setFromPoints(pointsx);
 
@@ -1036,12 +1071,12 @@ export function draw_elements(y_s: number, z_s: number, y_M: number, z_M: number
 
         scene.add(new THREE.Line(geometry_line, material_line_blue));
 
-        const geometry = new THREE.ConeGeometry(slmax/100, slmax/20, 16);             // x-Achse
+        const geometry = new THREE.ConeGeometry(slmax / 100, slmax / 20, 16);             // x-Achse
 
         let material = new THREE.MeshPhongMaterial({ color: 0xdd0000 });
         let cone = new THREE.Mesh(geometry, material);
         cone.rotateX(1.570795)
-        cone.position.set(-y_s, -z_s, 10+vlen)
+        cone.position.set(-y_s, -z_s, 10 + vlen)
         scene.add(cone);
 
         //        const geometry = new THREE.ConeGeometry( 2, 5, 16 );   // y-Achse
