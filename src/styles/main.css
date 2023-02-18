@@ -214,6 +214,18 @@ hr {
     display: none;
 }
 
+td,
+th {
+    padding: 1px 4px;
+    width: 70px;
+    /*background-color: orange;*/
+}
+
+p {
+    font-size: 1rem;
+    line-height: 2rem;
+}
+
 #eingabe {
     display: none;
     /*position: absolute;
@@ -265,17 +277,6 @@ hr {
     display: none;
 }
 */
-td,
-th {
-    padding: 1px 4px;
-    width: 100px;
-    /*background-color: orange;*/
-}
-
-p {
-    font-size: 1rem;
-    line-height: 2rem;
-}
 
 button {
     font-size: 1rem;
@@ -337,7 +338,7 @@ input:valid {
 }
 
 .input_kdtab {
-    width: 90px;
+    width: 70px;
 }
 
 #input-container {
@@ -375,7 +376,12 @@ input:valid {
     color: white;
     white-space: nowrap;
 }
-
+/*
+#nodeTable tr td:nth-child(2) {
+    width: 50px;
+    background-color: #D800D8;
+}
+*/
 #elemTable td {
     background-color: rgb(250, 250, 250);
     white-space: nowrap;

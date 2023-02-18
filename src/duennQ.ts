@@ -181,12 +181,15 @@ objCells.item(0).style.textAlign = "center";
 
 let nSpalten = nTabelle.rows[0].cells.length - 1;
 
+nTabelle.rows.item(0).cells.item(0).style.width = '50px'
+
 for (let i = 1; i < nTabelle.rows.length; i++) {
     const objCells = nTabelle.rows.item(i).cells;
     objCells.item(0).contentEditable = 'false';
     objCells.item(0).style.textAlign = "center";
     objCells.item(0).style.backgroundColor = 'rgb(150,180, 180)';
     objCells.item(0).style.border = 'none';
+    objCells.item(0).style.width = '50px'
 
     for (let j = 1; j <= nSpalten; j++) {
         objCells.item(j).id = "nodeTable-" + i + "-" + j;
@@ -209,12 +212,15 @@ objCells = eTabelle.rows.item(0).cells;  // Überschrift Punkt zentrieren
 objCells.item(0).style.textAlign = "center";
 nSpalten = eTabelle.rows[0].cells.length - 1;
 
+eTabelle.rows.item(0).cells.item(0).style.width = '50px'
+
 for (let i = 1; i < eTabelle.rows.length; i++) {
     const objCells = eTabelle.rows.item(i).cells;
     objCells.item(0).contentEditable = 'false';
     objCells.item(0).style.textAlign = "center";
     objCells.item(0).style.backgroundColor = 'rgb(150,180, 180)';
     objCells.item(0).style.border = 'none';
+    objCells.item(0).style.width = '50px'
 
     for (let j = 1; j <= nSpalten; j++) {
         objCells.item(j).id = "elemTable-" + i + "-" + j;
