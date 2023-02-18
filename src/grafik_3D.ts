@@ -391,7 +391,7 @@ export function draw_elements(y_s: number, z_s: number, y_M: number, z_M: number
     let punkteL = [] as TPunkt[]
     let punkteR = [] as TPunkt[]
 
-    const teilung = 5
+    const teilung = 10
 
 
     while (scene.children.length > 2) {  // Licht soll bleiben
@@ -514,12 +514,16 @@ export function draw_elements(y_s: number, z_s: number, y_M: number, z_M: number
 
             const geometry = new THREE.ExtrudeGeometry(elemShape, extrudeSettings);
 
-            const mesh = new THREE.Mesh(geometry, new THREE.MeshPhongMaterial({ color: 0x555566 }));
+            const mesh = new THREE.Mesh(geometry, new THREE.MeshPhongMaterial({ 
+                color: 0x555566,
+                opacity: 0.75,
+                transparent: true,
+            }));
 
             scene.add(mesh);
 
 
-            if (show_webgl_label) {
+            if (show_webgl_label && !show_webgl_tau && !show_webgl_sigma) {
                 let nameDiv = document.createElement("div");
                 nameDiv.className = "emotionLabel";
                 nameDiv.textContent = String(i + 1);
@@ -889,6 +893,7 @@ export function draw_elements(y_s: number, z_s: number, y_M: number, z_M: number
                 console.log("maxTau", maxTau, Ueberhoehung)
 
                 let dx: number, sl: number, x0: number, y0: number
+                let wert: string;
 
                 for (i = 0; i < nelem; i++) {
                     sl = truss[i].sl
@@ -1036,7 +1041,21 @@ export function draw_elements(y_s: number, z_s: number, y_M: number, z_M: number
                     const lineL = new THREE.Line(geometryL, material1);
                     scene.add(lineL);
 
-                   
+                    if (show_webgl_label) {
+                        let nameDiv = document.createElement("div");
+                        nameDiv.className = "emotionLabel";
+                        wert = (punkteL[0].z / Ueberhoehung).toFixed(3);
+                        nameDiv.textContent = wert;
+                        nameDiv.id = "elNoTauL1" + i
+                        //console.log("nameDiv", nameDiv)
+                        const xLabel = new CSS2DObject(nameDiv);
+                        xLabel.position.set(punkteL[0].x, punkteL[0].y, punkteL[0].z);
+                        xLabel.layers.set(1)
+                        //console.log("xLabel", xLabel)
+                        mesh.add(xLabel);
+                        xLabel.layers.set(1);
+                    }
+
                 }
             }
         }
