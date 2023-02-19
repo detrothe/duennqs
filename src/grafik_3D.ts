@@ -520,7 +520,7 @@ export function draw_elements(y_s: number, z_s: number, y_M: number, z_M: number
                 transparent: true,
             }));
 
-            mesh.position.set(0,0,-depthBeam);
+            mesh.position.set(0, 0, -depthBeam);
 
             scene.add(mesh);
 
@@ -961,7 +961,7 @@ export function draw_elements(y_s: number, z_s: number, y_M: number, z_M: number
                     flaecheR.rotateZ(truss[i].alpha)
                     flaecheR.rotateX(1.570795)
 
-                    scene.add(flaecheR)
+                    // scene.add(flaecheR)
 
 
                     const geometry_polyL = new THREE.ShapeGeometry(polyShapeL);
@@ -977,14 +977,18 @@ export function draw_elements(y_s: number, z_s: number, y_M: number, z_M: number
                     flaecheL.rotateZ(truss[i].alpha)
                     flaecheL.rotateX(1.570795)
 
-                    scene.add(flaecheL)
+                    // scene.add(flaecheL)
 
 
 
                     // jetzt die Spannungsfläche 
 
                     const positions = [];
+                    const posL = [];
+                    const posR = [];
                     const geometry = new THREE.BufferGeometry();
+                    const geometrySideL = new THREE.BufferGeometry();
+                    const geometrySideR = new THREE.BufferGeometry();
 
 
                     for (let istelle = 0; istelle < teilung; istelle++) {
@@ -999,12 +1003,79 @@ export function draw_elements(y_s: number, z_s: number, y_M: number, z_M: number
                         positions.push(punkteR[istelle + 1].x, punkteR[istelle + 1].y, punkteR[istelle + 1].z);
                         positions.push(punkteL[istelle + 1].x, punkteL[istelle + 1].y, punkteL[istelle + 1].z);
                     }
+
+                    for (let istelle = 1; istelle <= teilung; istelle++) {
+                        if (punkteR[istelle].z * punkteR[istelle - 1].z > 0) {
+                            posR.push(punkteR[istelle - 1].x, punkteR[istelle - 1].y, 0.0);
+                            posR.push(punkteR[istelle - 1].x, punkteR[istelle - 1].y, punkteR[istelle - 1].z);
+                            posR.push(punkteR[istelle].x, punkteR[istelle].y, punkteR[istelle].z);
+
+                            posR.push(punkteR[istelle].x, punkteR[istelle].y, punkteR[istelle].z);
+                            posR.push(punkteR[istelle].x, punkteR[istelle].y, 0.0);
+                            posR.push(punkteR[istelle - 1].x, punkteR[istelle - 1].y, 0.0);
+                        } else {
+                            const sigma1 = punkteR[istelle - 1].z;
+                            const sigma2 = punkteR[istelle ].z
+                            const dx0 = sigma1 * dx / (sigma2 - sigma1)
+                            const x0 = dx0 * (x2 - x1) / truss[i].sl + punkteR[istelle - 1].x
+                            const y0 = dx0 * (y2 - y1) / truss[i].sl + punkteR[istelle - 1].y
+
+                            posR.push(punkteR[istelle - 1].x, punkteR[istelle - 1].y, 0.0);
+                            posR.push(punkteR[istelle - 1].x, punkteR[istelle - 1].y, punkteR[istelle - 1].z);
+                            posR.push(x0, y0, 0.0);
+        
+                            posR.push(x0, y0, 0.0);
+                            posR.push(punkteR[istelle].x, punkteR[istelle].y, 0.0);
+                            posR.push(punkteR[istelle].x, punkteR[istelle].y, punkteR[istelle].z);
+                        }
+
+                        if (punkteL[istelle].z * punkteL[istelle - 1].z > 0) {
+                            posL.push(punkteL[istelle - 1].x, punkteL[istelle - 1].y, 0.0);
+                            posL.push(punkteL[istelle - 1].x, punkteL[istelle - 1].y, punkteL[istelle - 1].z);
+                            posL.push(punkteL[istelle].x, punkteL[istelle].y, punkteL[istelle].z);
+
+                            posL.push(punkteL[istelle].x, punkteL[istelle].y, punkteL[istelle].z);
+                            posL.push(punkteL[istelle].x, punkteL[istelle].y, 0.0);
+                            posL.push(punkteL[istelle - 1].x, punkteL[istelle - 1].y, 0.0);
+                        } else {
+                            const sigma1 = punkteL[istelle - 1].z;
+                            const sigma2 = punkteL[istelle ].z
+                            const dx0 = sigma1 * dx / (sigma2 - sigma1)
+                            const x0 = dx0 * (x2 - x1) / truss[i].sl + punkteL[istelle - 1].x
+                            const y0 = dx0 * (y2 - y1) / truss[i].sl + punkteL[istelle - 1].y
+
+                            posL.push(punkteL[istelle - 1].x, punkteL[istelle - 1].y, 0.0);
+                            posL.push(punkteL[istelle - 1].x, punkteL[istelle - 1].y, punkteL[istelle - 1].z);
+                            posL.push(x0, y0, 0.0);
+        
+                            posL.push(x0, y0, 0.0);
+                            posL.push(punkteL[istelle].x, punkteL[istelle].y, 0.0);
+                            posL.push(punkteL[istelle].x, punkteL[istelle].y, punkteL[istelle].z);
+                        }
+                    }
+
+                    geometrySideR.setAttribute('position', new THREE.Float32BufferAttribute(posR, 3));
+                    const materialSide = new THREE.MeshBasicMaterial({
+                        color: 'rgb(0, 150, 150)',
+                        transparent: true,
+                        opacity: 0.1,
+                        side: THREE.DoubleSide
+                    });
+                    const meshSideR = new THREE.Mesh(geometrySideR, materialSide);
+                    scene.add(meshSideR)
+
+                    geometrySideL.setAttribute('position', new THREE.Float32BufferAttribute(posL, 3));
+
+                    const meshSideL = new THREE.Mesh(geometrySideL, materialSide);
+                    scene.add(meshSideL)
+
                     // itemSize = 3 because there are 3 values (components) per vertex
 
                     geometry.setAttribute('position', new THREE.Float32BufferAttribute(positions, 3));
                     const material = new THREE.MeshBasicMaterial({
                         color: 'rgb(0, 150, 150)',
-                        opacity: 0.3,
+                        opacity: 0.7,
+                        transparent: true,
                         side: THREE.DoubleSide
                     });
                     const mesh = new THREE.Mesh(geometry, material);
@@ -1080,7 +1151,7 @@ export function draw_elements(y_s: number, z_s: number, y_M: number, z_M: number
         // Koodinatenkreuz
 
         const vlen = slmax / 10;
-        const skreuz = slmax/100;
+        const skreuz = slmax / 100;
 
         const pointsx = [];
         pointsx.push(new THREE.Vector3(-y_s, -z_s, skreuz));
