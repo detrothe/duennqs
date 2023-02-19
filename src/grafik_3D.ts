@@ -468,7 +468,7 @@ export function draw_elements(y_s: number, z_s: number, y_M: number, z_M: number
 
         if (show_webgl_sigma || show_webgl_tau || show_webgl_woelb_M || show_webgl_woelb_V) {
             if (maxTau > 1e-12 || maxSigma > 1e-12 || maxWoelb_M > 1e-12) {
-                depthBeam = 0;
+                depthBeam = 0.1;
             } else {
                 depthBeam = 5;
             }
@@ -505,20 +505,22 @@ export function draw_elements(y_s: number, z_s: number, y_M: number, z_M: number
 
             const extrudeSettings = {
                 depth: depthBeam,
-                bevelEnabled: false,
-                bevelSegments: 5,
+                bevelEnabled: true,
+                bevelSegments: 3,
                 steps: 1,
-                bevelSize: 1,
-                bevelThickness: 1
+                bevelSize: 0.1,
+                bevelThickness: 0.1
             };
 
             const geometry = new THREE.ExtrudeGeometry(elemShape, extrudeSettings);
 
-            const mesh = new THREE.Mesh(geometry, new THREE.MeshPhongMaterial({ 
+            const mesh = new THREE.Mesh(geometry, new THREE.MeshPhongMaterial({
                 color: 0x555566,
-                opacity: 0.75,
+                opacity: 0.8,
                 transparent: true,
             }));
+
+            mesh.position.set(0,0,-depthBeam);
 
             scene.add(mesh);
 
@@ -935,7 +937,7 @@ export function draw_elements(y_s: number, z_s: number, y_M: number, z_M: number
                         punkteL[istelle].y = -y0 - truss[i].pts_z[3]
                         punkteL[istelle].z = tau_i
 
-                        console.log("tau_i", i, istelle, xi, tau_i)
+                        //console.log("tau_i", i, istelle, xi, tau_i)
                     }
                     polyShapeR.lineTo(-sl, 0.0)
                     polyShapeR.lineTo(0.0, 0.0)
@@ -945,7 +947,7 @@ export function draw_elements(y_s: number, z_s: number, y_M: number, z_M: number
                     const geometry_polyR = new THREE.ShapeGeometry(polyShapeR);
                     const flaecheR = new THREE.Mesh(geometry_polyR, new THREE.MeshBasicMaterial({
                         color: 'rgb(0, 150, 150)',
-                        opacity: 0.1,
+                        opacity: 0.05,
                         transparent: true,
                         side: THREE.DoubleSide
                     }))
@@ -965,7 +967,7 @@ export function draw_elements(y_s: number, z_s: number, y_M: number, z_M: number
                     const geometry_polyL = new THREE.ShapeGeometry(polyShapeL);
                     const flaecheL = new THREE.Mesh(geometry_polyL, new THREE.MeshBasicMaterial({
                         color: 'rgb(0, 150, 150)',
-                        opacity: 0.1,
+                        opacity: 0.05,
                         transparent: true,
                         side: THREE.DoubleSide
                     }))
@@ -986,8 +988,8 @@ export function draw_elements(y_s: number, z_s: number, y_M: number, z_M: number
 
 
                     for (let istelle = 0; istelle < teilung; istelle++) {
-                        console.log("L", istelle, punkteL[istelle].x, punkteL[istelle].y, punkteL[istelle].z)
-                        console.log("R", istelle, punkteR[istelle].x, punkteR[istelle].y, punkteR[istelle].z)
+                        //console.log("L", istelle, punkteL[istelle].x, punkteL[istelle].y, punkteL[istelle].z)
+                        //console.log("R", istelle, punkteR[istelle].x, punkteR[istelle].y, punkteR[istelle].z)
 
                         positions.push(punkteL[istelle].x, punkteL[istelle].y, punkteL[istelle].z);
                         positions.push(punkteR[istelle].x, punkteR[istelle].y, punkteR[istelle].z);
@@ -1042,18 +1044,33 @@ export function draw_elements(y_s: number, z_s: number, y_M: number, z_M: number
                     scene.add(lineL);
 
                     if (show_webgl_label) {
+
                         let nameDiv = document.createElement("div");
+                        nameDiv.className = "emotionLabel";
+                        wert = (punkteR[0].z / Ueberhoehung).toFixed(3);
+                        nameDiv.textContent = wert;
+                        nameDiv.id = "elNoTauR1" + i
+                        //console.log("nameDiv", nameDiv)
+                        let xLabel = new CSS2DObject(nameDiv);
+                        xLabel.position.set(punkteR[0].x, punkteR[0].y, punkteR[0].z);
+                        xLabel.layers.set(1)
+                        //console.log("xLabel", xLabel)
+                        mesh.add(xLabel);
+                        xLabel.layers.set(1);
+
+                        nameDiv = document.createElement("div");
                         nameDiv.className = "emotionLabel";
                         wert = (punkteL[0].z / Ueberhoehung).toFixed(3);
                         nameDiv.textContent = wert;
                         nameDiv.id = "elNoTauL1" + i
                         //console.log("nameDiv", nameDiv)
-                        const xLabel = new CSS2DObject(nameDiv);
+                        xLabel = new CSS2DObject(nameDiv);
                         xLabel.position.set(punkteL[0].x, punkteL[0].y, punkteL[0].z);
                         xLabel.layers.set(1)
                         //console.log("xLabel", xLabel)
                         mesh.add(xLabel);
                         xLabel.layers.set(1);
+
                     }
 
                 }
@@ -1063,9 +1080,11 @@ export function draw_elements(y_s: number, z_s: number, y_M: number, z_M: number
         // Koodinatenkreuz
 
         const vlen = slmax / 10;
+        const skreuz = slmax/100;
+
         const pointsx = [];
-        pointsx.push(new THREE.Vector3(-y_s, -z_s, 10));
-        pointsx.push(new THREE.Vector3(-y_s, -z_s, 10 + vlen));
+        pointsx.push(new THREE.Vector3(-y_s, -z_s, skreuz));
+        pointsx.push(new THREE.Vector3(-y_s, -z_s, skreuz + vlen));
 
         let geometry_line = new THREE.BufferGeometry().setFromPoints(pointsx);
 
@@ -1074,8 +1093,8 @@ export function draw_elements(y_s: number, z_s: number, y_M: number, z_M: number
         scene.add(line);
 
         const pointsy = [];      // y-Achse
-        pointsy.push(new THREE.Vector3(-y_s, -z_s, 10));
-        pointsy.push(new THREE.Vector3(-y_s - vlen, -z_s, 10));
+        pointsy.push(new THREE.Vector3(-y_s, -z_s, skreuz));
+        pointsy.push(new THREE.Vector3(-y_s - vlen, -z_s, skreuz));
 
         geometry_line = new THREE.BufferGeometry().setFromPoints(pointsy);
 
@@ -1083,8 +1102,8 @@ export function draw_elements(y_s: number, z_s: number, y_M: number, z_M: number
         scene.add(new THREE.Line(geometry_line, material_line_green));
 
         const pointsz = [];      // z-Achse
-        pointsz.push(new THREE.Vector3(-y_s, -z_s, 10));
-        pointsz.push(new THREE.Vector3(-y_s, -z_s - vlen, 10));
+        pointsz.push(new THREE.Vector3(-y_s, -z_s, skreuz));
+        pointsz.push(new THREE.Vector3(-y_s, -z_s - vlen, skreuz));
 
         geometry_line = new THREE.BufferGeometry().setFromPoints(pointsz);
 
@@ -1095,7 +1114,7 @@ export function draw_elements(y_s: number, z_s: number, y_M: number, z_M: number
         let material = new THREE.MeshPhongMaterial({ color: 0xdd0000 });
         let cone = new THREE.Mesh(geometry, material);
         cone.rotateX(1.570795)
-        cone.position.set(-y_s, -z_s, 10 + vlen)
+        cone.position.set(-y_s, -z_s, skreuz + vlen)
         scene.add(cone);
 
         //        const geometry = new THREE.ConeGeometry( 2, 5, 16 );   // y-Achse
@@ -1103,13 +1122,13 @@ export function draw_elements(y_s: number, z_s: number, y_M: number, z_M: number
         material = new THREE.MeshPhongMaterial({ color: 0x00dd00 });
         cone = new THREE.Mesh(geometry, material);
         cone.rotateZ(1.570795)
-        cone.position.set(-y_s - vlen, -z_s, 10)
+        cone.position.set(-y_s - vlen, -z_s, skreuz)
         scene.add(cone);
 
         material = new THREE.MeshPhongMaterial({ color: 0x0000dd });     // z-Achse
         cone = new THREE.Mesh(geometry, material);
         cone.rotateX(3.14159)
-        cone.position.set(-y_s, -z_s - vlen, 10)
+        cone.position.set(-y_s, -z_s - vlen, skreuz)
         scene.add(cone);
 
 

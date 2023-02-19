@@ -703,9 +703,14 @@ td {
 .emotionLabel {
     color: #ff0000;
     /* font-family: Calibri, Candara, Segoe, "Segoe UI", Optima, Arial, sans-serif; */
-    margin: -5px 0 0 15px;
+    margin-top: 0px;  /*-5px 0 0 15px;*/
+    margin-left: 0px;
+    margin-bottom: 0px;
+    margin-right: 0px;
+    border: 1px solid rgb(85, 82, 82);
+    padding: 0px;
     /*pointer-events: none;*/
-    font-size: 1rem;
+    font-size: 16px; /*1rem;*/
     z-index: 120;
 }
 
