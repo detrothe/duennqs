@@ -728,7 +728,7 @@ export function duennQ() {
 
     ry = ry / I22 - 2 * yMh;
     rz = rz / I11 - 2 * zMh;
-    rOmega = rOmega / I_omega;
+    if (I_omega > 0.0000000000001) rOmega = rOmega / I_omega;
     console.log("ry", ry);
     console.log("rz", rz);
     console.log("rOmega", rOmega);

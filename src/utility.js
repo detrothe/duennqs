@@ -1,6 +1,7 @@
 //import {currentTab} from "./globals.js";
 import {myScreen, set_myScreen} from "./index.js";
 import { systemlinien } from "./systemlinien";
+import { duennQ } from "./duennQ";
 
 export let currentTab;
 
@@ -88,7 +89,7 @@ export function sichtbar(displayName) {
 
     if (displayName === 'duenn3D') {
         set_myScreen();
-        systemlinien();
+        duennQ();
         document.getElementById("my-webgl").style.display = "block";
         window.dispatchEvent(new Event("resize"));
     } else {
