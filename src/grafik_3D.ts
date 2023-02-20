@@ -50,17 +50,17 @@ export function main_3D() {
 
     const container = document.getElementById("my-webgl");
     const canvas = document.getElementById('c3') as HTMLCanvasElement  //.querySelector('#c3');
-    let leng = Math.min(myScreen.svgWidth, myScreen.clientHeight)
-    canvas.height = leng
-    canvas.width = leng
+    //let leng = Math.min(myScreen.svgWidth, myScreen.clientHeight)
+    canvas.height = myScreen.clientHeight //leng
+    canvas.width = myScreen.svgWidth   //leng
 
     const renderer = new THREE.WebGLRenderer({ canvas: canvas, antialias: true });  // canvas,
-    renderer.setSize(leng, leng);
+    renderer.setSize(myScreen.svgWidth, myScreen.clientHeight);  //leng, leng);
     container.appendChild(renderer.domElement);
     //console.log("renderer.domElement", renderer.domElement)
 
     const labelRenderer = new CSS2DRenderer();  // {element:canvas}
-    labelRenderer.setSize(leng, leng);
+    labelRenderer.setSize(myScreen.svgWidth, myScreen.clientHeight); //leng, leng);
     labelRenderer.domElement.style.position = 'absolute';
     labelRenderer.domElement.style.top = '0px';
     //console.log("labelRenderer.domElement", labelRenderer.domElement)
