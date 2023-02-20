@@ -33,7 +33,8 @@ export let maxTau: number;
 let scene = null
 let camera = null as THREE.OrthographicCamera;
 let controls = null as OrbitControls;
-
+let renderer = null as THREE.WebGLRenderer;
+let labelRenderer = null as CSS2DRenderer
 
 class TPunkt {
     x: number;
@@ -54,12 +55,12 @@ export function main_3D() {
     canvas.height = myScreen.clientHeight //leng
     canvas.width = myScreen.svgWidth   //leng
 
-    const renderer = new THREE.WebGLRenderer({ canvas: canvas, antialias: true });  // canvas,
+    renderer = new THREE.WebGLRenderer({ canvas: canvas, antialias: true });  // canvas,
     renderer.setSize(myScreen.svgWidth, myScreen.clientHeight);  //leng, leng);
     container.appendChild(renderer.domElement);
     //console.log("renderer.domElement", renderer.domElement)
 
-    const labelRenderer = new CSS2DRenderer();  // {element:canvas}
+    labelRenderer = new CSS2DRenderer();  // {element:canvas}
     labelRenderer.setSize(myScreen.svgWidth, myScreen.clientHeight); //leng, leng);
     labelRenderer.domElement.style.position = 'absolute';
     labelRenderer.domElement.style.top = '0px';
@@ -413,6 +414,9 @@ export function draw_elements(y_s: number, z_s: number, y_M: number, z_M: number
 
 
     if (scene !== null) {
+
+        renderer.setSize(myScreen.svgWidth, myScreen.clientHeight);
+        labelRenderer.setSize(myScreen.svgWidth, myScreen.clientHeight);
 
         console.log("minMax", -ymax, -ymin, -zmin, -zmax);
         let rand = slmax / 10.0;
