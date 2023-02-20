@@ -242,7 +242,9 @@ export function ttf_logo_3D() {
 
 }
 
+//--------------------------------------------------------------------------------------------------------
 function createText(font: FontLoader, text) {
+//--------------------------------------------------------------------------------------------------------
 
     let textMesh1, textGeo, material;
 
@@ -418,10 +420,29 @@ export function draw_elements(y_s: number, z_s: number, y_M: number, z_M: number
         let dx = Gesamt_ys;
         let dy = Gesamt_zs;
 
+        let width = myScreen.svgWidth;
+        let height = myScreen.clientHeight
+
         camera.left = -ymax - rand + dx;
         camera.right = -ymin + rand + dx;
         camera.top = -zmin + rand + dy;
         camera.bottom = -zmax - rand + dy;
+        console.log("camera",camera)
+
+        if ( height > width ) {
+            let dh = camera.top - camera.bottom
+            console.log("dh",dh, height/width)
+            dh = (height/width-1)*dh/2;
+            camera.top +=dh
+            camera.bottom -= dh;
+        } else {
+            let dh = camera.right - camera.left
+            console.log("dh",dh, width/height)
+            dh = (width/height-1)*dh/2;
+            camera.right +=dh
+            camera.left -= dh;
+
+        }
 
         controls.target.set(-dx, -dy, 0);
 

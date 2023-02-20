@@ -33,7 +33,7 @@ export function set_myScreen() {
     console.log("myScreen", myScreen.clientWidth, myScreen.clientHeight, myScreen.svgWidth)
 
     if (myScreen.clientWidth > 1500) {
-        myScreen.svgWidth = 1500;  //myScreen.clientWidth - 900;
+        myScreen.svgWidth = 1000;  //myScreen.clientWidth - 900;
 //    } else if (myScreen.clientWidth < 600) {
 //        myScreen.svgWidth = myScreen.clientWidth
     } else {
