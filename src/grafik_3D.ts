@@ -230,9 +230,9 @@ export function ttf_logo_3D() {
 
     loader.load('./fonts/ttf/FreeSans.ttf', function (json) {
 
-        console.log("json", json)
+        //console.log("json", json)
         const font = new Font(json);
-        console.log("font", font)
+        //console.log("font", font)
         createText(font, text);
         //const shapes = font   //.generateShapes("Hallo", 100);
 
@@ -245,7 +245,7 @@ export function ttf_logo_3D() {
 
 //--------------------------------------------------------------------------------------------------------
 function createText(font: FontLoader, text) {
-//--------------------------------------------------------------------------------------------------------
+    //--------------------------------------------------------------------------------------------------------
 
     let textMesh1, textGeo, material;
 
@@ -386,13 +386,20 @@ export function logo_3D() {
 }
 
 //--------------------------------------------------------------------------------------------------------
-export function draw_elements(y_s: number, z_s: number, y_M: number, z_M: number, phi: number) {
+export function draw_elements() {
     //--------------------------------------------------------------------------------------------------------
 
     let i: number, j: number
     let y1: number, y2: number, x1: number, x2: number, xm: number, ym: number
     let punkteL = [] as TPunkt[]
     let punkteR = [] as TPunkt[]
+
+
+    const y_s = Gesamt_ys
+    const z_s = Gesamt_zs
+    const y_M = yM
+    const z_M = zM
+    const phi = phi0
 
     const teilung = 10
 
@@ -431,24 +438,26 @@ export function draw_elements(y_s: number, z_s: number, y_M: number, z_M: number
         camera.right = -ymin + rand + dx;
         camera.top = -zmin + rand + dy;
         camera.bottom = -zmax - rand + dy;
-        console.log("camera",camera)
+        //console.log("camera", camera)
 
-        if ( height > width ) {
+        if (height > width) {
             let dh = camera.top - camera.bottom
-            console.log("dh",dh, height/width)
-            dh = (height/width-1)*dh/2;
-            camera.top +=dh
+            console.log("dh", dh, height / width)
+            dh = (height / width - 1) * dh / 2;
+            camera.top += dh
             camera.bottom -= dh;
         } else {
             let dh = camera.right - camera.left
-            console.log("dh",dh, width/height)
-            dh = (width/height-1)*dh/2;
-            camera.right +=dh
+            console.log("dh", dh, width / height)
+            dh = (width / height - 1) * dh / 2;
+            camera.right += dh
             camera.left -= dh;
 
         }
 
         controls.target.set(-dx, -dy, 0);
+
+        //___________________________________________________________________________
 
         maxWoelb_M = 0.0
         for (let i = 0; i < nnodes; i++) {
@@ -633,7 +642,7 @@ export function draw_elements(y_s: number, z_s: number, y_M: number, z_M: number
 
         if (maxSigma > 0.0000000000001 && show_webgl_sigma) {
 
-            let Ueberhoehung = 0.1 * slmax / maxSigma // * scf // Skalieren
+            let Ueberhoehung = 0.2 * slmax / maxSigma // * scf // Skalieren
             console.log("Normalspannung", maxSigma, Ueberhoehung)
 
             let j = 0, nod1: number, nod2: number, sigma1: number, sigma2: number
@@ -1040,7 +1049,7 @@ export function draw_elements(y_s: number, z_s: number, y_M: number, z_M: number
                             posR.push(punkteR[istelle - 1].x, punkteR[istelle - 1].y, 0.0);
                         } else {
                             const sigma1 = punkteR[istelle - 1].z;
-                            const sigma2 = punkteR[istelle ].z
+                            const sigma2 = punkteR[istelle].z
                             const dx0 = sigma1 * dx / (sigma2 - sigma1)
                             const x0 = dx0 * (x2 - x1) / truss[i].sl + punkteR[istelle - 1].x
                             const y0 = dx0 * (y2 - y1) / truss[i].sl + punkteR[istelle - 1].y
@@ -1048,7 +1057,7 @@ export function draw_elements(y_s: number, z_s: number, y_M: number, z_M: number
                             posR.push(punkteR[istelle - 1].x, punkteR[istelle - 1].y, 0.0);
                             posR.push(punkteR[istelle - 1].x, punkteR[istelle - 1].y, punkteR[istelle - 1].z);
                             posR.push(x0, y0, 0.0);
-        
+
                             posR.push(x0, y0, 0.0);
                             posR.push(punkteR[istelle].x, punkteR[istelle].y, 0.0);
                             posR.push(punkteR[istelle].x, punkteR[istelle].y, punkteR[istelle].z);
@@ -1064,7 +1073,7 @@ export function draw_elements(y_s: number, z_s: number, y_M: number, z_M: number
                             posL.push(punkteL[istelle - 1].x, punkteL[istelle - 1].y, 0.0);
                         } else {
                             const sigma1 = punkteL[istelle - 1].z;
-                            const sigma2 = punkteL[istelle ].z
+                            const sigma2 = punkteL[istelle].z
                             const dx0 = sigma1 * dx / (sigma2 - sigma1)
                             const x0 = dx0 * (x2 - x1) / truss[i].sl + punkteL[istelle - 1].x
                             const y0 = dx0 * (y2 - y1) / truss[i].sl + punkteL[istelle - 1].y
@@ -1072,7 +1081,7 @@ export function draw_elements(y_s: number, z_s: number, y_M: number, z_M: number
                             posL.push(punkteL[istelle - 1].x, punkteL[istelle - 1].y, 0.0);
                             posL.push(punkteL[istelle - 1].x, punkteL[istelle - 1].y, punkteL[istelle - 1].z);
                             posL.push(x0, y0, 0.0);
-        
+
                             posL.push(x0, y0, 0.0);
                             posL.push(punkteL[istelle].x, punkteL[istelle].y, 0.0);
                             posL.push(punkteL[istelle].x, punkteL[istelle].y, punkteL[istelle].z);
@@ -1249,7 +1258,7 @@ function label_webgl() {
         console.log("in false");
     }
     console.log("in label_webgl", show_webgl_label, element.className);
-    draw_elements(Gesamt_ys, Gesamt_zs, yM, zM, phi0);
+    draw_elements();
 
 }
 
@@ -1269,7 +1278,7 @@ function tau_webgl() {
         console.log("in false");
     }
 
-    draw_elements(Gesamt_ys, Gesamt_zs, yM, zM, phi0);
+    draw_elements();
 }
 
 //--------------------------------------------------------------------------------------------------------
@@ -1288,7 +1297,7 @@ function sigma_webgl() {
         console.log("in false");
     }
 
-    draw_elements(Gesamt_ys, Gesamt_zs, yM, zM, phi0);
+    draw_elements();
 }
 
 //--------------------------------------------------------------------------------------------------------
@@ -1307,7 +1316,7 @@ function woelb_M_webgl() {
         console.log("in false");
     }
 
-    draw_elements(Gesamt_ys, Gesamt_zs, yM, zM, phi0);
+    draw_elements();
 }
 
 //--------------------------------------------------------------------------------------------------------
@@ -1326,7 +1335,7 @@ function woelb_V_webgl() {
         console.log("in false");
     }
 
-    draw_elements(Gesamt_ys, Gesamt_zs, yM, zM, phi0);
+    draw_elements();
 }
 
 //--------------------------------------------------------------------------------------------------------
