@@ -88,6 +88,7 @@ export function sichtbar(displayName) {
 
     if (displayName === 'duenn3D') {
         set_myScreen();
+        systemlinien();
         document.getElementById("my-webgl").style.display = "block";
         window.dispatchEvent(new Event("resize"));
     } else {
