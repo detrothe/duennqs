@@ -158,8 +158,16 @@ export function main_3D() {
         }
     }
 
+    function forceRender() {
+        //if (!renderRequested) {
+            renderRequested = true;
+            requestAnimationFrame(render);
+        //}
+    }
+
     controls.addEventListener('change', requestRenderIfNotRequested);
     window.addEventListener('resize', requestRenderIfNotRequested);
+    window.addEventListener('forceRender', forceRender);
 }
 
 //--------------------------------------------------------------------------------------------------------
@@ -456,6 +464,7 @@ export function draw_elements() {
         }
 
         controls.target.set(-dx, -dy, 0);
+        
 
         //___________________________________________________________________________
 
@@ -1236,9 +1245,12 @@ export function draw_elements() {
         cone.position.set(-y_s, -z_s - vlen, skreuz)
         scene.add(cone);
 
+        controls.update();
+renderer.render(scene,camera);
 
-        window.dispatchEvent(new Event("resize"));
-    }
+window.dispatchEvent(new Event("resize"));
+window.dispatchEvent(new Event("forceRender"));
+}
 
 
 }
