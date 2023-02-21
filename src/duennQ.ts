@@ -1,4 +1,5 @@
 
+import { berechnungErfolgreich } from "./globals.js";
 import { resizeTable, tabulate } from "./base_tabelle.js"
 import './dateien.js';
 import { gauss } from "./gauss.js"
@@ -300,6 +301,8 @@ export function duennQ() {
     let EModul: number, mue: number;
     //let nelem: number = 2
 
+    berechnungErfolgreich( false );
+    
     set_myScreen();
 
     // Schnittgrößen einlesen
@@ -1261,6 +1264,7 @@ export function duennQ() {
     slmax = Math.sqrt((ymax - ymin) ** 2 + (zmax - zmin) ** 2)
 
     //systemlinien();
+    berechnungErfolgreich( true );
 
     draw_elements();
 

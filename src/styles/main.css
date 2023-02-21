@@ -125,7 +125,8 @@ a:link {
     padding: 0px;
     margin: 0px;
     text-align: center;
-    font-size: 7px; /*0.8rem;*/
+    font-size: 7px;
+    /*0.8rem;*/
     /*height: 50px;*/
     /*0.7rem*/
 }
@@ -380,6 +381,7 @@ input:valid {
     color: white;
     white-space: nowrap;
 }
+
 /*
 #nodeTable tr td:nth-child(2) {
     width: 50px;
@@ -588,28 +590,32 @@ td {
     position: absolute;
     top: var(--abst_gl_v);
     /*-15*/
-    left: calc(var(--width_gl_button)+2px+5px);  /*90px;*/
+    left: calc(var(--width_gl_button) + 2px + 5px);  /* Leerzeichen nicht vergessen */
+    /*90px;*/
 }
 
 #button_sigma_webgl {
     position: absolute;
-    top:  var(--abst_gl_v);
+    top: var(--abst_gl_v);
     /*-15*/
-    left: calc((var(--width_gl_button)+2px)*2+5px);   /*170px;*/
+    left: calc((var(--width_gl_button) + 2px) * 2 + 5px);
+    /*170px;*/
 }
 
 #button_woelb_M_webgl {
     position: absolute;
     top: var(--abst_gl_v);
     /*-15*/
-    left: calc((var(--width_gl_button)+2px)*3+5px);   /*250px;*/
+    left: calc((var(--width_gl_button) + 2px) * 3 + 5px);
+    /*250px;*/
 }
 
 #button_woelb_V_webgl {
     position: absolute;
     top: var(--abst_gl_v);
     /*-15*/
-    left: calc((var(--width_gl_button)+2px)*4+5px);   /*330px;*/
+    left: calc((var(--width_gl_button) + 2px) * 4 + 5px);
+    /*330px;*/
 }
 
 .button_webgl {
@@ -700,14 +706,16 @@ td {
 .emotionLabel {
     color: #ff0000;
     /* font-family: Calibri, Candara, Segoe, "Segoe UI", Optima, Arial, sans-serif; */
-    margin-top: 0px;  /*-5px 0 0 15px;*/
+    margin-top: 0px;
+    /*-5px 0 0 15px;*/
     margin-left: 0px;
     margin-bottom: 0px;
     margin-right: 0px;
     border: 1px solid rgb(85, 82, 82);
     padding: 0px;
     /*pointer-events: none;*/
-    font-size: 16px; /*1rem;*/
+    font-size: 16px;
+    /*1rem;*/
     z-index: 120;
 }
 
