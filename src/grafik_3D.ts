@@ -160,8 +160,8 @@ export function main_3D() {
 
     function forceRender() {
         //if (!renderRequested) {
-            renderRequested = true;
-            requestAnimationFrame(render);
+        renderRequested = true;
+        requestAnimationFrame(render);
         //}
     }
 
@@ -464,7 +464,7 @@ export function draw_elements() {
         }
 
         controls.target.set(-dx, -dy, 0);
-        
+
 
         //___________________________________________________________________________
 
@@ -1245,13 +1245,16 @@ export function draw_elements() {
         cone.position.set(-y_s, -z_s - vlen, skreuz)
         scene.add(cone);
 
+        //____________________________________________________________________
+        //____________________________________________________________________
+        
         controls.update();
         camera.updateProjectionMatrix();
-renderer.render(scene,camera);
+        //renderer.render(scene,camera);
 
-window.dispatchEvent(new Event("resize"));
-window.dispatchEvent(new Event("forceRender"));
-}
+        window.dispatchEvent(new Event("resize"));
+        //window.dispatchEvent(new Event("forceRender"));
+    }
 
 
 }
