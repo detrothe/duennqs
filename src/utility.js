@@ -89,11 +89,11 @@ export function sichtbar(displayName) {
     }
 
     if (displayName === 'duenn3D') {
-        set_myScreen();
+        //set_myScreen();
         draw_elements();
         document.getElementById("my-webgl").style.display = "block";
         window.dispatchEvent(new Event("resize"));
-        window.dispatchEvent(new Event("forceRender"));
+        //window.dispatchEvent(new Event("forceRender"));
     } else {
         document.getElementById("my-webgl").style.display = "none";
     }

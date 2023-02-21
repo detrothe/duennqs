@@ -430,17 +430,27 @@ export function draw_elements() {
 
     if (scene !== null) {
 
-        renderer.setSize(myScreen.svgWidth, myScreen.clientHeight);
-        labelRenderer.setSize(myScreen.svgWidth, myScreen.clientHeight);
+        const ele = document.getElementById("footer");
+        const h = ele.clientHeight;
+        console.log("h", h)
+
+        let width = myScreen.svgWidth;
+        let height = myScreen.clientHeight
+
+        if (height > width) {
+            height -= h
+        } else {
+            width -= h
+        }
+
+        renderer.setSize(width, height);
+        labelRenderer.setSize(width, height);
 
         console.log("minMax", -ymax, -ymin, -zmin, -zmax);
         let rand = slmax / 10.0;
 
         let dx = Gesamt_ys;
         let dy = Gesamt_zs;
-
-        let width = myScreen.svgWidth;
-        let height = myScreen.clientHeight
 
         camera.left = -ymax - rand + dx;
         camera.right = -ymin + rand + dx;
@@ -1247,7 +1257,7 @@ export function draw_elements() {
 
         //____________________________________________________________________
         //____________________________________________________________________
-        
+
         controls.update();
         camera.updateProjectionMatrix();
         //renderer.render(scene,camera);
