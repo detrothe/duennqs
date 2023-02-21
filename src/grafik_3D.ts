@@ -1246,6 +1246,7 @@ export function draw_elements() {
         scene.add(cone);
 
         controls.update();
+        camera.updateProjectionMatrix();
 renderer.render(scene,camera);
 
 window.dispatchEvent(new Event("resize"));
