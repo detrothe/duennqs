@@ -122,8 +122,8 @@ a:link {
 .footer {
     grid-area: footer;
     background-color: #f1f1f1;
-    padding: 0px;
-    margin: 0px;
+    /*padding: auto;
+    margin: auto;*/
     text-align: center;
     font-size: 0.7rem;
     /*0.8rem;*/
