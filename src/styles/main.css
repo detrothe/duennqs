@@ -588,28 +588,28 @@ td {
     position: absolute;
     top: var(--abst_gl_v);
     /*-15*/
-    left: calc(var(--abst_gl_v)+2px+5px)  /*90px;*/
+    left: calc(var(--width_gl_button)+2px+5px);  /*90px;*/
 }
 
 #button_sigma_webgl {
     position: absolute;
-    top: var(--abst_gl_v);
+    top:  var(--abst_gl_v);
     /*-15*/
-    left: calc((var(--abst_gl_v)+2px)*2+5px)   /*170px;*/
+    left: calc((var(--width_gl_button)+2px)*2+5px);   /*170px;*/
 }
 
 #button_woelb_M_webgl {
     position: absolute;
     top: var(--abst_gl_v);
     /*-15*/
-    left: calc((var(--abst_gl_v)+2px)*3+5px)   /*250px;*/
+    left: calc((var(--width_gl_button)+2px)*3+5px);   /*250px;*/
 }
 
 #button_woelb_V_webgl {
     position: absolute;
     top: var(--abst_gl_v);
     /*-15*/
-    left: calc((var(--abst_gl_v)+2px)*4+5px)   /*330px;*/
+    left: calc((var(--width_gl_button)+2px)*4+5px);   /*330px;*/
 }
 
 .button_webgl {
