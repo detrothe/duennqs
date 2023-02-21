@@ -8,6 +8,8 @@ html {
 
 :root {
     --sgroesse: 0.9rem;
+    --abst_gl_v: 2px;
+    --width_gl_button: 80px;
 }
 
 body {
@@ -476,10 +478,9 @@ td {
 
 .td_eng {
     padding: 1px;
-
 }
 
-#querschnittwerte_table {}
+/*#querschnittwerte_table {}*/
 
 #querschnittwerte_table td {
     padding-left: 5px;
@@ -578,41 +579,41 @@ td {
 
 #button_label_webgl {
     position: absolute;
-    top: 10px;
+    top: var(--abst_gl_v);
     /*-15*/
-    left: 10px;
+    left: 5px;
 }
 
 #button_tau_webgl {
     position: absolute;
-    top: 10px;
+    top: var(--abst_gl_v);
     /*-15*/
-    left: 90px;
+    left: calc(var(--abst_gl_v)+2px+5px)  /*90px;*/
 }
 
 #button_sigma_webgl {
     position: absolute;
-    top: 10px;
+    top: var(--abst_gl_v);
     /*-15*/
-    left: 170px;
+    left: calc((var(--abst_gl_v)+2px)*2+5px)   /*170px;*/
 }
 
 #button_woelb_M_webgl {
     position: absolute;
-    top: 10px;
+    top: var(--abst_gl_v);
     /*-15*/
-    left: 250px;
+    left: calc((var(--abst_gl_v)+2px)*3+5px)   /*250px;*/
 }
 
 #button_woelb_V_webgl {
     position: absolute;
-    top: 10px;
+    top: var(--abst_gl_v);
     /*-15*/
-    left: 330px;
+    left: calc((var(--abst_gl_v)+2px)*4+5px)   /*330px;*/
 }
 
 .button_webgl {
-    width: 75px;
+    width: var(--width_gl_button);
     z-index: 90;
     background-color: black;
     color: white;
@@ -623,7 +624,7 @@ td {
 
 .button_label_webgl_pressed {
     background-color: orange;
-    width: 75px;
+    width: var(--width_gl_button);
     z-index: 90;
     color: white;
     border-radius: 3px;
@@ -633,7 +634,7 @@ td {
 
 .button_tau_webgl_pressed {
     background-color: orange;
-    width: 75px;
+    width: var(--width_gl_button);
     z-index: 90;
     color: white;
     border-radius: 3px;
@@ -643,7 +644,7 @@ td {
 
 .button_sigma_webgl_pressed {
     background-color: orange;
-    width: 75px;
+    width: var(--width_gl_button);
     z-index: 90;
     color: white;
     border-radius: 3px;
@@ -653,7 +654,7 @@ td {
 
 .button_woelb_M_webgl_pressed {
     background-color: orange;
-    width: 75px;
+    width: var(--width_gl_button);
     z-index: 90;
     color: white;
     border-radius: 3px;
@@ -663,7 +664,7 @@ td {
 
 .button_woelb_V_webgl_pressed {
     background-color: orange;
-    width: 75px;
+    width: var(--width_gl_button);
     z-index: 90;
     color: white;
     border-radius: 3px;
@@ -681,12 +682,6 @@ td {
 
 #my-webgl {
     position: relative;
-    /*display: none;
-    width: 1000px;
-    height: 1000px;
-
-     */
-    /*background-color: rgb(110, 180, 180);*/
 }
 
 #label_x_achse,

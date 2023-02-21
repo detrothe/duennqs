@@ -509,13 +509,15 @@ export function draw_elements() {
             maxSigma = Math.max(Math.abs(truss[i].sigma_x[0]), Math.abs(truss[i].sigma_x[2]), maxSigma)
         }
 
-        let tau_j: number, depthBeam: number
+        let tau_L: number, tau_R: number, depthBeam: number
         maxTau = 0.0
 
         for (i = 0; i < nelem; i++) {
             for (j = 0; j < 3; j++) {
-                tau_j = truss[i].tau_p1[j] + truss[i].tau_s[j]
-                if (Math.abs(tau_j) > maxTau) maxTau = Math.abs(tau_j)
+                tau_R = truss[i].tau_p0R[j] +truss[i].tau_p1[j] + truss[i].tau_s[j]
+                tau_L = truss[i].tau_p0L[j] + truss[i].tau_p1[j] + truss[i].tau_s[j]
+                if (Math.abs(tau_R) > maxTau) maxTau = Math.abs(tau_R)
+                if (Math.abs(tau_L) > maxTau) maxTau = Math.abs(tau_L)
             }
         }
 
