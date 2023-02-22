@@ -1369,10 +1369,12 @@ function woelb_V_webgl() {
 }
 
 //--------------------------------------------------------------------------------------------------------
-
+/*
 document.getElementById('button_label_webgl').addEventListener('click', label_webgl, false);
 document.getElementById('button_tau_webgl').addEventListener('click', tau_webgl, false);
 document.getElementById('button_sigma_webgl').addEventListener('click', sigma_webgl, false);
 document.getElementById('button_woelb_M_webgl').addEventListener('click', woelb_M_webgl, false);
 document.getElementById('button_woelb_V_webgl').addEventListener('click', woelb_V_webgl, false);
+*/
+window.addEventListener('label_webgl', label_webgl);
 
