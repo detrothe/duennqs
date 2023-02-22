@@ -1,6 +1,6 @@
 // Option 1: Import the entire three.js core library.
 import * as THREE from 'three';
-import {myPanel} from "./mygui.js"
+import { myPanel, get_scale_factor } from "./mygui.js"
 
 import { OrbitControls } from './OrbitControls.js';
 
@@ -14,6 +14,7 @@ import { FontLoader, Font } from "./renderers/FontLoaders.js";
 import { TTFLoader } from "./renderers/TTFLoader.js";
 import { TextGeometry } from './renderers/TextGeometry.js';
 
+//import {berechnung_erfolgreich} from "./globals.js";
 
 let show_webgl_label = false;
 let show_webgl_tau = false;
@@ -35,6 +36,8 @@ let camera = null as THREE.OrthographicCamera;
 let controls = null as OrbitControls;
 let renderer = null as THREE.WebGLRenderer;
 let labelRenderer = null as CSS2DRenderer
+
+let scaleFactor: number = 1.0;
 
 class TPunkt {
     x: number;
@@ -165,7 +168,7 @@ export function main_3D() {
         //}
     }
 
- myPanel();
+    myPanel();
 
     controls.addEventListener('change', requestRenderIfNotRequested);
     window.addEventListener('resize', requestRenderIfNotRequested);
@@ -429,6 +432,8 @@ export function draw_elements() {
         el.remove();
     });
 
+    //if ( !berechnung_erfolgreich ) return;
+    console.log("SCALEFACTOR",scaleFactor)
 
     if (scene !== null) {
 
@@ -601,7 +606,7 @@ export function draw_elements() {
 
         if (maxWoelb_M > 0.0000000000001 && show_webgl_woelb_M) {
 
-            let Ueberhoehung = 0.1 * slmax / maxWoelb_M
+            let Ueberhoehung = 0.1 * slmax / maxWoelb_M * scaleFactor
 
             const material = new THREE.LineBasicMaterial({
                 color: 0x00dd00,
@@ -632,7 +637,7 @@ export function draw_elements() {
 
         if (maxWoelb_V > 0.0000000000001 && show_webgl_woelb_V) {
 
-            let Ueberhoehung = 0.1 * slmax / maxWoelb_V
+            let Ueberhoehung = 0.1 * slmax / maxWoelb_V * scaleFactor
 
             const material = new THREE.LineBasicMaterial({
                 color: 0x00dd00,
@@ -665,7 +670,7 @@ export function draw_elements() {
 
         if (maxSigma > 0.0000000000001 && show_webgl_sigma) {
 
-            let Ueberhoehung = 0.2 * slmax / maxSigma // * scf // Skalieren
+            let Ueberhoehung = 0.2 * slmax / maxSigma * scaleFactor    // Skalieren
             console.log("Normalspannung", maxSigma, Ueberhoehung)
 
             let j = 0, nod1: number, nod2: number, sigma1: number, sigma2: number
@@ -948,7 +953,7 @@ export function draw_elements() {
 
             if (maxTau > 0.0 && show_webgl_tau) {
 
-                let Ueberhoehung = 0.3 * slmax / maxTau // * scf //
+                let Ueberhoehung = 0.3 * slmax / maxTau * scaleFactor   
                 console.log("maxTau", maxTau, Ueberhoehung)
 
                 let dx: number, sl: number, x0: number, y0: number
@@ -1277,9 +1282,11 @@ export function draw_elements() {
 function label_webgl() {
     //--------------------------------------------------------------------------------------------------------
     //console.log("isNAN",isNaN(Gesamt_ys),yM)
+
     if (Gesamt_ys === undefined || isNaN(yM)) return; // noch nie gerechnet oder Fehler bei Berechnung
 
     show_webgl_label = !show_webgl_label;
+    /*
     let element = document.getElementById("button_label_webgl");
     if (show_webgl_label) {
         element.className = 'button_label_webgl_pressed'
@@ -1288,6 +1295,7 @@ function label_webgl() {
         console.log("in false");
     }
     console.log("in label_webgl", show_webgl_label, element.className);
+    */
     draw_elements();
 
 }
@@ -1300,6 +1308,7 @@ function tau_webgl() {
 
     console.log("in tau_webgl");
     show_webgl_tau = !show_webgl_tau;
+    /*
     let element = document.getElementById("button_tau_webgl");
     if (show_webgl_tau) {
         element.className = 'button_tau_webgl_pressed'
@@ -1307,7 +1316,7 @@ function tau_webgl() {
         element.className = 'button_webgl'
         console.log("in false");
     }
-
+*/
     draw_elements();
 }
 
@@ -1319,6 +1328,7 @@ function sigma_webgl() {
 
     console.log("in sigma_webgl");
     show_webgl_sigma = !show_webgl_sigma;
+    /*
     let element = document.getElementById("button_sigma_webgl");
     if (show_webgl_sigma) {
         element.className = 'button_sigma_webgl_pressed'
@@ -1326,7 +1336,7 @@ function sigma_webgl() {
         element.className = 'button_webgl'
         console.log("in false");
     }
-
+*/
     draw_elements();
 }
 
@@ -1338,6 +1348,7 @@ function woelb_M_webgl() {
 
     console.log("in woelb_M_webgl");
     show_webgl_woelb_M = !show_webgl_woelb_M;
+    /*
     let element = document.getElementById("button_woelb_M_webgl");
     if (show_webgl_woelb_M) {
         element.className = 'button_woelb_M_webgl_pressed'
@@ -1345,7 +1356,7 @@ function woelb_M_webgl() {
         element.className = 'button_webgl'
         console.log("in false");
     }
-
+*/
     draw_elements();
 }
 
@@ -1357,6 +1368,7 @@ function woelb_V_webgl() {
 
     console.log("in woelb_V_webgl");
     show_webgl_woelb_V = !show_webgl_woelb_V;
+    /*
     let element = document.getElementById("button_woelb_V_webgl");
     if (show_webgl_woelb_V) {
         element.className = 'button_woelb_V_webgl_pressed'
@@ -1364,7 +1376,16 @@ function woelb_V_webgl() {
         element.className = 'button_webgl'
         console.log("in false");
     }
+*/
+    draw_elements();
+}
 
+//--------------------------------------------------------------------------------------------------------
+function scale_factor() {
+    //--------------------------------------------------------------------------------------------------------
+
+    scaleFactor = get_scale_factor();
+    console.log("stressFactor=",scaleFactor)
     draw_elements();
 }
 
@@ -1377,4 +1398,9 @@ document.getElementById('button_woelb_M_webgl').addEventListener('click', woelb_
 document.getElementById('button_woelb_V_webgl').addEventListener('click', woelb_V_webgl, false);
 */
 window.addEventListener('label_webgl', label_webgl);
+window.addEventListener('tau_webgl', tau_webgl);
+window.addEventListener('sigma_webgl', sigma_webgl);
+window.addEventListener('woelb_M_webgl', woelb_M_webgl);
+window.addEventListener('woelb_V_webgl', woelb_V_webgl);
 
+window.addEventListener('scale_factor', scale_factor);
