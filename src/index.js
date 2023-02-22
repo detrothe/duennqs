@@ -92,14 +92,16 @@ export const Detect = new DetectOS();
 
 init_contextmenu();
 
-let myInfoDiv = document.getElementById("id_hilfe");  //in div
+{
+    let myInfoDiv = document.getElementById("id_hilfe");  //in div
 
-let tag = document.createElement("p"); // <p></p>
-tag.setAttribute("id", "id_infoDiv");
-let text = document.createTextNode("xxx");
-tag.appendChild(text);
-tag.innerHTML = "devicePixelRatio " + window.devicePixelRatio;
-myInfoDiv.appendChild(tag); 
+    let tag = document.createElement("p"); // <p></p>
+    tag.setAttribute("id", "id_infoDiv");
+    let text = document.createTextNode("xxx");
+    tag.appendChild(text);
+    tag.innerHTML = "devicePixelRatio " + window.devicePixelRatio;
+    myInfoDiv.appendChild(tag);
+}
 
 main_3D();
 

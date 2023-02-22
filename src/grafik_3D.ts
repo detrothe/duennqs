@@ -1,6 +1,6 @@
 // Option 1: Import the entire three.js core library.
 import * as THREE from 'three';
-
+import {myPanel} from "./mygui.js"
 
 import { OrbitControls } from './OrbitControls.js';
 
@@ -164,6 +164,8 @@ export function main_3D() {
         requestAnimationFrame(render);
         //}
     }
+
+ myPanel();
 
     controls.addEventListener('change', requestRenderIfNotRequested);
     window.addEventListener('resize', requestRenderIfNotRequested);
@@ -514,7 +516,7 @@ export function draw_elements() {
 
         for (i = 0; i < nelem; i++) {
             for (j = 0; j < 3; j++) {
-                tau_R = truss[i].tau_p0R[j] +truss[i].tau_p1[j] + truss[i].tau_s[j]
+                tau_R = truss[i].tau_p0R[j] + truss[i].tau_p1[j] + truss[i].tau_s[j]
                 tau_L = truss[i].tau_p0L[j] + truss[i].tau_p1[j] + truss[i].tau_s[j]
                 if (Math.abs(tau_R) > maxTau) maxTau = Math.abs(tau_R)
                 if (Math.abs(tau_L) > maxTau) maxTau = Math.abs(tau_L)
