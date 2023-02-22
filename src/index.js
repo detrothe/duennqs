@@ -6,13 +6,13 @@ import "./duenn3D.js";
 import './ergebnisse.js'
 import './base_tabelle.js'
 
-import {testeZahl, SDuennTruss, sichtbar, currentTab} from "./utility.js";
+import { testeZahl, SDuennTruss, sichtbar, currentTab } from "./utility.js";
 
 import DetectOS from './detectos.js'
-import {init_contextmenu} from './contextMenu.js';
+import { init_contextmenu } from './contextMenu.js';
 
 
-import {logo_3D, main_3D, ttf_logo_3D} from "./grafik_3D";
+import { logo_3D, main_3D, ttf_logo_3D } from "./grafik_3D";
 
 export const myScreen = {
     clientWidth: 0,
@@ -31,11 +31,12 @@ export function set_myScreen() {
     myScreen.clientHeight = document.documentElement.clientHeight;
 
     console.log("myScreen", myScreen.clientWidth, myScreen.clientHeight, myScreen.svgWidth)
+    console.log("devicePixelRatio", window.devicePixelRatio, screen.width, screen.height, screen.orientation)
 
     if (myScreen.clientWidth > 1500) {
         myScreen.svgWidth = 1500;  //myScreen.clientWidth - 900;
-//    } else if (myScreen.clientWidth < 600) {
-//        myScreen.svgWidth = myScreen.clientWidth
+        //    } else if (myScreen.clientWidth < 600) {
+        //        myScreen.svgWidth = myScreen.clientWidth
     } else {
         myScreen.svgWidth = myScreen.clientWidth;
     }
@@ -69,8 +70,8 @@ export const app = {
 
 const portrait = window.matchMedia("(orientation: portrait)");
 
-portrait.addEventListener("change", function(e) {
-    if(e.matches) {
+portrait.addEventListener("change", function (e) {
+    if (e.matches) {
         // Portrait mode
         console.log("portrait mode")
         sichtbar(currentTab)
@@ -90,6 +91,15 @@ set_myScreen();
 export const Detect = new DetectOS();
 
 init_contextmenu();
+
+let myInfoDiv = document.getElementById("id_hilfe");  //in div
+
+let tag = document.createElement("p"); // <p></p>
+tag.setAttribute("id", "id_infoDiv");
+let text = document.createTextNode("xxx");
+tag.appendChild(text);
+tag.innerHTML = "devicePixelRatio " + window.devicePixelRatio;
+myInfoDiv.appendChild(tag); 
 
 main_3D();
 
