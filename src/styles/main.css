@@ -299,11 +299,11 @@ input {
 input:invalid {
     color: red;
 }
-
+/*
 input:valid {
-    color: blue;
+    color: rgb(187, 255, 0);
 }
-
+*/
 .input_int {
     width: 50px;
     font-size: 1rem;
