@@ -14,7 +14,7 @@ import { FontLoader, Font } from "./renderers/FontLoaders.js";
 import { TTFLoader } from "./renderers/TTFLoader.js";
 import { TextGeometry } from './renderers/TextGeometry.js';
 
-//import {berechnung_erfolgreich} from "./globals.js";
+import {berechnung_erfolgreich} from "./globals.js";
 
 let show_webgl_label = false;
 let show_webgl_tau = false;
@@ -432,7 +432,8 @@ export function draw_elements() {
         el.remove();
     });
 
-    //if ( !berechnung_erfolgreich ) return;
+    if ( !berechnung_erfolgreich ) return;
+    
     console.log("SCALEFACTOR",scaleFactor)
 
     if (scene !== null) {
@@ -1390,6 +1391,15 @@ function scale_factor() {
 }
 
 //--------------------------------------------------------------------------------------------------------
+function reset_webgl() {
+    //--------------------------------------------------------------------------------------------------------
+
+    scaleFactor = get_scale_factor();
+    console.log("reset_webgl=",scaleFactor)
+    draw_elements();
+}
+
+//--------------------------------------------------------------------------------------------------------
 /*
 document.getElementById('button_label_webgl').addEventListener('click', label_webgl, false);
 document.getElementById('button_tau_webgl').addEventListener('click', tau_webgl, false);
@@ -1404,3 +1414,4 @@ window.addEventListener('woelb_M_webgl', woelb_M_webgl);
 window.addEventListener('woelb_V_webgl', woelb_V_webgl);
 
 window.addEventListener('scale_factor', scale_factor);
+window.addEventListener('reset_webgl', reset_webgl);
