@@ -476,7 +476,7 @@ export function resize_Tabelle(idTable, nRowNew, nColNew) {
     let nZeilen = table.rows.length - 1;  // header abziehen
     let nSpalten = table.rows[0].cells.length - 1;
 
-    //console.log("nRowNew", nRowNew, nZeilen, nSpalten);
+    console.log("nRowNew", nRowNew, nColNew, nZeilen, nSpalten);
 
     if (nSpalten > nColNew) {
 
@@ -533,7 +533,7 @@ export function resize_Tabelle(idTable, nRowNew, nColNew) {
     if (nRowNew > nZeilen) {
 
         const material_equal = document.getElementById('material_equal') //as HTMLInputElement | null;
-        console.log("in setMaterialEqual", material_equal.checked);
+        console.log("in setMaterialEqual, nRowNew > nZeilen", nColNew, material_equal.checked);
         for (let i = nZeilen + 1; i <= nRowNew; i++) {
             //selectedCellPoly.selColY.push(false);
             //selectedCellPoly.selColZ.push(false);
@@ -562,9 +562,10 @@ export function resize_Tabelle(idTable, nRowNew, nColNew) {
                 if (j === 0) {
                     newCell.style.textAlign = "center";
                     newCell.style.border = 'none';
+                    newCell.style.width = '50px';
                     newCell.style.backgroundColor = 'rgb(150,180, 180)';
 
-                } else if (j <= nRowNew) {
+                } else {
                     //newCell.style.backgroundColor = "#FFFFFF";
                     if (material_equal.checked && j < 3) {
                         newCell.contentEditable = 'false';

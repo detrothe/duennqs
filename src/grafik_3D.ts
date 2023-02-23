@@ -14,13 +14,14 @@ import { FontLoader, Font } from "./renderers/FontLoaders.js";
 import { TTFLoader } from "./renderers/TTFLoader.js";
 import { TextGeometry } from './renderers/TextGeometry.js';
 
-import {berechnung_erfolgreich} from "./globals.js";
+import { berechnung_erfolgreich } from "./globals.js";
 
 let show_webgl_label = false;
 let show_webgl_tau = false;
 let show_webgl_sigma = false;
 let show_webgl_woelb_M = false;
 let show_webgl_woelb_V = false;
+let showSides = true;
 
 
 
@@ -432,9 +433,9 @@ export function draw_elements() {
         el.remove();
     });
 
-    if ( !berechnung_erfolgreich ) return;
-    
-    console.log("SCALEFACTOR",scaleFactor)
+    if (!berechnung_erfolgreich) return;
+
+    console.log("SCALEFACTOR", scaleFactor)
 
     if (scene !== null) {
 
@@ -954,7 +955,7 @@ export function draw_elements() {
 
             if (maxTau > 0.0 && show_webgl_tau) {
 
-                let Ueberhoehung = 0.3 * slmax / maxTau * scaleFactor   
+                let Ueberhoehung = 0.2 * slmax / maxTau * scaleFactor
                 console.log("maxTau", maxTau, Ueberhoehung)
 
                 let dx: number, sl: number, x0: number, y0: number
@@ -1117,6 +1118,8 @@ export function draw_elements() {
                         }
                     }
 
+                    if ( showSides ) {
+
                     geometrySideR.setAttribute('position', new THREE.Float32BufferAttribute(posR, 3));
                     const materialSide = new THREE.MeshBasicMaterial({
                         color: 'rgb(0, 150, 150)',
@@ -1131,6 +1134,7 @@ export function draw_elements() {
 
                     const meshSideL = new THREE.Mesh(geometrySideL, materialSide);
                     scene.add(meshSideL)
+                }
 
                     // itemSize = 3 because there are 3 values (components) per vertex
 
@@ -1386,7 +1390,7 @@ function scale_factor() {
     //--------------------------------------------------------------------------------------------------------
 
     scaleFactor = get_scale_factor();
-    console.log("stressFactor=",scaleFactor)
+    console.log("stressFactor=", scaleFactor)
     draw_elements();
 }
 
@@ -1394,11 +1398,17 @@ function scale_factor() {
 function reset_webgl() {
     //--------------------------------------------------------------------------------------------------------
 
-    scaleFactor = get_scale_factor();
-    console.log("reset_webgl=",scaleFactor)
+    controls.reset();
+    console.log("reset_webgl=", scaleFactor)
     draw_elements();
 }
 
+//--------------------------------------------------------------------------------------------------------
+function showSides_webgl() {
+    //--------------------------------------------------------------------------------------------------------
+    showSides = !showSides;
+    draw_elements();
+}
 //--------------------------------------------------------------------------------------------------------
 /*
 document.getElementById('button_label_webgl').addEventListener('click', label_webgl, false);
@@ -1414,4 +1424,5 @@ window.addEventListener('woelb_M_webgl', woelb_M_webgl);
 window.addEventListener('woelb_V_webgl', woelb_V_webgl);
 
 window.addEventListener('scale_factor', scale_factor);
+window.addEventListener('show_sides_webgl', showSides_webgl);
 window.addEventListener('reset_webgl', reset_webgl);

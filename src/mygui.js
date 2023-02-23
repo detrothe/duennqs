@@ -13,6 +13,7 @@ export function myPanel() {
         woelb_M: false,
         woelb_V: false,
         scale: 1.0,
+        show_sides: true,
         Reset: function () {
             window.dispatchEvent(new Event("reset_webgl"));
         }
@@ -44,6 +45,10 @@ export function myPanel() {
         console.log("skalierung", v)
         scale_factor = v;
         window.dispatchEvent(new Event("scale_factor"));
+    });
+
+    gui.add(obj, 'show_sides').name('Seiten anzeigen').onChange(v => {
+        window.dispatchEvent(new Event("show_sides_webgl"));
     });
 
     gui.add(obj, 'Reset')
