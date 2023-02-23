@@ -378,7 +378,7 @@ function menuItemListener(link) {
         for (i = 1; i < nZeilen; i++) {
             for (j = 1; j < nSpalten; j++) {
                 if (tabelle.rows.item(i).cells.item(j).selekt) {
-                    let zahl = value[j - 1].toPrecision(10)
+                    let zahl = value[j - 1].toPrecision(12) * 1;
                     tabelle.rows[i].cells[j].innerText = zahl.toString();
                     value[j - 1] += delta[j - 1];
                 }
