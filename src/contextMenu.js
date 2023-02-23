@@ -1,5 +1,5 @@
-import {app, Detect} from './index';
-import {selectedCellPoly} from './base_tabelle.js';
+import { app, Detect } from './index';
+import { selectedCellPoly } from './base_tabelle.js';
 
 //(function () {
 
@@ -76,8 +76,8 @@ function getPosition(e) {
 /**
  * Variables.
  */
-    //var contextMenuClassName = "context-menu";
-    //var contextMenuItemClassName = "context-menu__item";
+//var contextMenuClassName = "context-menu";
+//var contextMenuItemClassName = "context-menu__item";
 const contextMenuLinkClassName = "context-menu__link";
 const contextMenuActive = "context-menu--active";
 
@@ -281,7 +281,40 @@ function menuItemListener(link) {
                 }
             }
         }
+    } else if (link.getAttribute("data-action") === "copyFirstRow") {
+
+        let i, j;
+        console.log("copyFirstRow")
+        // Zellwert in zuletzt geklickter Zelle
+        let row = selectedCellPoly.row;
+        let col = selectedCellPoly.col;
+
+        const wert = selectedCellPoly.wert;
+        console.log("copyFirst, wert=", wert, row, col);
+
+        const tabelle = document.getElementById(selectedCellPoly.tableId);
+        const nZeilen = tabelle.rows.length;  // header abziehen
+        const nSpalten = tabelle.rows[0].cells.length;
+
+        const value = [];
+        let nCols = 0;
+        for (j = 1; j < nSpalten; j++) {
+            value.push(tabelle.rows[row].cells[j].innerText)
+            nCols++;
+        }
+        console.log("value", value);
+
+        for (i = 1; i < nZeilen; i++) {
+            for (j = 1; j < nSpalten; j++) {
+                if (tabelle.rows.item(i).cells.item(j).selekt) {
+                    tabelle.rows[i].cells[j].innerText = value[j - 1].toString();
+                }
+            }
+        }
+
     } else if (link.getAttribute("data-action") === "increment_1") {
+
+        let i, j;
 
         // Zellwert in zuletzt geklickter Zelle
         let row = selectedCellPoly.row;
@@ -294,11 +327,60 @@ function menuItemListener(link) {
         const nZeilen = tabelle.rows.length;
         const nSpalten = tabelle.rows[0].cells.length;
 
-        let i, j;
+        const value = [];
+
+        for (j = 1; j < nSpalten; j++) {
+            value.push(tabelle.rows[row].cells[j].innerText)
+        }
+        console.log("value", value);
+
+
         for (i = 1; i < nZeilen; i++) {
             for (j = 1; j < nSpalten; j++) {
                 if (tabelle.rows.item(i).cells.item(j).selekt) {
-                    tabelle.rows[i].cells[j].innerText = (wert++).toString();
+                    tabelle.rows[i].cells[j].innerText = (value[j - 1]++).toString();
+                }
+            }
+        }
+
+    } else if (link.getAttribute("data-action") === "increment_delta") {
+
+        let i, j;
+
+        const tabelle = document.getElementById(selectedCellPoly.tableId);
+        const nZeilen = tabelle.rows.length;
+        const nSpalten = tabelle.rows[0].cells.length;
+
+        // Zellwert in zuletzt geklickter Zelle
+        let row = selectedCellPoly.row;
+        console.log("test", row, nZeilen)
+        if (row + 2 >= nZeilen) return;    // das geht nicht, da gibt es nichts zu tun
+
+        let col = selectedCellPoly.col;
+
+        let wert = Number(selectedCellPoly.wert);
+        //console.log("increment_1, wert=", wert);
+
+        const value = [];
+        const delta = [];
+        let del;
+
+        for (j = 1; j < nSpalten; j++) {
+
+            del = Number(tabelle.rows[row + 1].cells[j].innerText.replace(/,/g, '.'))
+                - Number(tabelle.rows[row].cells[j].innerText.replace(/,/g, '.'))
+            value.push(Number(tabelle.rows[row].cells[j].innerText.replace(/,/g, '.')))
+            delta.push(del)
+        }
+        console.log("value", value);
+        console.log("delta", delta);
+
+        for (i = 1; i < nZeilen; i++) {
+            for (j = 1; j < nSpalten; j++) {
+                if (tabelle.rows.item(i).cells.item(j).selekt) {
+                    let zahl = value[j - 1].toPrecision(10)
+                    tabelle.rows[i].cells[j].innerText = zahl.toString();
+                    value[j - 1] += delta[j - 1];
                 }
             }
         }

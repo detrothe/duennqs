@@ -4,8 +4,8 @@
 <head>
     <title>Querschnittswerte und Spannungen dünnwandiger Querschnitte</title>
 
-     <!-- Set the viewport. -->
-     <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1, maximum-scale=1, minimal-ui">
+    <!-- Set the viewport. -->
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1, maximum-scale=1, minimal-ui">
     <!-- <meta name="viewport" content="width=device-width, initial-scale=1"> -->
     <meta charset="UTF-8" />
     <!-- <meta name="apple-mobile-web-app-capable" content="yes"> -->
@@ -370,7 +370,7 @@
             <div id="cursor_coordy">y&#772;:</div>
             <div id="cursor_coordz">z&#772;:</div>
             <button id="button_label_svg">Label</button>
-           
+
 
         </div>
 
@@ -383,7 +383,7 @@
             <button id="button_woelb_M_webgl" class="button_webgl">Wölb M</button>
             <button id="button_woelb_V_webgl" class="button_webgl">Wölb V</button>
             -->
-            <div id="panel_gui" ></div>
+            <div id="panel_gui"></div>
 
             <!-- <div id="label_x_achse">x</div>
         <div id="label_y_achse">y</div>
@@ -392,13 +392,13 @@
 
         <div id="id_hilfe" class="c_hilfe">
             <iframe id="id_doc" src="Kurzdokumentation zu Duenne Querschnitte.html" width="100%" height="1000px"
-            style="border:none;">
+                style="border:none;">
             </iframe>
         </div>
 
         <div id="footer" class="footer">
             Querschnittswerte und Spannungen dünnwandiger Querschnitte, 23-Februar-2023, <a
-                    href="https://statikverstehen.de"> statikverstehen.de </a>
+                href="https://statikverstehen.de"> statikverstehen.de </a>
         </div>
 
     </div>
@@ -407,13 +407,19 @@
         <ul class="context-menu__items">
             <li class="context-menu__item">
                 <a href="#" class="context-menu__link" data-action="copyFirst"><i class="fa fa-clone"></i> copy first
-                    cell
-                    value</a>
+                    cell value</a>
+            </li>
+            <li class="context-menu__item">
+                <a href="#" class="context-menu__link" data-action="copyFirstRow"><i class="fa fa-clone"></i> copy first
+                    row values</a>
             </li>
             <li class="context-menu__item">
                 <a href="#" class="context-menu__link" data-action="increment_1"><i class="fa fa-plus-square-o"></i>
-                    increment by
-                    1</a>
+                    increment by 1</a>
+            </li>
+            <li class="context-menu__item">
+                <a href="#" class="context-menu__link" data-action="increment_delta"><i class="fa fa-plus-square-o"></i>
+                    increment by delta</a>
             </li>
             <li class="context-menu__item">
                 <a href="#" class="context-menu__link" data-action="copy"><i class="fa fa-clipboard"></i> copy to

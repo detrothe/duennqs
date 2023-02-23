@@ -63,8 +63,8 @@ function setMaterialEqual(ev) {
 }
 
 
-export let node = []
-export let truss = []
+export let node = [] as TNode[]
+export let truss = [] as TElement[]
 export let I_omega: number
 export let Gesamt_ys: number
 export let Gesamt_zs: number
@@ -73,12 +73,14 @@ export let zM: number                              // Schubmittelpunkt bezogen a
 export let phi0: number
 
 class TNode {
-    y: number = 1.0
+    y: number = 1.0                                 // Knotenkoordinaten bezogen auf Hilfskoordinatensystem
     z: number = 1.0
     yh: number = 1.0                                // entspricht Koordinate in Hauptrichtung 1 (eta), Ursprung liegt im Schwerpunkt
     zh: number = 1.0                                // entspricht Koordinate in Hauptrichtung 2 (ksi)
     omega: number = 0.0
     Lx: number = 0                                  // Lagerbedingung  bei Eingabe: 0=frei, 1=fest, später enthält L() die Gleichungsnummern
+    ys: number = 0.0                                // Knotenkoordinaten bezogen auf den Schwerpunkt
+    zs: number = 0.0
 }
 
 class TElement {
@@ -242,7 +244,7 @@ for (let i = 1; i < eTabelle.rows.length; i++) {
     }
 }
 // Inzidenzen
-/*
+/* I-Querschnitt
 eTabelle.rows[1].cells[4].innerText = "1";
 eTabelle.rows[1].cells[5].innerText = "2";
 eTabelle.rows[2].cells[4].innerText = "2";
@@ -254,6 +256,7 @@ eTabelle.rows[4].cells[5].innerText = "4";
 eTabelle.rows[5].cells[4].innerText = "4";
 eTabelle.rows[5].cells[5].innerText = "6";
 */
+// Quadratischer Hohlquerschnitt
 eTabelle.rows[1].cells[4].innerText = "1";
 eTabelle.rows[1].cells[5].innerText = "2";
 eTabelle.rows[2].cells[4].innerText = "2";
@@ -269,29 +272,26 @@ eTabelle.rows[4].cells[5].innerText = "1";
 export function duennQ() {
     //----------------------------------------------------------------------------------------------
 
-    //let node = []
-    //let truss = []
 
-
-    let i: number, neq: number
-    let j: number, k: number, nod1: number, nod2: number, lmi: number, lmj: number, kn: number, ieq: number;
-    let y1: number, y2: number, z1: number, z2: number, ys: number, zs: number, dy: number, dz: number, t: number,
-        sl: number, h: number, si2: number, co2: number;
-    let si: number, co: number, sico: number, si0: number, co0: number, cc: number, bb: number, cr: number;
-    let Hebely: number, Hebelz: number;
-    let iP2: number, iM2: number;
-    let fact: number, A_omegaQ: number, A_yOmegaQ: number, A_zOmegaQ: number, rOmega: number, dOmega: number;
-    let It_geschlossen: number, omega_m: number, area: number;
-    let rt: number, ry: number, rz: number, y_m: number, z_m: number;
+    let i: number, neq: number,
+        j: number, k: number, nod1: number, nod2: number, lmi: number, lmj: number, kn: number, ieq: number,
+        y1: number, y2: number, z1: number, z2: number, ys: number, zs: number, dy: number, dz: number, t: number,
+        sl: number, h: number, si2: number, co2: number,
+        si: number, co: number, sico: number, si0: number, co0: number, cc: number, bb: number, cr: number,
+        Hebely: number, Hebelz: number,
+        iP2: number, iM2: number,
+        fact: number, A_omegaQ: number, A_yOmegaQ: number, A_zOmegaQ: number, rOmega: number, dOmega: number,
+        It_geschlossen: number, omega_m: number, area: number,
+        rt: number, ry: number, rz: number, y_m: number, z_m: number;
 
     let Gesamtflaeche: number, I11: number, I22: number,
         Gesamt_Iyy: number, Gesamt_Izz: number, Gesamt_Iyz: number, Gesamt_It: number, It_offen: number,
         yMh: number, zMh: number                             // Schubmittelpunkt bezogen auf Schwerpunkt im Hauptachsensystem
 
-    let tau_xs1: number, tau_xs2: number, tau_xsm: number, tau_xs_1: number, tau_xs_0: number
-    let normalkraft: number, moment_y: number, moment_z: number, moment_1: number, moment_2: number
-    let M_omega: number
-    let Vy: number, Vz: number, V1: number, V2: number, Mt1: number, Mt2: number
+    let tau_xs1: number, tau_xs2: number, tau_xsm: number, tau_xs_1: number, tau_xs_0: number,
+        normalkraft: number, moment_y: number, moment_z: number, moment_1: number, moment_2: number,
+        M_omega: number,
+        Vy: number, Vz: number, V1: number, V2: number, Mt1: number, Mt2: number;
 
     let yj: number, zj: number, nodj: number
     let sigma: number, sigma2: number, tau_L: number, tau_R: number, fyRd: number
@@ -301,8 +301,8 @@ export function duennQ() {
     let EModul: number, mue: number;
     //let nelem: number = 2
 
-    berechnungErfolgreich( false );
-    
+    berechnungErfolgreich(false);
+
     set_myScreen();
 
     // Schnittgrößen einlesen
@@ -1264,7 +1264,7 @@ export function duennQ() {
     slmax = Math.sqrt((ymax - ymin) ** 2 + (zmax - zmin) ** 2)
 
     //systemlinien();
-    berechnungErfolgreich( true );
+    berechnungErfolgreich(true);
 
     draw_elements();
 

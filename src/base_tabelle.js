@@ -533,7 +533,7 @@ export function resize_Tabelle(idTable, nRowNew, nColNew) {
     if (nRowNew > nZeilen) {
 
         const material_equal = document.getElementById('material_equal') //as HTMLInputElement | null;
-        console.log("in setMaterialEqual, nRowNew > nZeilen", nColNew, material_equal.checked);
+        //console.log("in setMaterialEqual, nRowNew > nZeilen", nColNew, material_equal.checked);
         for (let i = nZeilen + 1; i <= nRowNew; i++) {
             //selectedCellPoly.selColY.push(false);
             //selectedCellPoly.selColZ.push(false);
@@ -541,7 +541,7 @@ export function resize_Tabelle(idTable, nRowNew, nColNew) {
             // Insert a row at the end of the table
             let newRow = table.insertRow(-1);
 
-            for (let j = 0; j <= nColNew; j++) {     // nRowNew
+            for (let j = 0; j <= nColNew; j++) {     
                 // Insert a cell in the row at index 0
                 let newCell = newRow.insertCell(j);
 

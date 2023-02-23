@@ -435,13 +435,13 @@ export function draw_elements() {
 
     if (!berechnung_erfolgreich) return;
 
-    console.log("SCALEFACTOR", scaleFactor)
+    //console.log("SCALEFACTOR", scaleFactor)
 
     if (scene !== null) {
 
         const ele = document.getElementById("footer");
         const h = ele.clientHeight;
-        console.log("h", h)
+        //console.log("h", h)
 
         let width = myScreen.svgWidth;
         let height = myScreen.clientHeight
@@ -455,7 +455,7 @@ export function draw_elements() {
         renderer.setSize(width, height);
         labelRenderer.setSize(width, height);
 
-        console.log("minMax", -ymax, -ymin, -zmin, -zmax);
+        //console.log("minMax", -ymax, -ymin, -zmin, -zmax);
         let rand = slmax / 10.0;
 
         let dx = Gesamt_ys;
