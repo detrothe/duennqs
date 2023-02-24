@@ -302,6 +302,7 @@ export function duennQ() {
     //let nelem: number = 2
 
     berechnungErfolgreich(false);
+    document.getElementById("info_berechnung").innerText = "Fehler in Eingabe"
 
     set_myScreen();
 
@@ -693,6 +694,8 @@ export function duennQ() {
     console.log("yM", yM);
     console.log("zM", zM);
 
+    if ( Number.isNaN(yM) || Number.isNaN(zM) ) return;
+    
     for (i = 0; i < nnodes; i++) {     // Berechnung der normierten Wölbordinaten
         node[i].omega = node[i].omega - A_omegaQ - node[i].zh * yMh + node[i].yh * zMh;
         //Sheets("Knoten").Cells(5 + i, 8) = node[i].omega;
@@ -1267,6 +1270,7 @@ export function duennQ() {
 
     //systemlinien();
     berechnungErfolgreich(true);
+    document.getElementById("info_berechnung").innerText = "Berechnung erfolgreich"
 
     draw_elements();
 

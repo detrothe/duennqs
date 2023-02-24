@@ -735,6 +735,11 @@ td {
     text-align: center;
 }
 
+#info_berechnung {
+    text-align: right;
+}
+
+
 /*
 .unsichtbar {
     color: rgb(250,250,250);
