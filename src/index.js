@@ -73,11 +73,11 @@ const portrait = window.matchMedia("(orientation: portrait)");
 portrait.addEventListener("change", function (e) {
     if (e.matches) {
         // Portrait mode
-        console.log("portrait mode")
+        //console.log("portrait mode")
         sichtbar(currentTab)
     } else {
         // Landscape
-        console.log("landscape mode")
+        //console.log("landscape mode")
         sichtbar(currentTab)
     }
 })

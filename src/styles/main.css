@@ -287,6 +287,10 @@ button {
     font-size: 1rem;
 }
 
+button:active {
+    background-color: darkorange;
+}
+
 .buttonTable {
     font-size: 1rem;
     width: 8em;

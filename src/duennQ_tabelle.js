@@ -1,29 +1,45 @@
+"use strict";
 
 
 
+const input_nodes = document.getElementById('input_nodes');
+const input_nelem = document.getElementById("input_nelem");
 
-const input = document.getElementById('input_nodes');
-export let nnodes = Number(input.value);    // können nur gelesen werden in anderen Modulen
-// @ts-ignore
-export let nelem = Number(document.getElementById("input_nelem").value);
+export let nnodes = Number(input_nodes.value);    // können nur gelesen werden in anderen Modulen
 
-// @ts-ignore
+export let nelem = Number(input_nelem.value);
+
+
 window.nelem = nelem; // globale Variablen,die auch in anderen Modulen geändert werden können
-// @ts-ignore
+
 window.nnodes = nnodes;
 
 console.log("nnodes=", nnodes)
 console.log("nelem=", nelem)
 
-
-export function set_nnodes(n) {
 //----------------------------------------------------------------------------------------------
+input_nodes.onchange = function () {
+    nnodes = Number(this.value);
+    console.log("neues nnodes", nnodes)
+    //console.log("this", this)
+}
+
+//----------------------------------------------------------------------------------------------
+input_nelem.onchange = function () {
+    nelem = Number(this.value);
+    console.log("neues nelem", nelem)
+    //console.log("this", this)
+}
+
+//----------------------------------------------------------------------------------------------
+export function set_nnodes(n) {
+    //----------------------------------------------------------------------------------------------
     nnodes = n
 }
 
 //----------------------------------------------------------------------------------------------
 export function set_nelem(n) {
-//----------------------------------------------------------------------------------------------
+    //----------------------------------------------------------------------------------------------
     nelem = n
 }
 
@@ -31,7 +47,7 @@ export function set_nelem(n) {
 
 //----------------------------------------------------------------------------------------------
 export function table_index(idTable) {
-//----------------------------------------------------------------------------------------------
+    //----------------------------------------------------------------------------------------------
     if (idTable === 'nodeTable') {
         return 0;
     } else if (idTable === 'elemTable') {
@@ -43,7 +59,7 @@ export function table_index(idTable) {
 
 //----------------------------------------------------------------------------------------------
 export function clear_Tabelle() {
-//----------------------------------------------------------------------------------------------
+    //----------------------------------------------------------------------------------------------
 
     const tabelle = document.getElementById("nodeTable");
     let nSpalten = tabelle.rows[0].cells.length;
@@ -58,6 +74,36 @@ export function clear_Tabelle() {
     for (let i = 1; i < eTabelle.rows.length; i++) {
         for (let j = 1; j < nSpalten; j++) {
             eTabelle.rows[i].cells[j].innerText = "";
+        }
+    }
+
+}
+
+//----------------------------------------------------------------------------------------------
+export function remove_selected_Tabelle() {
+    //----------------------------------------------------------------------------------------------
+
+    const tabelle = document.getElementById("nodeTable");
+    let nSpalten = tabelle.rows[0].cells.length;
+    for (let i = 1; i < tabelle.rows.length; i++) {
+        for (let j = 1; j < nSpalten; j++) {
+            const el = tabelle.rows[i].cells[j]
+            if (el.classList && el.classList.contains("selected")) {
+                el.classList.remove("selected")
+            }
+
+        }
+    }
+
+    const eTabelle = document.getElementById("elemTable");
+    nSpalten = eTabelle.rows[0].cells.length;
+    for (let i = 1; i < eTabelle.rows.length; i++) {
+        for (let j = 1; j < nSpalten; j++) {
+            const el = eTabelle.rows[i].cells[j]
+            if (el.classList && el.classList.contains("selected")) {
+                el.classList.remove("selected")
+            }
+
         }
     }
 

@@ -4,7 +4,7 @@ import { resizeTable, tabulate } from "./base_tabelle.js"
 import './dateien.js';
 import { gauss } from "./gauss.js"
 import { testeZahl, sichtbar, testNumber } from './utility.js';
-import { clear_Tabelle, nelem, nnodes } from "./duennQ_tabelle.js";
+import { remove_selected_Tabelle, clear_Tabelle, nelem, nnodes } from "./duennQ_tabelle.js";
 import { label_svg } from "./systemlinien";
 import { set_myScreen } from "./index.js"
 import { draw_elements } from "./grafik_3D";
@@ -304,6 +304,8 @@ export function duennQ() {
     berechnungErfolgreich(false);
 
     set_myScreen();
+
+    remove_selected_Tabelle();  // alte Fehlermarkierungen entfernen
 
     // Schnittgrößen einlesen
     let input = document.getElementById('Vy') as HTMLInputElement | null;
