@@ -142,8 +142,8 @@ export function tabulate(theDiv, i_d, data, columns) {
             return d.value;
         })
         .on('keydown', KEYDOWN)
-        .on('mousedown', MOUSEDOWN)
-        .on('mousemove', MOUSEMOVE)
+        .on('pointerdown', MOUSEDOWN)
+        .on('pointermove', MOUSEMOVE)
 /*
         .on("touchstart", function (ev) {
             const tableId = ev.target.offsetParent.id;
@@ -457,7 +457,7 @@ export function KEYDOWN(ev) {
             elemNeu.innerText = "";
         }
         elemNeu.focus();
-        const evt = new Event("mousedown", {"bubbles": true, "cancelable": false});
+        const evt = new Event("pointerdown", {"bubbles": true, "cancelable": false});
         evt.button = 0;     // linke Maustaste
         elemNeu.dispatchEvent(evt);
 
@@ -522,8 +522,8 @@ export function resize_Tabelle(idTable, nRowNew, nColNew) {
                     newCell.style.border = 'solid 1px';
                     newCell.style.padding = '5px';
                     newCell.contentEditable = 'true';
-                    newCell.addEventListener("mousemove", MOUSEMOVE);
-                    newCell.addEventListener("mousedown", MOUSEDOWN);
+                    newCell.addEventListener("pointermove", MOUSEMOVE);
+                    newCell.addEventListener("pointerdown", MOUSEDOWN);
                     newCell.addEventListener("keydown", KEYDOWN);
                     newCell.id = str;
                     newCell.wrap = false;
@@ -575,8 +575,8 @@ export function resize_Tabelle(idTable, nRowNew, nColNew) {
                     } else {
                         newCell.contentEditable = 'true';
                     }
-                    newCell.addEventListener("mousemove", MOUSEMOVE);
-                    newCell.addEventListener("mousedown", MOUSEDOWN);
+                    newCell.addEventListener("pointermove", MOUSEMOVE);
+                    newCell.addEventListener("pointerdown", MOUSEDOWN);
                     newCell.addEventListener("keydown", KEYDOWN);
                     newCell.wrap = false;
                 }
