@@ -144,7 +144,7 @@ export function tabulate(theDiv, i_d, data, columns) {
         .on('keydown', KEYDOWN)
         .on('mousedown', MOUSEDOWN)
         .on('mousemove', MOUSEMOVE)
-
+/*
         .on("touchstart", function (ev) {
             const tableId = ev.target.offsetParent.id;
             const tableIndex = table_index(tableId)
@@ -198,14 +198,14 @@ export function tabulate(theDiv, i_d, data, columns) {
                 selectedCellPoly.zelle = document.getElementById(str);
 
                 //console.log("str", str, cellLeft, cellTop);
-                /*
+                //*
                                 const elemNeu = document.getElementById(str);
                                 elemNeu.focus();
                                 const evt = new Event("mousedown", {"bubbles": true, "cancelable": false});
                                 evt.button = 0;     // linke Maustaste
                                 elemNeu.dispatchEvent(evt);
-                */
-                /*
+                * //
+                // *
                 cellLeft = (col - 1) * cellWidth;
                 cellTop = (row - 1) * cellHeight;
                 document.getElementById("polyCanvas").style.display = "block";
@@ -214,12 +214,14 @@ export function tabulate(theDiv, i_d, data, columns) {
                 rechteck.attr("width", cellWidth + 'px');
                 rechteck.attr("height", cellHeight + 'px');
 
-                 */
+                 * /
             }
 
 
-        })
-
+        }
+        
+        )
+*/
 
     return table;
 }

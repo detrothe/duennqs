@@ -1,7 +1,7 @@
 import {berechnung_erfolgreich} from "./globals.js";
 import {myScreen, set_myScreen} from "./index.js";
 import { systemlinien } from "./systemlinien";
-import { duennQ } from "./duennQ";
+//import { duennQ } from "./duennQ";
 import { draw_elements } from "./grafik_3D.js";
 
 export let currentTab;
@@ -31,14 +31,6 @@ export function testNumber(wert, zeile, spalte, id) {
         return 0;
     }
     return wert;
-}
-
-//------------------------------------------------------------------------------------------------
-
-export function SDuennTruss() {
-    this.emodul = null
-    this.Iy = null
-    this.r = [1, 1]
 }
 
 //------------------------------------------------------------------------------------------------
@@ -109,9 +101,3 @@ export function sichtbar(displayName) {
         document.getElementById("id_hilfe").style.display = "none";
     }
 }
-
-/*
-let stab = new mystruct();
-
-stab.Iy = 10.0
-*/

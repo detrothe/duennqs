@@ -1,6 +1,6 @@
 "use strict";
 
-
+import {berechnungErforderlich} from "./globals.js"
 
 const input_nodes = document.getElementById('input_nodes');
 const input_nelem = document.getElementById("input_nelem");
@@ -19,16 +19,18 @@ console.log("nelem=", nelem)
 
 //----------------------------------------------------------------------------------------------
 input_nodes.onchange = function () {
+
     nnodes = Number(this.value);
     console.log("neues nnodes", nnodes)
-    //console.log("this", this)
+    berechnungErforderlich(true);
 }
 
 //----------------------------------------------------------------------------------------------
 input_nelem.onchange = function () {
+
     nelem = Number(this.value);
     console.log("neues nelem", nelem)
-    //console.log("this", this)
+    berechnungErforderlich(true);
 }
 
 //----------------------------------------------------------------------------------------------

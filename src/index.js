@@ -6,7 +6,7 @@ import "./duenn3D.js";
 import './ergebnisse.js'
 import './base_tabelle.js'
 
-import { testeZahl, SDuennTruss, sichtbar, currentTab } from "./utility.js";
+import { testeZahl, sichtbar, currentTab } from "./utility.js";
 
 import DetectOS from './detectos.js'
 import { init_contextmenu } from './contextMenu.js';
