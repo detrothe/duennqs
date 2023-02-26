@@ -95,6 +95,7 @@ class TElement {
     lm = [0, 0]
     estiff = [[0.0, 0.0], [0.0, 0.0]]
     F = [0.0, 0.0]
+    F34 = [0.0, 0.0]
     cosinus: number
     sinus: number
     alpha: number
@@ -110,10 +111,13 @@ class TElement {
     omegaQ = [0.0, 0.0]
     y1: number                                 // Koordinaten im Hauptsystem
     y2: number
+    y3: number; y4: number
     z1: number
     z2: number
-    omega = [0.0, 0.0]
-    u = [0.0, 0.0]
+    z3: number; z4: number
+    omega = [0.0, 0.0, 0.0, 0.0]
+    u = [0.0, 0.0, 0.0, 0.0]
+    u34 = [0.0, 0.0]                            // Vertforungen innere Knoten
     ry: number                                 // Querschnittswerte für Biegedrillknicken
     rz: number
     rOmega: number
@@ -179,6 +183,15 @@ tabulate('#elementtabelle', 'elemTable', elemArray, ["El No", 'E-Modul [kN/cm²]
 
 
 const nTabelle = document.getElementById("nodeTable") as HTMLTableElement;
+
+
+
+document.getElementById("knotentabelle").onpointermove = function (e) {
+    e.preventDefault();
+    //let ele = document.elementFromPoint(e.pageX, e.pageY);
+    console.log("ON TOUCH MOVE")
+}
+
 let objCells = nTabelle.rows.item(0).cells;  // Überschrift Punkt zentrieren
 objCells.item(0).style.textAlign = "center";
 
@@ -574,6 +587,14 @@ export function duennQ() {
         truss[i].z1 = z1;
         truss[i].z2 = z2;
 
+        dy = (y2 - y1) / 3;
+        dz = (z2 - z1) / 3;
+        truss[i].y3 = y1 + dy;
+        truss[i].y4 = y1 + 2 * dy;
+        truss[i].z3 = z1 + dz;
+        truss[i].z4 = z1 + 2 * dz;
+
+
         fact = truss[i].GModul * truss[i].dicke / truss[i].sl;
 
         truss[i].estiff[0][0] = fact;
@@ -694,8 +715,8 @@ export function duennQ() {
     console.log("yM", yM);
     console.log("zM", zM);
 
-    if ( Number.isNaN(yM) || Number.isNaN(zM) ) return;
-    
+    if (Number.isNaN(yM) || Number.isNaN(zM)) return;
+
     for (i = 0; i < nnodes; i++) {     // Berechnung der normierten Wölbordinaten
         node[i].omega = node[i].omega - A_omegaQ - node[i].zh * yMh + node[i].yh * zMh;
         //Sheets("Knoten").Cells(5 + i, 8) = node[i].omega;
@@ -712,6 +733,10 @@ export function duennQ() {
         rt = (truss[k].y1 - yMh) * (truss[k].z2 - truss[k].z1) / truss[k].sl - (truss[k].z1 - zMh) * (truss[k].y2 - truss[k].y1) / truss[k].sl;
         truss[k].rt = rt;
         It_geschlossen = It_geschlossen + truss[k].ngi * truss[k].dicke * rt * (rt * truss[k].sl + truss[k].omega[0] - truss[k].omega[1]);
+
+        dOmega = (truss[k].omega[1] - truss[k].omega[0]) / 3
+        truss[k].omega[2] = truss[k].omega[0] + dOmega
+        truss[k].omega[3] = truss[k].omega[0] + 2 * dOmega
     }
     Gesamt_It = It_offen + It_geschlossen;
     console.log("I_omega", I_omega);
@@ -768,14 +793,21 @@ export function duennQ() {
         if (I_omega > 0.0000000000001) {
             truss[i].F[0] = V2 / I11 * truss[i].z1 + V1 / I22 * truss[i].y1 + Mt2 / I_omega * truss[i].omega[0]
             truss[i].F[1] = V2 / I11 * truss[i].z2 + V1 / I22 * truss[i].y2 + Mt2 / I_omega * truss[i].omega[1]
+            truss[i].F34[0] = V2 / I11 * truss[i].z3 + V1 / I22 * truss[i].y3 + Mt2 / I_omega * truss[i].omega[2]
+            truss[i].F34[1] = V2 / I11 * truss[i].z4 + V1 / I22 * truss[i].y4 + Mt2 / I_omega * truss[i].omega[3]
         } else {
             // wölbfreier Querschnitt
             truss[i].F[0] = V2 / I11 * truss[i].z1 + V1 / I22 * truss[i].y1
             truss[i].F[1] = V2 / I11 * truss[i].z2 + V1 / I22 * truss[i].y2
+            truss[i].F34[0] = V2 / I11 * truss[i].z3 + V1 / I22 * truss[i].y3
+            truss[i].F34[1] = V2 / I11 * truss[i].z4 + V1 / I22 * truss[i].y4
         }
 
         truss[i].R2[0] = truss[i].ni * truss[i].Flaeche * (truss[i].F[0] + 0.5 * truss[i].F[1]) / 3.0
         truss[i].R2[1] = truss[i].ni * truss[i].Flaeche * (0.5 * truss[i].F[0] + truss[i].F[1]) / 3.0
+
+        truss[i].F34[0] *= truss[i].ni * truss[i].Flaeche
+        truss[i].F34[1] *= truss[i].ni * truss[i].Flaeche
     }
 
     for (k = 0; k < neq; k++) R[k] = 0.0        // Aufstellen der rechten Seite
@@ -828,6 +860,13 @@ export function duennQ() {
         truss[k].tau_s[0] = tau_xs1
         truss[k].tau_s[1] = tau_xsm
         truss[k].tau_s[2] = tau_xs2
+
+        truss[k].u[2] = (2 * truss[k].u[0] + truss[k].u[1]) / 3.0
+            + (5 * truss[k].R2[0] + 4 * truss[k].R2[1]) * truss[k].sl * truss[k].sl / truss[k].GModul / 81;
+        truss[k].u[3] = (truss[k].u[0] + 2 * truss[k].u[1]) / 3.0
+            + (4 * truss[k].R2[0] + 5 * truss[k].R2[1]) * truss[k].sl * truss[k].sl / truss[k].GModul / 81;
+
+        console.log("U", k, truss[k].u[0], truss[k].u[2], truss[k].u[3], truss[k].u[1])
     }
 
     //---------------------------------

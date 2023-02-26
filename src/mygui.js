@@ -33,7 +33,7 @@ export function myPanel() {
         window.dispatchEvent(new Event("sigma_webgl"));
     });
 
-    gui.add(obj, 'woelb_M').name('Verwölbung').onChange(v => {
+    gui.add(obj, 'woelb_M').name('omega').onChange(v => {
         window.dispatchEvent(new Event("woelb_M_webgl"));
     });
 

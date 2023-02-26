@@ -253,7 +253,8 @@ p {
 
 #knotentabelle {
     display: none;
-    background-color: #D8D8D8;
+    background-color: #7c8956; /* #D8D8D8;  */
+    z-index: 190;
 }
 
 #eingabe_duennQ_top {
@@ -350,16 +351,23 @@ input:valid {
     width: 70px;
 }
 
-#input-container {
+/*#input-container { */
     /*position: absolute;
     top: 10px;
     left: 10px;*/
     /* width: 62rem; */
     /*100%; */
     /* height: 50px; */
+/* } */
+
+#matrix_knoten {
+    background-color: rgb(163, 173, 120);
 }
-
-
+/*
+#nodeTable {
+    touch-action: none;
+}
+*/
 #nodeTable td {
     background-color: rgb(250, 250, 250);
     white-space: nowrap;

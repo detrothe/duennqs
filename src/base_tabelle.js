@@ -144,6 +144,10 @@ export function tabulate(theDiv, i_d, data, columns) {
         .on('keydown', KEYDOWN)
         .on('pointerdown', MOUSEDOWN)
         .on('pointermove', MOUSEMOVE)
+        .on('pointerover',POINTEROVER)
+        .on('pointerleave',POINTERLEAVE)
+        .on('pointerenter',POINTERENTER)
+        .on('pointerup',POINTERUP)
 /*
         .on("touchstart", function (ev) {
             const tableId = ev.target.offsetParent.id;
@@ -226,7 +230,27 @@ export function tabulate(theDiv, i_d, data, columns) {
     return table;
 }
 
+
+export function POINTEROVER(ev) { 
+    console.log("pointerType POINTEROVER",ev.pointerType, ev.buttons,ev.target.id);
+}
+
+export function POINTERLEAVE(ev) { 
+    console.log("pointerType POINTERLEAVE",ev.pointerType, ev.buttons,ev.target.id, ev.pageX, ev.pageY)
+}
+
+export function POINTERENTER(ev) { 
+    console.log("pointerType POINTERENTER",ev.pointerType, ev.buttons,ev.target.id);
+}
+
+export function POINTERUP(ev) { 
+    console.log("pointerType POINTERUP",ev.pointerType, ev.buttons,ev.target.id);
+}
+
 export function MOUSEMOVE(ev) { // mousemove
+
+    console.log("pointerType MOVE",ev.pointerType, ev.buttons,ev.target.id,ev.pageX, ev.pageY);
+
     const tableId = ev.target.offsetParent.id;
     //console.log("MMOVE mouseover", tableId, ev.buttons);  // ev.path[3].id
     const tableIndex = table_index(tableId)
@@ -301,6 +325,9 @@ export function MOUSEMOVE(ev) { // mousemove
 }
 
 export function MOUSEDOWN(ev) {
+
+    console.log("pointerType DOWN",ev.pointerType,ev.target.id);
+
     const tableId = ev.target.offsetParent.id;
     const tableIndex = table_index(tableId)
     selectedCellPoly.tableId = tableId;
@@ -394,6 +421,9 @@ export function MOUSEDOWN(ev) {
 
 
 export function KEYDOWN(ev) {
+    
+    console.log("pointerType KEYDOWN",ev.pointerType, ev.keyCode);
+
     const tableId = ev.target.offsetParent.id;
     const tableIndex = table_index(tableId)
     tableInfo[tableIndex].tableId = tableId;
