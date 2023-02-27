@@ -806,8 +806,8 @@ export function duennQ() {
         truss[i].R2[0] = truss[i].ni * truss[i].Flaeche * (truss[i].F[0] + 0.5 * truss[i].F[1]) / 3.0
         truss[i].R2[1] = truss[i].ni * truss[i].Flaeche * (0.5 * truss[i].F[0] + truss[i].F[1]) / 3.0
 
-        truss[i].F34[0] *= truss[i].ni * truss[i].Flaeche
-        truss[i].F34[1] *= truss[i].ni * truss[i].Flaeche
+        truss[i].F34[0] = truss[i].ni * truss[i].Flaeche * (13*truss[i].F[0] + 2 * truss[i].F[1]) / 120.0
+        truss[i].F34[1] = truss[i].ni * truss[i].Flaeche * (2 * truss[i].F[0] + 13*truss[i].F[1]) / 120.0
     }
 
     for (k = 0; k < neq; k++) R[k] = 0.0        // Aufstellen der rechten Seite
@@ -862,9 +862,9 @@ export function duennQ() {
         truss[k].tau_s[2] = tau_xs2
 
         truss[k].u[2] = (2 * truss[k].u[0] + truss[k].u[1]) / 3.0
-            + (5 * truss[k].R2[0] + 4 * truss[k].R2[1]) * truss[k].sl * truss[k].sl / truss[k].GModul / 81;
+            + (5 * truss[k].F34[0] + 4 * truss[k].F34[1]) * truss[k].sl * truss[k].sl / truss[k].GModul / 81;
         truss[k].u[3] = (truss[k].u[0] + 2 * truss[k].u[1]) / 3.0
-            + (4 * truss[k].R2[0] + 5 * truss[k].R2[1]) * truss[k].sl * truss[k].sl / truss[k].GModul / 81;
+            + (4 * truss[k].F34[0] + 5 * truss[k].F34[1]) * truss[k].sl * truss[k].sl / truss[k].GModul / 81;
 
         console.log("U", k, truss[k].u[0], truss[k].u[2], truss[k].u[3], truss[k].u[1])
     }

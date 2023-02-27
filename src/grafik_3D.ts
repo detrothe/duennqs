@@ -606,6 +606,66 @@ export function draw_elements() {
         }
 
 
+        if (maxWoelb_V > 0.0000000000001 && show_webgl_woelb_V) {
+
+            const N = Array(4);
+            let sl: number, sl2: number, sl3: number
+            let x: number, x_2: number, x_3: number, u: number, x0: number, y0: number
+
+            let Ueberhoehung = 0.1 * slmax / maxWoelb_V * scaleFactor
+
+            const material = new THREE.LineBasicMaterial({
+                color: 0xdddd00,
+                linewidth: 2
+            });
+
+
+            for (let i = 0; i < nelem; i++) {
+                //console.log("elem i=", i)
+                x1 = -node[truss[i].nod[0]].y
+                y1 = -node[truss[i].nod[0]].z
+                x2 = -node[truss[i].nod[1]].y
+                y2 = -node[truss[i].nod[1]].z
+                xm = (x1 + x2) / 2
+                ym = (y1 + y2) / 2
+
+                sl = truss[i].sl;
+                sl2 = sl * sl;
+                sl3 = sl2 * sl;
+
+                dx = sl / teilung;
+                const points = [];
+
+                for (let istelle = 0; istelle <= teilung; istelle++) {
+
+                    x = istelle * dx;
+                    x_2 = x * x;
+                    x_3 = x_2 * x;
+
+                    N[0] = -(9 * x_3 - 18 * sl * x_2 + 11 * sl2 * x - 2 * sl3) / (2 * sl3)
+                    N[1] = (9 * x_3 - 9 * sl * x_2 + 2 * sl2 * x) / (2 * sl3)
+                    N[2] = (27 * x_3 - 45 * sl * x_2 + 18 * sl2 * x) / (2 * sl3)
+                    N[3] = -(27 * x_3 - 36 * sl * x_2 + 9 * sl2 * x) / (2 * sl3)
+
+                   u = N[0] * truss[i].u[0] + N[1] * truss[i].u[1] + N[2] * truss[i].u[2] + N[3] * truss[i].u[3];
+
+                    x0 = x * (x2 - x1) / sl + x1
+                    y0 = x * (y2 - y1) / sl + y1
+                    points.push(new THREE.Vector3(x0, y0, u * Ueberhoehung));
+
+                }
+
+                //points.push(new THREE.Vector3(x2, y2, node[truss[i].nod[1]].omega * Ueberhoehung));
+
+                const geometry = new THREE.BufferGeometry().setFromPoints(points);
+
+                const line = new THREE.Line(geometry, material);
+                scene.add(line);
+
+            }
+
+        }
+
         if (maxWoelb_M > 0.0000000000001 && show_webgl_woelb_M) {
 
             let Ueberhoehung = 0.1 * slmax / maxWoelb_M * scaleFactor
@@ -627,37 +687,6 @@ export function draw_elements() {
                 const points = [];
                 points.push(new THREE.Vector3(x1, y1, node[truss[i].nod[0]].omega * Ueberhoehung));
                 points.push(new THREE.Vector3(x2, y2, node[truss[i].nod[1]].omega * Ueberhoehung));
-
-                const geometry = new THREE.BufferGeometry().setFromPoints(points);
-
-                const line = new THREE.Line(geometry, material);
-                scene.add(line);
-
-            }
-
-        }
-
-        if (maxWoelb_V > 0.0000000000001 && show_webgl_woelb_V) {
-
-            let Ueberhoehung = 0.1 * slmax / maxWoelb_V * scaleFactor
-
-            const material = new THREE.LineBasicMaterial({
-                color: 0x00dd00,
-                linewidth: 2
-            });
-
-            for (let i = 0; i < nelem; i++) {
-                //console.log("elem i=", i)
-                x1 = -node[truss[i].nod[0]].y
-                y1 = -node[truss[i].nod[0]].z
-                x2 = -node[truss[i].nod[1]].y
-                y2 = -node[truss[i].nod[1]].z
-                xm = (x1 + x2) / 2
-                ym = (y1 + y2) / 2
-
-                const points = [];
-                points.push(new THREE.Vector3(x1, y1, truss[i].u[0] * Ueberhoehung));
-                points.push(new THREE.Vector3(x2, y2, truss[i].u[1] * Ueberhoehung));
 
                 const geometry = new THREE.BufferGeometry().setFromPoints(points);
 
@@ -1118,23 +1147,23 @@ export function draw_elements() {
                         }
                     }
 
-                    if ( showSides ) {
+                    if (showSides) {
 
-                    geometrySideR.setAttribute('position', new THREE.Float32BufferAttribute(posR, 3));
-                    const materialSide = new THREE.MeshBasicMaterial({
-                        color: 'rgb(0, 150, 150)',
-                        transparent: true,
-                        opacity: 0.1,
-                        side: THREE.DoubleSide
-                    });
-                    const meshSideR = new THREE.Mesh(geometrySideR, materialSide);
-                    scene.add(meshSideR)
+                        geometrySideR.setAttribute('position', new THREE.Float32BufferAttribute(posR, 3));
+                        const materialSide = new THREE.MeshBasicMaterial({
+                            color: 'rgb(0, 150, 150)',
+                            transparent: true,
+                            opacity: 0.1,
+                            side: THREE.DoubleSide
+                        });
+                        const meshSideR = new THREE.Mesh(geometrySideR, materialSide);
+                        scene.add(meshSideR)
 
-                    geometrySideL.setAttribute('position', new THREE.Float32BufferAttribute(posL, 3));
+                        geometrySideL.setAttribute('position', new THREE.Float32BufferAttribute(posL, 3));
 
-                    const meshSideL = new THREE.Mesh(geometrySideL, materialSide);
-                    scene.add(meshSideL)
-                }
+                        const meshSideL = new THREE.Mesh(geometrySideL, materialSide);
+                        scene.add(meshSideL)
+                    }
 
                     // itemSize = 3 because there are 3 values (components) per vertex
 
