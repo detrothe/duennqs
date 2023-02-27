@@ -528,7 +528,7 @@ export function draw_elements() {
             linewidth: 4
         });
         const material_line_green = new THREE.LineBasicMaterial({
-            color: 0x00dd00,
+            color: 0x00aa55,
             linewidth: 4
         });
 
@@ -1305,12 +1305,12 @@ export function draw_elements() {
 
                         nameDiv = document.createElement("div");
                         nameDiv.className = "emotionLabel";
-                        wert = (maxtau.tau/ Ueberhoehung).toFixed(3);
+                        wert = (maxtau.tau / Ueberhoehung).toFixed(3);
                         nameDiv.textContent = wert;
                         nameDiv.id = "elNoTaum1" + i
                         //console.log("nameDiv", nameDiv)
                         xLabel = new CSS2DObject(nameDiv);
-                        xLabel.position.set(maxtau.x,maxtau.y,maxtau.wert);
+                        xLabel.position.set(maxtau.x, maxtau.y, maxtau.wert);
                         xLabel.layers.set(1)
                         //console.log("xLabel", xLabel)
                         mesh.add(xLabel);
@@ -1364,7 +1364,7 @@ export function draw_elements() {
 
         //        const geometry = new THREE.ConeGeometry( 2, 5, 16 );   // y-Achse
 
-        material = new THREE.MeshPhongMaterial({ color: 0x00dd00 });
+        material = new THREE.MeshPhongMaterial({ color: 0x00aa55 });
         cone = new THREE.Mesh(geometry, material);
         cone.rotateZ(1.570795)
         cone.position.set(-y_s - vlen, -z_s, skreuz)
@@ -1375,6 +1375,45 @@ export function draw_elements() {
         cone.rotateX(3.14159)
         cone.position.set(-y_s, -z_s - vlen, skreuz)
         scene.add(cone);
+
+
+        if (show_webgl_label && !show_webgl_tau && !show_webgl_sigma && !show_webgl_woelb_V) {
+            let nameDiv = document.createElement("div");
+            nameDiv.className = "emotionLabel";
+            nameDiv.textContent = 'x';
+            nameDiv.id = "elNo-x"
+            nameDiv.style.color='#000000'
+            nameDiv.style.border='none'
+            let xLabel = new CSS2DObject(nameDiv);
+            xLabel.position.set(-y_s, -z_s, skreuz + vlen + slmax / 30);
+            xLabel.layers.set(1)
+            line.add(xLabel);
+            xLabel.layers.set(1);
+
+            nameDiv = document.createElement("div");
+            nameDiv.className = "emotionLabel";
+            nameDiv.textContent = 'y';
+            nameDiv.id = "elNo-y"
+            nameDiv.style.color='#000000'
+            nameDiv.style.border='none'
+            xLabel = new CSS2DObject(nameDiv);
+            xLabel.position.set(-y_s - vlen - slmax / 30, -z_s, skreuz);
+            xLabel.layers.set(1)
+            line.add(xLabel);
+            xLabel.layers.set(1);
+
+            nameDiv = document.createElement("div");
+            nameDiv.className = "emotionLabel";
+            nameDiv.textContent = 'z';
+            nameDiv.id = "elNo-z"
+            nameDiv.style.color='#000000'
+            nameDiv.style.border='none'
+            xLabel = new CSS2DObject(nameDiv);
+            xLabel.position.set(-y_s, -z_s - vlen - slmax / 30, skreuz);
+            xLabel.layers.set(1)
+            line.add(xLabel);
+            xLabel.layers.set(1);
+        }
 
         //____________________________________________________________________
         //____________________________________________________________________
