@@ -417,6 +417,7 @@ export function draw_elements() {
 
     const teilung = 10
 
+    let wert: string;
 
     while (scene.children.length > 2) {  // Licht soll bleiben
         removeObject3D(scene.children[scene.children.length - 1])
@@ -461,10 +462,28 @@ export function draw_elements() {
         let dx = Gesamt_ys;
         let dy = Gesamt_zs;
 
-        camera.left = -ymax - rand + dx;
-        camera.right = -ymin + rand + dx;
-        camera.top = -zmin + rand + dy;
-        camera.bottom = -zmax - rand + dy;
+        let dxm = ymax - ymin;
+        let dym = zmax - zmin
+        let delta: number, y_min: number, y_max: number, z_min: number, z_max: number
+
+        if (dxm > dym) {
+            delta = (dxm - dym) / 2;
+            z_min = zmin - delta;
+            z_max = zmax + delta;
+            y_min = ymin;
+            y_max = ymax;
+        } else {
+            delta = (dym - dxm) / 2;
+            y_min = ymin - delta;
+            y_max = ymax + delta;
+            z_min = zmin;
+            z_max = zmax;
+        }
+
+        camera.left = -y_max - rand + dx;
+        camera.right = -y_min + rand + dx;
+        camera.top = -z_min + rand + dy;
+        camera.bottom = -z_max - rand + dy;
         //console.log("camera", camera)
 
         if (height > width) {
@@ -589,7 +608,7 @@ export function draw_elements() {
             scene.add(mesh);
 
 
-            if (show_webgl_label && !show_webgl_tau && !show_webgl_sigma) {
+            if (show_webgl_label && !show_webgl_tau && !show_webgl_sigma && !show_webgl_woelb_V) {
                 let nameDiv = document.createElement("div");
                 nameDiv.className = "emotionLabel";
                 nameDiv.textContent = String(i + 1);
@@ -611,11 +630,17 @@ export function draw_elements() {
             const N = Array(4);
             let sl: number, sl2: number, sl3: number
             let x: number, x_2: number, x_3: number, u: number, x0: number, y0: number
+            const maxU = {
+                u: 0.0,
+                wert: 0.0,
+                x: 0.0,
+                y: 0.0
+            };
 
             let Ueberhoehung = 0.1 * slmax / maxWoelb_V * scaleFactor
 
             const material = new THREE.LineBasicMaterial({
-                color: 0xdddd00,
+                color: 0x5555ff,
                 linewidth: 2
             });
 
@@ -635,6 +660,7 @@ export function draw_elements() {
 
                 dx = sl / teilung;
                 const points = [];
+                maxU.u = 0.0;
 
                 for (let istelle = 0; istelle <= teilung; istelle++) {
 
@@ -647,12 +673,18 @@ export function draw_elements() {
                     N[2] = (27 * x_3 - 45 * sl * x_2 + 18 * sl2 * x) / (2 * sl3)
                     N[3] = -(27 * x_3 - 36 * sl * x_2 + 9 * sl2 * x) / (2 * sl3)
 
-                   u = N[0] * truss[i].u[0] + N[1] * truss[i].u[1] + N[2] * truss[i].u[2] + N[3] * truss[i].u[3];
+                    u = N[0] * truss[i].u[0] + N[1] * truss[i].u[1] + N[2] * truss[i].u[2] + N[3] * truss[i].u[3];
 
                     x0 = x * (x2 - x1) / sl + x1
                     y0 = x * (y2 - y1) / sl + y1
                     points.push(new THREE.Vector3(x0, y0, u * Ueberhoehung));
 
+                    if (Math.abs(u) > maxU.u) {
+                        maxU.u = Math.abs(u)
+                        maxU.wert = u
+                        maxU.x = x0
+                        maxU.y = y0
+                    }
                 }
 
                 //points.push(new THREE.Vector3(x2, y2, node[truss[i].nod[1]].omega * Ueberhoehung));
@@ -662,6 +694,20 @@ export function draw_elements() {
                 const line = new THREE.Line(geometry, material);
                 scene.add(line);
 
+                if (show_webgl_label) {
+                    let nameDiv = document.createElement("div");
+                    nameDiv.className = "emotionLabel";
+                    wert = (maxU.u).toPrecision(3);
+                    nameDiv.textContent = wert
+                    nameDiv.id = "elNo" + i
+                    //console.log("nameDiv", nameDiv)
+                    const xLabel = new CSS2DObject(nameDiv);
+                    xLabel.position.set(maxU.x, maxU.y, maxU.wert * Ueberhoehung);
+                    xLabel.layers.set(1)
+                    //console.log("xLabel", xLabel)
+                    line.add(xLabel);
+                    xLabel.layers.set(1);
+                }
             }
 
         }
@@ -976,7 +1022,12 @@ export function draw_elements() {
             let tau = Array(3)
 
             let xi: number, tau_i: number, sl: number, nod1: number
-
+            const maxtau = {
+                tau: 0.0,
+                wert: 0.0,
+                x: 0.0,
+                y: 0.0
+            };
 
             const n = (teilung + 1) * 2
             //const stress_poly = Array.from(Array(teilung + 4), () => new Array(2).fill(0.0));
@@ -988,7 +1039,6 @@ export function draw_elements() {
                 console.log("maxTau", maxTau, Ueberhoehung)
 
                 let dx: number, sl: number, x0: number, y0: number
-                let wert: string;
 
                 for (i = 0; i < nelem; i++) {
                     sl = truss[i].sl
@@ -997,6 +1047,8 @@ export function draw_elements() {
                     y1 = node[truss[i].nod[0]].z
                     x2 = node[truss[i].nod[1]].y
                     y2 = node[truss[i].nod[1]].z
+
+                    maxtau.tau = 0.0;
 
                     for (j = 0; j < 3; j++) {
                         tau[j] = truss[i].stress_R[j];  // truss[i].tau_p1[j] + truss[i].tau_s[j]
@@ -1020,6 +1072,13 @@ export function draw_elements() {
                         punkteR[istelle].y = -y0 - truss[i].pts_z[0]
                         punkteR[istelle].z = tau_i
 
+                        if (Math.abs(tau_i) > maxtau.tau) {
+                            maxtau.tau = Math.abs(tau_i)
+                            maxtau.wert = tau_i
+                            maxtau.x = punkteR[istelle].x
+                            maxtau.y = punkteR[istelle].y
+                        }
+
                         tau_i = (sl ** 2 - 3 * sl * xi + 2 * xi ** 2) * truss[i].stress_L[0]
                             + 4 * xi * (sl - xi) * truss[i].stress_L[1]
                         tau_i = (tau_i + xi * (2 * xi - sl) * truss[i].stress_L[2]) / sl / sl * Ueberhoehung
@@ -1030,8 +1089,14 @@ export function draw_elements() {
                         punkteL[istelle].y = -y0 - truss[i].pts_z[3]
                         punkteL[istelle].z = tau_i
 
-                        //console.log("tau_i", i, istelle, xi, tau_i)
+                        if (Math.abs(tau_i) > maxtau.tau) {
+                            maxtau.tau = Math.abs(tau_i)
+                            maxtau.wert = tau_i
+                            maxtau.x = punkteL[istelle].x
+                            maxtau.y = punkteL[istelle].y
+                        }
                     }
+
                     polyShapeR.lineTo(-sl, 0.0)
                     polyShapeR.lineTo(0.0, 0.0)
                     polyShapeL.lineTo(-sl, 0.0)
@@ -1233,6 +1298,19 @@ export function draw_elements() {
                         //console.log("nameDiv", nameDiv)
                         xLabel = new CSS2DObject(nameDiv);
                         xLabel.position.set(punkteL[0].x, punkteL[0].y, punkteL[0].z);
+                        xLabel.layers.set(1)
+                        //console.log("xLabel", xLabel)
+                        mesh.add(xLabel);
+                        xLabel.layers.set(1);
+
+                        nameDiv = document.createElement("div");
+                        nameDiv.className = "emotionLabel";
+                        wert = (maxtau.tau/ Ueberhoehung).toFixed(3);
+                        nameDiv.textContent = wert;
+                        nameDiv.id = "elNoTaum1" + i
+                        //console.log("nameDiv", nameDiv)
+                        xLabel = new CSS2DObject(nameDiv);
+                        xLabel.position.set(maxtau.x,maxtau.y,maxtau.wert);
                         xLabel.layers.set(1)
                         //console.log("xLabel", xLabel)
                         mesh.add(xLabel);

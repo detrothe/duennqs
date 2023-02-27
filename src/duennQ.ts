@@ -339,6 +339,7 @@ export function duennQ() {
     input = document.getElementById('Mz') as HTMLInputElement | null;
     moment_z = Number(testeZahl(input.value));
 
+    console.log ("Mxs", Mt2)
     input = document.getElementById('fyRd') as HTMLInputElement | null;
     fyRd = Number(testeZahl(input.value));
 
@@ -793,19 +794,20 @@ export function duennQ() {
         if (I_omega > 0.0000000000001) {
             truss[i].F[0] = V2 / I11 * truss[i].z1 + V1 / I22 * truss[i].y1 + Mt2 / I_omega * truss[i].omega[0]
             truss[i].F[1] = V2 / I11 * truss[i].z2 + V1 / I22 * truss[i].y2 + Mt2 / I_omega * truss[i].omega[1]
-            truss[i].F34[0] = V2 / I11 * truss[i].z3 + V1 / I22 * truss[i].y3 + Mt2 / I_omega * truss[i].omega[2]
-            truss[i].F34[1] = V2 / I11 * truss[i].z4 + V1 / I22 * truss[i].y4 + Mt2 / I_omega * truss[i].omega[3]
+            //truss[i].F34[0] = V2 / I11 * truss[i].z3 + V1 / I22 * truss[i].y3 + Mt2 / I_omega * truss[i].omega[2]
+            //truss[i].F34[1] = V2 / I11 * truss[i].z4 + V1 / I22 * truss[i].y4 + Mt2 / I_omega * truss[i].omega[3]
         } else {
             // wölbfreier Querschnitt
             truss[i].F[0] = V2 / I11 * truss[i].z1 + V1 / I22 * truss[i].y1
             truss[i].F[1] = V2 / I11 * truss[i].z2 + V1 / I22 * truss[i].y2
-            truss[i].F34[0] = V2 / I11 * truss[i].z3 + V1 / I22 * truss[i].y3
-            truss[i].F34[1] = V2 / I11 * truss[i].z4 + V1 / I22 * truss[i].y4
+            //truss[i].F34[0] = V2 / I11 * truss[i].z3 + V1 / I22 * truss[i].y3
+            //truss[i].F34[1] = V2 / I11 * truss[i].z4 + V1 / I22 * truss[i].y4
         }
 
         truss[i].R2[0] = truss[i].ni * truss[i].Flaeche * (truss[i].F[0] + 0.5 * truss[i].F[1]) / 3.0
         truss[i].R2[1] = truss[i].ni * truss[i].Flaeche * (0.5 * truss[i].F[0] + truss[i].F[1]) / 3.0
 
+        // entspricht F1 und F2 nach Krause für 4 Knotenelement
         truss[i].F34[0] = truss[i].ni * truss[i].Flaeche * (13*truss[i].F[0] + 2 * truss[i].F[1]) / 120.0
         truss[i].F34[1] = truss[i].ni * truss[i].Flaeche * (2 * truss[i].F[0] + 13*truss[i].F[1]) / 120.0
     }
@@ -860,6 +862,8 @@ export function duennQ() {
         truss[k].tau_s[0] = tau_xs1
         truss[k].tau_s[1] = tau_xsm
         truss[k].tau_s[2] = tau_xs2
+
+        // Verformungen in den Mittelknoten
 
         truss[k].u[2] = (2 * truss[k].u[0] + truss[k].u[1]) / 3.0
             + (5 * truss[k].F34[0] + 4 * truss[k].F34[1]) * truss[k].sl * truss[k].sl / truss[k].GModul / 81;
