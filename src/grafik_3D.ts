@@ -1,5 +1,7 @@
 // Option 1: Import the entire three.js core library.
 import * as THREE from 'three';
+import { MeshLine, MeshLineMaterial } from './renderers/THREE_MeshLine.js';
+
 import { myPanel, get_scale_factor } from "./mygui.js"
 
 import { OrbitControls } from './OrbitControls.js';
@@ -513,7 +515,7 @@ export function draw_elements() {
 
         maxWoelb_V = 0.0
         for (let i = 0; i < nelem; i++) {
-            for (j = 0; j < 2; j++) {
+            for (j = 0; j < 4; j++) {
                 maxWoelb_V = Math.max(Math.abs(truss[i].u[j]), maxWoelb_V)
             }
         }
@@ -607,7 +609,6 @@ export function draw_elements() {
 
             scene.add(mesh);
 
-
             if (show_webgl_label && !show_webgl_tau && !show_webgl_sigma && !show_webgl_woelb_V) {
                 let nameDiv = document.createElement("div");
                 nameDiv.className = "emotionLabel";
@@ -638,12 +639,17 @@ export function draw_elements() {
             };
 
             let Ueberhoehung = 0.1 * slmax / maxWoelb_V * scaleFactor
-
-            const material = new THREE.LineBasicMaterial({
-                color: 0x5555ff,
-                linewidth: 2
+            /*
+                        const material = new THREE.LineBasicMaterial({
+                            color: 0x5555ff,
+                            linewidth: 2
+                        });
+            */
+            const material = new MeshLineMaterial({
+                color: 0x0000dd,
+                lineWidth: slmax / 100,
+                sizeAttenuation: 1,
             });
-
 
             for (let i = 0; i < nelem; i++) {
                 //console.log("elem i=", i)
@@ -677,7 +683,8 @@ export function draw_elements() {
 
                     x0 = x * (x2 - x1) / sl + x1
                     y0 = x * (y2 - y1) / sl + y1
-                    points.push(new THREE.Vector3(x0, y0, u * Ueberhoehung));
+                    //points.push(new THREE.Vector3(x0, y0, u * Ueberhoehung));
+                    points.push(x0, y0, u * Ueberhoehung);
 
                     if (Math.abs(u) > maxU.u) {
                         maxU.u = Math.abs(u)
@@ -686,13 +693,18 @@ export function draw_elements() {
                         maxU.y = y0
                     }
                 }
+                /*
+                                const geometry = new THREE.BufferGeometry().setFromPoints(points);
+                
+                                const line = new THREE.Line(geometry, material);
+                                scene.add(line);
+                */
 
-                //points.push(new THREE.Vector3(x2, y2, node[truss[i].nod[1]].omega * Ueberhoehung));
+                const lines = new MeshLine();
+                lines.setPoints(points);
 
-                const geometry = new THREE.BufferGeometry().setFromPoints(points);
-
-                const line = new THREE.Line(geometry, material);
-                scene.add(line);
+                const meshL = new THREE.Mesh(lines, material);
+                scene.add(meshL);
 
                 if (show_webgl_label) {
                     let nameDiv = document.createElement("div");
@@ -700,12 +712,13 @@ export function draw_elements() {
                     wert = (maxU.u).toPrecision(3);
                     nameDiv.textContent = wert
                     nameDiv.id = "elNo" + i
+                    nameDiv.style.backgroundColor = '#ffffff'
                     //console.log("nameDiv", nameDiv)
                     const xLabel = new CSS2DObject(nameDiv);
                     xLabel.position.set(maxU.x, maxU.y, maxU.wert * Ueberhoehung);
                     xLabel.layers.set(1)
                     //console.log("xLabel", xLabel)
-                    line.add(xLabel);
+                    scene.add(xLabel);
                     xLabel.layers.set(1);
                 }
             }
@@ -715,11 +728,28 @@ export function draw_elements() {
         if (maxWoelb_M > 0.0000000000001 && show_webgl_woelb_M) {
 
             let Ueberhoehung = 0.1 * slmax / maxWoelb_M * scaleFactor
-
-            const material = new THREE.LineBasicMaterial({
-                color: 0x00dd00,
-                linewidth: 2
+            /*
+                        const material = new THREE.LineBasicMaterial({
+                            color: 0x00dd00,
+                            linewidth: 2
+                        });
+                        */
+            /*
+                        const points = [];
+                        
+                        for (let j = 0; j < 5*Math.PI; j += (2 * Math.PI) / 100) {
+                          points.push(j, Math.sin(j), 0);
+                        }
+            
+            const materialL = new MeshLineMaterial({
+                color: 0x0000dd,
+                //lineWidth: truss[0].dicke,
+                sizeAttenuation: 1,
+                //dashArray: 0.01,
+                //dashRatio: 0.2
             });
+            materialL.transparent = true;
+*/
 
             for (let i = 0; i < nelem; i++) {
                 //console.log("elem i=", i)
@@ -731,13 +761,28 @@ export function draw_elements() {
                 ym = (y1 + y2) / 2
 
                 const points = [];
-                points.push(new THREE.Vector3(x1, y1, node[truss[i].nod[0]].omega * Ueberhoehung));
-                points.push(new THREE.Vector3(x2, y2, node[truss[i].nod[1]].omega * Ueberhoehung));
+                points.push(x1, y1, node[truss[i].nod[0]].omega * Ueberhoehung);
+                points.push(x2, y2, node[truss[i].nod[1]].omega * Ueberhoehung);
+                //points.push(new THREE.Vector3(x1, y1, node[truss[i].nod[0]].omega * Ueberhoehung));
+                //points.push(new THREE.Vector3(x2, y2, node[truss[i].nod[1]].omega * Ueberhoehung));
 
-                const geometry = new THREE.BufferGeometry().setFromPoints(points);
+                //const geometry = new THREE.BufferGeometry().setFromPoints(points);
 
-                const line = new THREE.Line(geometry, material);
-                scene.add(line);
+                //const line = new THREE.Line(geometry, material);
+                //scene.add(line);
+
+                const lines = new MeshLine();
+                lines.setPoints(points);
+
+                const materialL = new MeshLineMaterial({
+                    color: 0x0000dd,
+                    lineWidth: truss[i].dicke,
+                    sizeAttenuation: 1,
+                });
+
+
+                const meshL = new THREE.Mesh(lines, materialL);
+                scene.add(meshL);
 
             }
 
@@ -1011,6 +1056,33 @@ export function draw_elements() {
 
                 scene.add(arrowHelper);
 
+
+                if (show_webgl_label) {
+
+                    let nameDiv = document.createElement("div");
+                    nameDiv.className = "emotionLabel";
+                    wert = (sigma1).toFixed(3);
+                    nameDiv.textContent = wert;
+                    nameDiv.id = "sig1"
+                    nameDiv.style.backgroundColor = '#ffffff'
+                    let xLabel = new CSS2DObject(nameDiv);
+                    xLabel.position.set(x1, y1, sigma1 * Ueberhoehung);
+                    xLabel.layers.set(1)
+                    scene.add(xLabel);
+
+                    nameDiv = document.createElement("div");
+                    nameDiv.className = "emotionLabel";
+                    wert = (sigma2).toFixed(3);
+                    nameDiv.textContent = wert;
+                    nameDiv.id = "sig2"
+                    nameDiv.style.backgroundColor = '#ffffff'
+                    xLabel = new CSS2DObject(nameDiv);
+                    xLabel.position.set(x2, y2, sigma2 * Ueberhoehung);
+                    xLabel.layers.set(1)
+                    scene.add(xLabel);
+
+                }
+
             }
 
 
@@ -1282,39 +1354,33 @@ export function draw_elements() {
                         wert = (punkteR[0].z / Ueberhoehung).toFixed(3);
                         nameDiv.textContent = wert;
                         nameDiv.id = "elNoTauR1" + i
-                        //console.log("nameDiv", nameDiv)
+                        nameDiv.style.backgroundColor = '#ffffff'
                         let xLabel = new CSS2DObject(nameDiv);
                         xLabel.position.set(punkteR[0].x, punkteR[0].y, punkteR[0].z);
                         xLabel.layers.set(1)
-                        //console.log("xLabel", xLabel)
                         mesh.add(xLabel);
-                        xLabel.layers.set(1);
 
                         nameDiv = document.createElement("div");
                         nameDiv.className = "emotionLabel";
                         wert = (punkteL[0].z / Ueberhoehung).toFixed(3);
                         nameDiv.textContent = wert;
                         nameDiv.id = "elNoTauL1" + i
-                        //console.log("nameDiv", nameDiv)
+                        nameDiv.style.backgroundColor = '#ffffff'
                         xLabel = new CSS2DObject(nameDiv);
                         xLabel.position.set(punkteL[0].x, punkteL[0].y, punkteL[0].z);
                         xLabel.layers.set(1)
-                        //console.log("xLabel", xLabel)
                         mesh.add(xLabel);
-                        xLabel.layers.set(1);
 
                         nameDiv = document.createElement("div");
                         nameDiv.className = "emotionLabel";
                         wert = (maxtau.tau / Ueberhoehung).toFixed(3);
                         nameDiv.textContent = wert;
                         nameDiv.id = "elNoTaum1" + i
-                        //console.log("nameDiv", nameDiv)
+                        nameDiv.style.backgroundColor = '#ffffff'
                         xLabel = new CSS2DObject(nameDiv);
                         xLabel.position.set(maxtau.x, maxtau.y, maxtau.wert);
                         xLabel.layers.set(1)
-                        //console.log("xLabel", xLabel)
                         mesh.add(xLabel);
-                        xLabel.layers.set(1);
 
                     }
 
@@ -1382,8 +1448,8 @@ export function draw_elements() {
             nameDiv.className = "emotionLabel";
             nameDiv.textContent = 'x';
             nameDiv.id = "elNo-x"
-            nameDiv.style.color='#000000'
-            nameDiv.style.border='none'
+            nameDiv.style.color = '#000000'
+            nameDiv.style.border = 'none'
             let xLabel = new CSS2DObject(nameDiv);
             xLabel.position.set(-y_s, -z_s, skreuz + vlen + slmax / 30);
             xLabel.layers.set(1)
@@ -1394,8 +1460,8 @@ export function draw_elements() {
             nameDiv.className = "emotionLabel";
             nameDiv.textContent = 'y';
             nameDiv.id = "elNo-y"
-            nameDiv.style.color='#000000'
-            nameDiv.style.border='none'
+            nameDiv.style.color = '#000000'
+            nameDiv.style.border = 'none'
             xLabel = new CSS2DObject(nameDiv);
             xLabel.position.set(-y_s - vlen - slmax / 30, -z_s, skreuz);
             xLabel.layers.set(1)
@@ -1406,8 +1472,8 @@ export function draw_elements() {
             nameDiv.className = "emotionLabel";
             nameDiv.textContent = 'z';
             nameDiv.id = "elNo-z"
-            nameDiv.style.color='#000000'
-            nameDiv.style.border='none'
+            nameDiv.style.color = '#000000'
+            nameDiv.style.border = 'none'
             xLabel = new CSS2DObject(nameDiv);
             xLabel.position.set(-y_s, -z_s - vlen - slmax / 30, skreuz);
             xLabel.layers.set(1)
