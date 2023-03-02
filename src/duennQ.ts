@@ -1056,13 +1056,13 @@ export function duennQ() {
     th0.title = "Elementnummer"
     th0.setAttribute("class", "table_spannung_cell_center");
     th1 = table.tHead.appendChild(document.createElement("th"));
-    th1.innerHTML = "&tau;<sub>xs1</sub>";
+    th1.innerHTML = "&tau;<sub>xsa</sub>";
     th1.title = "Schubspannung am Elementanfang, Elementknoten 1"
     th2 = table.tHead.appendChild(document.createElement("th"));
     th2.innerHTML = "&tau;<sub>xsm</sub>";
     th2.title = "Schubspannung in Elementmitte"
     th3 = table.tHead.appendChild(document.createElement("th"));
-    th3.innerHTML = "&tau;<sub>xs2</sub>";
+    th3.innerHTML = "&tau;<sub>xse</sub>";
     th3.title = "Schubspannung am Elementende, Elementknoten 2"
 
     for (i = 0; i < nelem; i++) {
@@ -1113,22 +1113,22 @@ export function duennQ() {
     th0.title = "Elementnummer"
     th0.setAttribute("class", "table_spannung_cell_center");
     th1 = table.tHead.appendChild(document.createElement("th"));
-    th1.innerHTML = "&tau;<sub>1,L</sub>";
+    th1.innerHTML = "&tau;<sub>a,L</sub>";
     th1.title = "Schubspannung am Elementanfang, Elementknoten 1, linke Seite"
     th2 = table.tHead.appendChild(document.createElement("th"));
     th2.innerHTML = "&tau;<sub>m,L</sub>";
     th2.title = "Schubspannung in Elementmitte, linke Seite"
     th3 = table.tHead.appendChild(document.createElement("th"));
-    th3.innerHTML = "&tau;<sub>2,L</sub>";
+    th3.innerHTML = "&tau;<sub>e,L</sub>";
     th3.title = "Schubspannung am Elementende, Elementknoten 2, linke Seite"
     let th4 = table.tHead.appendChild(document.createElement("th"));
-    th4.innerHTML = "&tau;<sub>1,R</sub>";
+    th4.innerHTML = "&tau;<sub>a,R</sub>";
     th4.title = "Schubspannung am Elementanfang, Elementknoten 1, rechte Seite"
     let th5 = table.tHead.appendChild(document.createElement("th"));
     th5.innerHTML = "&tau;<sub>m,R</sub>";
     th5.title = "Schubspannung in Elementmitte, rechte Seite"
     let th6 = table.tHead.appendChild(document.createElement("th"));
-    th6.innerHTML = "&tau;<sub>2,R</sub>";
+    th6.innerHTML = "&tau;<sub>e,R</sub>";
     th6.title = "Schubspannung am Elementende, Elementknoten 2, rechte Seite"
 
     let newRow = table.insertRow(-1);
@@ -1210,10 +1210,10 @@ export function duennQ() {
     th0.title = "Elementnummer"
     th0.setAttribute("class", "table_spannung_cell_center");
     th1 = table.tHead.appendChild(document.createElement("th"));
-    th1.innerHTML = "&sigma;<sub>x1</sub>";
+    th1.innerHTML = "&sigma;<sub>xa</sub>";
     th1.title = "Normalspannung in Mittellinie, Elementanfang"
     th2 = table.tHead.appendChild(document.createElement("th"));
-    th2.innerHTML = "&sigma;<sub>x2</sub>";
+    th2.innerHTML = "&sigma;<sub>xe</sub>";
     th2.title = "Normalspannung in Mittellinie, Elementende"
 
     for (i = 0; i < nelem; i++) {
@@ -1261,13 +1261,13 @@ export function duennQ() {
     th0.title = "Elementnummer"
     th0.setAttribute("class", "table_spannung_cell_center");
     th1 = table.tHead.appendChild(document.createElement("th"));
-    th1.innerHTML = "&sigma;<sub>v1</sub>";
+    th1.innerHTML = "&sigma;<sub>va</sub>";
     th1.title = "Größtwert der Vergleichsspannung, Elementanfang"
     th2 = table.tHead.appendChild(document.createElement("th"));
     th2.innerHTML = "&sigma;<sub>vm</sub>";
     th2.title = "Größtwert der Vergleichsspannung, Elementmitte"
     th3 = table.tHead.appendChild(document.createElement("th"));
-    th3.innerHTML = "&sigma;<sub>v2</sub>";
+    th3.innerHTML = "&sigma;<sub>ve</sub>";
     th3.title = "Größtwert der Vergleichsspannung, Elementende"
 
     for (i = 0; i < nelem; i++) {
