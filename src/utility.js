@@ -1,5 +1,5 @@
-import {berechnung_erfolgreich} from "./globals.js";
-import {myScreen, set_myScreen} from "./index.js";
+import { berechnung_erfolgreich } from "./globals.js";
+import { myScreen, set_myScreen } from "./index.js";
 import { systemlinien } from "./systemlinien";
 //import { duennQ } from "./duennQ";
 import { draw_elements } from "./grafik_3D.js";
@@ -34,11 +34,19 @@ export function testNumber(wert, zeile, spalte, id) {
 }
 
 //------------------------------------------------------------------------------------------------
+export function myFormat(wert, minDecimal, maxDecimal) {
+    //--------------------------------------------------------------------------------------------
+
+    return new Intl.NumberFormat(navigator.language, { minimumFractionDigits: minDecimal, maximumFractionDigits: maxDecimal }).format(wert);
+}
+
+
+//------------------------------------------------------------------------------------------------
 
 export function sichtbar(displayName) {
 
     currentTab = displayName;
-    
+
     if (displayName === 'eingabe') {
         //document.getElementById("eingabe").style.display = "block";
         document.getElementById("knotentabelle").style.display = "block";
@@ -82,20 +90,20 @@ export function sichtbar(displayName) {
 
     if (displayName === 'duenn3D') {
         set_myScreen();
-        if ( berechnung_erfolgreich ) draw_elements();
+        if (berechnung_erfolgreich) draw_elements();
         document.getElementById("my-webgl").style.display = "block";
         window.dispatchEvent(new Event("resize"));
         //window.dispatchEvent(new Event("forceRender"));
     } else {
         document.getElementById("my-webgl").style.display = "none";
     }
-    
+
     if (displayName === 'hilfe') {
         set_myScreen();
-        let breite = Math.min(myScreen.clientWidth,700);
+        let breite = Math.min(myScreen.clientWidth, 700);
         document.getElementById("id_doc").setAttribute("width", breite + "px");
         document.getElementById("id_doc").setAttribute("height", myScreen.clientHeight + "px");
-    
+
         document.getElementById("id_hilfe").style.display = "block";
     } else {
         document.getElementById("id_hilfe").style.display = "none";

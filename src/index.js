@@ -101,6 +101,8 @@ init_contextmenu();
     tag.appendChild(text);
     tag.innerHTML = "devicePixelRatio " + window.devicePixelRatio;
     myInfoDiv.appendChild(tag);
+
+    console.log("my locale", navigator.language)
 }
 
 main_3D();

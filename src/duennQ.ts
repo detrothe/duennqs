@@ -3,7 +3,7 @@ import { berechnungErfolgreich } from "./globals.js";
 import { resizeTable, tabulate } from "./base_tabelle.js"
 import './dateien.js';
 import { gauss } from "./gauss.js"
-import { testeZahl, sichtbar, testNumber } from './utility.js';
+import { testeZahl, myFormat, testNumber } from './utility.js';
 import { remove_selected_Tabelle, clear_Tabelle, nelem, nnodes } from "./duennQ_tabelle.js";
 import { label_svg } from "./systemlinien";
 import { set_myScreen } from "./index.js"
@@ -280,6 +280,7 @@ eTabelle.rows[4].cells[4].innerText = "4";
 eTabelle.rows[4].cells[5].innerText = "1";
 
 
+
 //----------------------------------------------------------------------------------------------
 
 export function duennQ() {
@@ -339,7 +340,7 @@ export function duennQ() {
     input = document.getElementById('Mz') as HTMLInputElement | null;
     moment_z = Number(testeZahl(input.value));
 
-    console.log ("Mxs", Mt2)
+    console.log("Mxs", Mt2)
     input = document.getElementById('fyRd') as HTMLInputElement | null;
     fyRd = Number(testeZahl(input.value));
 
@@ -808,8 +809,8 @@ export function duennQ() {
         truss[i].R2[1] = truss[i].ni * truss[i].Flaeche * (0.5 * truss[i].F[0] + truss[i].F[1]) / 3.0
 
         // entspricht F1 und F2 nach Krause für 4 Knotenelement
-        truss[i].F34[0] = truss[i].ni * truss[i].Flaeche * (13*truss[i].F[0] + 2 * truss[i].F[1]) / 120.0
-        truss[i].F34[1] = truss[i].ni * truss[i].Flaeche * (2 * truss[i].F[0] + 13*truss[i].F[1]) / 120.0
+        truss[i].F34[0] = truss[i].ni * truss[i].Flaeche * (13 * truss[i].F[0] + 2 * truss[i].F[1]) / 120.0
+        truss[i].F34[1] = truss[i].ni * truss[i].Flaeche * (2 * truss[i].F[0] + 13 * truss[i].F[1]) / 120.0
     }
 
     for (k = 0; k < neq; k++) R[k] = 0.0        // Aufstellen der rechten Seite
@@ -924,30 +925,30 @@ export function duennQ() {
         }
     }
 
-    document.getElementById("ys").innerText = Gesamt_ys.toFixed(2);
-    document.getElementById("zs").innerText = Gesamt_zs.toFixed(2);
-    document.getElementById("area").innerText = Gesamtflaeche.toFixed(2);
-    document.getElementById("Iys").innerText = Gesamt_Iyy.toFixed(2);
-    document.getElementById("Izs").innerText = Gesamt_Izz.toFixed(2);
-    document.getElementById("Iyzs").innerText = Gesamt_Iyz.toFixed(2);
-    document.getElementById("I11").innerText = I11.toFixed(2);
-    document.getElementById("I22").innerText = I22.toFixed(2);
-    document.getElementById("phi_h").innerText = (phi0 * 180.0 / Math.PI).toFixed(2);
+    document.getElementById("ys").innerText = myFormat(Gesamt_ys,2,2)   // Gesamt_ys.toFixed(2);
+    document.getElementById("zs").innerText = myFormat(Gesamt_zs,2,2);
+    document.getElementById("area").innerText = myFormat(Gesamtflaeche,2,2);
+    document.getElementById("Iys").innerText = myFormat(Gesamt_Iyy,2,2);
+    document.getElementById("Izs").innerText = myFormat(Gesamt_Izz,2,2);
+    document.getElementById("Iyzs").innerText = myFormat(Gesamt_Iyz,2,2);
+    document.getElementById("I11").innerText = myFormat(I11,1,2);
+    document.getElementById("I22").innerText = myFormat(I22,1,2);
+    document.getElementById("phi_h").innerText = myFormat((phi0 * 180.0 / Math.PI),2,2);
 
-    document.getElementById("yM").innerText = yM.toFixed(2);
-    document.getElementById("zM").innerText = zM.toFixed(2);
-    document.getElementById("I_t").innerText = Gesamt_It.toFixed(2);
-    document.getElementById("I_omega").innerText = I_omega.toFixed(2);
+    document.getElementById("yM").innerText = myFormat(yM,2,2);
+    document.getElementById("zM").innerText = myFormat(zM,2,2);
+    document.getElementById("I_t").innerText = myFormat(Gesamt_It,1,2);
+    document.getElementById("I_omega").innerText = myFormat(I_omega,1,2);
 
-    document.getElementById("r_1").innerText = ry.toFixed(2);
-    document.getElementById("r_2").innerText = rz.toFixed(2);
+    document.getElementById("r_1").innerText = myFormat(ry,2,2);
+    document.getElementById("r_2").innerText = myFormat(rz,2,2);
     if (I_omega > 0.0000000000001) {
-        document.getElementById("r_omega").innerText = rOmega.toFixed(2);
+        document.getElementById("r_omega").innerText = myFormat(rOmega,2,2);
     } else {
         document.getElementById("r_omega").innerText = "-";
     }
-    document.getElementById("i_M2").innerText = iM2.toFixed(2);
-    document.getElementById("i_p2").innerText = iP2.toFixed(2);
+    document.getElementById("i_M2").innerText = myFormat(iM2,2,2);
+    document.getElementById("i_p2").innerText = myFormat(iP2,2,2);
 
 
     // Altes löschen
@@ -1019,15 +1020,15 @@ export function duennQ() {
         newCell.setAttribute("class", "table_spannung_cell_center");
 
         newCell = newRow.insertCell(1);  // Insert a cell in the row at index 1
-        newText = document.createTextNode(truss[i].tau_p0L[0].toFixed(2));  // Append a text node to the cell
+        newText = document.createTextNode(myFormat(truss[i].tau_p0L[0],2,2));  // Append a text node to the cell
         newCell.appendChild(newText);
 
         newCell = newRow.insertCell(2);  // Insert a cell in the row at index 1
-        newText = document.createTextNode(truss[i].tau_p0R[0].toFixed(2));  // Append a text node to the cell
+        newText = document.createTextNode(myFormat(truss[i].tau_p0R[0],2,2));  // Append a text node to the cell
         newCell.appendChild(newText);
 
         newCell = newRow.insertCell(3);  // Insert a cell in the row at index 1
-        newText = document.createTextNode(truss[i].tau_p1[0].toFixed(2));  // Append a text node to the cell
+        newText = document.createTextNode(myFormat(truss[i].tau_p1[0],2,2));  // Append a text node to the cell
         newCell.appendChild(newText);
     }
 
@@ -1076,15 +1077,15 @@ export function duennQ() {
         newCell.setAttribute("class", "table_spannung_cell_center");
 
         newCell = newRow.insertCell(1);  // Insert a cell in the row at index 1
-        newText = document.createTextNode(truss[i].tau_s[0].toFixed(2));  // Append a text node to the cell
+        newText = document.createTextNode(myFormat(truss[i].tau_s[0],2,2));  // Append a text node to the cell
         newCell.appendChild(newText);
 
         newCell = newRow.insertCell(2);  // Insert a cell in the row at index 1
-        newText = document.createTextNode(truss[i].tau_s[1].toFixed(2));  // Append a text node to the cell
+        newText = document.createTextNode(myFormat(truss[i].tau_s[1],2,2));  // Append a text node to the cell
         newCell.appendChild(newText);
 
         newCell = newRow.insertCell(3);  // Insert a cell in the row at index 1
-        newText = document.createTextNode(truss[i].tau_s[2].toFixed(2));  // Append a text node to the cell
+        newText = document.createTextNode(myFormat(truss[i].tau_s[2],2,2));  // Append a text node to the cell
         newCell.appendChild(newText);
     }
 
@@ -1160,27 +1161,27 @@ export function duennQ() {
         newCell.setAttribute("class", "table_spannung_cell_center");
 
         newCell = newRow.insertCell(1);  // Insert a cell in the row at index 1
-        newText = document.createTextNode(truss[i].stress_L[0].toFixed(2));  // Append a text node to the cell
+        newText = document.createTextNode(myFormat(truss[i].stress_L[0],2,2));  // Append a text node to the cell
         newCell.appendChild(newText);
 
         newCell = newRow.insertCell(2);  // Insert a cell in the row at index 1
-        newText = document.createTextNode(truss[i].stress_L[1].toFixed(2));  // Append a text node to the cell
+        newText = document.createTextNode(myFormat(truss[i].stress_L[1],2,2));  // Append a text node to the cell
         newCell.appendChild(newText);
 
         newCell = newRow.insertCell(3);  // Insert a cell in the row at index 1
-        newText = document.createTextNode(truss[i].stress_L[2].toFixed(2));  // Append a text node to the cell
+        newText = document.createTextNode(myFormat(truss[i].stress_L[2],2,2));  // Append a text node to the cell
         newCell.appendChild(newText);
 
         newCell = newRow.insertCell(4);  // Insert a cell in the row at index 1
-        newText = document.createTextNode(truss[i].stress_R[0].toFixed(2));  // Append a text node to the cell
+        newText = document.createTextNode(myFormat(truss[i].stress_R[0],2,2));  // Append a text node to the cell
         newCell.appendChild(newText);
 
         newCell = newRow.insertCell(5);  // Insert a cell in the row at index 1
-        newText = document.createTextNode(truss[i].stress_R[1].toFixed(2));  // Append a text node to the cell
+        newText = document.createTextNode(myFormat(truss[i].stress_R[1],2,2));  // Append a text node to the cell
         newCell.appendChild(newText);
 
         newCell = newRow.insertCell(6);  // Insert a cell in the row at index 1
-        newText = document.createTextNode(truss[i].stress_R[2].toFixed(2));  // Append a text node to the cell
+        newText = document.createTextNode(myFormat(truss[i].stress_R[2],2,2));  // Append a text node to the cell
         newCell.appendChild(newText);
     }
 
@@ -1227,11 +1228,11 @@ export function duennQ() {
         newCell.setAttribute("class", "table_spannung_cell_center");
 
         newCell = newRow.insertCell(1);  // Insert a cell in the row at index 1
-        newText = document.createTextNode(truss[i].sigma_x[0].toFixed(3));  // Append a text node to the cell
+        newText = document.createTextNode(myFormat(truss[i].sigma_x[0],3,3));  // Append a text node to the cell
         newCell.appendChild(newText);
 
         newCell = newRow.insertCell(2);  // Insert a cell in the row at index 1
-        newText = document.createTextNode(truss[i].sigma_x[2].toFixed(3));  // Append a text node to the cell
+        newText = document.createTextNode(myFormat(truss[i].sigma_x[2],3,3));  // Append a text node to the cell
         newCell.appendChild(newText);
 
     }
@@ -1281,15 +1282,15 @@ export function duennQ() {
         newCell.setAttribute("class", "table_spannung_cell_center");
 
         newCell = newRow.insertCell(1);  // Insert a cell in the row at index 1
-        newText = document.createTextNode(truss[i].sigma_v[0].toFixed(3));  // Append a text node to the cell
+        newText = document.createTextNode(myFormat(truss[i].sigma_v[0],3,3));  // Append a text node to the cell
         newCell.appendChild(newText);
 
         newCell = newRow.insertCell(2);  // Insert a cell in the row at index 1
-        newText = document.createTextNode(truss[i].sigma_v[1].toFixed(3));  // Append a text node to the cell
+        newText = document.createTextNode(myFormat(truss[i].sigma_v[1],3,3));  // Append a text node to the cell
         newCell.appendChild(newText);
 
         newCell = newRow.insertCell(3);  // Insert a cell in the row at index 1
-        newText = document.createTextNode(truss[i].sigma_v[2].toFixed(3));  // Append a text node to the cell
+        newText = document.createTextNode(myFormat(truss[i].sigma_v[2],3,3));  // Append a text node to the cell
         newCell.appendChild(newText);
 
     }
