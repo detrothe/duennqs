@@ -1,6 +1,6 @@
 import * as d3 from "d3";
 import {set_nelem, set_nnodes, table_index} from "./duennQ_tabelle.js";
-
+import {berechnungErforderlich} from "./globals.js"
 
 export const selectedCellPoly = {   // export const
     isSelected: false,
@@ -86,6 +86,10 @@ export function resizeTable() {
 
     resize_Tabelle("nodeTable", nnodes, 2);
     resize_Tabelle("elemTable", nelem, 5);
+
+    document.getElementById("resize").style.color="#aaaaaa"
+    document.getElementById("resize").setAttribute('disabled',true)
+    berechnungErforderlich(true)
 
 }
 

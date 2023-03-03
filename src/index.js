@@ -13,6 +13,7 @@ import { init_contextmenu } from './contextMenu.js';
 
 
 import { logo_3D, main_3D, ttf_logo_3D } from "./grafik_3D";
+import {duennQ} from "./duennQ"
 
 export const myScreen = {
     clientWidth: 0,
@@ -113,6 +114,6 @@ logo_3D();
 
 ttf_logo_3D();
 
-
+duennQ();
 
 

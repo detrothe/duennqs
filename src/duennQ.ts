@@ -317,6 +317,7 @@ export function duennQ() {
 
     berechnungErfolgreich(false);
     document.getElementById("info_berechnung").innerText = "Fehler in Eingabe"
+    document.getElementById("rechnen").style.color="#dd0000"
 
     set_myScreen();
 
@@ -423,14 +424,14 @@ export function duennQ() {
         }
         wert = eTabelle.rows[i + 1].cells[4].innerText
         truss[i].nod[0] = Number(testNumber(wert, i + 1, 4, 'elemTable')) - 1;
-        if (truss[i].nod[0] < 0) {
-            alert("Knoteninzidenz nod1 von Element " + String(i + 1) + " muss größer 0 sein")
+        if (truss[i].nod[0] < 0 || truss[i].nod[0] > nnodes-1) {
+            alert("Knoteninzidenz nod1 von Element " + String(i + 1) + " muss größer 0 und kleiner gleich Anzahl Knoten sein")
             return;
         }
         wert = eTabelle.rows[i + 1].cells[5].innerText
         truss[i].nod[1] = Number(testNumber(wert, i + 1, 5, 'elemTable')) - 1;
-        if (truss[i].nod[1] < 0) {
-            alert("Knoteninzidenz nod2 von Element " + String(i + 1) + " muss größer 0 sein")
+        if (truss[i].nod[1] < 0 || truss[i].nod[1] > nnodes-1) {
+            alert("Knoteninzidenz nod2 von Element " + String(i + 1) + " muss größer 0 und kleiner gleich Anzahl Knoten sein")
             return;
         }
         console.log("truss", i, truss[i].EModul, truss[i].mue, truss[i].dicke, truss[i].nod[0], truss[i].nod[1])
@@ -1333,6 +1334,8 @@ btn3.addEventListener('click', clear_Tabelle);
 
 document.getElementById("material_equal").addEventListener('change', setMaterialEqual);
 document.getElementById('button_label_svg').addEventListener('click', label_svg, false);
+
+//document.getElementById("input_nodes").addEventListener('change', setMaterialEqual);
 
 // @ts-ignore
 window.setMaterialEqual = setMaterialEqual;   // jetzt auch in html sichtbar
