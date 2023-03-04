@@ -8,7 +8,7 @@ import { OrbitControls } from './OrbitControls.js';
 
 import { node, truss, Gesamt_ys, Gesamt_zs, yM, zM, phi0 } from "./duennQ"
 import { nnodes, nelem } from "./duennQ_tabelle.js"
-import { ymin, ymax, zmin, zmax, slmax } from "./duennQ";
+import { ymin, ymax, zmin, zmax, slmax, Mxp } from "./duennQ";
 import { myScreen } from "./index.js";
 import { CSS2DObject, CSS2DRenderer } from "./renderers/CSS2DRenderer.js"
 
@@ -719,7 +719,6 @@ export function draw_elements() {
                     xLabel.layers.set(1)
                     //console.log("xLabel", xLabel)
                     scene.add(xLabel);
-                    xLabel.layers.set(1);
                 }
             }
 
@@ -784,6 +783,24 @@ export function draw_elements() {
                 const meshL = new THREE.Mesh(lines, materialL);
                 scene.add(meshL);
 
+            }
+
+            for (i = 0; i < nnodes; i++) {
+
+                if (show_webgl_label) {
+                    let nameDiv = document.createElement("div");
+                    nameDiv.className = "emotionLabel";
+                    wert = (node[i].omega).toPrecision(3);
+                    nameDiv.textContent = wert
+                    nameDiv.id = "omega" + i
+                    nameDiv.style.backgroundColor = '#ffffff'
+                    //console.log("nameDiv", nameDiv)
+                    const xLabel = new CSS2DObject(nameDiv);
+                    xLabel.position.set(-node[i].y, -node[i].z, node[i].omega * Ueberhoehung);
+                    xLabel.layers.set(1)
+                    //console.log("xLabel", xLabel)
+                    scene.add(xLabel);
+                }
             }
 
         }
@@ -1360,16 +1377,18 @@ export function draw_elements() {
                         xLabel.layers.set(1)
                         mesh.add(xLabel);
 
-                        nameDiv = document.createElement("div");
-                        nameDiv.className = "emotionLabel";
-                        wert = (punkteL[0].z / Ueberhoehung).toFixed(3);
-                        nameDiv.textContent = wert;
-                        nameDiv.id = "elNoTauL1" + i
-                        nameDiv.style.backgroundColor = '#ffffff'
-                        xLabel = new CSS2DObject(nameDiv);
-                        xLabel.position.set(punkteL[0].x, punkteL[0].y, punkteL[0].z);
-                        xLabel.layers.set(1)
-                        mesh.add(xLabel);
+                        if (Mxp !== 0.0) {
+                            nameDiv = document.createElement("div");
+                            nameDiv.className = "emotionLabel";
+                            wert = (punkteL[0].z / Ueberhoehung).toFixed(3);
+                            nameDiv.textContent = wert;
+                            nameDiv.id = "elNoTauL1" + i
+                            nameDiv.style.backgroundColor = '#ffffff'
+                            xLabel = new CSS2DObject(nameDiv);
+                            xLabel.position.set(punkteL[0].x, punkteL[0].y, punkteL[0].z);
+                            xLabel.layers.set(1)
+                            mesh.add(xLabel);
+                        }
 
                         nameDiv = document.createElement("div");
                         nameDiv.className = "emotionLabel";
