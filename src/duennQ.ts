@@ -83,6 +83,7 @@ class TNode {
     Lx: number = 0                                  // Lagerbedingung  bei Eingabe: 0=frei, 1=fest, später enthält L() die Gleichungsnummern
     ys: number = 0.0                                // Knotenkoordinaten bezogen auf den Schwerpunkt
     zs: number = 0.0
+    nel: number = 0                                 // Anzahl der Elemente, die an dem Knoten hängen
 }
 
 class TElement {
@@ -430,18 +431,26 @@ export function duennQ() {
             alert("Knoteninzidenz nod1 von Element " + String(i + 1) + " muss größer 0 und kleiner gleich Anzahl Knoten sein")
             return;
         }
+        node[truss[i].nod[0]].nel++;
         wert = eTabelle.rows[i + 1].cells[5].innerText
         truss[i].nod[1] = Number(testNumber(wert, i + 1, 5, 'elemTable')) - 1;
         if (truss[i].nod[1] < 0 || truss[i].nod[1] > nnodes - 1) {
             alert("Knoteninzidenz nod2 von Element " + String(i + 1) + " muss größer 0 und kleiner gleich Anzahl Knoten sein")
             return;
         }
+        node[truss[i].nod[1]].nel++;
         console.log("truss", i, truss[i].EModul, truss[i].mue, truss[i].dicke, truss[i].nod[0], truss[i].nod[1])
         truss[i].GModul = truss[i].EModul / 2.0 / (1.0 + truss[i].mue)
         truss[i].ni = truss[i].EModul / EModul
         truss[i].ngi = truss[i].GModul / GModul
     }
 
+    for (i = 0; i < nnodes; i++) {
+        if (node[i].nel === 0) {
+            window.alert("An Knoten " + (i + 1) + " hängt keine Element")
+            return;
+        }
+    }
 
     node[0].Lx = 1                               // ein Freiheitsgrad muss gelagert werden
 
@@ -665,7 +674,7 @@ export function duennQ() {
     // Gleichungssystem lösen
     let error = gauss(neq, stiff, R);
     if (error != 0) {
-        console.log("Gleichungssystem singulär");
+        window.alert("Gleichungssystem singulär");
         return 1;
     }
 
@@ -834,7 +843,7 @@ export function duennQ() {
     // Gleichungssystem lösen
 
     if (gauss(neq, stiff2, R) != 0) {
-        console.log("Gleichungssystem 2 singulär");
+        window.alert("Gleichungssystem 2 singulär");
         return 1
     }
 

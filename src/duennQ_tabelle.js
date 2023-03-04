@@ -25,6 +25,7 @@ input_nodes.onchange = function () {
     berechnungErforderlich(true);
     document.getElementById("resize").disabled = false
     document.getElementById("resize").style.color = "#dd0000"
+    document.getElementById("rechnen").setAttribute('disabled',true)
 }
 
 //----------------------------------------------------------------------------------------------
@@ -35,6 +36,7 @@ input_nelem.onchange = function () {
     berechnungErforderlich(true);
     document.getElementById("resize").disabled = false
     document.getElementById("resize").style.color = "#dd0000"
+    document.getElementById("rechnen").setAttribute('disabled',true)
 }
 
 //----------------------------------------------------------------------------------------------
