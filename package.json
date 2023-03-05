@@ -19,7 +19,8 @@
     "@types/d3": "^7.4.0",
     "@types/three": "^0.148.0",
     "esbuild": "^0.12.29",
-    "jspdf": "^2.5.1"
+    "jspdf": "^2.5.1",
+    "jspdf-autotable": "^3.5.28"
   },
   "repository": {
     "type": "git",
