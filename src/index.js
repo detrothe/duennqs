@@ -5,6 +5,7 @@ import './styles/contextMenu.css';
 import "./duenn3D.js";
 import './ergebnisse.js'
 import './base_tabelle.js'
+import './mypdf'
 
 import { testeZahl, sichtbar, currentTab } from "./utility.js";
 

@@ -19,6 +19,15 @@ export function duennQuer() {
     sichtbar('duennQ')
 }
 
-
 // @ts-ignore
 window.duennQuer = duennQuer;   // jetzt auch in html sichtbar
+
+//------------------------------------------------------------------------------------------------
+
+export function mypdf() {
+    console.log("in mypdf");
+    sichtbar('mypdf')
+}
+
+// @ts-ignore
+window.mypdf = mypdf;   // jetzt auch in html sichtbar

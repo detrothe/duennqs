@@ -3,6 +3,7 @@ import { myScreen, set_myScreen } from "./index.js";
 import { systemlinien } from "./systemlinien";
 //import { duennQ } from "./duennQ";
 import { draw_elements } from "./grafik_3D.js";
+import { my_jspdf } from "./mypdf.js";
 
 export let currentTab;
 
@@ -108,4 +109,12 @@ export function sichtbar(displayName) {
     } else {
         document.getElementById("id_hilfe").style.display = "none";
     }
+
+    if (displayName === 'mypdf') {
+        document.getElementById("id_pdf").style.display = "block";
+        my_jspdf();
+    } else {
+        document.getElementById("id_pdf").style.display = "none";
+    }
+    
 }
