@@ -25,6 +25,8 @@ export function my_jspdf() {
   autoTable(doc, { html: '#nodeTable' });
   autoTable(doc, { html: '#elemTable' });
 
+let yy=doc.lastAutoTable.finalY;
+console.log("lastAutoTable",yy)
 
   //Get svg markup as string
   let svg = document.getElementById('my-svg').innerHTML;  // dataviz_area
@@ -52,7 +54,7 @@ export function my_jspdf() {
 
   // Generate PDF
   //var doc = new jsPDF('p', 'pt', 'a4');
-  doc.addImage(imgData, 'PNG', 0, 0, 200, 200 * myScreen.clientHeight / myScreen.svgWidth);
+  doc.addImage(imgData, 'PNG', 0, yy, 200, 200 * myScreen.clientHeight / myScreen.svgWidth);
 
   doc.save("a4.pdf");
 
