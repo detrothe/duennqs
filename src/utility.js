@@ -112,6 +112,7 @@ export function sichtbar(displayName) {
 
     if (displayName === 'mypdf') {
         document.getElementById("id_pdf").style.display = "block";
+        systemlinien();
         my_jspdf();
     } else {
         document.getElementById("id_pdf").style.display = "none";

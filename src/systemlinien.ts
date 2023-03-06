@@ -9,7 +9,7 @@ import { ymin, ymax, zmin, zmax, slmax } from "./duennQ";
 import {myScreen} from "./index.js";
 import {nnodes, nelem} from "./duennQ_tabelle.js"
 
-let svg = null;
+export let svg = null;
 let tr = null;
 let label_visible = false;
 
