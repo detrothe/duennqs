@@ -38,9 +38,9 @@ export function my_jspdf() {
   console.log("lastAutoTable", yy)
   doc.line(0, yy, 200, yy, 'S')
 
-  doc.text("lastAutoTable.finalY="+yy, 10, yy);
-  const fs=doc.getFontSize();
-  doc.text("fontsize="+fs, 10, yy+fs);
+  doc.text("lastAutoTable.finalY=" + yy, 10, yy);
+  const fs = doc.getFontSize();
+  doc.text("fontsize=" + fs, 10, yy + fs);
   //Get svg markup as string
   let svg = document.getElementById('my-svg').innerHTML;  // dataviz_area
 
@@ -54,7 +54,7 @@ export function my_jspdf() {
 
   var canvas = document.createElement('canvas');
   var context = canvas.getContext('2d');
-
+  console.log("canvas", canvas.width, canvas.height)
 
   context.clearRect(0, 0, canvas.width, canvas.height);
   const v = Canvg.fromString(context, svg);
@@ -68,7 +68,7 @@ export function my_jspdf() {
 
   // Generate PDF
   //var doc = new jsPDF('p', 'pt', 'a4');
-  doc.addImage(imgData, 'PNG', 0, 0, 200, 200 * myScreen.clientHeight / myScreen.svgWidth);
+  doc.addImage(imgData, 'PNG', 0, 0, 200, 200); // * myScreen.clientHeight / myScreen.svgWidth);
 
   doc.save("a4.pdf");
 

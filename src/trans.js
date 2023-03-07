@@ -1,13 +1,13 @@
-import {myScreen} from "./index";
+//import {myScreen} from "./index";
 //import * as THREE from "three";
 //import {OrbitControls} from "./OrbitControls";
 
 class CTrans {
-    constructor(ymin = 0.0, zmin = 0.0, ymax = 1.0, zmax = 1.0) {
-        this.init(ymin, zmin, ymax, zmax)
+    constructor(ymin = 0.0, zmin = 0.0, ymax = 1.0, zmax = 1.0, clientWidth=100.0, clientHeight=100.0) {
+        this.init(ymin, zmin, ymax, zmax, clientWidth, clientHeight)
     }
 
-    init(ymin, zmin, ymax, zmax) {
+    init(ymin, zmin, ymax, zmax, clientWidth, clientHeight) {
 
         let dy, dz;
 
@@ -33,9 +33,9 @@ class CTrans {
 
         console.log("dy,dz", this.dy, this.dz);
 
-        this.height = myScreen.clientHeight - 1; //  .getElementById("my-svg").clientHeight - 1;
+        this.height = clientHeight - 1; //  .getElementById("my-svg").clientHeight - 1;
         //this.width = document.getElementById("dataviz_area").clientWidth - 1;
-        this.width = myScreen.svgWidth - 1;
+        this.width = clientWidth - 1;
 
         //this.ratio = this.width / this.height;
 

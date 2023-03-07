@@ -2,12 +2,12 @@
 
 import * as d3 from "d3";
 
-import {CTrans} from './trans.js';
-import {truss, node, Gesamt_ys, Gesamt_zs, yM, zM, phi0} from "./duennQ"
+import { CTrans } from './trans.js';
+import { truss, node, Gesamt_ys, Gesamt_zs, yM, zM, phi0 } from "./duennQ"
 import { ymin, ymax, zmin, zmax, slmax } from "./duennQ";
 
-import {myScreen} from "./index.js";
-import {nnodes, nelem} from "./duennQ_tabelle.js"
+import { myScreen } from "./index.js";
+import { nnodes, nelem } from "./duennQ_tabelle.js"
 
 export let svg = null;
 let tr = null;
@@ -15,15 +15,23 @@ let label_visible = false;
 
 
 //--------------------------------------------------------------------------------------------------------
-export function systemlinien() {
-//--------------------------------------------------------------------------------------------------------
+export function systemlinien(clientWidth?: number, clientHeight?: number) {
+    //--------------------------------------------------------------------------------------------------------
 
     let i: number, j: number;
     //let slmax;
     let str = "";
     let y1: number, y2: number, z1: number, z2: number, h: number, si: number, co: number
 
-    if ( Gesamt_ys === undefined || isNaN(yM) ) return;
+    if (Gesamt_ys === undefined || isNaN(yM)) return;
+
+    if (typeof clientWidth === 'undefined') {
+        clientWidth = myScreen.svgWidth
+    }
+
+    if (typeof clientHeight === 'undefined') {
+        clientHeight = myScreen.clientWidth
+    }
 
     const y_s = Gesamt_ys;
     const z_s = Gesamt_zs;
@@ -59,9 +67,9 @@ export function systemlinien() {
     console.log("MAX", slmax, ymin, ymax, zmin, zmax)
 
     if (tr === null) {
-        tr = new CTrans(ymin, zmin, ymax, zmax)
+        tr = new CTrans(ymin, zmin, ymax, zmax, clientWidth, clientHeight)
     } else {
-        tr.init(ymin, zmin, ymax, zmax);
+        tr.init(ymin, zmin, ymax, zmax, clientWidth, clientHeight);
     }
 
     for (let i = 0; i < nnodes; i++) {
@@ -88,8 +96,8 @@ export function systemlinien() {
     const hauptachse4z = Math.round(tr.zPix(z_s + si));
 
 
-    document.getElementById("dataviz_area").setAttribute("width", myScreen.svgWidth + "px");
-    document.getElementById("dataviz_area").setAttribute("height", myScreen.clientHeight + "px");
+    document.getElementById("dataviz_area").setAttribute("width", clientWidth + "px");
+    document.getElementById("dataviz_area").setAttribute("height", clientHeight + "px");
 
     svg = d3.select("#dataviz_area")
 
@@ -125,7 +133,7 @@ export function systemlinien() {
 
         str = ""
         for (j = 0; j < 4; j++) {
-            str += Math.round(tr.yPix(truss[i].pts_y[j])) + ',' + Math.round(tr.zPix(truss[i].pts_z [j])) + ' ';
+            str += Math.round(tr.yPix(truss[i].pts_y[j])) + ',' + Math.round(tr.zPix(truss[i].pts_z[j])) + ' ';
         }
         svg.append('polygon')
             .attr('points', str)
@@ -165,7 +173,7 @@ export function systemlinien() {
 
     svg.append("text").attr("x", Number(Math.round(tr.yPix(0.0))) + 5).attr("y", Number(Math.round(tr.zPix(sl / 2))) - 6).html("z&#772;").style("font-size", 15).style("fill", 'darkslategrey');
 
-// y-z Koordinatensystem
+    // y-z Koordinatensystem
 
     svg.append("line")
         .attr("x1", ys)
@@ -189,7 +197,7 @@ export function systemlinien() {
 
     svg.append("text").attr("x", ys + 5).attr("y", Number(Math.round(tr.zPix(z_s + sl / 2))) - 5).text("z").style("font-size", 15).style("fill", 'blue');
 
-// Hauptachsenkoordinatensystem
+    // Hauptachsenkoordinatensystem
 
     svg.append("line")
         .attr("x1", hauptachse1y)
@@ -222,10 +230,10 @@ export function systemlinien() {
         .attr("cx", y_M).attr("cy", z_M).attr("r", 5).style("fill", "red")
         .attr("id", "circleTooltip_SM")
 
-// Hauptachsen
+    // Hauptachsen
 
 
-// create a tooltip
+    // create a tooltip
     const tooltip = d3.select("#my-svg")    // #my_dataviz   my-svg
         .append("div")
         .style("position", "absolute")
@@ -262,7 +270,7 @@ export function systemlinien() {
         });
 
 
-// create a tooltip
+    // create a tooltip
     const tooltip_SM = d3.select("#my-svg")    // #my_dataviz   my-svg
         .append("div")
         .style("position", "absolute")
@@ -298,7 +306,7 @@ export function systemlinien() {
             return tooltip_SM.style("visibility", "hidden");
         });
 
-//svg.selectAll("circle").remove(); // alles entfernen aus früheren Berechnungen
+    //svg.selectAll("circle").remove(); // alles entfernen aus früheren Berechnungen
 
 
 }
