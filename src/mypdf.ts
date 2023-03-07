@@ -12,6 +12,8 @@ export function my_jspdf() {
   const doc = new jsPDF();
 
   doc.text("Dünnwandiger Querschnitt", 10, 10);
+  doc.setFontSize(14);
+  
   /*
       autoTable(doc, {
           head: [['Name', 'Email', 'Country']],
@@ -27,13 +29,16 @@ export function my_jspdf() {
   let yy = doc.lastAutoTable.finalY;
   console.log("lastAutoTable", yy)
   doc.line(0, yy, 200, yy, 'S')
-  
+
   autoTable(doc, { html: '#elemTable' });
 
   yy = doc.lastAutoTable.finalY;
   console.log("lastAutoTable", yy)
   doc.line(0, yy, 200, yy, 'S')
 
+  doc.text("lastAutoTable.finalY="+yy, 10, yy);
+  const fs=doc.getFontSize();
+  doc.text("fontsize="+fs, 10, yy+fs);
   //Get svg markup as string
   let svg = document.getElementById('my-svg').innerHTML;  // dataviz_area
 
