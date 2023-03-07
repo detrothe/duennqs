@@ -23,10 +23,16 @@ export function my_jspdf() {
       })
   */
   autoTable(doc, { html: '#nodeTable' });
+
+  let yy = doc.lastAutoTable.finalY;
+  console.log("lastAutoTable", yy)
+  doc.line(0, yy, 200, yy, 'S')
+  
   autoTable(doc, { html: '#elemTable' });
 
-let yy=doc.lastAutoTable.finalY;
-console.log("lastAutoTable",yy)
+  yy = doc.lastAutoTable.finalY;
+  console.log("lastAutoTable", yy)
+  doc.line(0, yy, 200, yy, 'S')
 
   //Get svg markup as string
   let svg = document.getElementById('my-svg').innerHTML;  // dataviz_area
@@ -48,7 +54,7 @@ console.log("lastAutoTable",yy)
 
   //'<svg width="600" height="600"><text x="50" y="50">Hello World!</text></svg>');
 
-  v.start();
+  v.render();
 
   var imgData = canvas.toDataURL('image/png', 1);
 
