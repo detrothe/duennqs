@@ -71,8 +71,10 @@ export function my_jspdf() {
     // Generate PDF
     //var doc = new jsPDF('p', 'pt', 'a4');
     doc.addImage(imgData, 'PNG', 0, 0, 200, 200); // * myScreen.clientHeight / myScreen.svgWidth);
-
-    doc.save("a4.pdf");
+    
+    const filename = window.prompt("Name der Datei mit Extension, z.B. test.pdf\nDie Datei wird im Default Download Ordner gespeichert");
+    
+    doc.save(filename);
 
     document.getElementById("id_pdf_info").innerText = "pdf-file saved with name " + "a4.pdf" + " in your Download folder"
   }
