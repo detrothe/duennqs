@@ -25,13 +25,16 @@ export function systemlinien(clientWidth?: number, clientHeight?: number) {
 
     if (Gesamt_ys === undefined || isNaN(yM)) return;
 
+    console.log("WIDTH HEIGHT",clientWidth,clientHeight);
+
     if (typeof clientWidth === 'undefined') {
         clientWidth = myScreen.svgWidth
     }
 
     if (typeof clientHeight === 'undefined') {
-        clientHeight = myScreen.clientWidth
+        clientHeight = myScreen.clientHeight
     }
+    console.log("WIDTH HEIGHT",clientWidth,clientHeight);
 
     const y_s = Gesamt_ys;
     const z_s = Gesamt_zs;
