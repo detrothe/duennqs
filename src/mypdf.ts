@@ -13,7 +13,7 @@ export function my_jspdf() {
 
   doc.text("Dünnwandiger Querschnitt", 10, 10);
   doc.setFontSize(14);
-  
+
   /*
       autoTable(doc, {
           head: [['Name', 'Email', 'Country']],
@@ -26,12 +26,14 @@ export function my_jspdf() {
   */
   autoTable(doc, { html: '#nodeTable' });
 
+  // @ts-ignore
   let yy = doc.lastAutoTable.finalY;
   console.log("lastAutoTable", yy)
   doc.line(0, yy, 200, yy, 'S')
 
   autoTable(doc, { html: '#elemTable' });
 
+  // @ts-ignore
   yy = doc.lastAutoTable.finalY;
   console.log("lastAutoTable", yy)
   doc.line(0, yy, 200, yy, 'S')
@@ -46,6 +48,7 @@ export function my_jspdf() {
 
     svg = svg.replace(/\r?\n|\r/g, '').trim();
   svg = svg.substring(0, svg.indexOf('</svg>')) + '</svg>';
+  // @ts-ignore
   svg = svg.replaceAll("  ", '');
   console.log("svg", svg)
 
