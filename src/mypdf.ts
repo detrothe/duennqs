@@ -51,7 +51,7 @@ export function my_jspdf() {
     // @ts-ignore
     svg = svg.replaceAll("  ", '');
     console.log("svg", svg)
-
+/*
     var canvas = document.createElement('canvas');
     var context = canvas.getContext('2d');
     console.log("canvas", canvas.width, canvas.height)
@@ -71,7 +71,7 @@ export function my_jspdf() {
     // Generate PDF
     //var doc = new jsPDF('p', 'pt', 'a4');
     doc.addImage(imgData, 'PNG', 0, 0, 200, 200); // * myScreen.clientHeight / myScreen.svgWidth);
-    
+    */
     const filename = window.prompt("Name der Datei mit Extension, z.B. test.pdf\nDie Datei wird im Default Download Ordner gespeichert");
     
     doc.save(filename);
