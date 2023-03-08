@@ -7,8 +7,20 @@ import { app } from "./index";
 //import {svg} from "./systemlinien"
 
 //----------------------------------------------------------------------------------------------
-export function my_jspdf() {
+export async function my_jspdf() {
   //----------------------------------------------------------------------------------------------
+
+  const opts = {
+    types: [{
+      description: 'Text file',
+      accept: {'text/plain': ['.txt']},
+    }],
+  };
+  return await window.showSaveFilePicker(opts);
+  
+  //window.URL.revokeObjectURL();
+  //const res = await navigator.storage.getDirectory()
+  //console.log("res",res)
 
   // Default export is a4 paper, portrait, using millimeters for units
   const doc = new jsPDF();
@@ -34,6 +46,10 @@ export function my_jspdf() {
   doc.line(0, yy, 200, yy, 'S')
 
   autoTable(doc, { html: '#elemTable' });
+
+  doc.text("ideelle Querschnittswerte", 10, doc.lastAutoTable.finalY);
+ 
+  autoTable(doc, { html: '#querschnittwerte_table' });
 
   // @ts-ignore
   yy = doc.lastAutoTable.finalY;
