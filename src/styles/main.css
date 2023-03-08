@@ -740,13 +740,16 @@ td {
 }
 
 .c_hilfe {
-    text-align: center;
+    text-align: left;
 }
 
 #info_berechnung {
     text-align: right;
 }
 
+#infoBox {
+    background-color: lightgray;
+}
 
 /*
 .unsichtbar {

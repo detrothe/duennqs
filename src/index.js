@@ -14,7 +14,7 @@ import { init_contextmenu } from './contextMenu.js';
 
 
 import { logo_3D, main_3D, ttf_logo_3D } from "./grafik_3D";
-import {duennQ} from "./duennQ"
+import { duennQ } from "./duennQ"
 
 export const myScreen = {
     clientWidth: 0,
@@ -25,7 +25,7 @@ export const myScreen = {
 // myScreen.clientWidth = document.documentElement.clientWidth;
 // myScreen.clientHeight = document.documentElement.clientHeight;
 
-
+export const infoBox = document.getElementById("infoBox");
 
 export function set_myScreen() {
 
@@ -115,6 +115,17 @@ logo_3D();
 
 ttf_logo_3D();
 
+{
+    infoBox.innerHTML = "clientwidth=" + myScreen.clientWidth + "&nbsp;,&nbsp;&nbsp;    clientheight=" + myScreen.clientHeight;
+    infoBox.innerHTML += "<br>Browser: " + Detect.browser + " Version " + Detect.version;
+    infoBox.innerHTML += "<br>OS: " + Detect.OS + " , isMac: " + app.isMac;
+    if (app.hasFSAccess) {
+        infoBox.innerHTML += "<br>showSaveFilePicker wird unterstützt";
+    } else {
+        infoBox.innerHTML += "<br>showSaveFilePicker wird NICHT unterstützt";
+    }
+
+}
 duennQ();
 
 

@@ -1,7 +1,7 @@
 import { jsPDF } from "jspdf";
 import autoTable from "jspdf-autotable";
 import { Canvg } from 'canvg';
-import { myScreen } from "./index.js";
+import { infoBox } from "./index.js";
 
 import { app } from "./index";
 //import {svg} from "./systemlinien"
@@ -46,7 +46,8 @@ export function my_jspdf() {
   //Get svg markup as string
   let svg = document.getElementById('my-svg').innerHTML;  // dataviz_area
 
-  console.log("app.hasFSAccess", app.hasFSAccess)
+  infoBox.innerHTML += "<br>mypdf: " + yy;
+
   if (svg) {
 
     svg = svg.replace(/\r?\n|\r/g, '').trim();
