@@ -10,14 +10,7 @@ import { app } from "./index";
 export async function my_jspdf() {
   //----------------------------------------------------------------------------------------------
 
-  const opts = {
-    types: [{
-      description: 'Text file',
-      accept: {'text/plain': ['.txt']},
-    }],
-  };
-  return await window.showSaveFilePicker(opts);
-  
+
   //window.URL.revokeObjectURL();
   //const res = await navigator.storage.getDirectory()
   //console.log("res",res)
@@ -26,7 +19,7 @@ export async function my_jspdf() {
   const doc = new jsPDF();
 
   doc.text("Dünnwandiger Querschnitt", 10, 10);
-  doc.setFontSize(14);
+  doc.setFontSize(14);  // in points
 
   /*
       autoTable(doc, {
@@ -47,18 +40,39 @@ export async function my_jspdf() {
 
   autoTable(doc, { html: '#elemTable' });
 
-  doc.text("ideelle Querschnittswerte", 10, doc.lastAutoTable.finalY);
- 
+  // @ts-ignore
+  yy = doc.lastAutoTable.finalY
+  doc.line(0, yy, 200, yy, 'S')
+  yy += 14 * 0.352778  // Umrechnung pt in mm
+  doc.text("ideelle Querschnittswerte", 10, yy);
+
   autoTable(doc, { html: '#querschnittwerte_table' });
+  autoTable(doc, { html: '#id_table_spannung_mxp' });
+  autoTable(doc, { html: '#id_table_spannung_mxs' });
+  autoTable(doc, { html: '#id_table_schubspannung' });
+
+  autoTable(doc, {
+    html: '#id_table_normalspannung',
+    theme: 'plain',
+    tableWidth: 100,
+    useCss: true
+  });
+
+  autoTable(doc, {
+    html: '#id_table_vergleichsspannung',
+    theme: 'plain',
+    tableWidth: 100,
+    useCss: true
+  });
 
   // @ts-ignore
   yy = doc.lastAutoTable.finalY;
   console.log("lastAutoTable", yy)
   doc.line(0, yy, 200, yy, 'S')
 
-  doc.text("lastAutoTable.finalY=" + yy, 10, yy);
+  doc.text("lastAutoTable.finalY=" + yy, 10, yy + 14 * 0.352778);
   const fs = doc.getFontSize();
-  doc.text("fontsize=" + fs, 10, yy + fs);
+  doc.text("fontsize=" + fs, 10, yy + 2 * (14 * 0.352778));
   //Get svg markup as string
   let svg = document.getElementById('my-svg').innerHTML;  // dataviz_area
 
@@ -93,7 +107,7 @@ export async function my_jspdf() {
         doc.addImage(imgData, 'PNG', 0, 0, 200, 200); // * myScreen.clientHeight / myScreen.svgWidth);
         */
     const filename = window.prompt("Name der Datei mit Extension, z.B. test.pdf\nDie Datei wird im Default Download Ordner gespeichert");
-    
+
     try {
       doc.save(filename);
     } catch (error) {
