@@ -22,7 +22,7 @@ export async function my_jspdf() {
   doc.addFont("freesans.ttf", "freesans_normal", "normal");
   doc.setFont("freesans_normal");
 
-  doc.text("Dünnwandiger σ Querschnitt", 10, 10);
+  doc.text("Dünnwandiger Querschnitt", 10, 10);
   doc.setFontSize(14); // in points
 
   /*
@@ -59,8 +59,21 @@ export async function my_jspdf() {
       font: "freesans_normal",
     },
   });
+
+  // @ts-ignore
+  yy = doc.lastAutoTable.finalY + 1.15 * (14 * 0.352778); // Umrechnung pt in mm
+  doc.text("Alle Spannungen in kN/cm²", 10, yy);
+
+  // @ts-ignore
+  yy = doc.lastAutoTable.finalY + 2 * 1.15 * (14 * 0.352778); // Umrechnung pt in mm
+  doc.text("Schubspannungen aus primärer Torsion", 10, yy);
+
+  // @ts-ignore
+  yy = doc.lastAutoTable.finalY + 3 * 1.15 * (14 * 0.352778); // Umrechnung pt in mm
+
   autoTable(doc, {
     html: "#id_table_spannung_mxp",
+    startY: yy,
     theme: "plain",
     tableWidth: 100,
     useCss: true,
@@ -68,6 +81,11 @@ export async function my_jspdf() {
       font: "freesans_normal",
     },
   });
+
+  // @ts-ignore
+  yy = doc.lastAutoTable.finalY + 14 * 0.352778; // Umrechnung pt in mm
+  doc.text("Schubspannungen aus Querkraft und sekundärer Torsion", 10, yy);
+
   autoTable(doc, {
     html: "#id_table_spannung_mxs",
     theme: "plain",
@@ -77,15 +95,24 @@ export async function my_jspdf() {
       font: "freesans_normal",
     },
   });
+
+  // @ts-ignore
+  yy = doc.lastAutoTable.finalY + 14 * 0.352778; // Umrechnung pt in mm
+  doc.text("Schubspannungen aus allen Anteilen", 10, yy);
+
   autoTable(doc, {
     html: "#id_table_schubspannung",
     theme: "plain",
-    tableWidth: 100,
+    tableWidth: 150,
     useCss: true,
     styles: {
       font: "freesans_normal",
     },
   });
+
+  // @ts-ignore
+  yy = doc.lastAutoTable.finalY + 14 * 0.352778; // Umrechnung pt in mm
+  doc.text("Normalspannungen aus Normalkraft, Biegemoment und Wölbbimoment", 10, yy);
 
   autoTable(doc, {
     html: "#id_table_normalspannung",
@@ -96,6 +123,11 @@ export async function my_jspdf() {
       font: "freesans_normal",
     },
   });
+
+
+  // @ts-ignore
+  yy = doc.lastAutoTable.finalY + 14 * 0.352778; // Umrechnung pt in mm
+  doc.text("Vergleichsspannungen", 10, yy);
 
   autoTable(doc, {
     html: "#id_table_vergleichsspannung",
@@ -125,12 +157,14 @@ export async function my_jspdf() {
     nameDiv.textContent = 'Hallo Welt';
     nameDiv.id = "divtest"
  */
+  /*
   let nameDiv = document.getElementById("divtest") as HTMLInputElement | null;
   console.log("namediv", nameDiv);
   doc.html(nameDiv, {
     x: 10,
     y: 10,
   });
+*/
 
   if (svg) {
     svg = svg.replace(/\r?\n|\r/g, "").trim();
