@@ -15,7 +15,7 @@ let label_visible = false;
 
 
 //--------------------------------------------------------------------------------------------------------
-export function systemlinien(clientWidth?: number, clientHeight?: number) {
+export function systemlinien(clientWidth?: number, clientHeight?: number, faktor = 1.0) {
     //--------------------------------------------------------------------------------------------------------
 
     let i: number, j: number;
@@ -25,7 +25,7 @@ export function systemlinien(clientWidth?: number, clientHeight?: number) {
 
     if (Gesamt_ys === undefined || isNaN(yM)) return;
 
-    console.log("WIDTH HEIGHT",clientWidth,clientHeight);
+    console.log("WIDTH HEIGHT",clientWidth,clientHeight, faktor);
 
     if (typeof clientWidth === 'undefined') {
         clientWidth = myScreen.svgWidth
@@ -163,7 +163,7 @@ export function systemlinien(clientWidth?: number, clientHeight?: number) {
         .attr("stroke-width", 2)
         .attr("marker-end", "url(#arrow_darkslategrey)");
 
-    svg.append("text").attr("x", Number(Math.round(tr.yPix(sl / 2))) + 5).attr("y", Number(Math.round(tr.zPix(0.0))) - 7).html("y&#772;").style("font-size", 15).style("fill", 'darkslategrey');
+    svg.append("text").attr("x", Number(Math.round(tr.yPix(sl / 2))) + 5).attr("y", Number(Math.round(tr.zPix(0.0))) - 7).html("y&#772;").style("font-size", 15*faktor).style("fill", 'darkslategrey');
 
     svg.append("line")   // Koordinatenkreuz im Ursprung, z-Richtung
         .attr("x1", Math.round(tr.yPix(0.0)))
@@ -174,7 +174,7 @@ export function systemlinien(clientWidth?: number, clientHeight?: number) {
         .attr("stroke-width", 2)
         .attr("marker-end", "url(#arrow_darkslategrey)");
 
-    svg.append("text").attr("x", Number(Math.round(tr.yPix(0.0))) + 5).attr("y", Number(Math.round(tr.zPix(sl / 2))) - 6).html("z&#772;").style("font-size", 15).style("fill", 'darkslategrey');
+    svg.append("text").attr("x", Number(Math.round(tr.yPix(0.0))) + 5).attr("y", Number(Math.round(tr.zPix(sl / 2))) - 6).html("z&#772;").style("font-size", 15*faktor).style("fill", 'darkslategrey');
 
     // y-z Koordinatensystem
 
@@ -187,7 +187,7 @@ export function systemlinien(clientWidth?: number, clientHeight?: number) {
         .attr("stroke-width", 1.5)
         .attr("marker-end", "url(#arrow_blue)");
 
-    svg.append("text").attr("x", Number(Math.round(tr.yPix(y_s + sl / 2))) + 5).attr("y", zs - 5).text("y").style("font-size", 15).style("fill", 'blue');
+    svg.append("text").attr("x", Number(Math.round(tr.yPix(y_s + sl / 2))) + 5).attr("y", zs - 5).text("y").style("font-size", 15*faktor).style("fill", 'blue');
 
     svg.append("line")
         .attr("x1", ys)
@@ -198,7 +198,7 @@ export function systemlinien(clientWidth?: number, clientHeight?: number) {
         .attr("stroke-width", 1.5)
         .attr("marker-end", "url(#arrow_blue)");
 
-    svg.append("text").attr("x", ys + 5).attr("y", Number(Math.round(tr.zPix(z_s + sl / 2))) - 5).text("z").style("font-size", 15).style("fill", 'blue');
+    svg.append("text").attr("x", ys + 5).attr("y", Number(Math.round(tr.zPix(z_s + sl / 2))) - 5).text("z").style("font-size", 15*faktor).style("fill", 'blue');
 
     // Hauptachsenkoordinatensystem
 
@@ -211,7 +211,7 @@ export function systemlinien(clientWidth?: number, clientHeight?: number) {
         .attr("stroke-width", 2)
         .attr("marker-end", "url(#arrow)");
 
-    svg.append("text").attr("x", Number(hauptachse2y) + 5).attr("y", Number(hauptachse2z) - 5).text(" 1").style("font-size", 15);
+    svg.append("text").attr("x", Number(hauptachse2y) + 5).attr("y", Number(hauptachse2z) - 5).text(" 1").style("font-size", 15*faktor);
 
     svg.append("line")
         .attr("x1", hauptachse3y)
@@ -222,7 +222,7 @@ export function systemlinien(clientWidth?: number, clientHeight?: number) {
         .attr("stroke-width", 2)
         .attr("marker-end", "url(#arrow)");
 
-    svg.append("text").attr("x", Number(hauptachse4y) + 5).attr("y", Number(hauptachse4z) - 5).text(" 2").style("font-size", 15);
+    svg.append("text").attr("x", Number(hauptachse4y) + 5).attr("y", Number(hauptachse4z) - 5).text(" 2").style("font-size", 15*faktor);
 
     svg.append("circle")       // Schwerpunkt
         .attr("cx", ys).attr("cy", zs).attr("r", 5).style("fill", "blue")
