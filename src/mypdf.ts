@@ -1,4 +1,4 @@
-import { jsPDF } from "jspdf";
+import { jsPDF, jsPDFAPI } from "jspdf";
 import autoTable from "jspdf-autotable";
 import { Canvg } from "canvg";
 import { infoBox } from "./index.js";
@@ -7,6 +7,43 @@ import { app } from "./index";
 //import {svg} from "./systemlinien"
 import { font } from "./FreeSans-normal.js";
 
+import htmlToPdfmake from "html-to-pdfmake"
+
+//----------------------------------------------------------------------------------------------
+function htmlText(doc: jsPDF, text: string, x: number, y: number) {
+  //--------------------------------------------------------------------------------------------
+
+  const html = htmlToPdfmake(text);
+  //console.log("html", html)
+
+  const fs = doc.getFontSize();
+
+  let xx = x
+  let yy = y
+
+  for (let i = 0; i < html.length; i++) {
+    console.log("i,nodeName", i, html[i].nodeName)
+    if (typeof html[i].nodeName === 'undefined') { // einfacher Text
+      doc.text(html[i].text, xx, yy)
+      xx += doc.getTextWidth(html[i].text)
+    }
+    else if (html[i].nodeName === 'SUB') {
+      doc.setFontSize(fs - 2);
+      doc.text(html[i].text, xx, yy + 1)
+      xx += doc.getTextWidth(html[i].text)
+      doc.setFontSize(fs);
+    }
+    else if (html[i].nodeName === 'SUP') {
+      doc.setFontSize(fs - 2);
+      doc.text(html[i].text, xx, yy - 1)
+      xx += doc.getTextWidth(html[i].text)
+      doc.setFontSize(fs);
+    }
+
+  }
+
+}
+
 //----------------------------------------------------------------------------------------------
 export async function my_jspdf() {
   //----------------------------------------------------------------------------------------------
@@ -14,7 +51,26 @@ export async function my_jspdf() {
   //window.URL.revokeObjectURL();
   //const res = await navigator.storage.getDirectory()
   //console.log("res",res)
+  /*
+    var html = htmlToPdfmake(`
+        formular <sup>abc</sup>
+  `);
+  */
+  /*
+    <div>
+      <p>
+      formular < sub > abc < /sub>
+      < /p>
+      < /div>
+  */
+  /*
+  console.log("html", html.length, html[0].text, html[1].text, html[2].text)
+  console.log("html0", html[0].text, html[0].style, html[0].nodeName)
+  //console.log("html1", html[1].text, html[1].style[0], html[1].nodeName, html[1].sub.offset, html[1].sub.fontSize)
+  console.log("html2", html[2].text, html[2].style, html[2].nodeName)
 
+  console.log("html", html)
+  */
   // Default export is a4 paper, portrait, using millimeters for units
   const doc = new jsPDF();
 
@@ -23,6 +79,13 @@ export async function my_jspdf() {
   doc.setFont("freesans_normal");
 
   doc.text("Dünnwandiger Querschnitt", 10, 10);
+  let xx = doc.getTextWidth("Dünnwandiger Querschnitt")
+  console.log("xx", xx)
+  xx += 10
+  doc.text("xsa", xx, 11)
+  xx += doc.getTextWidth("xsa")
+  doc.text(" und weiter gehts", xx, 10)
+
   doc.setFontSize(14); // in points
 
   /*
@@ -35,14 +98,30 @@ export async function my_jspdf() {
           ],
       })
   */
-  autoTable(doc, { html: "#nodeTable" });
+  autoTable(doc, {
+    html: "#nodeTable",
+    theme: "plain",
+    tableWidth: 100,
+    //useCss: true,
+    styles: {
+      font: "freesans_normal",
+    }
+  });
 
   // @ts-ignore
   let yy = doc.lastAutoTable.finalY;
   console.log("lastAutoTable", yy);
   doc.line(0, yy, 200, yy, "S");
 
-  autoTable(doc, { html: "#elemTable" });
+  autoTable(doc, {
+    html: "#elemTable",
+    theme: "plain",
+    tableWidth: 100,
+    //useCss: true,
+    styles: {
+      font: "freesans_normal",
+    }
+  });
 
   // @ts-ignore
   yy = doc.lastAutoTable.finalY;
@@ -131,11 +210,13 @@ export async function my_jspdf() {
 
   autoTable(doc, {
     html: "#id_table_vergleichsspannung",
-    theme: "plain",
+    //theme: "plain",
     tableWidth: 100,
     useCss: true,
     styles: {
       font: "freesans_normal",
+      fontSize: 10,
+      fillColor: '#ffffff'
     },
   });
 
@@ -147,6 +228,10 @@ export async function my_jspdf() {
   doc.text("lastAutoTable.finalY=" + yy, 10, yy + 14 * 0.352778);
   const fs = doc.getFontSize();
   doc.text("fontsize=" + fs, 10, yy + 2 * (14 * 0.352778));
+
+  yy += 3 * (14 * 0.352778)
+  htmlText(doc, "Trägheitsmoment I<sub>yy,s</sub> und i<sub>M</sub><sup>2</sup> und", 10, yy)
+
   //Get svg markup as string
   let svg = document.getElementById("my-svg").innerHTML; // dataviz_area
 
