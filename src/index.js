@@ -7,7 +7,7 @@ import './ergebnisse.js'
 import './base_tabelle.js'
 import './mypdf'
 
-import { testeZahl, sichtbar, currentTab } from "./utility.js";
+import { sichtbar, currentTab } from "./utility.js";
 
 import DetectOS from './detectos.js'
 import { init_contextmenu } from './contextMenu.js';
@@ -126,6 +126,7 @@ ttf_logo_3D();
     }
 
 }
+
 duennQ();
 
 

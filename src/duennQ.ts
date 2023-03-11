@@ -62,6 +62,28 @@ function setMaterialEqual(ev) {
      */
 }
 
+class TTabQWerte {  // Tabelle Querschnittswerte für pdf
+    zs: string
+    ys: string
+    area: string
+    Iyy: string
+    Izz: string
+    Iyz: string
+    I11: string
+    I22: string
+    phi_h: string
+    yM: string
+    zM: string
+    It: string
+    Iomega: string
+    r1: string
+    r2: string
+    r_omega: string
+    i_M2: string
+    i_p2: string
+}
+
+export const tabQWerte = new TTabQWerte;
 
 export let node = [] as TNode[]
 export let truss = [] as TElement[]
@@ -937,30 +959,30 @@ export function duennQ() {
         }
     }
 
-    document.getElementById("ys").innerText = myFormat(Gesamt_ys, 2, 2)   // Gesamt_ys.toFixed(2);
-    document.getElementById("zs").innerText = myFormat(Gesamt_zs, 2, 2);
-    document.getElementById("area").innerText = myFormat(Gesamtflaeche, 2, 2);
-    document.getElementById("Iys").innerText = myFormat(Gesamt_Iyy, 2, 2);
-    document.getElementById("Izs").innerText = myFormat(Gesamt_Izz, 2, 2);
-    document.getElementById("Iyzs").innerText = myFormat(Gesamt_Iyz, 2, 2);
-    document.getElementById("I11").innerText = myFormat(I11, 1, 2);
-    document.getElementById("I22").innerText = myFormat(I22, 1, 2);
-    document.getElementById("phi_h").innerText = myFormat((phi0 * 180.0 / Math.PI), 2, 2);
+    tabQWerte.ys = document.getElementById("ys").innerText = myFormat(Gesamt_ys, 2, 2)   // Gesamt_ys.toFixed(2);
+    tabQWerte.zs = document.getElementById("zs").innerText = myFormat(Gesamt_zs, 2, 2);
+    tabQWerte.area = document.getElementById("area").innerText = myFormat(Gesamtflaeche, 2, 2);
+    tabQWerte.Iyy = document.getElementById("Iys").innerText = myFormat(Gesamt_Iyy, 2, 2);
+    tabQWerte.Izz = document.getElementById("Izs").innerText = myFormat(Gesamt_Izz, 2, 2);
+    tabQWerte.Iyz = document.getElementById("Iyzs").innerText = myFormat(Gesamt_Iyz, 2, 2);
+    tabQWerte.I11 = document.getElementById("I11").innerText = myFormat(I11, 1, 2);
+    tabQWerte.I22 = document.getElementById("I22").innerText = myFormat(I22, 1, 2);
+    tabQWerte.phi_h = document.getElementById("phi_h").innerText = myFormat((phi0 * 180.0 / Math.PI), 2, 2);
 
-    document.getElementById("yM").innerText = myFormat(yM, 2, 2);
-    document.getElementById("zM").innerText = myFormat(zM, 2, 2);
-    document.getElementById("I_t").innerText = myFormat(Gesamt_It, 1, 2);
-    document.getElementById("I_omega").innerText = myFormat(I_omega, 1, 2);
+    tabQWerte.yM = document.getElementById("yM").innerText = myFormat(yM, 2, 2);
+    tabQWerte.zM = document.getElementById("zM").innerText = myFormat(zM, 2, 2);
+    tabQWerte.It = document.getElementById("I_t").innerText = myFormat(Gesamt_It, 1, 2);
+    tabQWerte.Iomega = document.getElementById("I_omega").innerText = myFormat(I_omega, 1, 2);
 
-    document.getElementById("r_1").innerText = myFormat(ry, 2, 2);
-    document.getElementById("r_2").innerText = myFormat(rz, 2, 2);
+    tabQWerte.r1 = document.getElementById("r_1").innerText = myFormat(ry, 2, 2);
+    tabQWerte.r2 = document.getElementById("r_2").innerText = myFormat(rz, 2, 2);
     if (I_omega > 0.0000000000001) {
-        document.getElementById("r_omega").innerText = myFormat(rOmega, 2, 2);
+        tabQWerte.r_omega = document.getElementById("r_omega").innerText = myFormat(rOmega, 2, 2);
     } else {
-        document.getElementById("r_omega").innerText = "-";
+        tabQWerte.r_omega = document.getElementById("r_omega").innerText = "-";
     }
-    document.getElementById("i_M2").innerText = myFormat(iM2, 2, 2);
-    document.getElementById("i_p2").innerText = myFormat(iP2, 2, 2);
+    tabQWerte.i_M2 = document.getElementById("i_M2").innerText = myFormat(iM2, 2, 2);
+    tabQWerte.i_p2 = document.getElementById("i_p2").innerText = myFormat(iP2, 2, 2);
 
 
     // Altes löschen

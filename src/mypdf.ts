@@ -8,6 +8,7 @@ import { app } from "./index";
 import { font } from "./FreeSans-normal.js";
 
 import htmlToPdfmake from "html-to-pdfmake"
+import { tabQWerte } from "./duennQ"
 
 //----------------------------------------------------------------------------------------------
 function htmlText(doc: jsPDF, text: string, x: number, y: number) {
@@ -28,13 +29,13 @@ function htmlText(doc: jsPDF, text: string, x: number, y: number) {
       xx += doc.getTextWidth(html[i].text)
     }
     else if (html[i].nodeName === 'SUB') {
-      doc.setFontSize(fs - 2);
+      doc.setFontSize(fs - 3);
       doc.text(html[i].text, xx, yy + 1)
       xx += doc.getTextWidth(html[i].text)
       doc.setFontSize(fs);
     }
     else if (html[i].nodeName === 'SUP') {
-      doc.setFontSize(fs - 2);
+      doc.setFontSize(fs - 3);
       doc.text(html[i].text, xx, yy - 1)
       xx += doc.getTextWidth(html[i].text)
       doc.setFontSize(fs);
