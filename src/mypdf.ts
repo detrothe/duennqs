@@ -6,6 +6,7 @@ import { infoBox } from "./index.js";
 import { app } from "./index";
 //import {svg} from "./systemlinien"
 import { font } from "./FreeSans-normal.js";
+import { fontBold } from "./FreeSans-bold.js"
 
 import htmlToPdfmake from "html-to-pdfmake"
 import { tabQWerte } from "./duennQ"
@@ -95,7 +96,11 @@ export async function my_jspdf() {
 
   doc.addFileToVFS("freesans.ttf", font);
   doc.addFont("freesans.ttf", "freesans_normal", "normal");
-  doc.setFont("freesans_normal");
+
+  doc.addFileToVFS("freesansbold.ttf", fontBold);
+  doc.addFont("freesansbold.ttf", "freesans_bold", "normal");
+
+  doc.setFont("freesans_bold");
   doc.setFontSize(fs1)
 
   doc.text("Dünnwandiger Querschnitt", links, 10);
@@ -103,11 +108,13 @@ export async function my_jspdf() {
 
   fs = 12
   doc.setFontSize(fs); // in points
+  doc.setFont("freesans_normal");
 
+  //console.log("nodeTable", document.getElementById("nodeTable"));
 
   autoTable(doc, {
     html: "#nodeTable",
-    theme: "plain",
+    //theme: "plain",
     tableWidth: 100,
     //useCss: true,
     margin: { left: links },
@@ -124,7 +131,7 @@ export async function my_jspdf() {
 
   autoTable(doc, {
     html: "#elemTable",
-    theme: "plain",
+    //theme: "plain",
     tableWidth: 100,
     //useCss: true,
     margin: { left: links },
@@ -139,8 +146,10 @@ export async function my_jspdf() {
   doc.line(links, yy, 200, yy, "S");
   yy = neueZeile(yy, fs1)
   doc.setFontSize(fs1)
+  doc.setFont("freesans_bold");
   doc.text("ideelle Querschnittswerte", links, yy);
   doc.setFontSize(fs)
+  doc.setFont("freesans_normal");
   /*
     autoTable(doc, {
       html: "#querschnittwerte_table",
@@ -242,7 +251,12 @@ export async function my_jspdf() {
 
   // @ts-ignore
   yy = doc.lastAutoTable.finalY + 14 * 0.352778; // Umrechnung pt in mm
-  doc.text("Schubspannungen aus Querkraft und sekundärer Torsion", 10, yy);
+  doc.text("Schubspannungen aus Querkraft und sekundärer Torsion", links, yy);
+
+  //console.log("id_table_spannung_mxs", document.getElementById("id_table_spannung_mxs"));
+
+  //const html1 = htmlToPdfmake(document.getElementById("id_table_spannung_mxs"))
+  //console.log("html1", html1)
 
   autoTable(doc, {
     html: "#id_table_spannung_mxs",
@@ -252,12 +266,13 @@ export async function my_jspdf() {
     margin: { left: links },
     styles: {
       font: "freesans_normal",
+      fontSize: fs
     },
   });
 
   // @ts-ignore
   yy = doc.lastAutoTable.finalY + 14 * 0.352778; // Umrechnung pt in mm
-  doc.text("Schubspannungen aus allen Anteilen", 10, yy);
+  doc.text("Schubspannungen aus allen Anteilen", links, yy);
 
   autoTable(doc, {
     html: "#id_table_schubspannung",
@@ -272,7 +287,7 @@ export async function my_jspdf() {
 
   // @ts-ignore
   yy = doc.lastAutoTable.finalY + 14 * 0.352778; // Umrechnung pt in mm
-  doc.text("Normalspannungen aus Normalkraft, Biegemoment und Wölbbimoment", 10, yy);
+  doc.text("Normalspannungen aus Normalkraft, Biegemoment und Wölbbimoment", links, yy);
 
   autoTable(doc, {
     html: "#id_table_normalspannung",
@@ -288,7 +303,7 @@ export async function my_jspdf() {
 
   // @ts-ignore
   yy = doc.lastAutoTable.finalY + 14 * 0.352778; // Umrechnung pt in mm
-  doc.text("Vergleichsspannungen", 10, yy);
+  doc.text("Vergleichsspannungen", links, yy);
 
   autoTable(doc, {
     html: "#id_table_vergleichsspannung",
@@ -303,6 +318,7 @@ export async function my_jspdf() {
     },
   });
 
+  /*
   // @ts-ignore
   yy = doc.lastAutoTable.finalY;
   console.log("lastAutoTable", yy);
@@ -315,10 +331,8 @@ export async function my_jspdf() {
   yy += 3 * (fs * 0.352778)
   htmlText(doc, "Trägheitsmoment I<sub>yy,s</sub> und i<sub>M</sub><sup>2</sup> und", 10, yy)
 
-  //Get svg markup as string
-  let svg = document.getElementById("my-svg").innerHTML; // dataviz_area
-
   infoBox.innerHTML += "<br>mypdf: " + yy;
+  */
   /*
     let nameDiv = document.createElement("div");
     //nameDiv.className = "emotionLabel";
@@ -333,13 +347,15 @@ export async function my_jspdf() {
     y: 10,
   });
 */
+  //Get svg markup as string
+  let svg = document.getElementById("my-svg").innerHTML; // dataviz_area
 
   if (svg) {
     svg = svg.replace(/\r?\n|\r/g, "").trim();
     svg = svg.substring(0, svg.indexOf("</svg>")) + "</svg>";
     // @ts-ignore
     svg = svg.replaceAll("  ", "");
-    console.log("svg", svg);
+    // console.log("svg", svg);
 
     var canvas = document.createElement("canvas");
     var context = canvas.getContext("2d");

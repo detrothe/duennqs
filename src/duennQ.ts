@@ -1110,9 +1110,11 @@ export function duennQ() {
         th3.title = "Schubspannung am Elementende, Elementknoten 2"
         row.appendChild(th3);
 
+        let tbody = table.createTBody();
+
         for (i = 0; i < nelem; i++) {
 
-            let newRow = table.insertRow(-1);
+            let newRow = tbody.insertRow(-1);
             let newCell, newText
             newCell = newRow.insertCell(0);  // Insert a cell in the row at index 0
 
