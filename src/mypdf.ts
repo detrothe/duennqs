@@ -10,20 +10,27 @@ import { font } from "./FreeSans-normal.js";
 import htmlToPdfmake from "html-to-pdfmake"
 import { tabQWerte } from "./duennQ"
 
+const zeilenAbstand = 1.15
+
 //----------------------------------------------------------------------------------------------
 function htmlText(doc: jsPDF, text: string, x: number, y: number) {
   //--------------------------------------------------------------------------------------------
 
   const html = htmlToPdfmake(text);
-  //console.log("html", html)
+  //console.log("html", text, "|" + html.text + "|", html.length)
 
   const fs = doc.getFontSize();
 
   let xx = x
   let yy = y
 
+  if (typeof html.length === 'undefined') {
+    doc.text(html.text, xx, yy)
+    return
+  }
+
   for (let i = 0; i < html.length; i++) {
-    console.log("i,nodeName", i, html[i].nodeName)
+    //console.log("i,nodeName", i, html[i].text, html[i].nodeName)
     if (typeof html[i].nodeName === 'undefined') { // einfacher Text
       doc.text(html[i].text, xx, yy)
       xx += doc.getTextWidth(html[i].text)
@@ -43,6 +50,12 @@ function htmlText(doc: jsPDF, text: string, x: number, y: number) {
 
   }
 
+}
+
+//----------------------------------------------------------------------------------------------
+function neueZeile(yy: number, fs: number, anzahl = 1): number {
+  //----------------------------------------------------------------------------------------------
+  return yy + anzahl * zeilenAbstand * (fs * 0.352778)
 }
 
 //----------------------------------------------------------------------------------------------
@@ -72,40 +85,35 @@ export async function my_jspdf() {
 
   console.log("html", html)
   */
+
+
+  let fs1 = 16, fs = 12
+  const links = 20;
+
   // Default export is a4 paper, portrait, using millimeters for units
   const doc = new jsPDF();
 
   doc.addFileToVFS("freesans.ttf", font);
   doc.addFont("freesans.ttf", "freesans_normal", "normal");
   doc.setFont("freesans_normal");
+  doc.setFontSize(fs1)
 
-  doc.text("Dünnwandiger Querschnitt", 10, 10);
-  let xx = doc.getTextWidth("Dünnwandiger Querschnitt")
-  console.log("xx", xx)
-  xx += 10
-  doc.text("xsa", xx, 11)
-  xx += doc.getTextWidth("xsa")
-  doc.text(" und weiter gehts", xx, 10)
+  doc.text("Dünnwandiger Querschnitt", links, 10);
 
-  doc.setFontSize(14); // in points
 
-  /*
-      autoTable(doc, {
-          head: [['Name', 'Email', 'Country']],
-          body: [
-              ['David', 'david@example.com', 'Sweden'],
-              ['Castille', 'castille@example.com', 'Spain'],
-              // ...
-          ],
-      })
-  */
+  fs = 12
+  doc.setFontSize(fs); // in points
+
+
   autoTable(doc, {
     html: "#nodeTable",
     theme: "plain",
     tableWidth: 100,
     //useCss: true,
+    margin: { left: links },
     styles: {
       font: "freesans_normal",
+      fontSize: fs
     }
   });
 
@@ -119,37 +127,106 @@ export async function my_jspdf() {
     theme: "plain",
     tableWidth: 100,
     //useCss: true,
+    margin: { left: links },
     styles: {
       font: "freesans_normal",
+      fontSize: fs
     }
   });
 
   // @ts-ignore
   yy = doc.lastAutoTable.finalY;
-  doc.line(0, yy, 200, yy, "S");
-  yy += 14 * 0.352778; // Umrechnung pt in mm
-  doc.text("ideelle Querschnittswerte", 10, yy);
+  doc.line(links, yy, 200, yy, "S");
+  yy = neueZeile(yy, fs1)
+  doc.setFontSize(fs1)
+  doc.text("ideelle Querschnittswerte", links, yy);
+  doc.setFontSize(fs)
+  /*
+    autoTable(doc, {
+      html: "#querschnittwerte_table",
+      theme: "plain",
+      tableWidth: 100,
+      useCss: true,
+      styles: {
+        font: "freesans_normal",
+      },
+    });
+  */
 
-  autoTable(doc, {
-    html: "#querschnittwerte_table",
-    theme: "plain",
-    tableWidth: 100,
-    useCss: true,
-    styles: {
-      font: "freesans_normal",
-    },
-  });
+  let xsp = 60
+  let xsp1 = 15
 
-  // @ts-ignore
-  yy = doc.lastAutoTable.finalY + 1.15 * (14 * 0.352778); // Umrechnung pt in mm
-  doc.text("Alle Spannungen in kN/cm²", 10, yy);
+  yy = neueZeile(yy, fs, 2)
 
-  // @ts-ignore
-  yy = doc.lastAutoTable.finalY + 2 * 1.15 * (14 * 0.352778); // Umrechnung pt in mm
-  doc.text("Schubspannungen aus primärer Torsion", 10, yy);
+  htmlText(doc, "y<sub>s</sub> = ", links, yy)
+  doc.text(tabQWerte.ys + ' cm', links + xsp1, yy)
+  htmlText(doc, "y<sub>M</sub> = ", links + xsp, yy)
+  doc.text(tabQWerte.yM + ' cm', links + xsp + xsp1, yy)
 
-  // @ts-ignore
-  yy = doc.lastAutoTable.finalY + 3 * 1.15 * (14 * 0.352778); // Umrechnung pt in mm
+  yy = neueZeile(yy, fs)
+
+  htmlText(doc, "z<sub>s</sub> = ", links, yy)
+  doc.text(tabQWerte.zs + ' cm', links + xsp1, yy)
+  htmlText(doc, "z<sub>M</sub> = ", links + xsp, yy)
+  doc.text(tabQWerte.zM + ' cm', links + xsp + xsp1, yy)
+
+  yy = neueZeile(yy, fs)
+
+  htmlText(doc, "A = ", links, yy)
+  doc.text(tabQWerte.area + ' cm²', links + xsp1, yy)
+  htmlText(doc, "I<sub>t</sub> = ", links + xsp, yy)
+  doc.text(tabQWerte.It + ' cm⁴', links + xsp + xsp1, yy)
+
+  yy = neueZeile(yy, fs)
+
+  htmlText(doc, "I<sub>yy,s</sub> = ", links, yy)
+  doc.text(tabQWerte.Iyy + ' cm⁴', links + xsp1, yy)
+  htmlText(doc, "I<sub>ω</sub> = ", links + xsp, yy)
+  doc.text(tabQWerte.Iomega + ' cm⁶', links + xsp + xsp1, yy)
+
+  yy = neueZeile(yy, fs)
+
+  htmlText(doc, "I<sub>zz,s</sub> = ", links, yy)
+  doc.text(tabQWerte.Izz + ' cm⁴', links + xsp1, yy)
+  htmlText(doc, "r<sub>1</sub> = ", links + xsp, yy)
+  doc.text(tabQWerte.r1 + ' cm', links + xsp + xsp1, yy)
+
+  yy = neueZeile(yy, fs)
+
+  htmlText(doc, "I<sub>yz,s</sub> = ", links, yy)
+  doc.text(tabQWerte.Iyz + ' cm⁴', links + xsp1, yy)
+  htmlText(doc, "r<sub>2</sub> = ", links + xsp, yy)
+  doc.text(tabQWerte.r2 + ' cm', links + xsp + xsp1, yy)
+
+  yy = neueZeile(yy, fs)
+
+  htmlText(doc, "I<sub>11</sub> = ", links, yy)
+  doc.text(tabQWerte.I11 + ' cm⁴', links + xsp1, yy)
+  htmlText(doc, "r<sub>ω</sub> = ", links + xsp, yy)
+  doc.text(tabQWerte.r_omega + ' -', links + xsp + xsp1, yy)
+
+  yy = neueZeile(yy, fs)
+
+  htmlText(doc, "I<sub>22</sub> = ", links, yy)
+  doc.text(tabQWerte.I22 + ' cm⁴', links + xsp1, yy)
+  htmlText(doc, "i<sub>M</sub><sup>2</sup> = ", links + xsp, yy)
+  doc.text(tabQWerte.i_M2 + ' cm²', links + xsp + xsp1, yy)
+
+  yy = neueZeile(yy, fs)
+
+  htmlText(doc, "φ<sub>h</sub> = ", links, yy)
+  doc.text(tabQWerte.phi_h + ' °', links + xsp1, yy)
+  htmlText(doc, "i<sub>p</sub><sup>2</sup> = ", links + xsp, yy)
+  doc.text(tabQWerte.i_p2 + ' cm²', links + xsp + xsp1, yy)
+
+  //-----------------
+  yy = neueZeile(yy, fs, 2)
+  doc.text("Alle Spannungen in kN/cm²", links, yy);
+
+  yy = neueZeile(yy, fs, 2)
+  doc.text("Schubspannungen aus primärer Torsion", links, yy);
+
+  yy = neueZeile(yy, fs)
 
   autoTable(doc, {
     html: "#id_table_spannung_mxp",
@@ -157,6 +234,7 @@ export async function my_jspdf() {
     theme: "plain",
     tableWidth: 100,
     useCss: true,
+    margin: { left: links },
     styles: {
       font: "freesans_normal",
     },
@@ -171,6 +249,7 @@ export async function my_jspdf() {
     theme: "plain",
     tableWidth: 100,
     useCss: true,
+    margin: { left: links },
     styles: {
       font: "freesans_normal",
     },
@@ -185,6 +264,7 @@ export async function my_jspdf() {
     theme: "plain",
     tableWidth: 150,
     useCss: true,
+    margin: { left: links },
     styles: {
       font: "freesans_normal",
     },
@@ -199,6 +279,7 @@ export async function my_jspdf() {
     theme: "plain",
     tableWidth: 100,
     useCss: true,
+    margin: { left: links },
     styles: {
       font: "freesans_normal",
     },
@@ -214,6 +295,7 @@ export async function my_jspdf() {
     //theme: "plain",
     tableWidth: 100,
     useCss: true,
+    margin: { left: links },
     styles: {
       font: "freesans_normal",
       fontSize: 10,
@@ -226,11 +308,11 @@ export async function my_jspdf() {
   console.log("lastAutoTable", yy);
   doc.line(0, yy, 200, yy, "S");
 
-  doc.text("lastAutoTable.finalY=" + yy, 10, yy + 14 * 0.352778);
-  const fs = doc.getFontSize();
-  doc.text("fontsize=" + fs, 10, yy + 2 * (14 * 0.352778));
+  doc.text("lastAutoTable.finalY=" + yy, links, yy + fs * 0.352778);
+  fs = doc.getFontSize();
+  doc.text("fontsize=" + fs, links, yy + 2 * (fs * 0.352778));
 
-  yy += 3 * (14 * 0.352778)
+  yy += 3 * (fs * 0.352778)
   htmlText(doc, "Trägheitsmoment I<sub>yy,s</sub> und i<sub>M</sub><sup>2</sup> und", 10, yy)
 
   //Get svg markup as string
