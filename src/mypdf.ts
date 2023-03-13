@@ -11,6 +11,10 @@ import { fontBold } from "./FreeSans-bold.js"
 import htmlToPdfmake from "html-to-pdfmake"
 import { tabQWerte } from "./duennQ"
 
+import { nnodes, nelem } from "./duennQ_tabelle.js"
+import { truss, node } from "./duennQ"
+import { myFormat } from './utility.js';
+
 const zeilenAbstand = 1.15
 
 //----------------------------------------------------------------------------------------------
@@ -235,60 +239,197 @@ export async function my_jspdf() {
   yy = neueZeile(yy, fs, 2)
   doc.text("Schubspannungen aus primärer Torsion", links, yy);
 
-  yy = neueZeile(yy, fs)
+  //yy = neueZeile(yy, fs)
+  /*
+    autoTable(doc, {
+      html: "#id_table_spannung_mxp",
+      startY: yy,
+      theme: "plain",
+      tableWidth: 100,
+      useCss: true,
+      margin: { left: links },
+      styles: {
+        font: "freesans_normal",
+      },
+    });
+    */
+  {
+    doc.setFontSize(fs)
+    doc.setFont("freesans_bold");
+    yy = neueZeile(yy, fs1, 2)
 
-  autoTable(doc, {
-    html: "#id_table_spannung_mxp",
-    startY: yy,
-    theme: "plain",
-    tableWidth: 100,
-    useCss: true,
-    margin: { left: links },
-    styles: {
-      font: "freesans_normal",
-    },
-  });
+    const nspalten = 4, nzeilen = nelem
+    const spalte: number[] = Array(nspalten);
+    spalte[0] = links
+    spalte[1] = spalte[0] + 15
+    spalte[2] = spalte[1] + 20
+    spalte[3] = spalte[2] + 20
+
+    htmlText(doc, "El No", spalte[0], yy)
+    htmlText(doc, "τ<sub>xs0,L</sub>", spalte[1], yy)
+    htmlText(doc, "τ<sub>xs0,R</sub>", spalte[2], yy)
+    htmlText(doc, "τ<sub>xs1</sub>", spalte[3], yy)
+
+    doc.setFontSize(fs)
+    doc.setFont("freesans_normal");
+    yy = neueZeile(yy, fs1, 1)
+
+    for (let i = 0; i < nzeilen; i++) {
+      doc.text(String(i + 1), spalte[0], yy);
+      doc.text(myFormat(truss[i].tau_p0L[0], 2, 2), spalte[1], yy);
+      doc.text(myFormat(truss[i].tau_p0R[0], 2, 2), spalte[2], yy);
+      doc.text(myFormat(truss[i].tau_p1[0], 2, 2), spalte[3], yy);
+      yy = neueZeile(yy, fs1, 1)
+    }
+  }
+
+  yy = neueZeile(yy, fs1, 1)
 
   // @ts-ignore
-  yy = doc.lastAutoTable.finalY + 14 * 0.352778; // Umrechnung pt in mm
+  //  yy = doc.lastAutoTable.finalY + 14 * 0.352778; // Umrechnung pt in mm
   doc.text("Schubspannungen aus Querkraft und sekundärer Torsion", links, yy);
 
+  {
+    doc.setFontSize(fs)
+    doc.setFont("freesans_bold");
+    yy = neueZeile(yy, fs1, 2)
+
+    const nspalten = 4, nzeilen = nelem
+    const spalte: number[] = Array(nspalten);
+    spalte[0] = links
+    spalte[1] = spalte[0] + 15
+    spalte[2] = spalte[1] + 20
+    spalte[3] = spalte[2] + 20
+
+    htmlText(doc, "El No", spalte[0], yy)
+    htmlText(doc, "τ<sub>xsa</sub>", spalte[1], yy)
+    htmlText(doc, "τ<sub>xsm</sub>", spalte[2], yy)
+    htmlText(doc, "τ<sub>xse</sub>", spalte[3], yy)
+
+    doc.setFontSize(fs)
+    doc.setFont("freesans_normal");
+    yy = neueZeile(yy, fs1, 1)
+
+    for (let i = 0; i < nzeilen; i++) {
+      doc.text(String(i + 1), spalte[0], yy);
+      for (let j = 1; j < nspalten; j++) {
+        doc.text(myFormat(truss[i].tau_s[j - 1], 2, 2), spalte[j], yy);
+      }
+      yy = neueZeile(yy, fs1, 1)
+    }
+  }
   //console.log("id_table_spannung_mxs", document.getElementById("id_table_spannung_mxs"));
 
   //const html1 = htmlToPdfmake(document.getElementById("id_table_spannung_mxs"))
   //console.log("html1", html1)
+  /*
+    autoTable(doc, {
+      html: "#id_table_spannung_mxs",
+      startY: yy,
+      theme: "plain",
+      tableWidth: 100,
+      useCss: true,
+      margin: { left: links },
+      styles: {
+        font: "freesans_normal",
+        fontSize: fs
+      },
+    });
+  
+    // @ts-ignore
+    yy = doc.lastAutoTable.finalY + 14 * 0.352778; // Umrechnung pt in mm
+  */
 
-  autoTable(doc, {
-    html: "#id_table_spannung_mxs",
-    theme: "plain",
-    tableWidth: 100,
-    useCss: true,
-    margin: { left: links },
-    styles: {
-      font: "freesans_normal",
-      fontSize: fs
-    },
-  });
-
-  // @ts-ignore
-  yy = doc.lastAutoTable.finalY + 14 * 0.352778; // Umrechnung pt in mm
+  doc.addPage();
+  yy = neueZeile(20, fs1, 1)
   doc.text("Schubspannungen aus allen Anteilen", links, yy);
 
-  autoTable(doc, {
-    html: "#id_table_schubspannung",
-    theme: "plain",
-    tableWidth: 150,
-    useCss: true,
-    margin: { left: links },
-    styles: {
-      font: "freesans_normal",
-    },
-  });
+  {
+    doc.setFontSize(fs)
+    doc.setFont("freesans_bold");
+    yy = neueZeile(yy, fs1, 2)
 
-  // @ts-ignore
-  yy = doc.lastAutoTable.finalY + 14 * 0.352778; // Umrechnung pt in mm
+    const nspalten = 7, nzeilen = nelem
+    const spalte: number[] = Array(nspalten);
+    spalte[0] = links
+    spalte[1] = spalte[0] + 15
+    spalte[2] = spalte[1] + 20
+    spalte[3] = spalte[2] + 20
+    spalte[4] = spalte[3] + 20
+    spalte[5] = spalte[4] + 20
+    spalte[6] = spalte[5] + 20
+
+    htmlText(doc, "El No", spalte[0], yy)
+    htmlText(doc, "τ<sub>a,L</sub>", spalte[1], yy)
+    htmlText(doc, "τ<sub>m,L</sub>", spalte[2], yy)
+    htmlText(doc, "τ<sub>e,L</sub>", spalte[3], yy)
+    htmlText(doc, "τ<sub>a,R</sub>", spalte[4], yy)
+    htmlText(doc, "τ<sub>m,R</sub>", spalte[5], yy)
+    htmlText(doc, "τ<sub>e,R</sub>", spalte[6], yy)
+
+    doc.setFontSize(fs)
+    doc.setFont("freesans_normal");
+    yy = neueZeile(yy, fs1, 1)
+
+    for (let i = 0; i < nzeilen; i++) {
+      doc.text(String(i + 1), spalte[0], yy);
+      for (let j = 1; j < 4; j++) {
+        doc.text(myFormat(truss[i].stress_L[j - 1], 2, 2), spalte[j], yy);
+      }
+      for (let j = 4; j < nspalten; j++) {
+        doc.text(myFormat(truss[i].stress_R[j - 4], 2, 2), spalte[j], yy);
+      }
+      yy = neueZeile(yy, fs1, 1)
+    }
+  }
+  /*
+    autoTable(doc, {
+      html: "#id_table_schubspannung",
+      startY: yy,
+      theme: "plain",
+      tableWidth: 150,
+      useCss: true,
+      margin: { left: links },
+      styles: {
+        font: "freesans_normal",
+      },
+    });
+  
+    // @ts-ignore
+    yy = doc.lastAutoTable.finalY + 14 * 0.352778; // Umrechnung pt in mm
+  */
   doc.text("Normalspannungen aus Normalkraft, Biegemoment und Wölbbimoment", links, yy);
 
+  {
+    doc.setFontSize(fs)
+    doc.setFont("freesans_bold");
+    yy = neueZeile(yy, fs1, 2)
+
+    const nspalten = 4, nzeilen = nelem
+    const spalte: number[] = Array(nspalten);
+    spalte[0] = links
+    spalte[1] = spalte[0] + 15
+    spalte[2] = spalte[1] + 20
+    spalte[3] = spalte[2] + 20
+
+    htmlText(doc, "El No", spalte[0], yy)
+    htmlText(doc, "σ<sub>xa</sub>", spalte[1], yy)
+    htmlText(doc, "σ<sub>xm</sub>", spalte[2], yy)
+    htmlText(doc, "σ<sub>xe</sub>", spalte[3], yy)
+
+    doc.setFontSize(fs)
+    doc.setFont("freesans_normal");
+    yy = neueZeile(yy, fs1, 1)
+
+    for (let i = 0; i < nzeilen; i++) {
+      doc.text(String(i + 1), spalte[0], yy);
+      for (let j = 1; j < nspalten; j++) {
+        doc.text(myFormat(truss[i].sigma_x[j - 1], 3, 3), spalte[j], yy);
+      }
+      yy = neueZeile(yy, fs1, 1)
+    }
+  }
+  /*
   autoTable(doc, {
     html: "#id_table_normalspannung",
     theme: "plain",
@@ -303,20 +444,53 @@ export async function my_jspdf() {
 
   // @ts-ignore
   yy = doc.lastAutoTable.finalY + 14 * 0.352778; // Umrechnung pt in mm
+*/
   doc.text("Vergleichsspannungen", links, yy);
+  /*
+    autoTable(doc, {
+      html: "#id_table_vergleichsspannung",
+      //theme: "plain",
+      tableWidth: 100,
+      useCss: true,
+      margin: { left: links },
+      styles: {
+        font: "freesans_normal",
+        fontSize: 10,
+        fillColor: '#ffffff'
+      },
+    });
+  */
+  // @ts-ignore
+  //yy = doc.lastAutoTable.finalY; // Umrechnung pt in mm
+  {
+    doc.setFontSize(fs)
+    doc.setFont("freesans_bold");
+    yy = neueZeile(yy, fs1, 2)
 
-  autoTable(doc, {
-    html: "#id_table_vergleichsspannung",
-    //theme: "plain",
-    tableWidth: 100,
-    useCss: true,
-    margin: { left: links },
-    styles: {
-      font: "freesans_normal",
-      fontSize: 10,
-      fillColor: '#ffffff'
-    },
-  });
+    const nspalten = 4, nzeilen = nelem
+    const spalte: number[] = Array(nspalten);
+    spalte[0] = links
+    spalte[1] = spalte[0] + 15
+    spalte[2] = spalte[1] + 20
+    spalte[3] = spalte[2] + 20
+
+    htmlText(doc, "El No", spalte[0], yy)
+    htmlText(doc, "σ<sub>va</sub>", spalte[1], yy)
+    htmlText(doc, "σ<sub>vm</sub>", spalte[2], yy)
+    htmlText(doc, "σ<sub>ve</sub>", spalte[3], yy)
+
+    doc.setFontSize(fs)
+    doc.setFont("freesans_normal");
+    yy = neueZeile(yy, fs1, 1)
+
+    for (let i = 0; i < nzeilen; i++) {
+      doc.text(String(i + 1), spalte[0], yy);
+      for (let j = 1; j < nspalten; j++) {
+        doc.text(myFormat(truss[i].sigma_v[j - 1], 3, 3), spalte[j], yy);
+      }
+      yy = neueZeile(yy, fs1, 1)
+    }
+  }
 
   /*
   // @ts-ignore

@@ -7,7 +7,9 @@ import { my_jspdf } from "./mypdf.js";
 
 export let currentTab;
 
+//------------------------------------------------------------------------------------------------
 export function testeZahl(wert) {
+    //--------------------------------------------------------------------------------------------
     wert = wert.replace(/,/g, '.');
     //console.log('Komma entfernt',wert);
     if (isNaN(wert)) {
@@ -19,9 +21,9 @@ export function testeZahl(wert) {
 }
 
 //------------------------------------------------------------------------------------------------
-
-
 export function testNumber(wert, zeile, spalte, id) {
+    //--------------------------------------------------------------------------------------------
+
     wert = wert.replace(/,/g, '.');
     //console.log('Komma entfernt',wert);
     if (isNaN(wert)) {
