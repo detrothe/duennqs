@@ -83,7 +83,19 @@ class TTabQWerte {  // Tabelle Querschnittswerte für pdf
     i_p2: string
 }
 
+class TSchnittgroessen {
+    Vy: number
+    Vz: number
+    Mxp: number
+    Mxs: number
+    M_omega: number
+    N: number
+    My: number
+    Mz: number
+}
+
 export const tabQWerte = new TTabQWerte;
+export const schnittgroesse = new TSchnittgroessen;
 
 export let node = [] as TNode[]
 export let truss = [] as TElement[]
@@ -350,21 +362,21 @@ export function duennQ() {
 
     // Schnittgrößen einlesen
     let input = document.getElementById('Vy') as HTMLInputElement | null;
-    Vy = Number(testeZahl(input.value));
+    schnittgroesse.Vy = Vy = Number(testeZahl(input.value));
     input = document.getElementById('Vz') as HTMLInputElement | null;
-    Vz = Number(testeZahl(input.value));
+    schnittgroesse.Vz = Vz = Number(testeZahl(input.value));
     input = document.getElementById('Nx') as HTMLInputElement | null;
-    normalkraft = Number(testeZahl(input.value));
+    schnittgroesse.N = normalkraft = Number(testeZahl(input.value));
     input = document.getElementById('Mxp') as HTMLInputElement | null;
-    Mxp = Mt1 = Number(testeZahl(input.value));
+    schnittgroesse.Mxp = Mxp = Mt1 = Number(testeZahl(input.value));
     input = document.getElementById('Mxs') as HTMLInputElement | null;
-    Mt2 = Number(testeZahl(input.value));
+    schnittgroesse.Mxs = Mt2 = Number(testeZahl(input.value));
     input = document.getElementById('Momega') as HTMLInputElement | null;
-    M_omega = Number(testeZahl(input.value));
+    schnittgroesse.M_omega = M_omega = Number(testeZahl(input.value));
     input = document.getElementById('My') as HTMLInputElement | null;
-    moment_y = Number(testeZahl(input.value));
+    schnittgroesse.My = moment_y = Number(testeZahl(input.value));
     input = document.getElementById('Mz') as HTMLInputElement | null;
-    moment_z = Number(testeZahl(input.value));
+    schnittgroesse.Mz = moment_z = Number(testeZahl(input.value));
 
     console.log("Mxs", Mt2)
     input = document.getElementById('fyRd') as HTMLInputElement | null;

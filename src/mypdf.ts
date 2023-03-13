@@ -9,7 +9,7 @@ import { font } from "./FreeSans-normal.js";
 import { fontBold } from "./FreeSans-bold.js"
 
 import htmlToPdfmake from "html-to-pdfmake"
-import { tabQWerte } from "./duennQ"
+import { tabQWerte, schnittgroesse } from "./duennQ"
 
 import { nnodes, nelem } from "./duennQ_tabelle.js"
 import { truss, node } from "./duennQ"
@@ -132,6 +132,28 @@ export async function my_jspdf() {
   doc.setFontSize(fs); // in points
   doc.setFont("freesans_normal");
 
+  // Schnittgrößen drucken
+
+  yy = neueZeile(yy, fs, 2)
+
+  doc.text("Schnittgrößen", links, yy)
+  yy = neueZeile(yy, fs, 2)
+
+  htmlText("V<sub>y</sub> = " + myFormat(schnittgroesse.Vy, 2, 2) + " kN", links, yy)
+  htmlText("M<sub>xp</sub> = " + myFormat(schnittgroesse.Mxp, 2, 2) + " kNcm", links + 40, yy)
+  htmlText("N = " + myFormat(schnittgroesse.N, 2, 2) + " kN", links + 90, yy)
+
+  yy = neueZeile(yy, fs1, 1)
+
+  htmlText("V<sub>z</sub> = " + myFormat(schnittgroesse.Vz, 2, 2) + " kN", links, yy)
+  htmlText("M<sub>xs</sub> = " + myFormat(schnittgroesse.Mxs, 2, 2) + " kNcm", links + 40, yy)
+  htmlText("M<sub>y</sub> = " + myFormat(schnittgroesse.My, 2, 2) + " kNcm", links + 90, yy)
+
+  yy = neueZeile(yy, fs1, 1)
+
+  htmlText("M<sub>ω</sub> = " + myFormat(schnittgroesse.M_omega, 2, 2) + " kNcm²", links + 40, yy)
+  htmlText("M<sub>z</sub> = " + myFormat(schnittgroesse.Mz, 2, 2) + " kNcm", links + 90, yy)
+
   yy = neueZeile(yy, fs, 2)
 
   doc.text("Knotenkkordinaten", links, yy)
@@ -175,7 +197,7 @@ export async function my_jspdf() {
   // @ts-ignore
   yy = doc.lastAutoTable.finalY;
   doc.line(links, yy, 200, yy, "S");
-  yy = neueZeile(yy, fs1)
+  yy = neueZeile(yy, fs1, 2)
   doc.setFontSize(fs1)
   doc.setFont("freesans_bold");
   doc.text("ideelle Querschnittswerte", links, yy);

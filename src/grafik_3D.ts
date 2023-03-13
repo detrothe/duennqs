@@ -609,7 +609,7 @@ export function draw_elements() {
 
             scene.add(mesh);
 
-            if (show_webgl_label && !show_webgl_tau && !show_webgl_sigma && !show_webgl_woelb_V && !maxWoelb_M) {
+            if (show_webgl_label && !show_webgl_tau && !show_webgl_sigma && !show_webgl_woelb_V && !show_webgl_woelb_M) {
                 let nameDiv = document.createElement("div");
                 nameDiv.className = "emotionLabel";
                 nameDiv.textContent = String(i + 1);
