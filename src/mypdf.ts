@@ -17,8 +17,10 @@ import { myFormat } from './utility.js';
 
 const zeilenAbstand = 1.15
 
+let doc: jsPDF;
+
 //----------------------------------------------------------------------------------------------
-function htmlText(doc: jsPDF, text: string, x: number, y: number) {
+function htmlText(text: string, x: number, y: number) {
   //--------------------------------------------------------------------------------------------
 
   const html = htmlToPdfmake(text);
@@ -59,13 +61,29 @@ function htmlText(doc: jsPDF, text: string, x: number, y: number) {
 
 //----------------------------------------------------------------------------------------------
 function neueZeile(yy: number, fs: number, anzahl = 1): number {
-  //----------------------------------------------------------------------------------------------
-  return yy + anzahl * zeilenAbstand * (fs * 0.352778)
+  //--------------------------------------------------------------------------------------------
+  let y = yy + anzahl * zeilenAbstand * (fs * 0.352778)
+  if (y > 270) {
+    doc.addPage();
+    y = 20
+  }
+  return y
 }
 
 //----------------------------------------------------------------------------------------------
+function testSeite(yy: number, fs: number, anzahl: number, nzeilen: number): number {
+  //--------------------------------------------------------------------------------------------
+  let y = yy + nzeilen * zeilenAbstand * (fs * 0.352778)
+  if (y > 270) {
+    doc.addPage();
+    return 20;
+  } else {
+    return yy + anzahl * zeilenAbstand * (fs * 0.352778);
+  }
+}
+//----------------------------------------------------------------------------------------------
 export async function my_jspdf() {
-  //----------------------------------------------------------------------------------------------
+  //--------------------------------------------------------------------------------------------
 
   //window.URL.revokeObjectURL();
   //const res = await navigator.storage.getDirectory()
@@ -96,7 +114,7 @@ export async function my_jspdf() {
   const links = 20;
 
   // Default export is a4 paper, portrait, using millimeters for units
-  const doc = new jsPDF();
+  doc = new jsPDF();
 
   doc.addFileToVFS("freesans.ttf", font);
   doc.addFont("freesans.ttf", "freesans_normal", "normal");
@@ -106,18 +124,27 @@ export async function my_jspdf() {
 
   doc.setFont("freesans_bold");
   doc.setFontSize(fs1)
+  let yy = 20;
 
-  doc.text("Dünnwandiger Querschnitt", links, 10);
-
+  doc.text("Dünnwandiger Querschnitt", links, yy);
 
   fs = 12
   doc.setFontSize(fs); // in points
   doc.setFont("freesans_normal");
 
+  yy = neueZeile(yy, fs, 2)
+
+  doc.text("Knotenkkordinaten", links, yy)
+
+  yy = neueZeile(yy, fs, 1)
+
+
+
   //console.log("nodeTable", document.getElementById("nodeTable"));
 
   autoTable(doc, {
     html: "#nodeTable",
+    startY: yy,
     //theme: "plain",
     tableWidth: 100,
     //useCss: true,
@@ -129,7 +156,7 @@ export async function my_jspdf() {
   });
 
   // @ts-ignore
-  let yy = doc.lastAutoTable.finalY;
+  yy = doc.lastAutoTable.finalY;
   console.log("lastAutoTable", yy);
   doc.line(0, yy, 200, yy, "S");
 
@@ -171,73 +198,70 @@ export async function my_jspdf() {
 
   yy = neueZeile(yy, fs, 2)
 
-  htmlText(doc, "y<sub>s</sub> = ", links, yy)
+  htmlText("y<sub>s</sub> = ", links, yy)
   doc.text(tabQWerte.ys + ' cm', links + xsp1, yy)
-  htmlText(doc, "y<sub>M</sub> = ", links + xsp, yy)
+  htmlText("y<sub>M</sub> = ", links + xsp, yy)
   doc.text(tabQWerte.yM + ' cm', links + xsp + xsp1, yy)
 
   yy = neueZeile(yy, fs)
 
-  htmlText(doc, "z<sub>s</sub> = ", links, yy)
+  htmlText("z<sub>s</sub> = ", links, yy)
   doc.text(tabQWerte.zs + ' cm', links + xsp1, yy)
-  htmlText(doc, "z<sub>M</sub> = ", links + xsp, yy)
+  htmlText("z<sub>M</sub> = ", links + xsp, yy)
   doc.text(tabQWerte.zM + ' cm', links + xsp + xsp1, yy)
 
   yy = neueZeile(yy, fs)
 
-  htmlText(doc, "A = ", links, yy)
+  htmlText("A = ", links, yy)
   doc.text(tabQWerte.area + ' cm²', links + xsp1, yy)
-  htmlText(doc, "I<sub>t</sub> = ", links + xsp, yy)
+  htmlText("I<sub>t</sub> = ", links + xsp, yy)
   doc.text(tabQWerte.It + ' cm⁴', links + xsp + xsp1, yy)
 
   yy = neueZeile(yy, fs)
 
-  htmlText(doc, "I<sub>yy,s</sub> = ", links, yy)
+  htmlText("I<sub>yy,s</sub> = ", links, yy)
   doc.text(tabQWerte.Iyy + ' cm⁴', links + xsp1, yy)
-  htmlText(doc, "I<sub>ω</sub> = ", links + xsp, yy)
+  htmlText("I<sub>ω</sub> = ", links + xsp, yy)
   doc.text(tabQWerte.Iomega + ' cm⁶', links + xsp + xsp1, yy)
 
   yy = neueZeile(yy, fs)
 
-  htmlText(doc, "I<sub>zz,s</sub> = ", links, yy)
+  htmlText("I<sub>zz,s</sub> = ", links, yy)
   doc.text(tabQWerte.Izz + ' cm⁴', links + xsp1, yy)
-  htmlText(doc, "r<sub>1</sub> = ", links + xsp, yy)
+  htmlText("r<sub>1</sub> = ", links + xsp, yy)
   doc.text(tabQWerte.r1 + ' cm', links + xsp + xsp1, yy)
 
   yy = neueZeile(yy, fs)
 
-  htmlText(doc, "I<sub>yz,s</sub> = ", links, yy)
+  htmlText("I<sub>yz,s</sub> = ", links, yy)
   doc.text(tabQWerte.Iyz + ' cm⁴', links + xsp1, yy)
-  htmlText(doc, "r<sub>2</sub> = ", links + xsp, yy)
+  htmlText("r<sub>2</sub> = ", links + xsp, yy)
   doc.text(tabQWerte.r2 + ' cm', links + xsp + xsp1, yy)
 
   yy = neueZeile(yy, fs)
 
-  htmlText(doc, "I<sub>11</sub> = ", links, yy)
+  htmlText("I<sub>11</sub> = ", links, yy)
   doc.text(tabQWerte.I11 + ' cm⁴', links + xsp1, yy)
-  htmlText(doc, "r<sub>ω</sub> = ", links + xsp, yy)
+  htmlText("r<sub>ω</sub> = ", links + xsp, yy)
   doc.text(tabQWerte.r_omega + ' -', links + xsp + xsp1, yy)
 
   yy = neueZeile(yy, fs)
 
-  htmlText(doc, "I<sub>22</sub> = ", links, yy)
+  htmlText("I<sub>22</sub> = ", links, yy)
   doc.text(tabQWerte.I22 + ' cm⁴', links + xsp1, yy)
-  htmlText(doc, "i<sub>M</sub><sup>2</sup> = ", links + xsp, yy)
+  htmlText("i<sub>M</sub><sup>2</sup> = ", links + xsp, yy)
   doc.text(tabQWerte.i_M2 + ' cm²', links + xsp + xsp1, yy)
 
   yy = neueZeile(yy, fs)
 
-  htmlText(doc, "φ<sub>h</sub> = ", links, yy)
+  htmlText("φ<sub>h</sub> = ", links, yy)
   doc.text(tabQWerte.phi_h + ' °', links + xsp1, yy)
-  htmlText(doc, "i<sub>p</sub><sup>2</sup> = ", links + xsp, yy)
+  htmlText("i<sub>p</sub><sup>2</sup> = ", links + xsp, yy)
   doc.text(tabQWerte.i_p2 + ' cm²', links + xsp + xsp1, yy)
 
   //-----------------
   yy = neueZeile(yy, fs, 2)
   doc.text("Alle Spannungen in kN/cm²", links, yy);
-
-  yy = neueZeile(yy, fs, 2)
-  doc.text("Schubspannungen aus primärer Torsion", links, yy);
 
   //yy = neueZeile(yy, fs)
   /*
@@ -254,21 +278,27 @@ export async function my_jspdf() {
     });
     */
   {
+    const nspalten = 4, nzeilen = nelem
+
+    yy = testSeite(yy, fs1, 1, 4 + nzeilen)
+    doc.text("Schubspannungen aus primärer Torsion", links, yy);
+
+    let str: string, texWid: number
+
     doc.setFontSize(fs)
     doc.setFont("freesans_bold");
     yy = neueZeile(yy, fs1, 2)
 
-    const nspalten = 4, nzeilen = nelem
     const spalte: number[] = Array(nspalten);
     spalte[0] = links
     spalte[1] = spalte[0] + 15
     spalte[2] = spalte[1] + 20
     spalte[3] = spalte[2] + 20
 
-    htmlText(doc, "El No", spalte[0], yy)
-    htmlText(doc, "τ<sub>xs0,L</sub>", spalte[1], yy)
-    htmlText(doc, "τ<sub>xs0,R</sub>", spalte[2], yy)
-    htmlText(doc, "τ<sub>xs1</sub>", spalte[3], yy)
+    htmlText("El No", spalte[0], yy)
+    htmlText("τ<sub>xs0,L</sub>", spalte[1] + 10, yy)
+    htmlText("τ<sub>xs0,R</sub>", spalte[2] + 10, yy)
+    htmlText("τ<sub>xs1</sub>", spalte[3] + 10, yy)
 
     doc.setFontSize(fs)
     doc.setFont("freesans_normal");
@@ -276,35 +306,47 @@ export async function my_jspdf() {
 
     for (let i = 0; i < nzeilen; i++) {
       doc.text(String(i + 1), spalte[0], yy);
-      doc.text(myFormat(truss[i].tau_p0L[0], 2, 2), spalte[1], yy);
-      doc.text(myFormat(truss[i].tau_p0R[0], 2, 2), spalte[2], yy);
-      doc.text(myFormat(truss[i].tau_p1[0], 2, 2), spalte[3], yy);
+
+      str = myFormat(truss[i].tau_p0L[0], 2, 2)
+      texWid = doc.getTextWidth(str)
+      doc.text(str, spalte[1] + 20 - texWid, yy);
+
+      str = myFormat(truss[i].tau_p0R[0], 2, 2)
+      texWid = doc.getTextWidth(str)
+      doc.text(str, spalte[2] + 20 - texWid, yy);
+
+      str = myFormat(truss[i].tau_p1[0], 2, 2)
+      texWid = doc.getTextWidth(str)
+      doc.text(str, spalte[3] + 20 - texWid, yy);
+
       yy = neueZeile(yy, fs1, 1)
     }
   }
 
-  yy = neueZeile(yy, fs1, 1)
-
-  // @ts-ignore
-  //  yy = doc.lastAutoTable.finalY + 14 * 0.352778; // Umrechnung pt in mm
-  doc.text("Schubspannungen aus Querkraft und sekundärer Torsion", links, yy);
 
   {
+    const nspalten = 4, nzeilen = nelem
+
+    yy = testSeite(yy, fs1, 1, 4 + nzeilen)
+
+    doc.text("Schubspannungen aus Querkraft und sekundärer Torsion", links, yy);
+
+    let str: string, texWid: number
+
     doc.setFontSize(fs)
     doc.setFont("freesans_bold");
     yy = neueZeile(yy, fs1, 2)
 
-    const nspalten = 4, nzeilen = nelem
     const spalte: number[] = Array(nspalten);
     spalte[0] = links
     spalte[1] = spalte[0] + 15
     spalte[2] = spalte[1] + 20
     spalte[3] = spalte[2] + 20
 
-    htmlText(doc, "El No", spalte[0], yy)
-    htmlText(doc, "τ<sub>xsa</sub>", spalte[1], yy)
-    htmlText(doc, "τ<sub>xsm</sub>", spalte[2], yy)
-    htmlText(doc, "τ<sub>xse</sub>", spalte[3], yy)
+    htmlText("El No", spalte[0], yy)
+    htmlText("τ<sub>xsa</sub>", spalte[1] + 10, yy)
+    htmlText("τ<sub>xsm</sub>", spalte[2] + 10, yy)
+    htmlText("τ<sub>xse</sub>", spalte[3] + 10, yy)
 
     doc.setFontSize(fs)
     doc.setFont("freesans_normal");
@@ -313,7 +355,9 @@ export async function my_jspdf() {
     for (let i = 0; i < nzeilen; i++) {
       doc.text(String(i + 1), spalte[0], yy);
       for (let j = 1; j < nspalten; j++) {
-        doc.text(myFormat(truss[i].tau_s[j - 1], 2, 2), spalte[j], yy);
+        str = myFormat(truss[i].tau_s[j - 1], 2, 2)
+        texWid = doc.getTextWidth(str)
+        doc.text(str, spalte[j] + 20 - texWid, yy);
       }
       yy = neueZeile(yy, fs1, 1)
     }
@@ -340,16 +384,19 @@ export async function my_jspdf() {
     yy = doc.lastAutoTable.finalY + 14 * 0.352778; // Umrechnung pt in mm
   */
 
-  doc.addPage();
-  yy = neueZeile(20, fs1, 1)
-  doc.text("Schubspannungen aus allen Anteilen", links, yy);
 
   {
+    const nspalten = 7, nzeilen = nelem
+
+    yy = testSeite(yy, fs1, 1, 5 + nzeilen)
+
+    doc.text("Schubspannungen aus allen Anteilen", links, yy);
+
+    let str: string, texWid: number
     doc.setFontSize(fs)
     doc.setFont("freesans_bold");
     yy = neueZeile(yy, fs1, 2)
 
-    const nspalten = 7, nzeilen = nelem
     const spalte: number[] = Array(nspalten);
     spalte[0] = links
     spalte[1] = spalte[0] + 15
@@ -359,25 +406,37 @@ export async function my_jspdf() {
     spalte[5] = spalte[4] + 20
     spalte[6] = spalte[5] + 20
 
-    htmlText(doc, "El No", spalte[0], yy)
-    htmlText(doc, "τ<sub>a,L</sub>", spalte[1], yy)
-    htmlText(doc, "τ<sub>m,L</sub>", spalte[2], yy)
-    htmlText(doc, "τ<sub>e,L</sub>", spalte[3], yy)
-    htmlText(doc, "τ<sub>a,R</sub>", spalte[4], yy)
-    htmlText(doc, "τ<sub>m,R</sub>", spalte[5], yy)
-    htmlText(doc, "τ<sub>e,R</sub>", spalte[6], yy)
+    htmlText("El No", spalte[0], yy)
+    htmlText("τ<sub>a,L</sub>", spalte[1] + 10, yy)
+    htmlText("τ<sub>m,L</sub>", spalte[2] + 10, yy)
+    htmlText("τ<sub>e,L</sub>", spalte[3] + 10, yy)
+    htmlText("τ<sub>a,R</sub>", spalte[4] + 10, yy)
+    htmlText("τ<sub>m,R</sub>", spalte[5] + 10, yy)
+    htmlText("τ<sub>e,R</sub>", spalte[6] + 10, yy)
 
     doc.setFontSize(fs)
     doc.setFont("freesans_normal");
     yy = neueZeile(yy, fs1, 1)
 
+    texWid = doc.getTextWidth("linke Seite")
+    doc.text("linke Seite", spalte[1] + (60 - texWid) / 2, yy)
+    texWid = doc.getTextWidth("rechte Seite")
+    doc.text("rechte Seite", spalte[4] + (60 - texWid) / 2, yy)
+
+    yy = neueZeile(yy, fs1, 1)
+
     for (let i = 0; i < nzeilen; i++) {
       doc.text(String(i + 1), spalte[0], yy);
       for (let j = 1; j < 4; j++) {
-        doc.text(myFormat(truss[i].stress_L[j - 1], 2, 2), spalte[j], yy);
+        str = myFormat(truss[i].stress_L[j - 1], 2, 2)
+        texWid = doc.getTextWidth(str)
+        doc.text(str, spalte[j] + 20 - texWid, yy);
       }
       for (let j = 4; j < nspalten; j++) {
-        doc.text(myFormat(truss[i].stress_R[j - 4], 2, 2), spalte[j], yy);
+        str = myFormat(truss[i].stress_R[j - 4], 2, 2)
+        texWid = doc.getTextWidth(str)
+        doc.text(str, spalte[j] + 20 - texWid, yy);
+        //doc.text(myFormat(truss[i].stress_R[j - 4], 2, 2), spalte[j], yy);
       }
       yy = neueZeile(yy, fs1, 1)
     }
@@ -398,24 +457,31 @@ export async function my_jspdf() {
     // @ts-ignore
     yy = doc.lastAutoTable.finalY + 14 * 0.352778; // Umrechnung pt in mm
   */
-  doc.text("Normalspannungen aus Normalkraft, Biegemoment und Wölbbimoment", links, yy);
 
   {
+    const nspalten = 4, nzeilen = nelem
+
+    yy = testSeite(yy, fs1, 1, 4 + nzeilen)
+
+
+    doc.text("Normalspannungen aus Normalkraft, Biegemoment und Wölbbimoment", links, yy);
+
+    let str: string, texWid: number
+
     doc.setFontSize(fs)
     doc.setFont("freesans_bold");
     yy = neueZeile(yy, fs1, 2)
 
-    const nspalten = 4, nzeilen = nelem
     const spalte: number[] = Array(nspalten);
     spalte[0] = links
     spalte[1] = spalte[0] + 15
     spalte[2] = spalte[1] + 20
     spalte[3] = spalte[2] + 20
 
-    htmlText(doc, "El No", spalte[0], yy)
-    htmlText(doc, "σ<sub>xa</sub>", spalte[1], yy)
-    htmlText(doc, "σ<sub>xm</sub>", spalte[2], yy)
-    htmlText(doc, "σ<sub>xe</sub>", spalte[3], yy)
+    htmlText("El No", spalte[0], yy)
+    htmlText("σ<sub>xa</sub>", spalte[1] + 10, yy)
+    htmlText("σ<sub>xm</sub>", spalte[2] + 10, yy)
+    htmlText("σ<sub>xe</sub>", spalte[3] + 10, yy)
 
     doc.setFontSize(fs)
     doc.setFont("freesans_normal");
@@ -424,7 +490,9 @@ export async function my_jspdf() {
     for (let i = 0; i < nzeilen; i++) {
       doc.text(String(i + 1), spalte[0], yy);
       for (let j = 1; j < nspalten; j++) {
-        doc.text(myFormat(truss[i].sigma_x[j - 1], 3, 3), spalte[j], yy);
+        str = myFormat(truss[i].sigma_x[j - 1], 3, 3)
+        texWid = doc.getTextWidth(str)
+        doc.text(str, spalte[j] + 20 - texWid, yy);
       }
       yy = neueZeile(yy, fs1, 1)
     }
@@ -445,7 +513,6 @@ export async function my_jspdf() {
   // @ts-ignore
   yy = doc.lastAutoTable.finalY + 14 * 0.352778; // Umrechnung pt in mm
 */
-  doc.text("Vergleichsspannungen", links, yy);
   /*
     autoTable(doc, {
       html: "#id_table_vergleichsspannung",
@@ -463,21 +530,28 @@ export async function my_jspdf() {
   // @ts-ignore
   //yy = doc.lastAutoTable.finalY; // Umrechnung pt in mm
   {
+    const nspalten = 4, nzeilen = nelem
+
+    yy = testSeite(yy, fs1, 1, 4 + nzeilen)
+    doc.text("Vergleichsspannungen", links, yy);
+
+
+    let str: string, texWid: number
+
     doc.setFontSize(fs)
     doc.setFont("freesans_bold");
     yy = neueZeile(yy, fs1, 2)
 
-    const nspalten = 4, nzeilen = nelem
     const spalte: number[] = Array(nspalten);
     spalte[0] = links
     spalte[1] = spalte[0] + 15
     spalte[2] = spalte[1] + 20
     spalte[3] = spalte[2] + 20
 
-    htmlText(doc, "El No", spalte[0], yy)
-    htmlText(doc, "σ<sub>va</sub>", spalte[1], yy)
-    htmlText(doc, "σ<sub>vm</sub>", spalte[2], yy)
-    htmlText(doc, "σ<sub>ve</sub>", spalte[3], yy)
+    htmlText("El No", spalte[0], yy)
+    htmlText("σ<sub>va</sub>", spalte[1] + 10, yy)
+    htmlText("σ<sub>vm</sub>", spalte[2] + 10, yy)
+    htmlText("σ<sub>ve</sub>", spalte[3] + 10, yy)
 
     doc.setFontSize(fs)
     doc.setFont("freesans_normal");
@@ -486,7 +560,9 @@ export async function my_jspdf() {
     for (let i = 0; i < nzeilen; i++) {
       doc.text(String(i + 1), spalte[0], yy);
       for (let j = 1; j < nspalten; j++) {
-        doc.text(myFormat(truss[i].sigma_v[j - 1], 3, 3), spalte[j], yy);
+        str = myFormat(truss[i].sigma_v[j - 1], 3, 3)
+        texWid = doc.getTextWidth(str)
+        doc.text(str, spalte[j] + 20 - texWid, yy);
       }
       yy = neueZeile(yy, fs1, 1)
     }
@@ -503,7 +579,7 @@ export async function my_jspdf() {
   doc.text("fontsize=" + fs, links, yy + 2 * (fs * 0.352778));
 
   yy += 3 * (fs * 0.352778)
-  htmlText(doc, "Trägheitsmoment I<sub>yy,s</sub> und i<sub>M</sub><sup>2</sup> und", 10, yy)
+  htmlText( "Trägheitsmoment I<sub>yy,s</sub> und i<sub>M</sub><sup>2</sup> und", 10, yy)
 
   infoBox.innerHTML += "<br>mypdf: " + yy;
   */
