@@ -94,8 +94,14 @@ class TSchnittgroessen {
     Mz: number
 }
 
+class TBezugswerte {
+    emodul: number
+    mue: number
+}
+
 export const tabQWerte = new TTabQWerte;
 export const schnittgroesse = new TSchnittgroessen;
+export const bezugswerte = new TBezugswerte
 
 export let node = [] as TNode[]
 export let truss = [] as TElement[]
@@ -378,7 +384,7 @@ export function duennQ() {
     input = document.getElementById('Mz') as HTMLInputElement | null;
     schnittgroesse.Mz = moment_z = Number(testeZahl(input.value));
 
-    console.log("Mxs", Mt2)
+    //console.log("Mxs", Mt2)
     input = document.getElementById('fyRd') as HTMLInputElement | null;
     fyRd = Number(testeZahl(input.value));
 
@@ -394,7 +400,7 @@ export function duennQ() {
     }
 
     const material_equal = document.getElementById('material_equal') as HTMLInputElement | null;
-    console.log("in setMaterialEqual", material_equal.checked);
+    //console.log("in setMaterialEqual", material_equal.checked);
 
 
     if (material_equal.checked) {
@@ -402,13 +408,13 @@ export function duennQ() {
         mue = 0.3;
     } else {
         input = document.getElementById('EMod_ref') as HTMLInputElement | null;
-        EModul = Number(testeZahl(input.value));
+        bezugswerte.emodul = EModul = Number(testeZahl(input.value));
         if (EModul < 1e-12) {
             alert("Referenz-Emodul muss größer 0 sein")
             return;
         }
         input = document.getElementById('mue_ref') as HTMLInputElement | null;
-        mue = Number(testeZahl(input.value));
+        bezugswerte.mue = mue = Number(testeZahl(input.value));
         if (mue < 0) {
             alert("Referenz-Querdehnung muss größer oder gleich 0 sein")
             return;

@@ -372,8 +372,8 @@ function menuItemListener(link) {
             value.push(Number(tabelle.rows[row].cells[j].innerText.replace(/,/g, '.')))
             delta.push(del)
         }
-        console.log("value", value);
-        console.log("delta", delta);
+        //console.log("value", value);
+        //console.log("delta", delta);
 
         for (i = 1; i < nZeilen; i++) {
             for (j = 1; j < nSpalten; j++) {
