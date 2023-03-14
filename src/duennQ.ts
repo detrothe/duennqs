@@ -421,7 +421,7 @@ export function duennQ() {
         }
     }
     const GModul = EModul / 2.0 / (1.0 + mue)
-    console.log("Bezugswerte", EModul, mue, GModul)
+    //console.log("Bezugswerte", EModul, mue, GModul)
 
     // Knoten Eingabe einlesen
 
@@ -433,7 +433,7 @@ export function duennQ() {
         node[i].y = Number(testNumber(wert, i + 1, 1, 'nodeTable'));
         wert = nTabelle.rows[i + 1].cells[2].innerText
         node[i].z = Number(testNumber(wert, i + 1, 2, 'nodeTable'));
-        console.log("node,y,z", i, node[i].y, node[i].z)
+        //console.log("node,y,z", i, node[i].y, node[i].z)
     }
 
     // Elemente Eingabe einlesen
@@ -487,7 +487,7 @@ export function duennQ() {
 
     for (i = 0; i < nnodes; i++) {
         if (node[i].nel === 0) {
-            window.alert("An Knoten " + (i + 1) + " hängt keine Element")
+            window.alert("An Knoten " + (i + 1) + " hängt kein Element")
             return;
         }
     }

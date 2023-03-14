@@ -21,18 +21,18 @@ import {
 
 class TextGeometry extends ExtrudeGeometry {
 
-	constructor( text, parameters = {} ) {
+	constructor(text, parameters = {}) {
 
 		const font = parameters.font;
 
-		if ( font === undefined ) {
+		if (font === undefined) {
 
 			super(); // generate default extrude geometry
 
 		} else {
-console.log("in TextGeometry",text,parameters.size);
+			//console.log("in TextGeometry",text,parameters.size);
 
-			const shapes = font.generateShapes( text, parameters.size );
+			const shapes = font.generateShapes(text, parameters.size);
 
 			// translate parameters to ExtrudeGeometry API
 
@@ -40,11 +40,11 @@ console.log("in TextGeometry",text,parameters.size);
 
 			// defaults
 
-			if ( parameters.bevelThickness === undefined ) parameters.bevelThickness = 10;
-			if ( parameters.bevelSize === undefined ) parameters.bevelSize = 8;
-			if ( parameters.bevelEnabled === undefined ) parameters.bevelEnabled = false;
+			if (parameters.bevelThickness === undefined) parameters.bevelThickness = 10;
+			if (parameters.bevelSize === undefined) parameters.bevelSize = 8;
+			if (parameters.bevelEnabled === undefined) parameters.bevelEnabled = false;
 
-			super( shapes, parameters );
+			super(shapes, parameters);
 
 		}
 
