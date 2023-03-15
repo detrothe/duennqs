@@ -148,10 +148,11 @@ export function tabulate(theDiv, i_d, data, columns) {
         .on('keydown', KEYDOWN)
         .on('pointerdown', MOUSEDOWN)
         .on('pointermove', MOUSEMOVE)
-        .on('pointerover',POINTEROVER)
-        .on('pointerleave',POINTERLEAVE)
-        .on('pointerenter',POINTERENTER)
-        .on('pointerup',POINTERUP)
+
+        //.on('pointerover',POINTEROVER)
+        //.on('pointerleave',POINTERLEAVE)
+        //.on('pointerenter',POINTERENTER)
+        //.on('pointerup',POINTERUP)
 /*
         .on("touchstart", function (ev) {
             const tableId = ev.target.offsetParent.id;
@@ -234,7 +235,7 @@ export function tabulate(theDiv, i_d, data, columns) {
     return table;
 }
 
-
+/*
 export function POINTEROVER(ev) { 
     console.log("pointerType POINTEROVER",ev.pointerType, ev.buttons,ev.target.id);
 }
@@ -250,7 +251,7 @@ export function POINTERENTER(ev) {
 export function POINTERUP(ev) { 
     console.log("pointerType POINTERUP",ev.pointerType, ev.buttons,ev.target.id);
 }
-
+*/
 export function MOUSEMOVE(ev) { // mousemove
 
     console.log("pointerType MOVE",ev.pointerType, ev.buttons,ev.target.id,ev.pageX, ev.pageY);
