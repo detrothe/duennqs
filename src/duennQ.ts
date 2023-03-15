@@ -230,13 +230,13 @@ tabulate('#elementtabelle', 'elemTable', elemArray, ["El No", 'E-Modul [kN/cm²]
 const nTabelle = document.getElementById("nodeTable") as HTMLTableElement;
 
 
-
+/*
 document.getElementById("knotentabelle").onpointermove = function (e) {
     e.preventDefault();
     //let ele = document.elementFromPoint(e.pageX, e.pageY);
     console.log("ON TOUCH MOVE")
 }
-
+*/
 let objCells = nTabelle.rows.item(0).cells;  // Überschrift Punkt zentrieren
 objCells.item(0).style.textAlign = "center";
 

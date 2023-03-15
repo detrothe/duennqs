@@ -146,8 +146,8 @@ export function tabulate(theDiv, i_d, data, columns) {
             return d.value;
         })
         .on('keydown', KEYDOWN)
-        .on('pointerdown', MOUSEDOWN)
-        .on('pointermove', MOUSEMOVE)
+        .on('mousedown', MOUSEDOWN)
+        .on('mousemove', MOUSEMOVE)
 
         //.on('pointerover',POINTEROVER)
         //.on('pointerleave',POINTERLEAVE)
@@ -254,7 +254,7 @@ export function POINTERUP(ev) {
 */
 export function MOUSEMOVE(ev) { // mousemove
 
-    console.log("pointerType MOVE",ev.pointerType, ev.buttons,ev.target.id,ev.pageX, ev.pageY);
+    //console.log("pointerType MOVE",ev.pointerType, ev.buttons,ev.target.id,ev.pageX, ev.pageY);
 
     const tableId = ev.target.offsetParent.id;
     //console.log("MMOVE mouseover", tableId, ev.buttons);  // ev.path[3].id
@@ -307,7 +307,7 @@ export function MOUSEMOVE(ev) { // mousemove
             const tabelle = document.getElementById(tableId);
             const nSpalten = tabelle.rows[0].cells.length - 1;
 
-            console.log("move", nZeilen, nSpalten)
+            //console.log("move", nZeilen, nSpalten)
             for (let i = 1; i < nZeilen; i++) {
                 for (let j = 1; j <= nSpalten; j++) {
                     tabelle.rows.item(i).cells.item(j).selekt = false;
@@ -331,7 +331,7 @@ export function MOUSEMOVE(ev) { // mousemove
 
 export function MOUSEDOWN(ev) {
 
-    console.log("pointerType DOWN",ev.pointerType,ev.target.id);
+    //console.log("pointerType DOWN",ev.pointerType,ev.target.id);
 
     const tableId = ev.target.offsetParent.id;
     const tableIndex = table_index(tableId)
@@ -427,7 +427,7 @@ export function MOUSEDOWN(ev) {
 
 export function KEYDOWN(ev) {
     
-    console.log("pointerType KEYDOWN",ev.pointerType, ev.keyCode);
+    //console.log("pointerType KEYDOWN",ev.pointerType, ev.keyCode);
 
     const tableId = ev.target.offsetParent.id;
     const tableIndex = table_index(tableId)
@@ -492,7 +492,7 @@ export function KEYDOWN(ev) {
             elemNeu.innerText = "";
         }
         elemNeu.focus();
-        const evt = new Event("pointerdown", {"bubbles": true, "cancelable": false});
+        const evt = new Event("mousedown", {"bubbles": true, "cancelable": false});
         evt.button = 0;     // linke Maustaste
         elemNeu.dispatchEvent(evt);
 
@@ -557,8 +557,8 @@ export function resize_Tabelle(idTable, nRowNew, nColNew) {
                     newCell.style.border = 'solid 1px';
                     newCell.style.padding = '5px';
                     newCell.contentEditable = 'true';
-                    newCell.addEventListener("pointermove", MOUSEMOVE);
-                    newCell.addEventListener("pointerdown", MOUSEDOWN);
+                    newCell.addEventListener("mousemove", MOUSEMOVE);
+                    newCell.addEventListener("mousedown", MOUSEDOWN);
                     newCell.addEventListener("keydown", KEYDOWN);
                     newCell.id = str;
                     newCell.wrap = false;
@@ -610,8 +610,8 @@ export function resize_Tabelle(idTable, nRowNew, nColNew) {
                     } else {
                         newCell.contentEditable = 'true';
                     }
-                    newCell.addEventListener("pointermove", MOUSEMOVE);
-                    newCell.addEventListener("pointerdown", MOUSEDOWN);
+                    newCell.addEventListener("mousemove", MOUSEMOVE);
+                    newCell.addEventListener("mousedown", MOUSEDOWN);
                     newCell.addEventListener("keydown", KEYDOWN);
                     newCell.wrap = false;
                 }
