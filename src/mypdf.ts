@@ -200,7 +200,9 @@ export async function my_jspdf() {
 
     htmlText("Node No", spalte[0], yy)
     htmlText("y [cm]", spalte[1] + 10, yy)
+    doc.text("‾", spalte[1] + 10, yy)
     htmlText("z [cm]", spalte[2] + 10, yy)
+    doc.text("‾", spalte[2] + 10, yy)
 
     doc.setFontSize(fs)
     doc.setFont("freesans_normal");
@@ -300,60 +302,62 @@ export async function my_jspdf() {
   yy = neueZeile(yy, fs, 2)
 
   htmlText("y<sub>s</sub> = ", links, yy)
+  doc.text("‾", links, yy)
   doc.text(tabQWerte.ys + ' cm', links + xsp1, yy)
   htmlText("y<sub>M</sub> = ", links + xsp, yy)
   doc.text(tabQWerte.yM + ' cm', links + xsp + xsp1, yy)
 
-  yy = neueZeile(yy, fs)
+  yy = neueZeile(yy, fs1)
 
   htmlText("z<sub>s</sub> = ", links, yy)
+  doc.text("‾", links, yy)
   doc.text(tabQWerte.zs + ' cm', links + xsp1, yy)
   htmlText("z<sub>M</sub> = ", links + xsp, yy)
   doc.text(tabQWerte.zM + ' cm', links + xsp + xsp1, yy)
 
-  yy = neueZeile(yy, fs)
+  yy = neueZeile(yy, fs1)
 
   htmlText("A = ", links, yy)
   doc.text(tabQWerte.area + ' cm²', links + xsp1, yy)
   htmlText("I<sub>t</sub> = ", links + xsp, yy)
   doc.text(tabQWerte.It + ' cm⁴', links + xsp + xsp1, yy)
 
-  yy = neueZeile(yy, fs)
+  yy = neueZeile(yy, fs1)
 
   htmlText("I<sub>yy,s</sub> = ", links, yy)
   doc.text(tabQWerte.Iyy + ' cm⁴', links + xsp1, yy)
   htmlText("I<sub>ω</sub> = ", links + xsp, yy)
   doc.text(tabQWerte.Iomega + ' cm⁶', links + xsp + xsp1, yy)
 
-  yy = neueZeile(yy, fs)
+  yy = neueZeile(yy, fs1)
 
   htmlText("I<sub>zz,s</sub> = ", links, yy)
   doc.text(tabQWerte.Izz + ' cm⁴', links + xsp1, yy)
   htmlText("r<sub>1</sub> = ", links + xsp, yy)
   doc.text(tabQWerte.r1 + ' cm', links + xsp + xsp1, yy)
 
-  yy = neueZeile(yy, fs)
+  yy = neueZeile(yy, fs1)
 
   htmlText("I<sub>yz,s</sub> = ", links, yy)
   doc.text(tabQWerte.Iyz + ' cm⁴', links + xsp1, yy)
   htmlText("r<sub>2</sub> = ", links + xsp, yy)
   doc.text(tabQWerte.r2 + ' cm', links + xsp + xsp1, yy)
 
-  yy = neueZeile(yy, fs)
+  yy = neueZeile(yy, fs1)
 
   htmlText("I<sub>11</sub> = ", links, yy)
   doc.text(tabQWerte.I11 + ' cm⁴', links + xsp1, yy)
   htmlText("r<sub>ω</sub> = ", links + xsp, yy)
   doc.text(tabQWerte.r_omega + ' -', links + xsp + xsp1, yy)
 
-  yy = neueZeile(yy, fs)
+  yy = neueZeile(yy, fs1)
 
   htmlText("I<sub>22</sub> = ", links, yy)
   doc.text(tabQWerte.I22 + ' cm⁴', links + xsp1, yy)
   htmlText("i<sub>M</sub><sup>2</sup> = ", links + xsp, yy)
   doc.text(tabQWerte.i_M2 + ' cm²', links + xsp + xsp1, yy)
 
-  yy = neueZeile(yy, fs)
+  yy = neueZeile(yy, fs1)
 
   htmlText("φ<sub>h</sub> = ", links, yy)
   doc.text(tabQWerte.phi_h + ' °', links + xsp1, yy)
