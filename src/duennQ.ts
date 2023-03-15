@@ -215,8 +215,10 @@ for (let i = 1; i <= nelem; i++) {
 //const xx = [-10.0, 20.0, 50.0, 20.0, 40.0, 0.0];
 //const yy = [0.0, 0.0, 0.0, 40.0, 40.0, 40.0];
 
-const xx = [0.0, 20.0, 20.0, 0.0];
-const yy = [0.0, 0.0, 30.0, 30.0];
+//const xx = [0.0, 20.0, 20.0, 0.0];
+//const yy = [0.0, 0.0, 30.0, 30.0];
+const xx = [0.0, 30.0, 110.0, 140.0, 85.0, 55.0];
+const yy = [0.0, 0.0, 0.0, 0.0, 60.0, 60.0];
 
 
 
@@ -237,6 +239,9 @@ document.getElementById("knotentabelle").onpointermove = function (e) {
 
 let objCells = nTabelle.rows.item(0).cells;  // Überschrift Punkt zentrieren
 objCells.item(0).style.textAlign = "center";
+
+objCells.item(1).innerHTML = 'y&#772; [cm]'
+objCells.item(2).innerHTML = 'z&#772; [cm]'
 
 let nSpalten = nTabelle.rows[0].cells.length - 1;
 
@@ -288,7 +293,7 @@ for (let i = 1; i < eTabelle.rows.length; i++) {
         } else if (j === 2) {
             objCells.item(j).innerText = String(0.3);
         } else if (j === 3) {
-            objCells.item(j).innerText = String(0.5);
+            objCells.item(j).innerText = String(1.5);
         }
         // @ts-ignore
         objCells.item(j).wrap = false;
@@ -311,7 +316,7 @@ eTabelle.rows[4].cells[4].innerText = "5";
 eTabelle.rows[4].cells[5].innerText = "4";
 eTabelle.rows[5].cells[4].innerText = "4";
 eTabelle.rows[5].cells[5].innerText = "6";
-*/
+
 // Quadratischer Hohlquerschnitt
 eTabelle.rows[1].cells[4].innerText = "1";
 eTabelle.rows[1].cells[5].innerText = "2";
@@ -321,7 +326,20 @@ eTabelle.rows[3].cells[4].innerText = "3";
 eTabelle.rows[3].cells[5].innerText = "4";
 eTabelle.rows[4].cells[4].innerText = "4";
 eTabelle.rows[4].cells[5].innerText = "1";
-
+*/
+// Hohlquerschnitt mit Flügeln
+eTabelle.rows[1].cells[4].innerText = "1";
+eTabelle.rows[1].cells[5].innerText = "2";
+eTabelle.rows[2].cells[4].innerText = "2";
+eTabelle.rows[2].cells[5].innerText = "3";
+eTabelle.rows[3].cells[4].innerText = "3";
+eTabelle.rows[3].cells[5].innerText = "4";
+eTabelle.rows[4].cells[4].innerText = "3";
+eTabelle.rows[4].cells[5].innerText = "5";
+eTabelle.rows[5].cells[4].innerText = "2";
+eTabelle.rows[5].cells[5].innerText = "6";
+eTabelle.rows[6].cells[4].innerText = "5";
+eTabelle.rows[6].cells[5].innerText = "6";
 
 
 //----------------------------------------------------------------------------------------------
@@ -374,15 +392,15 @@ export function duennQ() {
     input = document.getElementById('Nx') as HTMLInputElement | null;
     schnittgroesse.N = normalkraft = Number(testeZahl(input.value));
     input = document.getElementById('Mxp') as HTMLInputElement | null;
-    schnittgroesse.Mxp = Mxp = Mt1 = Number(testeZahl(input.value));
+    schnittgroesse.Mxp = Mxp = Mt1 = Number(testeZahl(input.value)) * 100.0;  // in kNcm
     input = document.getElementById('Mxs') as HTMLInputElement | null;
-    schnittgroesse.Mxs = Mt2 = Number(testeZahl(input.value));
+    schnittgroesse.Mxs = Mt2 = Number(testeZahl(input.value)) * 100.0;
     input = document.getElementById('Momega') as HTMLInputElement | null;
-    schnittgroesse.M_omega = M_omega = Number(testeZahl(input.value));
+    schnittgroesse.M_omega = M_omega = Number(testeZahl(input.value)) * 10000.0;  // in kNcm²
     input = document.getElementById('My') as HTMLInputElement | null;
-    schnittgroesse.My = moment_y = Number(testeZahl(input.value));
+    schnittgroesse.My = moment_y = Number(testeZahl(input.value)) * 100.0;
     input = document.getElementById('Mz') as HTMLInputElement | null;
-    schnittgroesse.Mz = moment_z = Number(testeZahl(input.value));
+    schnittgroesse.Mz = moment_z = Number(testeZahl(input.value)) * 100.0;
 
     //console.log("Mxs", Mt2)
     input = document.getElementById('fyRd') as HTMLInputElement | null;

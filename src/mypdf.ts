@@ -17,7 +17,7 @@ const zeilenAbstand = 1.15
 
 let doc: jsPDF;
 
-let Seite_No = 0
+let Seite_No: number
 
 //----------------------------------------------------------------------------------------------
 function htmlText(text: string, x: number, y: number) {
@@ -108,8 +108,10 @@ function letzteSeite() {
 export async function my_jspdf() {
   //--------------------------------------------------------------------------------------------
 
-  let fs1 = 16, fs = 12
+  let fs1 = 15, fs = 11
   const links = 20;
+
+  Seite_No = 0
 
   // Default export is a4 paper, portrait, using millimeters for units
   doc = new jsPDF();
@@ -129,7 +131,6 @@ export async function my_jspdf() {
 
   doc.text("Dünnwandiger Querschnitt", links, yy);
 
-  fs = 12
   doc.setFontSize(fs); // in points
   doc.setFont("freesans_normal");
 
@@ -141,19 +142,19 @@ export async function my_jspdf() {
   yy = neueZeile(yy, fs, 2)
 
   htmlText("V<sub>y</sub> = " + myFormat(schnittgroesse.Vy, 2, 2) + " kN", links, yy)
-  htmlText("M<sub>xp</sub> = " + myFormat(schnittgroesse.Mxp, 2, 2) + " kNcm", links + 40, yy)
+  htmlText("M<sub>xp</sub> = " + myFormat(schnittgroesse.Mxp, 2, 2) + " kNm", links + 40, yy)
   htmlText("N = " + myFormat(schnittgroesse.N, 2, 2) + " kN", links + 90, yy)
 
   yy = neueZeile(yy, fs1, 1)
 
   htmlText("V<sub>z</sub> = " + myFormat(schnittgroesse.Vz, 2, 2) + " kN", links, yy)
-  htmlText("M<sub>xs</sub> = " + myFormat(schnittgroesse.Mxs, 2, 2) + " kNcm", links + 40, yy)
-  htmlText("M<sub>y</sub> = " + myFormat(schnittgroesse.My, 2, 2) + " kNcm", links + 90, yy)
+  htmlText("M<sub>xs</sub> = " + myFormat(schnittgroesse.Mxs, 2, 2) + " kNm", links + 40, yy)
+  htmlText("M<sub>y</sub> = " + myFormat(schnittgroesse.My, 2, 2) + " kNm", links + 90, yy)
 
   yy = neueZeile(yy, fs1, 1)
 
-  htmlText("M<sub>ω</sub> = " + myFormat(schnittgroesse.M_omega, 2, 2) + " kNcm²", links + 40, yy)
-  htmlText("M<sub>z</sub> = " + myFormat(schnittgroesse.Mz, 2, 2) + " kNcm", links + 90, yy)
+  htmlText("M<sub>ω</sub> = " + myFormat(schnittgroesse.M_omega, 2, 2) + " kNm²", links + 40, yy)
+  htmlText("M<sub>z</sub> = " + myFormat(schnittgroesse.Mz, 2, 2) + " kNm", links + 90, yy)
 
   yy = neueZeile(yy, fs, 2)
 
@@ -642,9 +643,11 @@ export async function my_jspdf() {
 
     var imgData = canvas.toDataURL("image/png", 1);
 
-    if ((yy + 200) > 275) neueSeite();
-
-    yy = neueZeile(yy, fs)
+    if ((yy + 200) > 275) {
+      yy = neueSeite();
+    } else {
+      yy = neueZeile(yy, fs)
+    }
     doc.text('Querschnitt', links, yy)
 
 
