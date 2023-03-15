@@ -459,7 +459,6 @@ export function draw_elements() {
         labelRenderer.setSize(width, height);
 
         //console.log("minMax", -ymax, -ymin, -zmin, -zmax);
-        let rand = slmax / 10.0;
 
         let dx = Gesamt_ys;
         let dy = Gesamt_zs;
@@ -482,6 +481,9 @@ export function draw_elements() {
             z_max = zmax;
         }
 
+        let rand = 0; //Math.min(slmax / 50.0, dxm / 10.0, dym / 10.0)
+        console.log("rand",rand,slmax / 50.0, dxm / 10.0, dym / 10.0)
+
         camera.left = -y_max - rand + dx;
         camera.right = -y_min + rand + dx;
         camera.top = -z_min + rand + dy;
@@ -498,6 +500,7 @@ export function draw_elements() {
             let dh = camera.right - camera.left
             console.log("dh", dh, width / height)
             dh = (width / height - 1) * dh / 2;
+            console.log("dh neu",dh)
             camera.right += dh
             camera.left -= dh;
 
