@@ -185,7 +185,7 @@ export async function my_jspdf() {
     const nspalten = 3, nzeilen = nnodes
 
     yy = testSeite(yy, fs1, 1, 4 + nzeilen)
-    doc.text("Knotenkkordinaten", links, yy)
+    doc.text("Knotenkoordinaten", links, yy)
 
     let str: string, texWid: number
 
