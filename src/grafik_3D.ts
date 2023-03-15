@@ -1404,6 +1404,10 @@ export function draw_elements() {
 
                     }
 
+
+                    // Pfeile zeichnen
+
+                    zeichneHPfeil(i, mesh)
                 }
             }
         }
@@ -1513,6 +1517,116 @@ export function draw_elements() {
     }
 
 
+}
+
+//--------------------------------------------------------------------------------------------------------
+function zeichneHPfeil(ielem: number, mesh: any) {
+    //----------------------------------------------------------------------------------------------------
+
+    let i: number, istelle: number, n: number
+    let b: number, a: number, c: number, b2: number, d: number
+    let tau_i: number, sl: number, xi: number
+    let x1: number, x2: number, y1: number, y2: number, dx: number, dy: number
+    let xm1: number, ym1: number, xm2: number, ym2: number, xm3: number, ym3: number
+
+
+    const si = truss[ielem].sinus
+    const co = truss[ielem].cosinus
+
+    sl = truss[ielem].sl
+
+    a = slmax / 100   // Länge Pfeil
+    b = slmax / 800   // Breite Pfeil
+    b2 = slmax / 250  // Breite Pfeilspitze
+    c = slmax / 1000  // Abstand vor Querschnitt
+    d = slmax / 100   // Länge Pfeilspitze
+
+    const vertices = [];
+    const indices = [];
+
+    n = 0
+
+    for (istelle = 1; istelle <= 3; istelle++) {
+
+        for (i = 1; i <= 2; i++) {
+            if (i === 1) {                     // rechte Seite
+                x1 = truss[ielem].pts_y[0]
+                y1 = truss[ielem].pts_z[0]
+                x2 = truss[ielem].pts_y[1]
+                y2 = truss[ielem].pts_z[1]
+            } else {                         // linke Seite
+                x1 = truss[ielem].pts_y[3]
+                y1 = truss[ielem].pts_z[3]
+                x2 = truss[ielem].pts_y[2]
+                y2 = truss[ielem].pts_z[2]
+
+            }
+            dx = x2 - x1
+            dy = y2 - y1
+
+            xi = istelle * sl / 4
+            if (i === 1) {
+                tau_i = (sl ** 2 - 3 * sl * xi + 2 * xi ** 2) * truss[ielem].stress_R[0]
+                    + 4 * xi * (sl - xi) * truss[ielem].stress_R[1]
+                tau_i = (tau_i + xi * (2 * xi - sl) * truss[ielem].stress_R[2]) / sl / sl
+            } else {
+                tau_i = (sl ** 2 - 3 * sl * xi + 2 * xi ** 2) * truss[ielem].stress_L[0]
+                    + 4 * xi * (sl - xi) * truss[ielem].stress_L[1]
+                tau_i = (tau_i + xi * (2 * xi - sl) * truss[ielem].stress_L[2]) / sl / sl
+            }
+
+            xm1 = x1 + istelle * dx / 4 - co * a
+            ym1 = y1 + istelle * dy / 4 - si * a
+            xm2 = x1 + istelle * dx / 4 + co * a
+            ym2 = y1 + istelle * dy / 4 + si * a
+
+            vertices.push(-(xm1 + si * b), -(ym1 - co * b), c);
+            vertices.push(-(xm2 + si * b), -(ym2 - co * b), c);
+            vertices.push(-(xm2 - si * b), -(ym2 + co * b), c);
+            vertices.push(-(xm1 - si * b), -(ym1 + co * b), c);
+
+
+            if (tau_i > 0) {
+                xm3 = xm2 + co * d
+                ym3 = ym2 + si * d
+
+                vertices.push(-(xm2 + si * b2), -(ym2 - co * b2), c);
+                vertices.push(-(xm2 - si * b2), -(ym2 + co * b2), c);
+                vertices.push(-(xm3), -(ym3), c);
+            } else {
+                xm3 = xm1 - co * d
+                ym3 = ym1 - si * d
+
+                vertices.push(-(xm1 + si * b2), -(ym1 - co * b2), c);
+                vertices.push(-(xm1 - si * b2), -(ym1 + co * b2), c);
+                vertices.push(-(xm3), -(ym3), c);
+            }
+
+
+            if (i === 1) {
+                indices.push(n + 0, n + 1, n + 2)
+                indices.push(n + 2, n + 3, n + 0)
+                indices.push(n + 4, n + 6, n + 5)
+            } else {
+                indices.push(n + 0 + 7, n + 1 + 7, n + 2 + 7)
+                indices.push(n + 2 + 7, n + 3 + 7, n + 0 + 7)
+                indices.push(n + 4 + 7, n + 6 + 7, n + 5 + 7)
+            }
+        }
+        n = n + 14
+    }
+
+    const geometry = new THREE.BufferGeometry();
+    geometry.setIndex(indices);
+    geometry.setAttribute('position', new THREE.Float32BufferAttribute(vertices, 3));
+
+    const material = new THREE.MeshPhongMaterial({
+        side: THREE.DoubleSide,
+        vertexColors: true
+    });
+
+    mesh = new THREE.Mesh(geometry, material);
+    scene.add(mesh);
 }
 
 //--------------------------------------------------------------------------------------------------------
