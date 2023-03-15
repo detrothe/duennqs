@@ -481,8 +481,7 @@ export function draw_elements() {
             z_max = zmax;
         }
 
-        let rand = 0; //Math.min(slmax / 50.0, dxm / 10.0, dym / 10.0)
-        console.log("rand",rand,slmax / 50.0, dxm / 10.0, dym / 10.0)
+        let rand = slmax / 10.0
 
         camera.left = -y_max - rand + dx;
         camera.right = -y_min + rand + dx;
@@ -492,15 +491,14 @@ export function draw_elements() {
 
         if (height > width) {
             let dh = camera.top - camera.bottom
-            console.log("dh", dh, height / width)
+            //console.log("dh", dh, height / width)
             dh = (height / width - 1) * dh / 2;
             camera.top += dh
             camera.bottom -= dh;
         } else {
             let dh = camera.right - camera.left
-            console.log("dh", dh, width / height)
             dh = (width / height - 1) * dh / 2;
-            console.log("dh neu",dh)
+            //console.log("dh neu",dh)
             camera.right += dh
             camera.left -= dh;
 
