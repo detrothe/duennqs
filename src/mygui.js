@@ -10,10 +10,12 @@ export function myPanel() {
         label: false,
         tau: false,
         sigma: false,
+        sigmaV: false,
         woelb_M: false,
         woelb_V: false,
         scale: 1.0,
         show_sides: true,
+        show_arrows: true,
         Reset: function () {
             window.dispatchEvent(new Event("reset_webgl"));
         }
@@ -23,7 +25,7 @@ export function myPanel() {
 
     gui.add(obj, 'label').onChange(v => {
         window.dispatchEvent(new Event("label_webgl"));
-    }); 	
+    });
 
     gui.add(obj, 'tau').name('Schubspannung').onChange(v => {
         window.dispatchEvent(new Event("tau_webgl"));
@@ -31,6 +33,10 @@ export function myPanel() {
 
     gui.add(obj, 'sigma').name('Normalspannung').onChange(v => {
         window.dispatchEvent(new Event("sigma_webgl"));
+    });
+
+    gui.add(obj, 'sigmaV').name('Vergleichsspannung').onChange(v => {
+        window.dispatchEvent(new Event("sigmaV_webgl"));
     });
 
     gui.add(obj, 'woelb_M').name('omega').onChange(v => {
@@ -51,6 +57,9 @@ export function myPanel() {
         window.dispatchEvent(new Event("show_sides_webgl"));
     });
 
+    gui.add(obj, 'show_arrows').name('Pfeile anzeigen').onChange(v => {
+        window.dispatchEvent(new Event("show_arrows_webgl"));
+    });
     gui.add(obj, 'Reset')
 
     gui.close();

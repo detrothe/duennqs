@@ -24,6 +24,7 @@ let show_webgl_sigma = false;
 let show_webgl_woelb_M = false;
 let show_webgl_woelb_V = false;
 let showSides = true;
+let showArrows = true;
 
 
 
@@ -1404,10 +1405,9 @@ export function draw_elements() {
 
                     }
 
-
                     // Pfeile zeichnen
 
-                    zeichneHPfeil(i, mesh)
+                    if (showArrows) zeichneHPfeil(i, mesh)
                 }
             }
         }
@@ -1524,7 +1524,7 @@ function zeichneHPfeil(ielem: number, mesh: any) {
     //----------------------------------------------------------------------------------------------------
 
     let i: number, istelle: number, n: number
-    let b: number, a: number, c: number, b2: number, d: number
+    let b: number, a: number, c: number, b2: number, d: number, atemp: number, btemp: number
     let tau_i: number, sl: number, xi: number
     let x1: number, x2: number, y1: number, y2: number, dx: number, dy: number
     let xm1: number, ym1: number, xm2: number, ym2: number, xm3: number, ym3: number
@@ -1575,31 +1575,46 @@ function zeichneHPfeil(ielem: number, mesh: any) {
                 tau_i = (tau_i + xi * (2 * xi - sl) * truss[ielem].stress_L[2]) / sl / sl
             }
 
-            xm1 = x1 + istelle * dx / 4 - co * a
-            ym1 = y1 + istelle * dy / 4 - si * a
-            xm2 = x1 + istelle * dx / 4 + co * a
-            ym2 = y1 + istelle * dy / 4 + si * a
+            if (Math.abs(tau_i) < 1.e-12) {
+                atemp = a / 10
+                btemp = b / 10
+            } else {
+                atemp = a
+                btemp = b
+            }
+            xm1 = x1 + istelle * dx / 4 - co * atemp
+            ym1 = y1 + istelle * dy / 4 - si * atemp
+            xm2 = x1 + istelle * dx / 4 + co * atemp
+            ym2 = y1 + istelle * dy / 4 + si * atemp
 
-            vertices.push(-(xm1 + si * b), -(ym1 - co * b), c);
-            vertices.push(-(xm2 + si * b), -(ym2 - co * b), c);
-            vertices.push(-(xm2 - si * b), -(ym2 + co * b), c);
-            vertices.push(-(xm1 - si * b), -(ym1 + co * b), c);
+            vertices.push(-(xm1 + si * btemp), -(ym1 - co * btemp), c);
+            vertices.push(-(xm2 + si * btemp), -(ym2 - co * btemp), c);
+            vertices.push(-(xm2 - si * btemp), -(ym2 + co * btemp), c);
+            vertices.push(-(xm1 - si * btemp), -(ym1 + co * btemp), c);
 
 
-            if (tau_i > 0) {
+            if (tau_i > 1.e-12) {
                 xm3 = xm2 + co * d
                 ym3 = ym2 + si * d
 
                 vertices.push(-(xm2 + si * b2), -(ym2 - co * b2), c);
                 vertices.push(-(xm2 - si * b2), -(ym2 + co * b2), c);
                 vertices.push(-(xm3), -(ym3), c);
-            } else {
+            } else if (tau_i < -1.e-12) {
                 xm3 = xm1 - co * d
                 ym3 = ym1 - si * d
 
                 vertices.push(-(xm1 + si * b2), -(ym1 - co * b2), c);
                 vertices.push(-(xm1 - si * b2), -(ym1 + co * b2), c);
                 vertices.push(-(xm3), -(ym3), c);
+            } else {
+                xm3 = xm2 + co * d / 10
+                ym3 = ym2 + si * d / 10
+
+                vertices.push(-(xm2 + si * b2 / 10), -(ym2 - co * b2 / 10), c);
+                vertices.push(-(xm2 - si * b2 / 10), -(ym2 + co * b2 / 10), c);
+                vertices.push(-(xm3), -(ym3), c);
+
             }
 
 
@@ -1677,20 +1692,20 @@ function sigma_webgl() {
 
     if (Gesamt_ys === undefined || isNaN(yM)) return;
 
-    console.log("in sigma_webgl");
+    //console.log("in sigma_webgl");
     show_webgl_sigma = !show_webgl_sigma;
-    /*
-    let element = document.getElementById("button_sigma_webgl");
-    if (show_webgl_sigma) {
-        element.className = 'button_sigma_webgl_pressed'
-    } else {
-        element.className = 'button_webgl'
-        console.log("in false");
-    }
-*/
     draw_elements();
 }
 
+//--------------------------------------------------------------------------------------------------------
+function sigmaV_webgl() {
+    //--------------------------------------------------------------------------------------------------------
+
+    if (Gesamt_ys === undefined || isNaN(yM)) return;
+    console.log("in sigmaV_webgl");
+    show_webgl_sigma = !show_webgl_sigma;
+    draw_elements();
+}
 //--------------------------------------------------------------------------------------------------------
 function woelb_M_webgl() {
     //--------------------------------------------------------------------------------------------------------
@@ -1699,15 +1714,7 @@ function woelb_M_webgl() {
 
     console.log("in woelb_M_webgl");
     show_webgl_woelb_M = !show_webgl_woelb_M;
-    /*
-    let element = document.getElementById("button_woelb_M_webgl");
-    if (show_webgl_woelb_M) {
-        element.className = 'button_woelb_M_webgl_pressed'
-    } else {
-        element.className = 'button_webgl'
-        console.log("in false");
-    }
-*/
+
     draw_elements();
 }
 
@@ -1719,15 +1726,7 @@ function woelb_V_webgl() {
 
     console.log("in woelb_V_webgl");
     show_webgl_woelb_V = !show_webgl_woelb_V;
-    /*
-    let element = document.getElementById("button_woelb_V_webgl");
-    if (show_webgl_woelb_V) {
-        element.className = 'button_woelb_V_webgl_pressed'
-    } else {
-        element.className = 'button_webgl'
-        console.log("in false");
-    }
-*/
+
     draw_elements();
 }
 
@@ -1755,20 +1754,23 @@ function showSides_webgl() {
     showSides = !showSides;
     draw_elements();
 }
+
 //--------------------------------------------------------------------------------------------------------
-/*
-document.getElementById('button_label_webgl').addEventListener('click', label_webgl, false);
-document.getElementById('button_tau_webgl').addEventListener('click', tau_webgl, false);
-document.getElementById('button_sigma_webgl').addEventListener('click', sigma_webgl, false);
-document.getElementById('button_woelb_M_webgl').addEventListener('click', woelb_M_webgl, false);
-document.getElementById('button_woelb_V_webgl').addEventListener('click', woelb_V_webgl, false);
-*/
+function showArrows_webgl() {
+    //--------------------------------------------------------------------------------------------------------
+    showArrows = !showArrows;
+    draw_elements();
+}
+//--------------------------------------------------------------------------------------------------------
+
 window.addEventListener('label_webgl', label_webgl);
 window.addEventListener('tau_webgl', tau_webgl);
 window.addEventListener('sigma_webgl', sigma_webgl);
+window.addEventListener('sigmaV_webgl', sigmaV_webgl);
 window.addEventListener('woelb_M_webgl', woelb_M_webgl);
 window.addEventListener('woelb_V_webgl', woelb_V_webgl);
 
 window.addEventListener('scale_factor', scale_factor);
 window.addEventListener('show_sides_webgl', showSides_webgl);
+window.addEventListener('show_arrows_webgl', showArrows_webgl);
 window.addEventListener('reset_webgl', reset_webgl);
