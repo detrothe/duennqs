@@ -16,6 +16,7 @@ export function myPanel() {
         scale: 1.0,
         show_sides: true,
         show_arrows: true,
+        show_sigma_frame: true,
         Reset: function () {
             window.dispatchEvent(new Event("reset_webgl"));
         }
@@ -60,6 +61,11 @@ export function myPanel() {
     gui.add(obj, 'show_arrows').name('Pfeile anzeigen').onChange(v => {
         window.dispatchEvent(new Event("show_arrows_webgl"));
     });
+
+    gui.add(obj, 'show_sigma_frame').name('sigma Fläche').onChange(v => {
+        window.dispatchEvent(new Event("show_sigma_frame_webgl"));
+    });
+
     gui.add(obj, 'Reset')
 
     gui.close();

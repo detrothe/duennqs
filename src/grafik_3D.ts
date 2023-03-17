@@ -26,6 +26,7 @@ let show_webgl_woelb_M = false;
 let show_webgl_woelb_V = false;
 let showSides = true;
 let showArrows = true;
+let showSigmaFrame = true;
 
 
 
@@ -420,7 +421,7 @@ export function draw_elements() {
     const z_M = zM
     const phi = phi0
 
-    const teilung = 10
+    const teilung = 20
 
     let wert: string;
 
@@ -815,7 +816,9 @@ export function draw_elements() {
 
         console.log("maxSigma, maxWoelb", maxSigma, maxWoelb_M, maxWoelb_V)
 
+        //---------------------------------------------------------------------------------------------------
         if (maxSigma > 0.0000000000001 && show_webgl_sigma) {
+            //---------------------------------------------------------------------------------------------------
 
             let Ueberhoehung = 0.2 * slmax / maxSigma * scaleFactor    // Skalieren
             console.log("Normalspannung", maxSigma, Ueberhoehung)
@@ -1081,8 +1084,54 @@ export function draw_elements() {
 
                 scene.add(arrowHelper);
 
+                if (showSigmaFrame) {
+                    const material = new THREE.LineBasicMaterial({
+                        color: 0x666666
+                    });
 
-                if (show_webgl_label) {
+                    const points = [];
+                    points.push(new THREE.Vector3(-truss[i].pts_y[0], -truss[i].pts_z[0], 0.0));
+                    points.push(new THREE.Vector3(-truss[i].pts_y[0], -truss[i].pts_z[0], truss[i].sigma_xe[0] * Ueberhoehung));
+                    points.push(new THREE.Vector3(-truss[i].pts_y[1], -truss[i].pts_z[1], truss[i].sigma_xe[1] * Ueberhoehung));
+                    points.push(new THREE.Vector3(-truss[i].pts_y[2], -truss[i].pts_z[2], truss[i].sigma_xe[2] * Ueberhoehung));
+                    points.push(new THREE.Vector3(-truss[i].pts_y[3], -truss[i].pts_z[3], truss[i].sigma_xe[3] * Ueberhoehung));
+                    points.push(new THREE.Vector3(-truss[i].pts_y[0], -truss[i].pts_z[0], truss[i].sigma_xe[0] * Ueberhoehung));
+
+                    const geometry = new THREE.BufferGeometry().setFromPoints(points);
+
+                    const line = new THREE.Line(geometry, material);
+                    scene.add(line);
+
+                    const points1 = [];
+                    points1.push(new THREE.Vector3(-truss[i].pts_y[1], -truss[i].pts_z[1], 0.0));
+                    points1.push(new THREE.Vector3(-truss[i].pts_y[1], -truss[i].pts_z[1], truss[i].sigma_xe[1] * Ueberhoehung));
+                    points1.push(new THREE.Vector3(-truss[i].pts_y[2], -truss[i].pts_z[2], 0.0));
+                    points1.push(new THREE.Vector3(-truss[i].pts_y[2], -truss[i].pts_z[2], truss[i].sigma_xe[2] * Ueberhoehung));
+                    points1.push(new THREE.Vector3(-truss[i].pts_y[3], -truss[i].pts_z[3], 0.0));
+                    points1.push(new THREE.Vector3(-truss[i].pts_y[3], -truss[i].pts_z[3], truss[i].sigma_xe[3] * Ueberhoehung));
+                    const geometry1 = new THREE.BufferGeometry().setFromPoints(points1);
+
+                    const line1 = new THREE.LineSegments(geometry1, material);
+                    scene.add(line1);
+
+                    if (show_webgl_label) {
+                        for (j = 0; j < 4; j++) {
+                            let nameDiv = document.createElement("div");
+                            nameDiv.className = "emotionLabel";
+                            wert = (truss[i].sigma_xe[j]).toFixed(3);
+                            nameDiv.textContent = wert;
+                            nameDiv.id = "sig4" + j
+                            nameDiv.style.backgroundColor = '#ffffff'
+                            let xLabel = new CSS2DObject(nameDiv);
+                            xLabel.position.set(-truss[i].pts_y[j], -truss[i].pts_z[j], truss[i].sigma_xe[j] * Ueberhoehung);
+                            xLabel.layers.set(1)
+                            scene.add(xLabel);
+                        }
+                    }
+
+                }
+
+                else if (show_webgl_label) {
 
                     let nameDiv = document.createElement("div");
                     nameDiv.className = "emotionLabel";
@@ -2130,6 +2179,14 @@ function showArrows_webgl() {
     showArrows = !showArrows;
     draw_elements();
 }
+
+//--------------------------------------------------------------------------------------------------------
+function showSigmaFrame_webgl() {
+    //--------------------------------------------------------------------------------------------------------
+    showSigmaFrame = !showSigmaFrame;
+    draw_elements();
+}
+
 //--------------------------------------------------------------------------------------------------------
 
 window.addEventListener('label_webgl', label_webgl);
@@ -2142,4 +2199,5 @@ window.addEventListener('woelb_V_webgl', woelb_V_webgl);
 window.addEventListener('scale_factor', scale_factor);
 window.addEventListener('show_sides_webgl', showSides_webgl);
 window.addEventListener('show_arrows_webgl', showArrows_webgl);
+window.addEventListener('show_sigma_frame_webgl', showSigmaFrame_webgl);
 window.addEventListener('reset_webgl', reset_webgl);
