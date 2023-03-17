@@ -174,6 +174,7 @@ class TElement {
     stress_L = [0.0, 0.0, 0.0]
     pts_y = [0.0, 0.0, 0.0, 0.0]
     pts_z = [0.0, 0.0, 0.0, 0.0]
+    sigma_xe = [0.0, 0.0, 0.0, 0.0]
 }
 
 
@@ -965,6 +966,21 @@ export function duennQ() {
             }
         }
         truss[i].sigma_x[1] = (truss[i].sigma_x[0] + truss[i].sigma_x[2]) / 2
+
+        // Berechnung der Spannungen in den 4 Eckpunkten der Elementfläche für Grafik
+
+        for (j = 0; j < 4; j++) {
+
+            ys = truss[i].pts_y[j] - Gesamt_ys
+            zs = truss[i].pts_z[j] - Gesamt_zs
+            yj = co0 * ys + si0 * zs;         // Umrechnung ins Hauptachensystem
+            zj = -si0 * ys + co0 * zs;
+            if (I_omega > 0.0000000000001) {
+                truss[i].sigma_xe[j] = truss[i].ni * (normalkraft / Gesamtflaeche + moment_1 / I11 * zj - moment_2 / I22 * yj + M_omega / I_omega * truss[i].omega[j])
+            } else {
+                truss[i].sigma_xe[j] = truss[i].ni * (normalkraft / Gesamtflaeche + moment_1 / I11 * zj - moment_2 / I22 * yj)
+            }
+        }
     }
 
     //---------------------------------
