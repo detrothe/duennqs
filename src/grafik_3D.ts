@@ -1544,7 +1544,11 @@ export function draw_elements() {
                         + 4 * xi * (sl - xi) * truss[i].stress_R[1]
                     tau_i = (tau_i + xi * (2 * xi - sl) * truss[i].stress_R[2]) / sl / sl
 
-                    sig_i = (sigma[2] - sigma[0]) / sl * xi + sigma[0]
+                    if (showSigmaFrame) {
+                        sig_i = (truss[i].sigma_xe[1] - truss[i].sigma_xe[0]) / sl * xi + truss[i].sigma_xe[0]
+                    } else {
+                        sig_i = (sigma[2] - sigma[0]) / sl * xi + sigma[0]
+                    }
 
                     sig_V = Math.sqrt(sig_i * sig_i + 3 * tau_i * tau_i) * Ueberhoehung
 
@@ -1564,6 +1568,10 @@ export function draw_elements() {
                     tau_i = (sl ** 2 - 3 * sl * xi + 2 * xi ** 2) * truss[i].stress_L[0]
                         + 4 * xi * (sl - xi) * truss[i].stress_L[1]
                     tau_i = (tau_i + xi * (2 * xi - sl) * truss[i].stress_L[2]) / sl / sl
+
+                    if (showSigmaFrame) {
+                        sig_i = (truss[i].sigma_xe[2] - truss[i].sigma_xe[3]) / sl * xi + truss[i].sigma_xe[3]
+                    }
 
                     sig_V = Math.sqrt(sig_i * sig_i + 3 * tau_i * tau_i) * Ueberhoehung
 
