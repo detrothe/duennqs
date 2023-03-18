@@ -5,7 +5,7 @@ import './dateien.js';
 import { gauss } from "./gauss.js"
 import { testeZahl, myFormat, testNumber } from './utility.js';
 import { remove_selected_Tabelle, clear_Tabelle, nelem, nnodes } from "./duennQ_tabelle.js";
-import { label_svg } from "./systemlinien";
+import { label_svg, copy_svg } from "./systemlinien";
 import { set_myScreen } from "./index.js"
 import { draw_elements } from "./grafik_3D";
 //import {set_nnodes, set_nelem} from "./duennQ_tabelle.js"
@@ -1447,6 +1447,7 @@ btn3.addEventListener('click', clear_Tabelle);
 
 document.getElementById("material_equal").addEventListener('change', setMaterialEqual);
 document.getElementById('button_label_svg').addEventListener('click', label_svg, false);
+document.getElementById('button_copy_svg').addEventListener('click', copy_svg, false);
 
 //document.getElementById("input_nodes").addEventListener('change', setMaterialEqual);
 

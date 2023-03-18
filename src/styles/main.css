@@ -570,12 +570,18 @@ td {
     z-index: 100;
     /*justify-content: center;}*/
 }
-
 #button_label_svg {
     position: absolute;
     top: 10px;
     /*-15*/
     left: calc(10px + 10em);
+}
+
+#button_copy_svg {
+    position: absolute;
+    top: 10px;
+    /*-15*/
+    left: calc(10px + 15em);
 }
 
 #circleBasicTooltip,
