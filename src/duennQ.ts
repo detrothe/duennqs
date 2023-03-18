@@ -970,13 +970,14 @@ export function duennQ() {
         // Berechnung der Spannungen in den 4 Eckpunkten der Elementfläche für Grafik
 
         for (j = 0; j < 4; j++) {
-
+            if (j === 0 || j === 3) { k = 0 }
+            else { k = 1 };
             ys = truss[i].pts_y[j] - Gesamt_ys
             zs = truss[i].pts_z[j] - Gesamt_zs
             yj = co0 * ys + si0 * zs;         // Umrechnung ins Hauptachensystem
             zj = -si0 * ys + co0 * zs;
             if (I_omega > 0.0000000000001) {
-                truss[i].sigma_xe[j] = truss[i].ni * (normalkraft / Gesamtflaeche + moment_1 / I11 * zj - moment_2 / I22 * yj + M_omega / I_omega * truss[i].omega[j])
+                truss[i].sigma_xe[j] = truss[i].ni * (normalkraft / Gesamtflaeche + moment_1 / I11 * zj - moment_2 / I22 * yj + M_omega / I_omega * truss[i].omega[k])
             } else {
                 truss[i].sigma_xe[j] = truss[i].ni * (normalkraft / Gesamtflaeche + moment_1 / I11 * zj - moment_2 / I22 * yj)
             }

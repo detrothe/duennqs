@@ -421,7 +421,7 @@ export function draw_elements() {
     const z_M = zM
     const phi = phi0
 
-    const teilung = 20
+    const teilung = 40
 
     let wert: string;
 
@@ -1780,7 +1780,7 @@ export function draw_elements() {
                     xLabel.layers.set(1)
                     mesh.add(xLabel);
 
-                    if (Mxp !== 0.0) {
+                    if (Mxp !== 0.0 || showSigmaFrame) {
                         nameDiv = document.createElement("div");
                         nameDiv.className = "emotionLabel";
                         wert = (punkteL[0].z / Ueberhoehung).toFixed(3);
@@ -1805,7 +1805,7 @@ export function draw_elements() {
                         xLabel.layers.set(1)
                         mesh.add(xLabel);
 
-                        if (Mxp !== 0.0) {
+                        if (Mxp !== 0.0 || showSigmaFrame) {
                             nameDiv = document.createElement("div");
                             nameDiv.className = "emotionLabel";
                             wert = (punkteL[teilung].z / Ueberhoehung).toFixed(3);
