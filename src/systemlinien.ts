@@ -8,6 +8,7 @@ import { ymin, ymax, zmin, zmax, slmax } from "./duennQ";
 
 import { myScreen } from "./index.js";
 import { nnodes, nelem } from "./duennQ_tabelle.js"
+import { saveAs } from 'file-saver';
 
 export let svg = null;
 let tr = null;
@@ -403,6 +404,20 @@ export function label_svg() {
 }
 
 //---------------------------------------------------------------------------------------------------
-export function copy_svg() {
+export async function copy_svg() {
     //-----------------------------------------------------------------------------------------------
+
+    let svg = document.getElementById("my-svg").innerHTML;
+
+    if (svg) {
+        svg = svg.replace(/\r?\n|\r/g, "").trim();
+        svg = svg.substring(0, svg.indexOf("</svg>")) + "</svg>";
+        // @ts-ignore
+        svg = svg.replaceAll("  ", "");
+
+        const preface = '<?xml version="1.0" standalone="no"?>\r\n';
+        const svgBlob = new Blob([preface, svg], { type: "image/svg+xml;charset=utf-8" });
+        saveAs(svgBlob, "graph.svg");
+    }
+
 }
