@@ -267,6 +267,7 @@ for (let i = 1; i < nTabelle.rows.length; i++) {
         objCells.item(j).wrap = false;
         // @ts-ignore
         objCells.item(j).selekt = false;
+        objCells.item(j).inputMode = 'decimal'
         //objCells.item(j).setAttribute("selekt", "false");
     }
     //console.log(objCells.item(0));
