@@ -227,6 +227,7 @@ tabulate('#knotentabelle', 'nodeTable', nodeArray, ['No', 'y [cm]', 'z [cm]']); 
 
 tabulate('#elementtabelle', 'elemTable', elemArray, ["El No", 'E-Modul [kN/cm²]', 'ν', 'Dicke t [cm]', 'nod1', 'nod2']);  // elemObj.
 
+testtabelle();
 
 const nTabelle = document.getElementById("nodeTable") as HTMLTableElement;
 
@@ -1455,3 +1456,68 @@ document.getElementById('button_copy_svg').addEventListener('click', copy_svg, f
 
 // @ts-ignore
 window.setMaterialEqual = setMaterialEqual;   // jetzt auch in html sichtbar
+
+
+//------------------------------------------------------------------------------------------------
+function testtabelle() {
+    //------------------------------------------------------------------------------------------------
+
+    const myTableDiv = document.getElementById("testtabelle");  //in div
+    //console.log("myTableDiv testtable1", myTableDiv)
+
+
+    // const tag = document.createElement("p"); // <p></p>
+    // tag.setAttribute("id", "id_spannung_mxs");
+    // const text = document.createTextNode("xxx");
+    // tag.appendChild(text);
+    // tag.innerHTML = "Schubspannungen aus Querkraft und sekundärer Torsion M<sub>xs</sub>"
+    // myTableDiv.appendChild(tag);
+
+    const table = document.createElement("TABLE") as HTMLTableElement;   //TABLE??
+    table.setAttribute("id", "id_testtable");
+    table.border = '0';
+    myTableDiv.appendChild(table);  //appendChild() insert it in the document (table --> myTableDiv)
+
+
+    let thead = table.createTHead();
+    let row = thead.insertRow();
+
+    const th0 = table.tHead.appendChild(document.createElement("th"));
+    th0.innerHTML = "El No";
+    th0.title = "Elementnummer"
+    row.appendChild(th0);
+    th0.setAttribute("class", "table_spannung_cell_center");
+    const th1 = table.tHead.appendChild(document.createElement("th"));
+    th1.innerHTML = "&tau;<sub>xsa</sub>";
+    th1.title = "Schubspannung am Elementanfang, Elementknoten 1"
+    row.appendChild(th1);
+    const th2 = table.tHead.appendChild(document.createElement("th"));
+    th2.innerHTML = "&tau;<sub>xsm</sub>";
+    th2.title = "Schubspannung in Elementmitte"
+    row.appendChild(th2);
+
+
+    let tbody = table.createTBody();
+
+    let newRow = tbody.insertRow(-1);
+
+    for (let i = 0; i < 3; i++) {
+
+        let newCell, newText
+        if (i === 0) {
+            newCell = newRow.insertCell(i);  // Insert a cell in the row at index 0
+            newText = document.createTextNode(String(i + 1));  // Append a text node to the cell
+            newCell.appendChild(newText);
+        } else {
+
+            let el = document.createElement("input");
+            el.setAttribute("type", "number");
+            console.log("el", el)
+            //newText = document.createTextNode(String(i + 1));  // Append a text node to the cell
+            newCell = newRow.insertCell()
+            newCell.appendChild(el);
+            //newCell.setAttribute("class", "table_spannung_cell_center");
+        }
+    }
+
+}
