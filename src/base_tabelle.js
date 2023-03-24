@@ -93,7 +93,7 @@ export function resizeTable() {
     berechnungErforderlich(true)
 
 }
-
+/*
 //----------------------------------------------------------------------------------------------
 export function tabulate(theDiv, i_d, data, columns) {
     //----------------------------------------------------------------------------------------------
@@ -150,109 +150,12 @@ export function tabulate(theDiv, i_d, data, columns) {
         .on('mousedown', MOUSEDOWN)
         .on('mousemove', MOUSEMOVE)
 
-    //.on('pointerover',POINTEROVER)
-    //.on('pointerleave',POINTERLEAVE)
-    //.on('pointerenter',POINTERENTER)
-    //.on('pointerup',POINTERUP)
-    /*
-            .on("touchstart", function (ev) {
-                const tableId = ev.target.offsetParent.id;
-                const tableIndex = table_index(tableId)
-                selectedCellPoly.tableId = tableId;
-                tableInfo[tableIndex].tableId = tableId;
-    
-                let touchobj = ev.changedTouches[0]; // erster Finger
-                selectedCellPoly.startx = parseInt(touchobj.clientX); // X/Y-Koordinaten relativ zum Viewport
-                selectedCellPoly.starty = parseInt(touchobj.clientY);
-                //console.log("touchstart bei ClientX: " + selectedCellPoly.startx + "px ClientY: " + selectedCellPoly.starty + "px");
-                tableInfo[tableIndex].startx = parseInt(touchobj.clientX); // X/Y-Koordinaten relativ zum Viewport
-                tableInfo[tableIndex].starty = parseInt(touchobj.clientY);
-                //console.log("touchstart bei ClientX: " + tableInfo[tableIndex].startx + "px ClientY: " + tableInfo[tableIndex].starty + "px");
-    
-                //ev.preventDefault();
-    
-                //ev.preventDefault();
-                if (selectedCellPoly.isSelected) {
-                    //selectedCellPoly.activatedMember.removeClass("highlight");
-                    console.log("is selected", $(this).parent());
-                    const el = document.getElementById("input_neq");
-                    if (el) {
-                        //const npkte = el.value;
-                        $("#" + tableId + " td").removeClass("highlight");
-                        //for (let i = 0; i < npkte; i++) {
-                        //    selectedCellPoly.selColY[i] = false;
-                        //    selectedCellPoly.selColZ[i] = false;
-                        //}
-                    }
-                }
-                //console.log("cell", $(this), $(this).parent().index());
-                const row = Number($(this).parent().index()) + 1;
-                const col = $(this).index();
-                if (col === 1 || col === 2) {
-                    const activatedMember = $(ev.target).closest("td");
-                    activatedMember.addClass("highlight");
-                    let wert = activatedMember.text();
-    
-                    //console.log("event", row, col, wert);
-                    selectedCellPoly.row = row;
-                    selectedCellPoly.col = col;
-                    selectedCellPoly.wert = wert;
-                    selectedCellPoly.activatedMember = activatedMember;
-                    selectedCellPoly.isSelected = true;
-                    //if (col === 1) selectedCellPoly.selColY[row - 1] = true;
-                    //else if (col === 2) selectedCellPoly.selColZ[row - 1] = true;
-                    selectedCellPoly.startRowIndex = row;
-                    selectedCellPoly.startCellIndex = col;
-    
-                    const str = tableId + "-" + row + "-" + col;
-                    selectedCellPoly.zelle = document.getElementById(str);
-    
-                    //console.log("str", str, cellLeft, cellTop);
-                    //*
-                                    const elemNeu = document.getElementById(str);
-                                    elemNeu.focus();
-                                    const evt = new Event("mousedown", {"bubbles": true, "cancelable": false});
-                                    evt.button = 0;     // linke Maustaste
-                                    elemNeu.dispatchEvent(evt);
-                    * //
-                    // *
-                    cellLeft = (col - 1) * cellWidth;
-                    cellTop = (row - 1) * cellHeight;
-                    document.getElementById("polyCanvas").style.display = "block";
-                    rechteck.attr("x", cellLeft + 'px');
-                    rechteck.attr("y", cellTop + 'px');
-                    rechteck.attr("width", cellWidth + 'px');
-                    rechteck.attr("height", cellHeight + 'px');
-    
-                     * /
-                }
-    
-    
-            }
-            
-            )
-    */
+
 
     return table;
 }
 
-/*
-export function POINTEROVER(ev) { 
-    console.log("pointerType POINTEROVER",ev.pointerType, ev.buttons,ev.target.id);
-}
 
-export function POINTERLEAVE(ev) { 
-    console.log("pointerType POINTERLEAVE",ev.pointerType, ev.buttons,ev.target.id, ev.pageX, ev.pageY)
-}
-
-export function POINTERENTER(ev) { 
-    console.log("pointerType POINTERENTER",ev.pointerType, ev.buttons,ev.target.id);
-}
-
-export function POINTERUP(ev) { 
-    console.log("pointerType POINTERUP",ev.pointerType, ev.buttons,ev.target.id);
-}
-*/
 export function MOUSEMOVE(ev) { // mousemove
 
     //console.log("pointerType MOVE",ev.pointerType, ev.buttons,ev.target.id,ev.pageX, ev.pageY);
@@ -502,7 +405,7 @@ export function KEYDOWN(ev) {
     }
 }
 
-
+*/
 //----------------------------------------------------------------------------------------------
 export function resize_Tabelle(idTable, nRowNew, nColNew) {
     //----------------------------------------------------------------------------------------------
@@ -806,7 +709,7 @@ export function POINTER_DOWN(ev) { // pointer move
     remove_selected_Tabelle();
 
     //console.log("POINTERDOWN", ev)
-    console.log("POINTERDOWN", ev.buttons, tableId, inputId, ev.pageX, ev.pageY, ev.which, ev.pointerType)
+    console.log("POINTERDOWN", ev.button, tableId, inputId, ev.pageX, ev.pageY, ev.which, ev.pointerType)
 
     const myTable = document.getElementById(tableId);
     myTable.addEventListener("pointermove", POINTER_MOVE);
