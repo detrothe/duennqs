@@ -1,6 +1,7 @@
 import * as d3 from "d3";
 import { set_nelem, set_nnodes, table_index, remove_selected_Tabelle } from "./duennQ_tabelle.js";
 import { berechnungErforderlich } from "./globals.js"
+import { show_contextMemu } from './contextMenu.js';
 
 export const selectedCellPoly = {   // export const
     isSelected: false,
@@ -73,11 +74,9 @@ dd.push(new test)
 export function resizeTable() {
     //----------------------------------------------------------------------------------------------
 
-    //neq = document.getElementById("input_neq").value;
-    //nlf = document.getElementById("input_nLF").value;
-
+    // @ts-ignore
     let nnodes = Number(document.getElementById("input_nodes").value);
-
+    // @ts-ignore
     let nelem = Number(document.getElementById("input_nelem").value);
 
     console.log("nnodes,nelem", nnodes, nelem)
@@ -89,7 +88,7 @@ export function resizeTable() {
     resize_Tabelle("elemTable", nelem, 5);
 
     document.getElementById("resize").style.color = "#aaaaaa"
-    document.getElementById("resize").setAttribute('disabled', true)
+    document.getElementById("resize").setAttribute('disabled', 'true')
     berechnungErforderlich(true)
 
 }
@@ -412,7 +411,7 @@ export function resize_Tabelle(idTable, nRowNew, nColNew) {
 
     console.info("in resize", idTable);
 
-    const table = document.getElementById(idTable) // as HTMLTableElement;
+    const table = document.getElementById(idTable) as HTMLTableElement;
     //console.log("spalten",table);
     let nZeilen = table.rows.length - 1;  // header abziehen
     let nSpalten = table.rows[0].cells.length - 1;
@@ -446,7 +445,7 @@ export function resize_Tabelle(idTable, nRowNew, nColNew) {
             //console.log("row",row);
             for (let j = nSpalten + 1; j <= nColNew; j++) {   // nZeilen + 1; j <= nRowNew
                 const newCell = row.insertCell(-1);
-                newCell.selekt = false;
+                //newCell.selekt = false;
                 //newCell.setAttribute("selekt", "false");
                 if (i === 0) {
                     const newText = document.createTextNode(String(j));
@@ -461,11 +460,11 @@ export function resize_Tabelle(idTable, nRowNew, nColNew) {
                     newCell.style.border = 'solid 1px';
                     newCell.style.padding = '5px';
                     newCell.contentEditable = 'true';
-                    newCell.addEventListener("mousemove", MOUSEMOVE);
-                    newCell.addEventListener("mousedown", MOUSEDOWN);
-                    newCell.addEventListener("keydown", KEYDOWN);
+                    newCell.addEventListener("mousemove", POINTER_MOVE);
+                    newCell.addEventListener("mousedown", POINTER_DOWN);
+                    newCell.addEventListener("keydown", newKEYDOWN);
                     newCell.id = str;
-                    newCell.wrap = false;
+                    //newCell.wrap = false;
                 }
             }
         }
@@ -473,7 +472,7 @@ export function resize_Tabelle(idTable, nRowNew, nColNew) {
 
     if (nRowNew > nZeilen) {
 
-        const material_equal = document.getElementById('material_equal') //as HTMLInputElement | null;
+        const material_equal = document.getElementById('material_equal') as HTMLInputElement | null;
         //console.log("in setMaterialEqual, nRowNew > nZeilen", nColNew, material_equal.checked);
         for (let i = nZeilen + 1; i <= nRowNew; i++) {
             //selectedCellPoly.selColY.push(false);
@@ -499,7 +498,7 @@ export function resize_Tabelle(idTable, nRowNew, nColNew) {
                 newCell.style.border = 'solid 1px';
                 newCell.style.padding = '5px';
                 //newCell.setAttribute("selekt", "false");
-                newCell.selekt = false;
+                //newCell.selekt = false;
                 if (j === 0) {
                     newCell.style.textAlign = "center";
                     newCell.style.border = 'none';
@@ -514,10 +513,10 @@ export function resize_Tabelle(idTable, nRowNew, nColNew) {
                     } else {
                         newCell.contentEditable = 'true';
                     }
-                    newCell.addEventListener("mousemove", MOUSEMOVE);
-                    newCell.addEventListener("mousedown", MOUSEDOWN);
-                    newCell.addEventListener("keydown", KEYDOWN);
-                    newCell.wrap = false;
+                    newCell.addEventListener("mousemove", POINTER_MOVE);
+                    newCell.addEventListener("mousedown", POINTER_DOWN);
+                    newCell.addEventListener("keydown", newKEYDOWN);
+                    //newCell.wrap = false;
                 }
             }
         }
@@ -543,7 +542,7 @@ export function meinetabelle(theDiv, id_table, nZeilen, columns) {
     // tag.innerHTML = "Schubspannungen aus Querkraft und sekundärer Torsion M<sub>xs</sub>"
     // myTableDiv.appendChild(tag);
 
-    const table = document.createElement("TABLE") //as HTMLTableElement;   //TABLE??
+    const table = document.createElement("TABLE") as HTMLTableElement;   //TABLE??
     table.setAttribute("id", id_table);
     table.className = 'tabelle'  // wichtig für Context menue
     table.border = '0';

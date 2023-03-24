@@ -10,7 +10,6 @@ import { set_myScreen } from "./index.js"
 import { draw_elements } from "./grafik_3D";
 //import {set_nnodes, set_nelem} from "./duennQ_tabelle.js"
 
-import { show_contextMemu } from './contextMenu.js';
 
 export let ymin = -50.0, zmin = -50.0, ymax = 50.0, zmax = 50.0, slmax = 0.0;
 
