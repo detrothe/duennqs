@@ -342,15 +342,16 @@ function menuItemListener(link) {
         const value = [];
         let nCols = 0;
         for (j = 1; j < nSpalten; j++) {
-            value.push(tabelle.rows[row].cells[j].innerText)
+            value.push(tabelle.rows[row].cells[j].firstElementChild.value)
             nCols++;
         }
         console.log("value", value);
 
         for (i = 1; i < nZeilen; i++) {
             for (j = 1; j < nSpalten; j++) {
-                if (tabelle.rows.item(i).cells.item(j).selekt) {
-                    tabelle.rows[i].cells[j].innerText = value[j - 1].toString();
+                let child = tabelle.rows[i].cells[j].firstElementChild   // input
+                if (child.className === 'input_select') {
+                    tabelle.rows[i].cells[j].firstElementChild.value = value[j - 1].toString();
                 }
             }
         }
@@ -373,15 +374,16 @@ function menuItemListener(link) {
         const value = [];
 
         for (j = 1; j < nSpalten; j++) {
-            value.push(tabelle.rows[row].cells[j].innerText)
+            value.push(tabelle.rows[row].cells[j].firstElementChild.value)
         }
         console.log("value", value);
 
 
         for (i = 1; i < nZeilen; i++) {
             for (j = 1; j < nSpalten; j++) {
-                if (tabelle.rows.item(i).cells.item(j).selekt) {
-                    tabelle.rows[i].cells[j].innerText = (value[j - 1]++).toString();
+                let child = tabelle.rows[i].cells[j].firstElementChild   // input
+                if (child.className === 'input_select') {
+                    tabelle.rows[i].cells[j].firstElementChild.value = (value[j - 1]++).toString();
                 }
             }
         }
@@ -395,13 +397,13 @@ function menuItemListener(link) {
         const nSpalten = tabelle.rows[0].cells.length;
 
         // Zellwert in zuletzt geklickter Zelle
-        let row = selectedCellPoly.row;
-        console.log("test", row, nZeilen)
-        if (row + 2 >= nZeilen) return;    // das geht nicht, da gibt es nichts zu tun
+        let row = Number(selectedCellPoly.row);
+        console.log("test increment_delta", row, nZeilen)
+        if (Number(row) + 2 >= nZeilen) return;    // das geht nicht, da gibt es nichts zu tun
+        console.log("alive")
+        //let col = selectedCellPoly.col;
 
-        let col = selectedCellPoly.col;
-
-        let wert = Number(selectedCellPoly.wert);
+        //let wert = Number(selectedCellPoly.wert);
         //console.log("increment_1, wert=", wert);
 
         const value = [];
@@ -410,19 +412,23 @@ function menuItemListener(link) {
 
         for (j = 1; j < nSpalten; j++) {
 
-            del = Number(tabelle.rows[row + 1].cells[j].innerText.replace(/,/g, '.'))
-                - Number(tabelle.rows[row].cells[j].innerText.replace(/,/g, '.'))
-            value.push(Number(tabelle.rows[row].cells[j].innerText.replace(/,/g, '.')))
-            delta.push(del)
+            //del = Number(tabelle.rows[row + 1].cells[j].firstElementChild.value.replace(/,/g, '.'))
+            //    - Number(tabelle.rows[row].cells[j].firstElementChild.value.replace(/,/g, '.'))
+            //value.push(Number(tabelle.rows[row].cells[j].firstElementChild.value.replace(/,/g, '.')))
+            del = tabelle.rows[row + 1].cells[j].firstElementChild.value
+                - tabelle.rows[row].cells[j].firstElementChild.value
+            value.push(Number(tabelle.rows[row].cells[j].firstElementChild.value))
+            delta.push(Number(del))
         }
-        //console.log("value", value);
-        //console.log("delta", delta);
+        console.log("value", value);
+        console.log("delta", delta);
 
         for (i = 1; i < nZeilen; i++) {
             for (j = 1; j < nSpalten; j++) {
-                if (tabelle.rows.item(i).cells.item(j).selekt) {
-                    let zahl = value[j - 1].toPrecision(12) * 1;
-                    tabelle.rows[i].cells[j].innerText = zahl.toString();
+                let child = tabelle.rows[i].cells[j].firstElementChild   // input
+                if (child.className === 'input_select') {
+                    let zahl = Number(value[j - 1]).toPrecision(12) * 1;
+                    tabelle.rows[i].cells[j].firstElementChild.value = zahl.toString();
                     value[j - 1] += delta[j - 1];
                 }
             }
@@ -448,14 +454,14 @@ function menuItemListener(link) {
             for (j = 1; j < nSpalten - 1; j++) {
                 if (tabelle.rows.item(i).cells.item(j).selekt) {
                     if (wertInSpalte1) newClip += "\t";
-                    let wert = tabelle.rows[i].cells[j].innerText;
+                    let wert = tabelle.rows[i].cells[j].firstElementChild.value;
                     newClip += wert;
                     wertInSpalte1 = true;
                 }
             }
             if (tabelle.rows.item(i).cells.item(nSpalten - 1).selekt) {
                 if (wertInSpalte1) newClip += "\t";
-                let wert = tabelle.rows[i].cells[nSpalten - 1].innerText;
+                let wert = tabelle.rows[i].cells[nSpalten - 1].firstElementChild.value;
                 newClip += wert + newLine;
             } else {
                 if (wertInSpalte1) newClip += newLine;
@@ -499,7 +505,7 @@ function menuItemListener(link) {
                 for (j = 0; j < zeile.length; j++) {
                     //console.log("z", i, j, zeile[j]);
                     if ((row + i) < nZeilen && (col + j) < nSpalten) {
-                        tabelle.rows[row + i].cells[col + j].innerText = zeile[j];
+                        tabelle.rows[row + i].cells[col + j].firstElementChild.value = zeile[j];
                     }
                 }
             }

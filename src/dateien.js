@@ -1,11 +1,13 @@
 //import './listener.js';
 
 import { app } from "./index";
-import { testeZahl } from "./utility";
+//import { testeZahl } from "./utility";
 import { resizeTable } from "./base_tabelle.js";
 import { saveAs } from 'file-saver';
 
+//------------------------------------------------------------------------------------------------
 function handleFileSelect_read() {
+    //--------------------------------------------------------------------------------------------
 
     let input = document.createElement('input');
     input.type = 'file';
@@ -69,7 +71,7 @@ function handleFileSelect_read() {
                     for (i = 1; i < tabelle.rows.length; i++) {
                         for (j = 1; j < nSpalten; j++) {
 
-                            tabelle.rows[i].cells[j].innerText = jobj.node[i - 1][j - 1];
+                            tabelle.rows[i].cells[j].firstElementChild.value = jobj.node[i - 1][j - 1];
                         }
                     }
 
@@ -79,7 +81,7 @@ function handleFileSelect_read() {
                     for (i = 1; i < etabelle.rows.length; i++) {
                         for (j = 1; j < nSpalten; j++) {
 
-                            etabelle.rows[i].cells[j].innerText = jobj.elem[i - 1][j - 1];
+                            etabelle.rows[i].cells[j].firstElementChild.value = jobj.elem[i - 1][j - 1];
                         }
                     }
 
@@ -98,7 +100,9 @@ function handleFileSelect_read() {
 }
 
 
+//------------------------------------------------------------------------------------------------
 async function handleFileSelect_save() {
+    //--------------------------------------------------------------------------------------------
 
     //const filename = window.prompt("Name der Datei mit Extension, z.B. test.txt\nDie Datei wird im Default Download Ordner gespeichert");
     console.log("in select save");
@@ -120,7 +124,7 @@ async function handleFileSelect_save() {
 
         for (i = 0; i < n_nodes; i++) {
             for (j = 0; j < nSpalten; j++) {
-                node[i][j] = tabelle.rows[i + 1].cells[j + 1].innerText;
+                node[i][j] = tabelle.rows[i + 1].cells[j + 1].firstElementChild.value;
                 //console.log(i,j,c[i][j]);
             }
         }
@@ -133,7 +137,7 @@ async function handleFileSelect_save() {
 
         for (i = 0; i < n_elem; i++) {
             for (j = 0; j < nSpalten; j++) {
-                elem[i][j] = tabelle.rows[i + 1].cells[j + 1].innerText;
+                elem[i][j] = tabelle.rows[i + 1].cells[j + 1].firstElementChild.value;
                 //console.log(i,j,a[i][j]);
             }
         }
@@ -219,7 +223,9 @@ document.getElementById('readFile').addEventListener('click', handleFileSelect_r
 document.getElementById('saveFile').addEventListener('click', handleFileSelect_save, false);
 
 
+//------------------------------------------------------------------------------------------------
 function download(filename, text) {
+    //--------------------------------------------------------------------------------------------
     let element = document.createElement('a');
     element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(text));
     element.setAttribute('download', filename);
