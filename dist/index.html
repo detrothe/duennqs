@@ -14,10 +14,10 @@
 
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" />
   <link rel="manifest" href="./manifest.webmanifest" />
-
+  <!--
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
-
+-->
   <script type="module" src="./index.js"></script>
 </head>
 
@@ -93,12 +93,12 @@
               <td class="td_eng">kN</td>
               <td style="text-align: right">M<sub>xp</sub>=</td>
               <td>
-                <input type="text" id="Mxp" name="Mxp" class="input_kdtab" pattern="[0-9.,eE+-]*" />
+                <input type="number" step="any" id="Mxp" name="Mxp" class="input_kdtab" pattern="[0-9.,eE+-]*" />
               </td>
               <td>kNm</td>
               <td style="text-align: right">N=</td>
               <td>
-                <input type="text" id="Nx" name="Nx" class="input_kdtab" pattern="[0-9.,eE+-]*" />
+                <input type="number" step="any" id="Nx" name="Nx" class="input_kdtab" pattern="[0-9.,eE+-]*" />
               </td>
               <td>kN</td>
             </tr>
@@ -110,12 +110,12 @@
               <td>kN</td>
               <td style="text-align: right">M<sub>xs</sub>=</td>
               <td>
-                <input type="text" id="Mxs" name="Mxs" class="input_kdtab" pattern="[0-9.,eE+-]*" />
+                <input type="number" step="any" id="Mxs" name="Mxs" class="input_kdtab" pattern="[0-9.,eE+-]*" />
               </td>
               <td>kNm</td>
               <td style="text-align: right">M<sub>y</sub>=</td>
               <td>
-                <input type="text" id="My" name="My" class="input_kdtab" pattern="[0-9.,eE+-]*" />
+                <input type="number" step="any" id="My" name="My" class="input_kdtab" pattern="[0-9.,eE+-]*" />
               </td>
               <td>kNm</td>
             </tr>
@@ -125,12 +125,12 @@
               <td></td>
               <td style="text-align: right">M<sub>&omega;</sub>=</td>
               <td>
-                <input type="text" id="Momega" name="Momega" class="input_kdtab" pattern="[0-9.,eE+-]*" />
+                <input type="number" step="any" id="Momega" name="Momega" class="input_kdtab" pattern="[0-9.,eE+-]*" />
               </td>
               <td>kNm²</td>
               <td style="text-align: right">M<sub>z</sub>=</td>
               <td>
-                <input type="text" id="Mz" name="Mz" class="input_kdtab" pattern="[0-9.,eE+-]*" />
+                <input type="number" step="any" id="Mz" name="Mz" class="input_kdtab" pattern="[0-9.,eE+-]*" />
               </td>
               <td>kNm</td>
             </tr>
@@ -157,13 +157,13 @@
               <tr>
                 <td class="zelle0">E-Modul=</td>
                 <td>
-                  <input type="text" id="EMod_ref" name="EMod_ref" value="21000" class="input_kdtab"
+                  <input type="number" step="any" id="EMod_ref" name="EMod_ref" value="21000" class="input_kdtab"
                     pattern="[0-9.,eE+-]*" />
                 </td>
                 <td>kN/cm²</td>
                 <td style="text-align: right" title="Querdehnzahl">&nu;=</td>
                 <td>
-                  <input type="text" id="mue_ref" name="mue_ref" value="0.3" class="input_kdtab"
+                  <input type="number" step="any" id="mue_ref" name="mue_ref" value="0.3" class="input_kdtab"
                     pattern="[0-9.,eE+-]*" />
                 </td>
               </tr>
@@ -177,7 +177,8 @@
             <tr>
               <td class="zelle0">f<sub>y,Rd</sub> =</td>
               <td>
-                <input type="text" id="fyRd" name="fyRd" value="23.5" class="input_kdtab" pattern="[0-9.,eE+-]*" />
+                <input type="number" step="any" id="fyRd" name="fyRd" value="23.5" class="input_kdtab"
+                  pattern="[0-9.,eE+-]*" />
               </td>
               <td>kN/cm²</td>
             </tr>

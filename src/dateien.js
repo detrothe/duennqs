@@ -1,8 +1,9 @@
 //import './listener.js';
 
-import {app} from "./index";
-import {testeZahl} from "./utility";
-import {resizeTable} from "./base_tabelle.js";
+import { app } from "./index";
+import { testeZahl } from "./utility";
+import { resizeTable } from "./base_tabelle.js";
+import { saveAs } from 'file-saver';
 
 function handleFileSelect_read() {
 
@@ -169,13 +170,13 @@ async function handleFileSelect_save() {
 
             try {
                 // (A) CREATE BLOB OBJECT
-                const myBlob = new Blob([jsonse], {type: "text/plain"});
+                const myBlob = new Blob([jsonse], { type: "text/plain" });
 
                 // (B) FILE HANDLER & FILE STREAM
                 const fileHandle = await window.showSaveFilePicker({
                     types: [{
                         description: "Text file",
-                        accept: {"text/plain": [".txt"]}
+                        accept: { "text/plain": [".txt"] }
                     }]
                 });
 
@@ -198,7 +199,7 @@ async function handleFileSelect_save() {
 
             //window.alert("showSaveFilePicker UNBEKANNT");
             const filename = window.prompt("Name der Datei mit Extension, z.B. test.txt\nDie Datei wird im Default Download Ordner gespeichert");
-            const myFile = new File([jsonse], filename, {type: "text/plain;charset=utf-8"});
+            const myFile = new File([jsonse], filename, { type: "text/plain;charset=utf-8" });
             try {
                 saveAs(myFile);
             } catch (error) {

@@ -507,33 +507,39 @@ export function duennQ() {
             truss[i].EModul = 21000.0;
             truss[i].mue = 0.3;
         } else {
-            wert = eTabelle.rows[i + 1].cells[1].innerText
+            let child = eTabelle.rows[i + 1].cells[1].firstElementChild as HTMLInputElement
+            wert = child.value
             truss[i].EModul = Number(testNumber(wert, i + 1, 1, 'elemTable'));
             if (truss[i].EModul < 1e-12) {
                 alert("Emodul von Element " + String(i + 1) + " muss größer 0 sein")
                 return;
             }
-            wert = eTabelle.rows[i + 1].cells[2].innerText
+            child = eTabelle.rows[i + 1].cells[2].firstElementChild as HTMLInputElement
+            wert = child.value
             truss[i].mue = Number(testNumber(wert, i + 1, 2, 'elemTable'));
             if (truss[i].mue < 0) {
                 alert("Querdehnung von Element " + String(i + 1) + " muss größer oder gleich 0 sein")
                 return;
             }
         }
-        wert = eTabelle.rows[i + 1].cells[3].innerText
+        let child = eTabelle.rows[i + 1].cells[3].firstElementChild as HTMLInputElement
+        wert = child.value
         truss[i].dicke = Number(testNumber(wert, i + 1, 3, 'elemTable'));
         if (truss[i].dicke < 1e-12) {
             alert("Dicke von Element " + String(i + 1) + " muss größer 0 sein")
             return;
         }
-        wert = eTabelle.rows[i + 1].cells[4].innerText
+        child = eTabelle.rows[i + 1].cells[4].firstElementChild as HTMLInputElement
+        wert = child.value
         truss[i].nod[0] = Number(testNumber(wert, i + 1, 4, 'elemTable')) - 1;
         if (truss[i].nod[0] < 0 || truss[i].nod[0] > nnodes - 1) {
             alert("Knoteninzidenz nod1 von Element " + String(i + 1) + " muss größer 0 und kleiner gleich Anzahl Knoten sein")
             return;
         }
         node[truss[i].nod[0]].nel++;
-        wert = eTabelle.rows[i + 1].cells[5].innerText
+
+        child = eTabelle.rows[i + 1].cells[5].firstElementChild as HTMLInputElement
+        wert = child.value
         truss[i].nod[1] = Number(testNumber(wert, i + 1, 5, 'elemTable')) - 1;
         if (truss[i].nod[1] < 0 || truss[i].nod[1] > nnodes - 1) {
             alert("Knoteninzidenz nod2 von Element " + String(i + 1) + " muss größer 0 und kleiner gleich Anzahl Knoten sein")
