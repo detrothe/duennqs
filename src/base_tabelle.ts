@@ -647,7 +647,7 @@ export function newKEYDOWN(ev) {
 //------------------------------------------------------------------------------------------------
 export function POINTER_MOVE(ev) { // pointer move
     //--------------------------------------------------------------------------------------------
-
+    console.log("tagname", ev.target.tagName)
     if (ev.target.tagName !== 'INPUT') return
 
     let rowIndex: number, colIndex: number
@@ -655,6 +655,8 @@ export function POINTER_MOVE(ev) { // pointer move
     const tableId = ev.target.offsetParent.offsetParent.id;
     //console.log("tableId", tableId)
     if (tableId === '') return;           // cursor steht auf irgendwas
+
+    ev.preventDefault();
 
     const inputId = ev.target.id
 
@@ -668,9 +670,7 @@ export function POINTER_MOVE(ev) { // pointer move
 
     const el = document.getElementById(ev.target.id);
     //console.log("getBoundingClientRect", el.getBoundingClientRect().x, el.getBoundingClientRect().y);
-    //const nSpalten = tabelle.rows[0].cells.length - 1;
-    //if (!el.classList.contains("input_select"))
-    //el.classList.add("input_select");
+
     el.className = 'input_select';
     //console.log("rect", ev.pointerType, ev.clientX - el.getBoundingClientRect().x, ev.clientY - el.getBoundingClientRect().y, el.getBoundingClientRect().width, el.getBoundingClientRect().height)
 
@@ -685,10 +685,10 @@ export function POINTER_MOVE(ev) { // pointer move
         spalte = Number(cellCol) + 1 * nx   //if (dx > cellWidth)
         zeile = Number(cellRow) + 1 * ny
         console.log("::::", tableIndex)
-        if (spalte > tableInfo[tableIndex].nSpalten) spalte = tableInfo[tableIndex].nSpalten
-        if (zeile > tableInfo[tableIndex].nZeilen) zeile = tableInfo[tableIndex].nZeilen
-        if (spalte < 1) spalte = 1
-        if (zeile < 1) zeile = 1
+        if (spalte > tableInfo[tableIndex].nSpalten - 1) return;  //spalte = tableInfo[tableIndex].nSpalten
+        if (zeile > tableInfo[tableIndex].nZeilen) return;    //zeile = tableInfo[tableIndex].nZeilen
+        if (spalte < 1) return;  // spalte = 1
+        if (zeile < 1) return;   // zeile = 1
         console.log("nx", nx, cellCol, spalte)
         //if (dy > cellHeight) zeile++
 
@@ -749,7 +749,7 @@ export function POINTER_MOVE(ev) { // pointer move
         }
     }
 
-    ev.preventDefault();
+
 }
 
 let cellWidth, cellHeight, cellRow, cellCol, cellTop, cellLeft, cellId: string, offsetX: number, offsetY: number
