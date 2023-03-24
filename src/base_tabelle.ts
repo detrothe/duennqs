@@ -10,7 +10,7 @@ export const selectedCellPoly = {   // export const
     col: -1,
     row: -1,
     wert: 0,
-    activatedMember: null,
+    activatedElement: null,
     //selColY: [],
     //selColZ: [],
     startRowIndex: null,
@@ -32,7 +32,7 @@ class selectedtable {
     col = -1
     row = -1
     wert = 0
-    activatedMember = null
+    activatedElement = null
     //selColY= []
     //selColZ= []
     startRowIndex = null
@@ -599,7 +599,7 @@ export function meinetabelle(theDiv, id_table, nZeilen, columns) {
 
 
 
-                console.log("el", el)
+                //console.log("el", el)
                 //newText = document.createTextNode(String(i + 1));  // Append a text node to the cell
                 newCell = newRow.insertCell()
                 newCell.style.border = 'solid';
@@ -628,6 +628,10 @@ export function meinetabelle(theDiv, id_table, nZeilen, columns) {
         }
     }
 
+    const tableIndex = table_index(id_table)
+    tableInfo[tableIndex].nZeilen = nZeilen
+    tableInfo[tableIndex].nSpalten = columns.length
+
 }
 //------------------------------------------------------------------------------------------------
 export function newKEYDOWN(ev) {
@@ -646,9 +650,13 @@ export function POINTER_MOVE(ev) { // pointer move
     const tableId = ev.target.offsetParent.id;   //.offsetParent
     const inputId = ev.target.id
 
+    selectedCellPoly.tableId = tableId;
+    const tableIndex = table_index(tableId)
+
     //console.log("POINTERMOVE", ev.buttons, ev.target.id, tableId)
-    console.log("MOVE ids", tableId, ev.target.id, ev.pointerId)
-    console.log("POINTER_MOVE pos", ev.pageX, ev.pageY, ev.clientX, ev.clientY, ev.pointerId, ev.target.id)
+    //console.log("MOVE ids", tableId, ev.target.id, ev.pointerId)
+    //console.log("POINTER_MOVE pos", ev.pageX, ev.pageY, ev.clientX, ev.clientY, ev.pointerId, ev.target.id)
+
     //const text = ev.target.id;
     //const myArray = text.split("-");
     //console.log("Array", myArray.length, myArray[0], myArray[1], myArray[2])
@@ -658,17 +666,22 @@ export function POINTER_MOVE(ev) { // pointer move
     //if (!el.classList.contains("input_select"))
     //el.classList.add("input_select");
     el.className = 'input_select';
-    console.log("rect", ev.pointerType, ev.clientX - el.getBoundingClientRect().x, ev.clientY - el.getBoundingClientRect().y, el.getBoundingClientRect().width, el.getBoundingClientRect().height)
+    //console.log("rect", ev.pointerType, ev.clientX - el.getBoundingClientRect().x, ev.clientY - el.getBoundingClientRect().y, el.getBoundingClientRect().width, el.getBoundingClientRect().height)
 
     if (ev.pointerType === 'touch' || ev.pointerType === 'pen') {
-        let dx = ev.clientX - cellLeft
-        let dy = ev.clientY - cellTop
-        let zeile = cellRow, spalte
-        let nx, ny
+        //console.log("scrollLeft", document.body.scrollLeft, document.documentElement.scrollLeft, window.pageXOffset)
+        let dx = ev.pageX - cellLeft;// + document.documentElement.scrollLeft;
+        let dy = ev.pageY - cellTop; // + document.documentElement.scrollTop;
+        let zeile: number, spalte: number
+        let nx: number, ny: number
         nx = Number(Math.trunc(dx / cellWidth))
         ny = Number(Math.trunc(dy / cellHeight))
         spalte = Number(cellCol) + 1 * nx   //if (dx > cellWidth)
         zeile = Number(cellRow) + 1 * ny
+        if (spalte > tableInfo[tableIndex].nSpalten) spalte = tableInfo[tableIndex].nSpalten
+        if (zeile > tableInfo[tableIndex].nZeilen) zeile = tableInfo[tableIndex].nZeilen
+        if (spalte < 1) spalte = 1
+        if (zeile < 1) zeile = 1
         console.log("nx", nx, cellCol, spalte)
         //if (dy > cellHeight) zeile++
 
@@ -676,6 +689,7 @@ export function POINTER_MOVE(ev) { // pointer move
         console.log("dx, dy", dx, dy, str)
         const el = document.getElementById(str);
         el.className = 'input_select';
+        el.scrollIntoView({ behavior: "smooth", block: "center", inline: "center" });  // { behavior: "smooth", block: "end", inline: "nearest" }
     }
     //console.log("classlist", el.classList)
     //el.style.backgroundColor = 'rgb(207, 217, 21)';
@@ -696,7 +710,7 @@ export function POINTER_MOVE(ev) { // pointer move
     ev.preventDefault();
 }
 
-let cellWidth, cellHeight, cellRow, cellCol, cellTop, cellLeft, cellId
+let cellWidth, cellHeight, cellRow, cellCol, cellTop, cellLeft, cellId: string, offsetX: number, offsetY: number
 
 //------------------------------------------------------------------------------------------------
 export function POINTER_DOWN(ev) { // pointer move
@@ -704,8 +718,9 @@ export function POINTER_DOWN(ev) { // pointer move
 
     const tableId = ev.target.offsetParent.offsetParent.id;
     const inputId = ev.target.id
+    const tableIndex = table_index(tableId)
 
-    remove_selected_Tabelle();
+    selectedCellPoly.tableId = tableId;
 
     //console.log("POINTERDOWN", ev)
     console.log("POINTERDOWN", ev.button, tableId, inputId, ev.pageX, ev.pageY, ev.which, ev.pointerType)
@@ -716,17 +731,51 @@ export function POINTER_DOWN(ev) { // pointer move
 
     const myArray = inputId.split("-");
     console.log("Array", myArray.length, myArray[0], myArray[1], myArray[2])
-    const el = document.getElementById(inputId);
+    const el = document.getElementById(inputId) as HTMLInputElement;
+
+    offsetX = ev.pageX - ev.clientX
+    offsetY = ev.pageY - ev.clientY
 
     //ev.pointerType, 
-    cellLeft = el.getBoundingClientRect().x
-    cellTop = el.getBoundingClientRect().y
+    cellLeft = el.getBoundingClientRect().x + offsetX
+    cellTop = el.getBoundingClientRect().y + offsetY
     cellWidth = el.getBoundingClientRect().width
     cellHeight = el.getBoundingClientRect().height
     cellId = myArray[0]
     cellRow = myArray[1]
     cellCol = myArray[2]
-    console.log("MEMORY", cellRow, cellCol, cellLeft, cellTop, cellWidth, cellHeight)
+    console.log("MEMORY", cellRow, cellCol, cellLeft, cellTop, cellWidth, cellHeight, offsetX, offsetY)
+
+    if (ev.which === 3) {               // rechte Maustaste
+        console.log("rechte Maustaste");
+        //ev.preventDefault();
+    } else if (ev.button === 0) {      // linke Maustaste
+
+        remove_selected_Tabelle();
+
+        console.log("linke Maustaste");
+        //ev.preventDefault();
+        const row = myArray[1]
+        const col = myArray[2];
+
+        selectedCellPoly.row = row;
+        selectedCellPoly.col = col;
+        selectedCellPoly.wert = Number(el.value);
+        selectedCellPoly.activatedElement = el;
+        selectedCellPoly.isSelected = true;
+        selectedCellPoly.startRowIndex = row;
+        selectedCellPoly.startCellIndex = col;
+
+        tableInfo[tableIndex].row = row;
+        tableInfo[tableIndex].col = col;
+        tableInfo[tableIndex].wert = Number(el.value);
+        tableInfo[tableIndex].activatedElement = el;
+        tableInfo[tableIndex].isSelected = true;
+        tableInfo[tableIndex].startRowIndex = row;
+        tableInfo[tableIndex].startCellIndex = col;
+
+        console.log("selectedCellPoly", selectedCellPoly.row, selectedCellPoly.col, selectedCellPoly.wert, selectedCellPoly.activatedElement)
+    }
 }
 //------------------------------------------------------------------------------------------------
 export function POINTER_UP(ev) { // pointer move
@@ -734,6 +783,8 @@ export function POINTER_UP(ev) { // pointer move
 
     const tableId = ev.target.offsetParent.offsetParent.id;
     const inputId = ev.target.id
+
+    selectedCellPoly.tableId = tableId;
 
     //console.log("POINTERDOWN", ev)
     console.log("POINTERUP", ev.buttons, tableId, inputId, ev.pageX, ev.pageY, ev.which, ev.pointerType)
@@ -756,6 +807,8 @@ export function POINTER_OUT(ev) { // pointer move
 
     const tableId = ev.target.offsetParent.offsetParent.id;
     const inputId = ev.target.id
+
+    selectedCellPoly.tableId = tableId;
 
     //console.log("POINTERDOWN", ev)
     console.log("POINTER_OUT", ev.buttons, tableId, inputId, ev.pageX, ev.pageY, ev.which, ev.pointerType)

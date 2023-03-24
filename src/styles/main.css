@@ -794,7 +794,7 @@ input[type=number] {
 #elemTable {
     border: none;
     border-spacing: 0px;
-    padding: 0px;
+    padding: 5px;
     margin: 5px;
     background-color: rgb(207, 217, 21);
 }

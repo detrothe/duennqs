@@ -313,12 +313,14 @@ function menuItemListener(link) {
         const tabelle = document.getElementById(selectedCellPoly.tableId);
         const nZeilen = tabelle.rows.length;  // header abziehen
         const nSpalten = tabelle.rows[0].cells.length;
+        //console.log("Tabelle", tabelle, nZeilen, nSpalten)
 
         let i, j;
         for (i = 1; i < nZeilen; i++) {
             for (j = 1; j < nSpalten; j++) {
-                if (tabelle.rows.item(i).cells.item(j).selekt) {
-                    tabelle.rows[i].cells[j].innerText = wert.toString();
+                let child = tabelle.rows[i].cells[j].firstElementChild   // input
+                if (child.className === 'input_select') {
+                    child.value = wert.toString();
                 }
             }
         }
