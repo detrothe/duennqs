@@ -253,7 +253,7 @@ p {
 
 #knotentabelle {
     display: none;
-    background-color: #D8D8D8;  
+    background-color: #D8D8D8;
     z-index: 190;
 }
 
@@ -301,9 +301,11 @@ input {
     font-size: 1rem;
 }
 
+
 input:invalid {
     color: red;
 }
+
 /*
 input:valid {
     color: rgb(187, 255, 0);
@@ -352,22 +354,24 @@ input:valid {
 }
 
 /*#input-container { */
-    /*position: absolute;
+/*position: absolute;
     top: 10px;
     left: 10px;*/
-    /* width: 62rem; */
-    /*100%; */
-    /* height: 50px; */
+/* width: 62rem; */
+/*100%; */
+/* height: 50px; */
 /* } */
 
 #matrix_knoten {
     /*background-color: rgb(163, 173, 120);*/
 }
+
 /*
 #nodeTable {
     touch-action: none;
 }
 */
+/*
 #nodeTable td {
     background-color: rgb(250, 250, 250);
     white-space: nowrap;
@@ -393,13 +397,13 @@ input:valid {
     color: white;
     white-space: nowrap;
 }
-
+*/
 /*
 #nodeTable tr td:nth-child(2) {
     width: 50px;
     background-color: #D800D8;
 }
-*/
+
 #elemTable td {
     background-color: rgb(250, 250, 250);
     white-space: nowrap;
@@ -417,19 +421,20 @@ input:valid {
     color: rgb(150, 180, 180);
     white-space: nowrap;
 }
-
+*/
 #uTable td {
     background-color: rgb(250, 250, 250);
     white-space: nowrap;
     font-size: 1rem;
 }
 
+/*
 #nodeTable th,
 #elemTable th {
     font-weight: normal;
     text-align: center;
 }
-
+*/
 
 td.selected {
     background-color: green;
@@ -472,6 +477,7 @@ td.selected {
 #my_dataviz {
     display: none;
 }
+
 /*
 #wind_vertikal td,
 #wind_satteldach td,
@@ -570,6 +576,7 @@ td {
     z-index: 100;
     /*justify-content: center;}*/
 }
+
 #button_label_svg {
     position: absolute;
     top: 10px;
@@ -616,7 +623,8 @@ td {
     position: absolute;
     top: var(--abst_gl_v);
     /*-15*/
-    left: calc(var(--width_gl_button) + 2px + 5px);  /* Leerzeichen nicht vergessen */
+    left: calc(var(--width_gl_button) + 2px + 5px);
+    /* Leerzeichen nicht vergessen */
     /*90px;*/
 }
 
@@ -770,8 +778,58 @@ td {
 
  */
 
- input[type=number]::-webkit-inner-spin-button,
- input[type=number]::-webkit-outer-spin-button {
-     -webkit-appearance: none;
-     margin: 0;
- }
+input[type=number]::-webkit-inner-spin-button,
+input[type=number]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+/* Firefox */
+input[type=number] {
+    -moz-appearance: textfield;
+}
+
+#id_myTable,
+#nodeTable,
+#elemTable {
+    border: none;
+    border-spacing: 0px;
+    padding: 0px;
+    margin: 5px;
+    background-color: rgb(207, 217, 21);
+}
+
+#id_myTable td,
+#nodeTable td,
+#elemTable td {
+    font-size: 1rem;
+    /*touch-action: none;*/
+}
+
+#id_myTable td.selected,
+#nodeTable td.selected,
+#elemTable td.selected {
+    background-color: rgb(206, 196, 46);
+    color: rgb(13, 13, 13);
+
+}
+
+#id_myTable td.highlight,
+#nodeTable td.highlight,
+#elemTable td.highlight {
+    background-color: orange;
+    color: darkslateblue;
+
+}
+
+.input_select {
+    background-color: orange;
+    color: darkslateblue;
+    touch-action: none;
+}
+
+.input_normal {
+    background-color: rgb(178, 194, 144);
+    color: darkslateblue;
+    touch-action: none;
+}

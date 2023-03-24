@@ -127,6 +127,6 @@ ttf_logo_3D();
 
 }
 
-duennQ();
+//duennQ();
 
 

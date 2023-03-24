@@ -24,11 +24,14 @@ import { selectedCellPoly } from './base_tabelle.js';
 function clickInsideElement(e, className) {
 
     let el = e.srcElement || e.target;
-    //console.log("clickInsideElement", className, e.target, "-el-", el);
+    //console.log("click Inside Element", className, e.target, "-el-", el);
 
     if (el.classList.contains(className)) {
         return el;
-    } else {
+    } else if (el.classList.contains('input_select')) {
+        return el;
+    }
+    else {
         while (el = el.parentNode) {
             if (el.classList && el.classList.contains(className)) {
                 return el;
@@ -81,7 +84,7 @@ function getPosition(e) {
 const contextMenuLinkClassName = "context-menu__link";
 const contextMenuActive = "context-menu--active";
 
-const taskItemClassName = "tabelle";   // tasks
+const taskItemClassName = "tabelle";   // tasks  tabelle
 let taskItemInContext;
 
 let clickCoords;
@@ -109,6 +112,7 @@ export function init_contextmenu() {
     clickListener();
     keyupListener();
     resizeListener();
+    //touchListener();
 }
 
 /**
@@ -118,7 +122,7 @@ function contextListener() {
     document.addEventListener("contextmenu", function (e) {
         taskItemInContext = clickInsideElement(e, taskItemClassName);
 
-        //console.log("taskItemInContext", taskItemInContext);
+        //console.log("//// taskItem In Context", taskItemInContext);
 
         if (taskItemInContext) {
             e.preventDefault();
@@ -137,7 +141,7 @@ function contextListener() {
 function clickListener() {
     document.addEventListener("click", function (e) {
         const clickeElIsLink = clickInsideElement(e, contextMenuLinkClassName);
-        //console.log("clickeElIsLink", clickeElIsLink);
+        //console.log("+++ clickeElIsLink", clickeElIsLink);
 
         if (clickeElIsLink) {
             e.preventDefault();
@@ -151,15 +155,52 @@ function clickListener() {
         }
     });
 }
+/*
+function touchListener() {
+    document.addEventListener("pointerup", function (e) {
+        const clickeElIsLink = clickInsideElement(e, contextMenuLinkClassName);
+        console.log("+++ in touchListener_clickeElIsLink", clickeElIsLink);
+
+        if (clickeElIsLink) {
+            e.preventDefault();
+            menuItemListener(clickeElIsLink);
+        } else {
+            //console.log("clickListener", e.button, e.which);
+            //let button = e.which || e.button;  // e.which ||
+            if (e.button === 0) {   // linke Maustaste
+                toggleMenuOff();
+            }
+        }
+    });
+}
+*/
+
+//-------------------------------------------------------------------------
+export function show_contextMemu(ev) {
+    //-------------------------------------------------------------------------
+    taskItemInContext = clickInsideElement(ev, taskItemClassName);
+
+    //console.log("//// taskItem In Context", taskItemInContext);
+
+    if (taskItemInContext) {
+        ev.preventDefault();
+        toggleMenuOn();
+        positionMenu(ev);
+    } else {
+        taskItemInContext = null;
+        toggleMenuOff();
+    }
+}
+
 
 /**
  * Listens for keyup events.
  */
 function keyupListener() {
-    //console.log("keyupListener", keyupListener);
+    //console.log("--- keyupListener");
 
     window.onkeyup = function (e) {
-        //console.log("keyupListener",e.code, e.key,e);   // geht auch
+        //console.log("keyupListener", e.code, e.key, e);   // geht auch
         if (e.keyCode === 27) {   // ESC Taste
             toggleMenuOff();
         }
@@ -254,7 +295,7 @@ function positionMenu(e) {
  * @param {HTMLElement} link The link that was clicked
  */
 function menuItemListener(link) {
-    //console.log("LINK", link)
+    console.log("LINK", link.getAttribute("data-action"))
     //console.log("Task ID - " + taskItemInContext.getAttribute("data-id") + ", Task action - " + link.getAttribute("data-action"));
     toggleMenuOff();
 

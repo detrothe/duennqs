@@ -1,6 +1,6 @@
 import * as d3 from "d3";
-import {set_nelem, set_nnodes, table_index} from "./duennQ_tabelle.js";
-import {berechnungErforderlich} from "./globals.js"
+import { set_nelem, set_nnodes, table_index, remove_selected_Tabelle } from "./duennQ_tabelle.js";
+import { berechnungErforderlich } from "./globals.js"
 
 export const selectedCellPoly = {   // export const
     isSelected: false,
@@ -47,6 +47,7 @@ class selectedtable {
 const tableInfo = []
 tableInfo.push(new selectedtable)  // nodeTable
 tableInfo.push(new selectedtable)  // elemTable
+tableInfo.push(new selectedtable)  // id_testTable
 
 console.log("in base_tabelle.js");
 /*
@@ -70,7 +71,7 @@ dd.push(new test)
 //----------------------------------------------------------------------------------------------
 //----------------------------------------------------------------------------------------------
 export function resizeTable() {
-//----------------------------------------------------------------------------------------------
+    //----------------------------------------------------------------------------------------------
 
     //neq = document.getElementById("input_neq").value;
     //nlf = document.getElementById("input_nLF").value;
@@ -87,19 +88,19 @@ export function resizeTable() {
     resize_Tabelle("nodeTable", nnodes, 2);
     resize_Tabelle("elemTable", nelem, 5);
 
-    document.getElementById("resize").style.color="#aaaaaa"
-    document.getElementById("resize").setAttribute('disabled',true)
+    document.getElementById("resize").style.color = "#aaaaaa"
+    document.getElementById("resize").setAttribute('disabled', true)
     berechnungErforderlich(true)
 
 }
 
 //----------------------------------------------------------------------------------------------
 export function tabulate(theDiv, i_d, data, columns) {
-//----------------------------------------------------------------------------------------------
+    //----------------------------------------------------------------------------------------------
 
     console.log("thediv, i_d", theDiv, i_d);
     console.log('columns', columns);
-    console.log ("data",data)
+    console.log("data", data)
 
 
     let table = d3.select(theDiv).append('table').style('border', 'solid').style('border-spacing', '0px').style('padding', "10px").attr("id", i_d).attr("class", "tabelle")
@@ -130,9 +131,9 @@ export function tabulate(theDiv, i_d, data, columns) {
             return columns.map(function (column, spalte) {
                 //console.log("function (column)", spalte, column, row[column]);
                 if (spalte === 0) {
-                    return {column: column, value: zeile++};
+                    return { column: column, value: zeile++ };
                 } else {
-                    return {column: column, value: ""};  // row[column]
+                    return { column: column, value: "" };  // row[column]
                 }
             });
         })
@@ -149,88 +150,88 @@ export function tabulate(theDiv, i_d, data, columns) {
         .on('mousedown', MOUSEDOWN)
         .on('mousemove', MOUSEMOVE)
 
-        //.on('pointerover',POINTEROVER)
-        //.on('pointerleave',POINTERLEAVE)
-        //.on('pointerenter',POINTERENTER)
-        //.on('pointerup',POINTERUP)
-/*
-        .on("touchstart", function (ev) {
-            const tableId = ev.target.offsetParent.id;
-            const tableIndex = table_index(tableId)
-            selectedCellPoly.tableId = tableId;
-            tableInfo[tableIndex].tableId = tableId;
-
-            let touchobj = ev.changedTouches[0]; // erster Finger
-            selectedCellPoly.startx = parseInt(touchobj.clientX); // X/Y-Koordinaten relativ zum Viewport
-            selectedCellPoly.starty = parseInt(touchobj.clientY);
-            //console.log("touchstart bei ClientX: " + selectedCellPoly.startx + "px ClientY: " + selectedCellPoly.starty + "px");
-            tableInfo[tableIndex].startx = parseInt(touchobj.clientX); // X/Y-Koordinaten relativ zum Viewport
-            tableInfo[tableIndex].starty = parseInt(touchobj.clientY);
-            //console.log("touchstart bei ClientX: " + tableInfo[tableIndex].startx + "px ClientY: " + tableInfo[tableIndex].starty + "px");
-
-            //ev.preventDefault();
-
-            //ev.preventDefault();
-            if (selectedCellPoly.isSelected) {
-                //selectedCellPoly.activatedMember.removeClass("highlight");
-                console.log("is selected", $(this).parent());
-                const el = document.getElementById("input_neq");
-                if (el) {
-                    //const npkte = el.value;
-                    $("#" + tableId + " td").removeClass("highlight");
-                    //for (let i = 0; i < npkte; i++) {
-                    //    selectedCellPoly.selColY[i] = false;
-                    //    selectedCellPoly.selColZ[i] = false;
-                    //}
+    //.on('pointerover',POINTEROVER)
+    //.on('pointerleave',POINTERLEAVE)
+    //.on('pointerenter',POINTERENTER)
+    //.on('pointerup',POINTERUP)
+    /*
+            .on("touchstart", function (ev) {
+                const tableId = ev.target.offsetParent.id;
+                const tableIndex = table_index(tableId)
+                selectedCellPoly.tableId = tableId;
+                tableInfo[tableIndex].tableId = tableId;
+    
+                let touchobj = ev.changedTouches[0]; // erster Finger
+                selectedCellPoly.startx = parseInt(touchobj.clientX); // X/Y-Koordinaten relativ zum Viewport
+                selectedCellPoly.starty = parseInt(touchobj.clientY);
+                //console.log("touchstart bei ClientX: " + selectedCellPoly.startx + "px ClientY: " + selectedCellPoly.starty + "px");
+                tableInfo[tableIndex].startx = parseInt(touchobj.clientX); // X/Y-Koordinaten relativ zum Viewport
+                tableInfo[tableIndex].starty = parseInt(touchobj.clientY);
+                //console.log("touchstart bei ClientX: " + tableInfo[tableIndex].startx + "px ClientY: " + tableInfo[tableIndex].starty + "px");
+    
+                //ev.preventDefault();
+    
+                //ev.preventDefault();
+                if (selectedCellPoly.isSelected) {
+                    //selectedCellPoly.activatedMember.removeClass("highlight");
+                    console.log("is selected", $(this).parent());
+                    const el = document.getElementById("input_neq");
+                    if (el) {
+                        //const npkte = el.value;
+                        $("#" + tableId + " td").removeClass("highlight");
+                        //for (let i = 0; i < npkte; i++) {
+                        //    selectedCellPoly.selColY[i] = false;
+                        //    selectedCellPoly.selColZ[i] = false;
+                        //}
+                    }
                 }
+                //console.log("cell", $(this), $(this).parent().index());
+                const row = Number($(this).parent().index()) + 1;
+                const col = $(this).index();
+                if (col === 1 || col === 2) {
+                    const activatedMember = $(ev.target).closest("td");
+                    activatedMember.addClass("highlight");
+                    let wert = activatedMember.text();
+    
+                    //console.log("event", row, col, wert);
+                    selectedCellPoly.row = row;
+                    selectedCellPoly.col = col;
+                    selectedCellPoly.wert = wert;
+                    selectedCellPoly.activatedMember = activatedMember;
+                    selectedCellPoly.isSelected = true;
+                    //if (col === 1) selectedCellPoly.selColY[row - 1] = true;
+                    //else if (col === 2) selectedCellPoly.selColZ[row - 1] = true;
+                    selectedCellPoly.startRowIndex = row;
+                    selectedCellPoly.startCellIndex = col;
+    
+                    const str = tableId + "-" + row + "-" + col;
+                    selectedCellPoly.zelle = document.getElementById(str);
+    
+                    //console.log("str", str, cellLeft, cellTop);
+                    //*
+                                    const elemNeu = document.getElementById(str);
+                                    elemNeu.focus();
+                                    const evt = new Event("mousedown", {"bubbles": true, "cancelable": false});
+                                    evt.button = 0;     // linke Maustaste
+                                    elemNeu.dispatchEvent(evt);
+                    * //
+                    // *
+                    cellLeft = (col - 1) * cellWidth;
+                    cellTop = (row - 1) * cellHeight;
+                    document.getElementById("polyCanvas").style.display = "block";
+                    rechteck.attr("x", cellLeft + 'px');
+                    rechteck.attr("y", cellTop + 'px');
+                    rechteck.attr("width", cellWidth + 'px');
+                    rechteck.attr("height", cellHeight + 'px');
+    
+                     * /
+                }
+    
+    
             }
-            //console.log("cell", $(this), $(this).parent().index());
-            const row = Number($(this).parent().index()) + 1;
-            const col = $(this).index();
-            if (col === 1 || col === 2) {
-                const activatedMember = $(ev.target).closest("td");
-                activatedMember.addClass("highlight");
-                let wert = activatedMember.text();
-
-                //console.log("event", row, col, wert);
-                selectedCellPoly.row = row;
-                selectedCellPoly.col = col;
-                selectedCellPoly.wert = wert;
-                selectedCellPoly.activatedMember = activatedMember;
-                selectedCellPoly.isSelected = true;
-                //if (col === 1) selectedCellPoly.selColY[row - 1] = true;
-                //else if (col === 2) selectedCellPoly.selColZ[row - 1] = true;
-                selectedCellPoly.startRowIndex = row;
-                selectedCellPoly.startCellIndex = col;
-
-                const str = tableId + "-" + row + "-" + col;
-                selectedCellPoly.zelle = document.getElementById(str);
-
-                //console.log("str", str, cellLeft, cellTop);
-                //*
-                                const elemNeu = document.getElementById(str);
-                                elemNeu.focus();
-                                const evt = new Event("mousedown", {"bubbles": true, "cancelable": false});
-                                evt.button = 0;     // linke Maustaste
-                                elemNeu.dispatchEvent(evt);
-                * //
-                // *
-                cellLeft = (col - 1) * cellWidth;
-                cellTop = (row - 1) * cellHeight;
-                document.getElementById("polyCanvas").style.display = "block";
-                rechteck.attr("x", cellLeft + 'px');
-                rechteck.attr("y", cellTop + 'px');
-                rechteck.attr("width", cellWidth + 'px');
-                rechteck.attr("height", cellHeight + 'px');
-
-                 * /
-            }
-
-
-        }
-        
-        )
-*/
+            
+            )
+    */
 
     return table;
 }
@@ -363,7 +364,7 @@ export function MOUSEDOWN(ev) {
             //elemNeu.classList.add('highlight');
             //elemNeu.innerText = "";
             //elemNeu.focus();
-            const evt = new Event("keydown", {"bubbles": true, "cancelable": false});
+            const evt = new Event("keydown", { "bubbles": true, "cancelable": false });
             evt.keyCode = 13;     // Return-Taste
             elemNeu.dispatchEvent(evt);
 
@@ -426,7 +427,7 @@ export function MOUSEDOWN(ev) {
 
 
 export function KEYDOWN(ev) {
-    
+
     //console.log("pointerType KEYDOWN",ev.pointerType, ev.keyCode);
 
     const tableId = ev.target.offsetParent.id;
@@ -458,7 +459,7 @@ export function KEYDOWN(ev) {
         let str = tableId + '-' + row + '-' + col;
         const elem = document.getElementById(str);
         // console.log("elem", elem);
-        if ( elem === null ) return;   // Zelle kann nicht bearbeitet werden
+        if (elem === null) return;   // Zelle kann nicht bearbeitet werden
         //console.log("<RETURN> ID", str, elem.id, elem.classList);
         elem.classList.remove('highlight');  // alle selektierte Zellen löschen
         //for (let i = 0; i < nZeilen; i++) {
@@ -492,7 +493,7 @@ export function KEYDOWN(ev) {
             elemNeu.innerText = "";
         }
         elemNeu.focus();
-        const evt = new Event("mousedown", {"bubbles": true, "cancelable": false});
+        const evt = new Event("mousedown", { "bubbles": true, "cancelable": false });
         evt.button = 0;     // linke Maustaste
         elemNeu.dispatchEvent(evt);
 
@@ -504,7 +505,7 @@ export function KEYDOWN(ev) {
 
 //----------------------------------------------------------------------------------------------
 export function resize_Tabelle(idTable, nRowNew, nColNew) {
-//----------------------------------------------------------------------------------------------
+    //----------------------------------------------------------------------------------------------
 
     console.info("in resize", idTable);
 
@@ -578,7 +579,7 @@ export function resize_Tabelle(idTable, nRowNew, nColNew) {
             // Insert a row at the end of the table
             let newRow = table.insertRow(-1);
 
-            for (let j = 0; j <= nColNew; j++) {     
+            for (let j = 0; j <= nColNew; j++) {
                 // Insert a cell in the row at index 0
                 let newCell = newRow.insertCell(j);
 
@@ -624,3 +625,239 @@ export function resize_Tabelle(idTable, nRowNew, nColNew) {
 }
 
 
+//------------------------------------------------------------------------------------------------
+export function meinetabelle(theDiv, id_table, nZeilen, columns) {
+    //------------------------------------------------------------------------------------------------
+
+    const myTableDiv = document.getElementById(theDiv);  //in div
+    //console.log("myTableDiv testtable1", myTableDiv)
+
+
+    // const tag = document.createElement("p"); // <p></p>
+    // tag.setAttribute("id", "id_spannung_mxs");
+    // const text = document.createTextNode("xxx");
+    // tag.appendChild(text);
+    // tag.innerHTML = "Schubspannungen aus Querkraft und sekundärer Torsion M<sub>xs</sub>"
+    // myTableDiv.appendChild(tag);
+
+    const table = document.createElement("TABLE") //as HTMLTableElement;   //TABLE??
+    table.setAttribute("id", id_table);
+    table.className = 'tabelle'  // wichtig für Context menue
+    table.border = '0';
+    myTableDiv.appendChild(table);  //appendChild() insert it in the document (table --> myTableDiv)
+
+
+    let thead = table.createTHead();
+    let row = thead.insertRow();
+
+    for (let i = 0; i < columns.length; i++) {
+        const th0 = table.tHead.appendChild(document.createElement("th"));
+        th0.innerHTML = columns[i];
+        //th0.title = "Elementnummer"
+        th0.style.padding = '5px';
+        th0.style.margin = '0px'
+        th0.style.textAlign = 'center'
+        row.appendChild(th0);
+
+    }
+
+    let tbody = table.createTBody();
+
+    for (let iZeile = 1; iZeile <= nZeilen; iZeile++) {
+
+        let newRow = tbody.insertRow(-1);
+
+        for (let iSpalte = 0; iSpalte < columns.length; iSpalte++) {
+
+            let newCell, newText
+            if (iSpalte === 0) {
+                newCell = newRow.insertCell(iSpalte);  // Insert a cell in the row at index 0
+                newText = document.createTextNode(String(iZeile));  // Append a text node to the cell
+                newCell.style.textAlign = 'center'
+                newCell.style.backgroundColor = 'rgb(150,180, 180)';
+                newCell.style.padding = '0px';
+                newCell.style.margin = '0px';
+                newCell.appendChild(newText);
+            } else {
+
+                let el = document.createElement("input");
+                el.setAttribute("type", "number");
+                el.style.width = '100px';
+                //el.style.backgroundColor = 'rgb(200,200,200)';
+                el.style.border = 'none';
+                el.style.borderWidth = '0px';
+                el.style.padding = '5px';
+                el.style.margin = '0px';
+                el.style.borderRadius = '0px';
+                const str = id_table + "-" + iZeile + "-" + iSpalte;
+                el.id = str;
+                //el.className = 'input_normal';
+                el.addEventListener("keydown", newKEYDOWN);
+                //el.addEventListener("mousemove", newMOUSEMOVE);
+
+
+
+                console.log("el", el)
+                //newText = document.createTextNode(String(i + 1));  // Append a text node to the cell
+                newCell = newRow.insertCell()
+                newCell.style.border = 'solid';
+                newCell.style.borderWidth = '1px';
+                newCell.style.padding = '0px'; "testtabelle"
+                newCell.style.margin = '0px';
+                newCell.style.backgroundColor = 'rgb(200,200,200)';
+                const str1 = id_table + "Cell-" + iZeile + "-" + iSpalte;
+                newCell.id = str1;
+                newCell.className = 'input_normal';
+
+                newCell.appendChild(el);
+                // el.addEventListener("pointermove", POINTERMOVE);
+                el.addEventListener("pointerdown", POINTER_DOWN);
+                // el.addEventListener("pointerup", POINTERUP);
+                // el.addEventListener("pointerout", POINTER_OUT);
+                //newCell.setAttribute("class", "table_spannung_cell_center");
+
+                //console.log("id-name", str)
+                //const w = document.getElementById(str)
+                //w.setAttribute("value", "12")
+
+                //console.log("rect", iZeile, iSpalte, el.getBoundingClientRect().x, newCell.getBoundingClientRect().y, newCell.getBoundingClientRect().width, newCell.getBoundingClientRect().height)
+
+            }
+        }
+    }
+
+}
+//------------------------------------------------------------------------------------------------
+export function newKEYDOWN(ev) {
+    //--------------------------------------------------------------------------------------------
+
+    console.log("KEYDOWN, keycode, id_input, id_tabelle", ev.keyCode, ev.target.id, ev.target.offsetParent.offsetParent.id);
+    const tableCellId = ev.target.offsetParent.id;
+    console.log("KEYDOWN", tableCellId)
+    //const tableIndex = table_index(tableId)
+}
+
+//------------------------------------------------------------------------------------------------
+export function POINTER_MOVE(ev) { // pointer move
+    //--------------------------------------------------------------------------------------------
+
+    const tableId = ev.target.offsetParent.id;   //.offsetParent
+    const inputId = ev.target.id
+
+    //console.log("POINTERMOVE", ev.buttons, ev.target.id, tableId)
+    console.log("MOVE ids", tableId, ev.target.id, ev.pointerId)
+    console.log("POINTER_MOVE pos", ev.pageX, ev.pageY, ev.clientX, ev.clientY, ev.pointerId, ev.target.id)
+    //const text = ev.target.id;
+    //const myArray = text.split("-");
+    //console.log("Array", myArray.length, myArray[0], myArray[1], myArray[2])
+    const el = document.getElementById(ev.target.id);
+    //console.log("getBoundingClientRect", el.getBoundingClientRect().x, el.getBoundingClientRect().y);
+    //const nSpalten = tabelle.rows[0].cells.length - 1;
+    //if (!el.classList.contains("input_select"))
+    //el.classList.add("input_select");
+    el.className = 'input_select';
+    console.log("rect", ev.pointerType, ev.clientX - el.getBoundingClientRect().x, ev.clientY - el.getBoundingClientRect().y, el.getBoundingClientRect().width, el.getBoundingClientRect().height)
+
+    if (ev.pointerType === 'touch' || ev.pointerType === 'pen') {
+        let dx = ev.clientX - cellLeft
+        let dy = ev.clientY - cellTop
+        let zeile = cellRow, spalte
+        let nx, ny
+        nx = Number(Math.trunc(dx / cellWidth))
+        ny = Number(Math.trunc(dy / cellHeight))
+        spalte = Number(cellCol) + 1 * nx   //if (dx > cellWidth)
+        zeile = Number(cellRow) + 1 * ny
+        console.log("nx", nx, cellCol, spalte)
+        //if (dy > cellHeight) zeile++
+
+        const str = cellId + "-" + zeile + "-" + spalte;
+        console.log("dx, dy", dx, dy, str)
+        const el = document.getElementById(str);
+        el.className = 'input_select';
+    }
+    //console.log("classlist", el.classList)
+    //el.style.backgroundColor = 'rgb(207, 217, 21)';
+    //const el = eTabelle.rows[i].cells[j]
+    //el.releasePointerCapture(ev.pointerId)
+    //ev.preventDefault()
+    /*
+        const str = tableId + "-6-1";
+        const elemNeu = el;  //document.getElementById(str);
+        //elemNeu.focus();
+    
+        const evt = new Event("pointerup", { "bubbles": false, "cancelable": true });
+        //evt.button = 0;     // linke Maustaste
+        elemNeu.dispatchEvent(evt);
+    */
+    //    const myTable = document.getElementById(tableId);
+    //    myTable.releasePointerCapture(ev.pointerId);
+    ev.preventDefault();
+}
+
+let cellWidth, cellHeight, cellRow, cellCol, cellTop, cellLeft, cellId
+
+//------------------------------------------------------------------------------------------------
+export function POINTER_DOWN(ev) { // pointer move
+    //--------------------------------------------------------------------------------------------
+
+    const tableId = ev.target.offsetParent.offsetParent.id;
+    const inputId = ev.target.id
+
+    remove_selected_Tabelle();
+
+    //console.log("POINTERDOWN", ev)
+    console.log("POINTERDOWN", ev.buttons, tableId, inputId, ev.pageX, ev.pageY, ev.which, ev.pointerType)
+
+    const myTable = document.getElementById(tableId);
+    myTable.addEventListener("pointermove", POINTER_MOVE);
+    myTable.addEventListener("pointerup", POINTER_UP);
+
+    const myArray = inputId.split("-");
+    console.log("Array", myArray.length, myArray[0], myArray[1], myArray[2])
+    const el = document.getElementById(inputId);
+
+    //ev.pointerType, 
+    cellLeft = el.getBoundingClientRect().x
+    cellTop = el.getBoundingClientRect().y
+    cellWidth = el.getBoundingClientRect().width
+    cellHeight = el.getBoundingClientRect().height
+    cellId = myArray[0]
+    cellRow = myArray[1]
+    cellCol = myArray[2]
+    console.log("MEMORY", cellRow, cellCol, cellLeft, cellTop, cellWidth, cellHeight)
+}
+//------------------------------------------------------------------------------------------------
+export function POINTER_UP(ev) { // pointer move
+    //--------------------------------------------------------------------------------------------
+
+    const tableId = ev.target.offsetParent.offsetParent.id;
+    const inputId = ev.target.id
+
+    //console.log("POINTERDOWN", ev)
+    console.log("POINTERUP", ev.buttons, tableId, inputId, ev.pageX, ev.pageY, ev.which, ev.pointerType)
+
+    const myTable = document.getElementById(tableId);
+    //myTable.releasePointerCapture(ev.pointerId);
+
+    myTable.removeEventListener("pointermove", POINTER_MOVE);
+    myTable.removeEventListener("pointerup", POINTER_UP);
+
+    if (ev.pointerType === 'touch' || ev.pointerType === 'pen') show_contextMemu(ev);
+
+    ev.preventDefault();
+}
+
+
+//------------------------------------------------------------------------------------------------
+export function POINTER_OUT(ev) { // pointer move
+    //--------------------------------------------------------------------------------------------
+
+    const tableId = ev.target.offsetParent.offsetParent.id;
+    const inputId = ev.target.id
+
+    //console.log("POINTERDOWN", ev)
+    console.log("POINTER_OUT", ev.buttons, tableId, inputId, ev.pageX, ev.pageY, ev.which, ev.pointerType)
+
+    const myTable = document.getElementById(tableId);
+    myTable.releasePointerCapture(ev.pointerId);
+}

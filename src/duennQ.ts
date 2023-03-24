@@ -1,6 +1,6 @@
 
 import { berechnungErfolgreich } from "./globals.js";
-import { resizeTable, tabulate } from "./base_tabelle.js"
+import { resizeTable, meinetabelle } from "./base_tabelle.js"
 import './dateien.js';
 import { gauss } from "./gauss.js"
 import { testeZahl, myFormat, testNumber } from './utility.js';
@@ -10,6 +10,7 @@ import { set_myScreen } from "./index.js"
 import { draw_elements } from "./grafik_3D";
 //import {set_nnodes, set_nelem} from "./duennQ_tabelle.js"
 
+import { show_contextMemu } from './contextMenu.js';
 
 export let ymin = -50.0, zmin = -50.0, ymax = 50.0, zmax = 50.0, slmax = 0.0;
 
@@ -223,22 +224,39 @@ const yy = [0.0, 0.0, 0.0, 0.0, 60.0, 60.0];
 
 
 
-tabulate('#knotentabelle', 'nodeTable', nodeArray, ['No', 'y [cm]', 'z [cm]']);  // nodeObj.
+//tabulate('#knotentabelle', 'nodeTable', nodeArray, ['No', 'y [cm]', 'z [cm]']);  // nodeObj.
+meinetabelle("knotentabelle", "nodeTable", nnodes, ['No', 'y&#772; [cm]', 'z&#772; [cm]']);
+meinetabelle("elementtabelle", "elemTable", nelem, ["El No", 'E-Modul [kN/cm²]', 'ν', 'Dicke t [cm]', 'nod1', 'nod2']);
 
-tabulate('#elementtabelle', 'elemTable', elemArray, ["El No", 'E-Modul [kN/cm²]', 'ν', 'Dicke t [cm]', 'nod1', 'nod2']);  // elemObj.
+//tabulate('#elementtabelle', 'elemTable', elemArray, ["El No", 'E-Modul [kN/cm²]', 'ν', 'Dicke t [cm]', 'nod1', 'nod2']);  // elemObj.
 
-testtabelle();
+let objCells: any, nSpalten: number
+
 
 const nTabelle = document.getElementById("nodeTable") as HTMLTableElement;
+console.log("nTabelle", nTabelle)
 
+nSpalten = nTabelle.rows[0].cells.length - 1;
+
+for (let i = 1; i < nTabelle.rows.length; i++) {
+    const objCells = nTabelle.rows.item(i).cells;
+
+    for (let j = 1; j <= nSpalten; j++) {
+        const str = "nodeTable-" + i + "-" + j;
+        const w = document.getElementById(str)
+        //        console.log("child", objCells.item(j).firstChild.parentElement.id)  // abfrage der id
+        //console.log("child", objCells.item(j).firstChild.parentElement)  // abfrage der id
+        if (j === 1) {
+            w.setAttribute("value", String(xx[i - 1]));
+        } else if (j === 2) {
+            w.setAttribute("value", String(yy[i - 1]));
+        }
+    }
+}
 
 /*
-document.getElementById("knotentabelle").onpointermove = function (e) {
-    e.preventDefault();
-    //let ele = document.elementFromPoint(e.pageX, e.pageY);
-    console.log("ON TOUCH MOVE")
-}
-*/
+
+
 let objCells = nTabelle.rows.item(0).cells;  // Überschrift Punkt zentrieren
 objCells.item(0).style.textAlign = "center";
 
@@ -253,7 +271,7 @@ for (let i = 1; i < nTabelle.rows.length; i++) {
     const objCells = nTabelle.rows.item(i).cells;
     objCells.item(0).contentEditable = 'false';
     objCells.item(0).style.textAlign = "center";
-    objCells.item(0).style.backgroundColor = 'rgb(150,180, 180)';
+    objCells.item(0).style.backgroundColor = 'rgb(150,180, 180)';myTabelle
     objCells.item(0).style.border = 'none';
     objCells.item(0).style.width = '50px'
 
@@ -273,6 +291,7 @@ for (let i = 1; i < nTabelle.rows.length; i++) {
     }
     //console.log(objCells.item(0));
 }
+*/
 
 const eTabelle = document.getElementById("elemTable") as HTMLTableElement;
 objCells = eTabelle.rows.item(0).cells;  // Überschrift Punkt zentrieren
@@ -282,31 +301,24 @@ nSpalten = eTabelle.rows[0].cells.length - 1;
 eTabelle.rows.item(0).cells.item(0).style.width = '50px'
 
 for (let i = 1; i < eTabelle.rows.length; i++) {
-    const objCells = eTabelle.rows.item(i).cells;
-    objCells.item(0).contentEditable = 'false';
-    objCells.item(0).style.textAlign = "center";
-    objCells.item(0).style.backgroundColor = 'rgb(150,180, 180)';
-    objCells.item(0).style.border = 'none';
-    objCells.item(0).style.width = '50px'
+    //const objCells = eTabelle.rows.item(i).cells;
 
     for (let j = 1; j <= nSpalten; j++) {
-        objCells.item(j).id = "elemTable-" + i + "-" + j;
-        if (j === 1) {
-            objCells.item(j).innerText = String(21000);
-        } else if (j === 2) {
-            objCells.item(j).innerText = String(0.3);
-        } else if (j === 3) {
-            objCells.item(j).innerText = String(1.5);
-        }
-        // @ts-ignore
-        objCells.item(j).wrap = false;
-        // @ts-ignore
-        objCells.item(j).selekt = false;
-        //objCells.item(j).setAttribute("selekt", "false");
+        const str = "elemTable-" + i + "-" + j;
+        const w = document.getElementById(str)
 
+        //objCells.item(j).id = "elemTable-" + i + "-" + j;
+        if (j === 1) {
+            w.setAttribute("value", String(21000));
+        } else if (j === 2) {
+            w.setAttribute("value", String(0.3));
+        } else if (j === 3) {
+            w.setAttribute("value", String(1.5));
+        }
 
     }
 }
+
 // Inzidenzen
 /* I-Querschnitt
 eTabelle.rows[1].cells[4].innerText = "1";
@@ -331,19 +343,30 @@ eTabelle.rows[4].cells[4].innerText = "4";
 eTabelle.rows[4].cells[5].innerText = "1";
 */
 // Hohlquerschnitt mit Flügeln
-eTabelle.rows[1].cells[4].innerText = "1";
-eTabelle.rows[1].cells[5].innerText = "2";
-eTabelle.rows[2].cells[4].innerText = "2";
-eTabelle.rows[2].cells[5].innerText = "3";
-eTabelle.rows[3].cells[4].innerText = "3";
-eTabelle.rows[3].cells[5].innerText = "4";
-eTabelle.rows[4].cells[4].innerText = "3";
-eTabelle.rows[4].cells[5].innerText = "5";
-eTabelle.rows[5].cells[4].innerText = "2";
-eTabelle.rows[5].cells[5].innerText = "6";
-eTabelle.rows[6].cells[4].innerText = "5";
-eTabelle.rows[6].cells[5].innerText = "6";
-
+// @ts-ignore
+eTabelle.rows[1].cells[4].firstElementChild.value = "1";
+// @ts-ignore
+eTabelle.rows[1].cells[5].firstElementChild.value = "2";
+// @ts-ignore
+eTabelle.rows[2].cells[4].firstElementChild.value = "2";
+// @ts-ignore
+eTabelle.rows[2].cells[5].firstElementChild.value = "3";
+// @ts-ignore
+eTabelle.rows[3].cells[4].firstElementChild.value = "3";
+// @ts-ignore
+eTabelle.rows[3].cells[5].firstElementChild.value = "4";
+// @ts-ignore
+eTabelle.rows[4].cells[4].firstElementChild.value = "3";
+// @ts-ignore
+eTabelle.rows[4].cells[5].firstElementChild.value = "5";
+// @ts-ignore
+eTabelle.rows[5].cells[4].firstElementChild.value = "2";
+// @ts-ignore
+eTabelle.rows[5].cells[5].firstElementChild.value = "6";
+// @ts-ignore
+eTabelle.rows[6].cells[4].firstElementChild.value = "5";
+// @ts-ignore
+eTabelle.rows[6].cells[5].firstElementChild.value = "6";
 
 //----------------------------------------------------------------------------------------------
 
@@ -444,18 +467,36 @@ export function duennQ() {
     const GModul = EModul / 2.0 / (1.0 + mue)
     //console.log("Bezugswerte", EModul, mue, GModul)
 
+    console.log("orginal", document.getElementById("nodeTable"))
     // Knoten Eingabe einlesen
+    /*
+        const nTabelle = document.getElementById("nodeTable") as HTMLTableElement;
+    
+        for (i = 0; i < nnodes; i++) {
+    
+            wert = nTabelle.rows[i + 1].cells[1].innerText
+            node[i].y = Number(testNumber(wert, i + 1, 1, 'nodeTable'));
+            wert = nTabelle.rows[i + 1].cells[2].innerText
+            node[i].z = Number(testNumber(wert, i + 1, 2, 'nodeTable'));
+            //console.log("node,y,z", i, node[i].y, node[i].z)
+        }
+    */
 
     const nTabelle = document.getElementById("nodeTable") as HTMLTableElement;
+    console.log("NODE", nTabelle.rows.length)
 
     for (i = 0; i < nnodes; i++) {
 
-        wert = nTabelle.rows[i + 1].cells[1].innerText
+        let child = nTabelle.rows[i + 1].cells[1].firstElementChild as HTMLInputElement
+        //console.log("NODE i", i, child.value)
+        wert = child.value
         node[i].y = Number(testNumber(wert, i + 1, 1, 'nodeTable'));
-        wert = nTabelle.rows[i + 1].cells[2].innerText
+        child = nTabelle.rows[i + 1].cells[2].firstElementChild as HTMLInputElement
+        wert = child.value
         node[i].z = Number(testNumber(wert, i + 1, 2, 'nodeTable'));
         //console.log("node,y,z", i, node[i].y, node[i].z)
     }
+
 
     // Elemente Eingabe einlesen
 
@@ -1458,66 +1499,3 @@ document.getElementById('button_copy_svg').addEventListener('click', copy_svg, f
 window.setMaterialEqual = setMaterialEqual;   // jetzt auch in html sichtbar
 
 
-//------------------------------------------------------------------------------------------------
-function testtabelle() {
-    //------------------------------------------------------------------------------------------------
-
-    const myTableDiv = document.getElementById("testtabelle");  //in div
-    //console.log("myTableDiv testtable1", myTableDiv)
-
-
-    // const tag = document.createElement("p"); // <p></p>
-    // tag.setAttribute("id", "id_spannung_mxs");
-    // const text = document.createTextNode("xxx");
-    // tag.appendChild(text);
-    // tag.innerHTML = "Schubspannungen aus Querkraft und sekundärer Torsion M<sub>xs</sub>"
-    // myTableDiv.appendChild(tag);
-
-    const table = document.createElement("TABLE") as HTMLTableElement;   //TABLE??
-    table.setAttribute("id", "id_testtable");
-    table.border = '0';
-    myTableDiv.appendChild(table);  //appendChild() insert it in the document (table --> myTableDiv)
-
-
-    let thead = table.createTHead();
-    let row = thead.insertRow();
-
-    const th0 = table.tHead.appendChild(document.createElement("th"));
-    th0.innerHTML = "El No";
-    th0.title = "Elementnummer"
-    row.appendChild(th0);
-    th0.setAttribute("class", "table_spannung_cell_center");
-    const th1 = table.tHead.appendChild(document.createElement("th"));
-    th1.innerHTML = "&tau;<sub>xsa</sub>";
-    th1.title = "Schubspannung am Elementanfang, Elementknoten 1"
-    row.appendChild(th1);
-    const th2 = table.tHead.appendChild(document.createElement("th"));
-    th2.innerHTML = "&tau;<sub>xsm</sub>";
-    th2.title = "Schubspannung in Elementmitte"
-    row.appendChild(th2);
-
-
-    let tbody = table.createTBody();
-
-    let newRow = tbody.insertRow(-1);
-
-    for (let i = 0; i < 3; i++) {
-
-        let newCell, newText
-        if (i === 0) {
-            newCell = newRow.insertCell(i);  // Insert a cell in the row at index 0
-            newText = document.createTextNode(String(i + 1));  // Append a text node to the cell
-            newCell.appendChild(newText);
-        } else {
-
-            let el = document.createElement("input");
-            el.setAttribute("type", "number");
-            console.log("el", el)
-            //newText = document.createTextNode(String(i + 1));  // Append a text node to the cell
-            newCell = newRow.insertCell()
-            newCell.appendChild(el);
-            //newCell.setAttribute("class", "table_spannung_cell_center");
-        }
-    }
-
-}

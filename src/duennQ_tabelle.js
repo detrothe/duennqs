@@ -25,7 +25,7 @@ input_nodes.onchange = function () {
     berechnungErforderlich(true);
     document.getElementById("resize").disabled = false
     document.getElementById("resize").style.color = "#dd0000"
-    document.getElementById("rechnen").setAttribute('disabled',true)
+    document.getElementById("rechnen").setAttribute('disabled', true)
 }
 
 //----------------------------------------------------------------------------------------------
@@ -36,7 +36,7 @@ input_nelem.onchange = function () {
     berechnungErforderlich(true);
     document.getElementById("resize").disabled = false
     document.getElementById("resize").style.color = "#dd0000"
-    document.getElementById("rechnen").setAttribute('disabled',true)
+    document.getElementById("rechnen").setAttribute('disabled', true)
 }
 
 //----------------------------------------------------------------------------------------------
@@ -60,6 +60,8 @@ export function table_index(idTable) {
         return 0;
     } else if (idTable === 'elemTable') {
         return 1;
+    } else if (idTable === 'id_testTable') {
+        return 2;
     }
     return undefined;
 }
@@ -73,7 +75,9 @@ export function clear_Tabelle() {
     let nSpalten = tabelle.rows[0].cells.length;
     for (let i = 1; i < tabelle.rows.length; i++) {
         for (let j = 1; j < nSpalten; j++) {
-            tabelle.rows[i].cells[j].innerText = "";
+            tabelle.rows[i].cells[j].firstElementChild.value = ""
+            //console.log("NODE i", i, child.value)
+            //            tabelle.rows[i].cells[j].innerText = "";
         }
     }
 
@@ -81,7 +85,7 @@ export function clear_Tabelle() {
     nSpalten = eTabelle.rows[0].cells.length;
     for (let i = 1; i < eTabelle.rows.length; i++) {
         for (let j = 1; j < nSpalten; j++) {
-            eTabelle.rows[i].cells[j].innerText = "";
+            eTabelle.rows[i].cells[j].firstElementChild.value = "";
         }
     }
 
@@ -95,11 +99,8 @@ export function remove_selected_Tabelle() {
     let nSpalten = tabelle.rows[0].cells.length;
     for (let i = 1; i < tabelle.rows.length; i++) {
         for (let j = 1; j < nSpalten; j++) {
-            const el = tabelle.rows[i].cells[j]
-            if (el.classList && el.classList.contains("selected")) {
-                el.classList.remove("selected")
-            }
-
+            const el = tabelle.rows[i].cells[j].firstElementChild
+            if (el) el.className = 'input_normal';
         }
     }
 
@@ -107,11 +108,8 @@ export function remove_selected_Tabelle() {
     nSpalten = eTabelle.rows[0].cells.length;
     for (let i = 1; i < eTabelle.rows.length; i++) {
         for (let j = 1; j < nSpalten; j++) {
-            const el = eTabelle.rows[i].cells[j]
-            if (el.classList && el.classList.contains("selected")) {
-                el.classList.remove("selected")
-            }
-
+            const el = eTabelle.rows[i].cells[j].firstElementChild
+            if (el) el.className = 'input_normal';
         }
     }
 

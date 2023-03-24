@@ -48,6 +48,8 @@ export function myFormat(wert, minDecimal, maxDecimal) {
 
 export function sichtbar(displayName) {
 
+    //console.log("sichtbar", displayName)
+
     currentTab = displayName;
 
     if (displayName === 'eingabe') {
