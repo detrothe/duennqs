@@ -1,6 +1,7 @@
 "use strict";
 
 import { berechnungErforderlich } from "./globals.js"
+import { tableInfo } from "./base_tabelle"
 
 const input_nodes = document.getElementById('input_nodes');
 const input_nelem = document.getElementById("input_nelem");
@@ -115,4 +116,51 @@ export function remove_selected_Tabelle() {
 
 }
 
+
+//----------------------------------------------------------------------------------------------
+export function setSelectionMode_node() {
+    //------------------------------------------------------------------------------------------
+
+    const input = document.getElementById('select_mode_node') //as HTMLInputElement | null;
+    console.log("in setSelectionMode_node", input.checked);
+
+
+    const tableIndex = table_index('nodeTable')
+    tableInfo[tableIndex].selectionMode = input.checked
+
+    let str
+    if (input.checked) { str = 'none'; } else { str = 'auto'; }
+
+    const tabelle = document.getElementById("nodeTable") //as HTMLTableElement;
+    let nSpalten = tabelle.rows[0].cells.length;
+    for (let i = 1; i < tabelle.rows.length; i++) {
+        for (let j = 1; j < nSpalten; j++) {
+            tabelle.rows[i].cells[j].style.touchAction = str
+            //if (el) el.className = 'input_normal';
+        }
+    }
+
+}
+//----------------------------------------------------------------------------------------------
+export function setSelectionMode_element() {
+    //------------------------------------------------------------------------------------------
+
+    const input = document.getElementById('select_mode_element') // as HTMLInputElement | null;
+    console.log("in setSelectionMode_element", input.checked);
+
+    const tableIndex = table_index('elemTable')
+    tableInfo[tableIndex].selectionMode = input.checked
+
+    let str
+    if (input.checked) { str = 'none'; } else { str = 'auto'; }
+
+    const eTabelle = document.getElementById("elemTable") //as HTMLTableElement;
+    nSpalten = eTabelle.rows[0].cells.length;
+    for (let i = 1; i < eTabelle.rows.length; i++) {
+        for (let j = 1; j < nSpalten; j++) {
+            eTabelle.rows[i].cells[j].style.touchAction = str
+            //if (el) el.className = 'input_normal';
+        }
+    }
+}
 console.log("exit duennQ-tabelle.js");

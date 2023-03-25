@@ -4,7 +4,7 @@ import { resizeTable, meinetabelle } from "./base_tabelle.js"
 import './dateien.js';
 import { gauss } from "./gauss.js"
 import { testeZahl, myFormat, testNumber } from './utility.js';
-import { remove_selected_Tabelle, clear_Tabelle, nelem, nnodes } from "./duennQ_tabelle.js";
+import { remove_selected_Tabelle, clear_Tabelle, setSelectionMode_node, setSelectionMode_element, nelem, nnodes } from "./duennQ_tabelle.js";
 import { label_svg, copy_svg } from "./systemlinien";
 import { set_myScreen } from "./index.js"
 import { draw_elements } from "./grafik_3D";
@@ -17,7 +17,10 @@ export let ymin = -50.0, zmin = -50.0, ymax = 50.0, zmax = 50.0, slmax = 0.0;
 
 
 
+//----------------------------------------------------------------------------------------------
 function setMaterialEqual(ev) {
+    //------------------------------------------------------------------------------------------
+
     const input = document.getElementById('material_equal') as HTMLInputElement | null;
     console.log("in setMaterialEqual", input.checked);
 
@@ -61,6 +64,8 @@ function setMaterialEqual(ev) {
 
      */
 }
+
+
 
 class TTabQWerte {  // Tabelle Querschnittswerte für pdf
     zs: string
@@ -1497,6 +1502,8 @@ btn3.addEventListener('click', clear_Tabelle);
 document.getElementById("material_equal").addEventListener('change', setMaterialEqual);
 document.getElementById('button_label_svg').addEventListener('click', label_svg, false);
 document.getElementById('button_copy_svg').addEventListener('click', copy_svg, false);
+document.getElementById("select_mode_node").addEventListener('change', setSelectionMode_node);
+document.getElementById("select_mode_element").addEventListener('change', setSelectionMode_element);
 
 //document.getElementById("input_nodes").addEventListener('change', setMaterialEqual);
 

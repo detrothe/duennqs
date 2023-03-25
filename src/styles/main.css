@@ -825,11 +825,11 @@ input[type=number] {
 .input_select {
     background-color: orange;
     color: darkslateblue;
-    touch-action: none;
+    /*touch-action: none;*/
 }
 
 .input_normal {
     background-color: rgb(178, 194, 144);
     color: darkslateblue;
-    touch-action: none;
+    /*touch-action: none;*/
 }

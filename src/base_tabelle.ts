@@ -43,9 +43,10 @@ class selectedtable {
     zelle = null
     nZeilen = 0
     nSpalten = 0
+    selectionMode = false
 }
 
-const tableInfo = []
+export const tableInfo = []
 tableInfo.push(new selectedtable)  // nodeTable
 tableInfo.push(new selectedtable)  // elemTable
 tableInfo.push(new selectedtable)  // id_testTable
@@ -607,6 +608,7 @@ export function meinetabelle(theDiv, id_table, nZeilen, columns) {
                 newCell.style.padding = '0px';
                 newCell.style.margin = '0px';
                 newCell.style.backgroundColor = 'rgb(200,200,200)';
+                newCell.style.touchAction = 'auto'
                 const str1 = id_table + "Cell-" + iZeile + "-" + iSpalte;
                 newCell.id = str1;
                 newCell.className = 'input_normal';
@@ -765,12 +767,17 @@ export function POINTER_DOWN(ev) { // pointer move
 
     selectedCellPoly.tableId = tableId;
 
+    const selectMode = tableInfo[tableIndex].selectionMode
+
     //console.log("POINTERDOWN", ev)
-    console.log("POINTERDOWN", ev.button, tableId, inputId, ev.pageX, ev.pageY, ev.which, ev.pointerType)
+    console.log("POINTERDOWN", selectMode, ev.button, tableId, inputId, ev.pageX, ev.pageY, ev.which, ev.pointerType)
 
     const myTable = document.getElementById(tableId);
-    myTable.addEventListener("pointermove", POINTER_MOVE);
-    myTable.addEventListener("pointerup", POINTER_UP);
+    if (selectMode) {
+        console.log("selectMode = true")
+        myTable.addEventListener("pointermove", POINTER_MOVE);
+        myTable.addEventListener("pointerup", POINTER_UP);
+    }
 
     const myArray = inputId.split("-");
     console.log("Array", myArray.length, myArray[0], myArray[1], myArray[2])
