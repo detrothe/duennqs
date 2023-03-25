@@ -417,6 +417,10 @@ export function resize_Tabelle(idTable, nRowNew, nColNew) {
     let nZeilen = table.rows.length - 1;  // header abziehen
     let nSpalten = table.rows[0].cells.length - 1;
 
+    const tableIndex = table_index(idTable)
+    tableInfo[tableIndex].nZeilen = nRowNew
+    tableInfo[tableIndex].nSpalten = nColNew + 1
+
     console.log("nRowNew", nRowNew, nColNew, nZeilen, nSpalten);
 
     if (nSpalten > nColNew) {
@@ -439,33 +443,83 @@ export function resize_Tabelle(idTable, nRowNew, nColNew) {
 
     }
 
-    if (nColNew > nSpalten) {
+    if (nColNew > nSpalten) {                // nicht getestet, da hier nicht gebraucht
 
-        for (let i = 0; i <= nZeilen; i++) {  // Spalten addieren
-            let row = table.rows.item(i);
+        for (let iZeile = 0; iZeile <= nZeilen; iZeile++) {  // Spalten addieren
+            let row = table.rows.item(iZeile);
             //console.log("row",row);
-            for (let j = nSpalten + 1; j <= nColNew; j++) {   // nZeilen + 1; j <= nRowNew
+            for (let iSpalte = nSpalten + 1; iSpalte <= nColNew; iSpalte++) {   // nZeilen + 1; j <= nRowNew
+
                 const newCell = row.insertCell(-1);
-                //newCell.selekt = false;
-                //newCell.setAttribute("selekt", "false");
-                if (i === 0) {
-                    const newText = document.createTextNode(String(j));
-                    newCell.appendChild(newText);
-                    newCell.style.textAlign = "center";
-                    newCell.style.border = 'none';
+                let newText
+                if (iSpalte === 0) {
+                    //newCell = newRow.insertCell(iSpalte);  // Insert a cell in the row at index 0
+                    newText = document.createTextNode(String(iZeile));  // Append a text node to the cell
+                    newCell.style.textAlign = 'center'
                     newCell.style.backgroundColor = 'rgb(150,180, 180)';
-                } else {
-                    const str = idTable + "-" + i + "-" + j;
-                    const newText = document.createTextNode("");
+                    newCell.style.padding = '0px';
+                    newCell.style.margin = '0px';
                     newCell.appendChild(newText);
-                    newCell.style.border = 'solid 1px';
-                    newCell.style.padding = '5px';
-                    newCell.contentEditable = 'true';
-                    newCell.addEventListener("mousemove", POINTER_MOVE);
-                    newCell.addEventListener("mousedown", POINTER_DOWN);
-                    newCell.addEventListener("keydown", newKEYDOWN);
-                    newCell.id = str;
-                    //newCell.wrap = false;
+                } else {
+
+                    let el = document.createElement("input");
+                    el.setAttribute("type", "number");
+                    el.style.width = '100px';
+                    //el.style.backgroundColor = 'rgb(200,200,200)';
+                    el.style.border = 'none';
+                    el.style.borderWidth = '0px';
+                    el.style.padding = '5px';
+                    el.style.margin = '0px';
+                    el.style.borderRadius = '0px';
+                    const str = idTable + "-" + iZeile + "-" + iSpalte;
+                    el.id = str;
+                    //el.className = 'input_normal';
+                    el.addEventListener("keydown", newKEYDOWN);
+                    //el.addEventListener("mousemove", newMOUSEMOVE);
+
+
+
+                    //console.log("el", el)
+                    //newText = document.createTextNode(String(i + 1));  // Append a text node to the cell
+                    //newCell = newRow.insertCell()
+                    newCell.style.border = 'solid';
+                    newCell.style.borderWidth = '1px';
+                    newCell.style.padding = '0px';
+                    newCell.style.margin = '0px';
+                    newCell.style.backgroundColor = 'rgb(200,200,200)';
+                    newCell.style.touchAction = 'auto'
+                    const str1 = idTable + "Cell-" + iZeile + "-" + iSpalte;
+                    newCell.id = str1;
+                    newCell.className = 'input_normal';
+
+                    newCell.appendChild(el);
+                    // el.addEventListener("pointermove", POINTERMOVE);
+                    el.addEventListener("pointerdown", POINTER_DOWN);
+
+                    /*
+                    const newCell = row.insertCell(-1);
+                    //newCell.selekt = false;
+                    //newCell.setAttribute("selekt", "false");
+                    if (i === 0) {
+                        const newText = document.createTextNode(String(j));
+                        newCell.appendChild(newText);
+                        newCell.style.textAlign = "center";
+                        newCell.style.border = 'none';
+                        newCell.style.backgroundColor = 'rgb(150,180, 180)';
+                    } else {
+                        const str = idTable + "-" + i + "-" + j;
+                        const newText = document.createTextNode("");
+                        newCell.appendChild(newText);
+                        newCell.style.border = 'solid 1px';
+                        newCell.style.padding = '5px';
+                        newCell.contentEditable = 'true';
+                        newCell.addEventListener("mousemove", POINTER_MOVE);
+                        newCell.addEventListener("mousedown", POINTER_DOWN);
+                        newCell.addEventListener("keydown", newKEYDOWN);
+                        newCell.id = str;
+                        //newCell.wrap = false;
+                    }
+                    */
                 }
             }
         }
@@ -475,23 +529,67 @@ export function resize_Tabelle(idTable, nRowNew, nColNew) {
 
         const material_equal = document.getElementById('material_equal') as HTMLInputElement | null;
         //console.log("in setMaterialEqual, nRowNew > nZeilen", nColNew, material_equal.checked);
-        for (let i = nZeilen + 1; i <= nRowNew; i++) {
+
+        for (let iZeile = nZeilen + 1; iZeile <= nRowNew; iZeile++) {
             //selectedCellPoly.selColY.push(false);
             //selectedCellPoly.selColZ.push(false);
 
             // Insert a row at the end of the table
             let newRow = table.insertRow(-1);
 
-            for (let j = 0; j <= nColNew; j++) {
-                // Insert a cell in the row at index 0
-                let newCell = newRow.insertCell(j);
+            for (let iSpalte = 0; iSpalte <= nColNew; iSpalte++) {
 
+
+                let newCell, newText
+                if (iSpalte === 0) {
+                    newCell = newRow.insertCell(iSpalte);  // Insert a cell in the row at index 0
+                    newText = document.createTextNode(String(iZeile));  // Append a text node to the cell
+                    newCell.style.textAlign = 'center'
+                    newCell.style.backgroundColor = 'rgb(150,180, 180)';
+                    newCell.style.padding = '0px';
+                    newCell.style.margin = '0px';
+                    newCell.appendChild(newText);
+                } else {
+
+                    let el = document.createElement("input");
+                    el.setAttribute("type", "number");
+                    el.style.width = '100px';
+                    el.style.border = 'none';
+                    el.style.borderWidth = '0px';
+                    el.style.padding = '5px';
+                    el.style.margin = '0px';
+                    el.style.borderRadius = '0px';
+                    const str = idTable + "-" + iZeile + "-" + iSpalte;
+                    el.id = str;
+                    //el.className = 'input_normal';
+                    el.addEventListener("keydown", newKEYDOWN);
+                    //el.addEventListener("mousemove", newMOUSEMOVE);
+
+                    newCell = newRow.insertCell()
+                    newCell.style.border = 'solid';
+                    newCell.style.borderWidth = '1px';
+                    newCell.style.padding = '0px';
+                    newCell.style.margin = '0px';
+                    newCell.style.backgroundColor = 'rgb(200,200,200)';
+                    newCell.style.touchAction = 'auto'
+                    const str1 = idTable + "Cell-" + iZeile + "-" + iSpalte;
+                    newCell.id = str1;
+                    newCell.className = 'input_normal';
+
+                    newCell.appendChild(el);
+                    el.addEventListener("pointerdown", POINTER_DOWN);
+
+                }
+
+
+
+                /*
                 // Append a text node to the cell
                 let newText;
-                if (j === 0) {
-                    newText = document.createTextNode(String(i));
+                if (iSpalte === 0) {
+                    newText = document.createTextNode(String(iZeile));
                 } else {
-                    const str = idTable + "-" + i + "-" + j;
+                    const str = idTable + "-" + iZeile + "-" + iSpalte;
                     newCell.id = str;
                     newText = document.createTextNode("");
                 }
@@ -500,25 +598,38 @@ export function resize_Tabelle(idTable, nRowNew, nColNew) {
                 newCell.style.padding = '5px';
                 //newCell.setAttribute("selekt", "false");
                 //newCell.selekt = false;
-                if (j === 0) {
+                if (iSpalte === 0) {
                     newCell.style.textAlign = "center";
                     newCell.style.border = 'none';
                     newCell.style.width = '50px';
                     newCell.style.backgroundColor = 'rgb(150,180, 180)';
-
+ 
                 } else {
                     //newCell.style.backgroundColor = "#FFFFFF";
-                    if (material_equal.checked && j < 3) {
-                        newCell.contentEditable = 'false';
+                    if (material_equal.checked && iSpalte < 3) {
+                        //newCell.contentEditable = 'false';
                         newCell.classList.add('unsichtbar');
                     } else {
-                        newCell.contentEditable = 'true';
+                        //newCell.contentEditable = 'true';
                     }
-                    newCell.addEventListener("mousemove", POINTER_MOVE);
-                    newCell.addEventListener("mousedown", POINTER_DOWN);
-                    newCell.addEventListener("keydown", newKEYDOWN);
-                    //newCell.wrap = false;
+ 
+                    let el = document.createElement("input");
+                    el.setAttribute("type", "number");
+                    el.style.width = '100px';
+                    //el.style.backgroundColor = 'rgb(200,200,200)';
+                    el.style.border = 'none';
+                    el.style.borderWidth = '0px';
+                    el.style.padding = '5px';
+                    el.style.margin = '0px';
+                    el.style.borderRadius = '0px';
+                    const str = idTable + "-" + iZeile + "-" + iSpalte;
+                    el.id = str;
+                    //el.className = 'input_normal';
+                    el.addEventListener("keydown", newKEYDOWN);
+ 
+ 
                 }
+                */
             }
         }
 
@@ -686,7 +797,7 @@ export function POINTER_MOVE(ev) { // pointer move
         ny = Number(Math.trunc(dy / cellHeight))
         spalte = Number(cellCol) + 1 * nx   //if (dx > cellWidth)
         zeile = Number(cellRow) + 1 * ny
-        console.log("::::", tableIndex)
+        console.log("::::", tableIndex, zeile, spalte)
         if (spalte > tableInfo[tableIndex].nSpalten - 1) return;  //spalte = tableInfo[tableIndex].nSpalten
         if (zeile > tableInfo[tableIndex].nZeilen) return;    //zeile = tableInfo[tableIndex].nZeilen
         if (spalte < 1) return;  // spalte = 1

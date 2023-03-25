@@ -224,6 +224,7 @@ function toggleMenuOn() {
     if (menuState !== 1) {
         menuState = 1;
         menu.classList.add(contextMenuActive);
+        menu.focus();
     }
 }
 
