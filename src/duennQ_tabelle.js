@@ -132,7 +132,7 @@ export function setSelectionMode_node() {
     if (input.checked) { str = 'none'; } else { str = 'auto'; }
 
     const tabelle = document.getElementById("nodeTable") //as HTMLTableElement;
-    let nSpalten = tabelle.rows[0].cells.length;
+    const nSpalten = tabelle.rows[0].cells.length;
     for (let i = 1; i < tabelle.rows.length; i++) {
         for (let j = 1; j < nSpalten; j++) {
             tabelle.rows[i].cells[j].style.touchAction = str
@@ -155,7 +155,7 @@ export function setSelectionMode_element() {
     if (input.checked) { str = 'none'; } else { str = 'auto'; }
 
     const eTabelle = document.getElementById("elemTable") //as HTMLTableElement;
-    nSpalten = eTabelle.rows[0].cells.length;
+    const nSpalten = eTabelle.rows[0].cells.length;
     for (let i = 1; i < eTabelle.rows.length; i++) {
         for (let j = 1; j < nSpalten; j++) {
             eTabelle.rows[i].cells[j].style.touchAction = str
