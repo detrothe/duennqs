@@ -34,22 +34,38 @@ function setMaterialEqual(ev) {
         document.getElementById("EMod_ref").hidden = true;
         document.getElementById("mue_ref").hidden = true;
         console.log("Anzahl Zeilen", tabelle.rows.length);
-        for (let i = 1; i < tabelle.rows.length; i++) {
+        for (let i = 0; i < tabelle.rows.length; i++) {
             for (let j = 1; j < 3; j++) {
                 //tabelle.rows[i].cells[j].innerText = 'NO';
-                tabelle.rows[i].cells[j].contentEditable = 'false';
-                tabelle.rows[i].cells[j].classList.add('unsichtbar');
+                //tabelle.rows[i].cells[j].contentEditable = 'false';
+                //tabelle.rows[i].cells[j].classList.add('unsichtbar');
+                tabelle.rows[i].cells[j].style.width = '0px'
+                
+                if (i === 0) {
+                    tabelle.rows[i].cells[j].innerText = ""  //.hidden = true
+                    tabelle.rows[i].cells[j].style.padding = '0px'
+                } else {
+                    tabelle.rows[i].cells[j].firstElementChild.hidden = true
+                    tabelle.rows[i].cells[j].style.padding = '0px'
+                }
             }
         }
     } else {
         console.log("editable", document.getElementById("EMod_ref").isContentEditable);
         document.getElementById("EMod_ref").hidden = false;
         document.getElementById("mue_ref").hidden = false;
-        for (let i = 1; i < tabelle.rows.length; i++) {
+        for (let i = 0; i < tabelle.rows.length; i++) {
             for (let j = 1; j < 3; j++) {
                 //tabelle.rows[i].cells[j].innerText = 'edit';
-                tabelle.rows[i].cells[j].contentEditable = 'true';
-                tabelle.rows[i].cells[j].classList.remove('unsichtbar');
+                //tabelle.rows[i].cells[j].contentEditable = 'true';
+                //tabelle.rows[i].cells[j].classList.remove('unsichtbar');
+                
+                if (i === 0) {
+                    if (j === 1) tabelle.rows[i].cells[j].innerText = 'E-Modul [kN/cm²]'  //.hidden = true
+                    if (j === 2) tabelle.rows[i].cells[j].innerText = 'ν'  //.hidden = true
+                } else {
+                    tabelle.rows[i].cells[j].firstElementChild.hidden = false
+                }
             }
         }
     }
