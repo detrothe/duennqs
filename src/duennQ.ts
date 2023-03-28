@@ -63,6 +63,7 @@ function setMaterialEqual(ev) {
                 if (i === 0) {
                     if (j === 1) tabelle.rows[i].cells[j].innerText = 'E-Modul [kN/cm²]'  //.hidden = true
                     if (j === 2) tabelle.rows[i].cells[j].innerText = 'ν'  //.hidden = true
+                    tabelle.rows[i].cells[j].style.padding = '5px'
                 } else {
                     tabelle.rows[i].cells[j].firstElementChild.hidden = false
                 }
