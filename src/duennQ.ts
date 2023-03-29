@@ -1008,9 +1008,9 @@ export function duennQ() {
         // Verformungen in den Mittelknoten
 
         truss[k].u[2] = (2 * truss[k].u[0] + truss[k].u[1]) / 3.0
-            + (5 * truss[k].F34[0] + 4 * truss[k].F34[1]) * truss[k].sl * truss[k].sl / truss[k].GModul / 81;
+            + (5 * truss[k].F[0] + 4 * truss[k].F[1]) * truss[k].sl * truss[k].sl / truss[k].GModul / 81;
         truss[k].u[3] = (truss[k].u[0] + 2 * truss[k].u[1]) / 3.0
-            + (4 * truss[k].F34[0] + 5 * truss[k].F34[1]) * truss[k].sl * truss[k].sl / truss[k].GModul / 81;
+            + (4 * truss[k].F[0] + 5 * truss[k].F[1]) * truss[k].sl * truss[k].sl / truss[k].GModul / 81;
 
         console.log("U", k, truss[k].u[0], truss[k].u[2], truss[k].u[3], truss[k].u[1])
     }

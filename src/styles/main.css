@@ -829,7 +829,7 @@ input[type=number] {
 }
 
 .input_normal {
-    background-color: rgb(178, 194, 144);
-    color: darkslateblue;
+    background-color: rgb(255, 255, 255);
+    color: rgb(0, 0, 0);
     /*touch-action: none;*/
 }
