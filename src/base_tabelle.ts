@@ -866,7 +866,7 @@ export function POINTER_MOVE(ev) { // pointer move
 
     for (let i = rowStart; i <= rowEnd; i++) {
         for (let j = colStart; j <= colEnd; j++) {
-            tabelle.rows[i].cells[j].firstElementChild.className = "input_select";
+            if (!tabelle.rows[i].cells[j].firstElementChild.hidden) tabelle.rows[i].cells[j].firstElementChild.className = "input_select";
         }
     }
 
