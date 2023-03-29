@@ -792,9 +792,17 @@ export function POINTER_MOVE(ev) { // pointer move
         let dx = ev.pageX - cellLeft;// + document.documentElement.scrollLeft;
         let dy = ev.pageY - cellTop; // + document.documentElement.scrollTop;
         let zeile: number, spalte: number
-        let nx: number, ny: number
-        nx = Number(Math.trunc(dx / cellWidth))
-        ny = Number(Math.trunc(dy / cellHeight))
+        let nx: number, ny: number, vorz: number, div: number
+        div = dx / cellWidth
+        vorz = Math.abs(div) / div
+        nx = Math.trunc(Math.abs(div)) * vorz
+        if (vorz < 0.0) nx = nx - 1
+        console.log("div", dx, div, vorz, nx)
+        div = dy / cellHeight
+        vorz = Math.abs(div) / div
+        ny = Math.trunc(Math.abs(div)) * vorz
+        if (vorz < 0.0) ny = ny - 1
+        //ny = Number(Math.trunc(dy / cellHeight))
         spalte = Number(cellCol) + 1 * nx   //if (dx > cellWidth)
         zeile = Number(cellRow) + 1 * ny
         console.log("::::", tableIndex, zeile, spalte)
