@@ -1426,7 +1426,7 @@ export function duennQ() {
         tag.setAttribute("id", "id_vergleichsspannung");
         const text = document.createTextNode("xxx");
         tag.appendChild(text);
-        tag.innerHTML = "Vergleichsspannungen"
+        tag.innerHTML = "von Mises Vergleichsspannungen"
         myTableDiv.appendChild(tag);
 
         const table = document.createElement("TABLE") as HTMLTableElement;

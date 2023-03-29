@@ -589,7 +589,7 @@ export async function my_jspdf() {
     const nspalten = 4, nzeilen = nelem
 
     yy = testSeite(yy, fs1, 1, 4 + nzeilen)
-    doc.text("Vergleichsspannungen", links, yy);
+    doc.text("von Mises Vergleichsspannungen", links, yy);
 
 
     let str: string, texWid: number
