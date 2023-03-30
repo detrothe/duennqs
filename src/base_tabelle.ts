@@ -474,7 +474,7 @@ export function resize_Tabelle(idTable, nRowNew, nColNew) {
                     const str = idTable + "-" + iZeile + "-" + iSpalte;
                     el.id = str;
                     //el.className = 'input_normal';
-                    el.addEventListener("keydown", newKEYDOWN);
+                    el.addEventListener("keydown", KEYDOWN);
                     //el.addEventListener("mousemove", newMOUSEMOVE);
 
 
@@ -562,7 +562,7 @@ export function resize_Tabelle(idTable, nRowNew, nColNew) {
                     const str = idTable + "-" + iZeile + "-" + iSpalte;
                     el.id = str;
                     //el.className = 'input_normal';
-                    el.addEventListener("keydown", newKEYDOWN);
+                    el.addEventListener("keydown", KEYDOWN);
                     //el.addEventListener("mousemove", newMOUSEMOVE);
 
                     newCell = newRow.insertCell()
@@ -706,7 +706,7 @@ export function meinetabelle(theDiv, id_table, nZeilen, columns) {
                 const str = id_table + "-" + iZeile + "-" + iSpalte;
                 el.id = str;
                 //el.className = 'input_normal';
-                el.addEventListener("keydown", newKEYDOWN);
+                el.addEventListener("keydown", KEYDOWN);
                 //el.addEventListener("mousemove", newMOUSEMOVE);
 
 
@@ -748,13 +748,20 @@ export function meinetabelle(theDiv, id_table, nZeilen, columns) {
 
 }
 //------------------------------------------------------------------------------------------------
-export function newKEYDOWN(ev) {
+export function KEYDOWN(ev) {
     //--------------------------------------------------------------------------------------------
 
     console.log("KEYDOWN, keycode, id_input, id_tabelle", ev.keyCode, ev.target.id, ev.target.offsetParent.offsetParent.id);
     const tableCellId = ev.target.offsetParent.id;
-    console.log("KEYDOWN", tableCellId)
+    console.log("KEYDOWN", tableCellId, ev.keyCode)
     //const tableIndex = table_index(tableId)
+    if ( ev.keyCode > 47 && ev.keyCode < 58 ) return  // Ziffern 0-9
+    if ( ev.keyCode === 69 || ev.keyCode === 190 || ev.keyCode === 188 ) return // e .  ,
+    if ( ev.keyCode === 13 || ev.keyCode === 8 || ev.keyCode === 46 ) return // return, del, entfernen
+    if ( ev.keyCode === 37 || ev.keyCode === 39 ) return  // rechts links
+    if ( ev.keyCode === 9 || ev.keyCode === 27 ) return   // Tab, ESC
+
+    ev.preventDefault();
 }
 
 //------------------------------------------------------------------------------------------------
