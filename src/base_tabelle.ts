@@ -751,10 +751,15 @@ export function meinetabelle(theDiv, id_table, nZeilen, columns) {
 export function KEYDOWN(ev) {
     //--------------------------------------------------------------------------------------------
 
-    console.log("KEYDOWN, keycode, id_input, id_tabelle", ev.keyCode, ev.target.id, ev.target.offsetParent.offsetParent.id);
-    const tableCellId = ev.target.offsetParent.id;
-    console.log("KEYDOWN", tableCellId, ev.keyCode)
+    //console.log("KEYDOWN, keycode, id_input, id_tabelle", ev.keyCode, ev.target.id, ev.target.offsetParent.offsetParent.id);
+    //const tableCellId = ev.target.offsetParent.id;
+    console.log("KEYDOWN", ev.keyCode, ev.shiftKey,  ev)
     //const tableIndex = table_index(tableId)
+    
+    if ( ev.shiftKey ) {
+        ev.preventDefault();
+        return
+    }
     if ( ev.keyCode > 47 && ev.keyCode < 58 ) return  // Ziffern 0-9
     if ( ev.keyCode === 69 || ev.keyCode === 190 || ev.keyCode === 188 ) return // e .  ,
     if ( ev.keyCode === 13 || ev.keyCode === 8 || ev.keyCode === 46 ) return // return, del, entfernen
