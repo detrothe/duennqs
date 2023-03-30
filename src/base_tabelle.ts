@@ -758,7 +758,7 @@ export function KEYDOWN(ev) {
     if ( ev.keyCode > 47 && ev.keyCode < 58 ) return  // Ziffern 0-9
     if ( ev.keyCode === 69 || ev.keyCode === 190 || ev.keyCode === 188 ) return // e .  ,
     if ( ev.keyCode === 13 || ev.keyCode === 8 || ev.keyCode === 46 ) return // return, del, entfernen
-    if ( ev.keyCode === 37 || ev.keyCode === 39 ) return  // rechts links
+    if ( ev.keyCode === 37 || ev.keyCode === 39 || ev.keyCode === 189 ) return  // rechts links -
     if ( ev.keyCode === 9 || ev.keyCode === 27 ) return   // Tab, ESC
 
     ev.preventDefault();
