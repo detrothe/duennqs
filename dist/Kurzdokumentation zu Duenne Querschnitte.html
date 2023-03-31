@@ -21,6 +21,11 @@
 			background: transparent
 		}
 
+		ul {
+			font-family: "FreeSans", sans-serif;
+			line-height: 125%;
+		}
+
 		h1 {
 			color: #365f91;
 			line-height: 115%;
@@ -80,15 +85,15 @@
 	</h1>
 	<p>
 		Mit dieser App können Querschnittswerte und
-		Spannungen von dünnwandigen Querschnitten berechnet werden. Es wird das Mittellinienmodell (Drahtmodell) 
-		angewendet und zur Lösung wird 
+		Spannungen von dünnwandigen Querschnitten berechnet werden. Es wird das Mittellinienmodell (Drahtmodell)
+		angewendet und zur Lösung wird
 		die finite Element Methode verwendet [1], [2]. Der Querschnitt wird
 		ähnlich wie ein Stabwerk oder Fachwerk durch mehrere gerade Elemente
 		beschrieben, die über Knoten miteinander verbunden sind. Die Theorie
 		erfordert, dass jedes Element mindestens eine Verbindung zu einem anderen
 		Element haben muss. Es dürfen also keine Elemente „alleine“ im
 		Querschnitt sein. Dies bedeutet, dass es von jedem Element einen Pfad zu allen anderen Elementen geben muss.
-		<br> Die Knotenkoordinaten werden in einem y&#772;-z&#772; Hilfskoordinatensystem  eingegeben, dessen Ursprung
+		<br> Die Knotenkoordinaten werden in einem y&#772;-z&#772; Hilfskoordinatensystem eingegeben, dessen Ursprung
 		beliebig gewählt werden kann.
 		<br> Die Elemente haben einen Anfangs- und Endknoten und
 		können quadratische Schubspannungsverläufe exakt darstellen.
@@ -199,10 +204,46 @@
 	<p>Als Dezimal-Trennzeichen ist das Komma oder der Punkt zulässig.
 		Ein Tausender-Trennzeichen ist nicht zulässig.
 	</p>
-	<p>Wenn eine Maus angeschlossen ist, dann ergeben sich zusätzliche Möglichkeiten
-		der Eingabe bei den Tabellen. Es kann durch Drücken der linken Maustaste ein Block selektiert werden.
-		Nach Drücken der rechten Maustaste erscheint ein Kontextmenü.
+	<p>Um die Knoten- und Elementeingabe zu beschleunigen, können einzelne Zellwerte oder Zeilen der Tabellen kopiert
+		bzw. generiert
+		werden.
+		Es kann durch Drücken der linken Maustaste ein Block selektiert werden.
+		Nach dem Loslassen der Maustaste erscheint ein Kontextmenü. <br>
+		Bei <b>Touch screens:</b> Bei Eingabe mit dem Finger oder Stift ist zuerst der
+		Selektiermodus durch Anklicken der Checkbox über einer Tabelle zu aktivieren. Beim Übersteichen mit dem Finger
+		oder dem Stift werden dann wie bei der Maus
+		die selektierten Zellen farblich markiert. Nach Heben des Fingers/Stifts erscheint das Kontextmenu.
+		Während des Selektiermodus können keine Werte eingegeben werden.
 	</p>
+	<p>
+		<img src="contextmenu.png" name="Bild4" style="width:240px; height:260px; margin-left:50px" />
+		Kontextmenü
+		<br />
+	</p>
+	<p>
+	<ul>
+		<li><b>copy first cell value:</b> Es wird der Wert der zuerst selektierten Zelle in die anderen selektierten
+			Zellen
+			kopiert.</li>
+		<li><b>copy first row values:</b> Es sind mindestens zwei Zeilen zu selektieren. Es werden die Werte der
+			obersten Zeile
+			spaltenweise nach unten kopiert.</li>
+		<li><b>increment by 1:</b> Es sind mindestens zwei Zeilen zu selektieren. Es werden die Werte der obersten Zeile
+			spaltenweise um 1 erhöht.</li>
+		<li><b>increment by delta:</b> Es sind mindestens drei Zeilen zu selektieren. Es werden spaltenweise die
+			Differenzen
+			zwischen der obersten und der darunterliegenden Zeile
+			bestimmt. Die darunterliegenden Zeilen werden spaltenweise mit den berechneten Deltawerten verändert. </li>
+		<li><b>copy to clipboard:</b> Der Inhalt der selektierten Zellen wird in die Zwischenablage kopiert und kann zum
+			Beispiel an anderen Stellen der Tabelle eingesetzt werden. Auch können die Werte an andere Programme
+			übergeben werden (Tabellenkalkulation)</li>
+		<li><b>insert from clipboard:</b> Der Inhalt der Zwischenablage wird beginnend an der linken oberen Zelle des
+			markierten Bereichs eingefügt.
+		</li>
+	</ul>
+	</p>
+	<p>Bei iOS erfolgt die Auswahl im Kontextmenü mit einem Doppelklick. </p>
+
 	<p>Hinweis: An jedes Tablett und Smartphone läßt sich eine Bluetooth Maus und/oder Tastatur anschließen.</p>
 
 	<p>Um den begrenzten Bildschirmplatz auf Smartphones und Tabletts besser zu nutzen, werden die Anzahl der Zeilen in
@@ -214,7 +255,8 @@
 	<p>
 	<h2 class="western">Installation als App auf dem Desktop</h2>
 	</p>
-	<p>Diese Anwendung ist als Web App programmiert, so dass sie unter Android und iOS auf dem Desktop installiert
+	<p>Diese Anwendung ist als Webanwendung (Web App) programmiert, so dass sie unter Android und iOS auf dem Desktop
+		installiert
 		werden kann.
 		Dafür wird auf dem Desktop ein Icon erstellt. Damit verhält sich die App wie eine aus einem Store installierte
 		App.
