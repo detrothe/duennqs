@@ -453,14 +453,16 @@ function menuItemListener(link) {
         for (i = 1; i < nZeilen; i++) {
             wertInSpalte1 = false;
             for (j = 1; j < nSpalten - 1; j++) {
-                if (tabelle.rows.item(i).cells.item(j).selekt) {
+                let child = tabelle.rows[i].cells[j].firstElementChild   // input
+                if (child.className === 'input_select') {
                     if (wertInSpalte1) newClip += "\t";
                     let wert = tabelle.rows[i].cells[j].firstElementChild.value;
                     newClip += wert;
                     wertInSpalte1 = true;
                 }
             }
-            if (tabelle.rows.item(i).cells.item(nSpalten - 1).selekt) {
+            let child = tabelle.rows[i].cells[nSpalten - 1].firstElementChild   // input
+            if (child.className === 'input_select') {
                 if (wertInSpalte1) newClip += "\t";
                 let wert = tabelle.rows[i].cells[nSpalten - 1].firstElementChild.value;
                 newClip += wert + newLine;
@@ -489,13 +491,13 @@ function menuItemListener(link) {
         let row = Number(selectedCellPoly.row);
         let col = Number(selectedCellPoly.col);
 
-        console.log("insert", row, col)
+        //console.log("insert", row, col)
 
         const tabelle = document.getElementById(selectedCellPoly.tableId);
         const nZeilen = tabelle.rows.length;
         const nSpalten = tabelle.rows[0].cells.length;
 
-        console.log("nZeilen,nSpalten", nZeilen, nSpalten)
+        //console.log("nZeilen,nSpalten", nZeilen, nSpalten)
 
         navigator.clipboard.readText().then(function (clipText) {
             //console.log("clipText", clipText);
@@ -508,7 +510,7 @@ function menuItemListener(link) {
                 let zeile = zeilen[i].split("\t");
                 //console.log("zeile", i, zeile, zeile.length);
                 for (j = 0; j < zeile.length; j++) {
-                    console.log("z", i, j, zeile[j], (row + i), nZeilen, (col + j), nSpalten);
+                    //console.log("z", i, j, zeile[j], (row + i), nZeilen, (col + j), nSpalten);
                     if ((row + i) < nZeilen && (col + j) < nSpalten) {
                         //console.log("z", i, j, zeile[j], (row + i), nZeilen, (col + j), nSpalten);
                         let zahl = zeile[j].replace(/,/g, '.')
