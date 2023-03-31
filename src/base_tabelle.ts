@@ -1,7 +1,7 @@
 import * as d3 from "d3";
 import { set_nelem, set_nnodes, table_index, remove_selected_Tabelle } from "./duennQ_tabelle.js";
 import { berechnungErforderlich } from "./globals.js"
-import { show_contextMemu } from './contextMenu.js';
+import { show_contextMemu, clickListener } from './contextMenu.js';
 
 export const selectedCellPoly = {   // export const
     isSelected: false,
@@ -793,10 +793,13 @@ export function POINTER_MOVE(ev) { // pointer move
     //console.log("POINTER_MOVE pos", ev.pageX, ev.pageY, ev.clientX, ev.clientY, ev.pointerId, ev.target.id)
 
 
-    const el = document.getElementById(ev.target.id);
+    const el = document.getElementById(inputId);
     //console.log("getBoundingClientRect", el.getBoundingClientRect().x, el.getBoundingClientRect().y);
 
-    el.className = 'input_select';
+    if (el.className !== 'input_select') {
+        el.className = 'input_select';
+        selected = true
+    }
     //console.log("rect", ev.pointerType, ev.clientX - el.getBoundingClientRect().x, ev.clientY - el.getBoundingClientRect().y, el.getBoundingClientRect().width, el.getBoundingClientRect().height)
 
     if (ev.pointerType === 'touch' || ev.pointerType === 'pen') {
@@ -905,14 +908,14 @@ export function POINTER_DOWN(ev) { // pointer move
     console.log("POINTERDOWN", selectMode, ev.button, tableId, inputId, ev.pageX, ev.pageY, ev.which, ev.pointerType)
 
     const myTable = document.getElementById(tableId);
-    if (selectMode) {
-        console.log("selectMode = true")
+    if (selectMode || ev.pointerType === 'mouse') {   // bei Mouse immer select mode
+        //console.log("selectMode = true")
         myTable.addEventListener("pointermove", POINTER_MOVE);
         myTable.addEventListener("pointerup", POINTER_UP);
     }
 
     const myArray = inputId.split("-");
-    console.log("Array", myArray.length, myArray[0], myArray[1], myArray[2])
+    //console.log("Array", myArray.length, myArray[0], myArray[1], myArray[2])
     const el = document.getElementById(inputId) as HTMLInputElement;
 
     offsetX = ev.pageX - ev.clientX
@@ -926,11 +929,11 @@ export function POINTER_DOWN(ev) { // pointer move
     cellId = myArray[0]
     cellRow = myArray[1]
     cellCol = myArray[2]
-    console.log("MEMORY", cellRow, cellCol, cellLeft, cellTop, cellWidth, cellHeight, offsetX, offsetY)
+    //console.log("MEMORY", cellRow, cellCol, cellLeft, cellTop, cellWidth, cellHeight, offsetX, offsetY)
 
     if (ev.which === 3) {               // rechte Maustaste
         console.log("rechte Maustaste");
-        //ev.preventDefault();
+        ev.preventDefault();
     } else if (ev.button === 0) {      // linke Maustaste
 
         remove_selected_Tabelle();
@@ -957,7 +960,7 @@ export function POINTER_DOWN(ev) { // pointer move
         tableInfo[tableIndex].startRowIndex = row;
         tableInfo[tableIndex].startColIndex = col;
 
-        if (selectMode) {
+        if (selectMode && ev.pointerType !== 'mouse') {
             ev.preventDefault();
         }
         //console.log("selectedCellPoly", selectedCellPoly.row, selectedCellPoly.col, selectedCellPoly.wert, selectedCellPoly.activatedElement)
@@ -973,7 +976,7 @@ export function POINTER_UP(ev) { // pointer move
     selectedCellPoly.tableId = tableId;
 
     //console.log("POINTERDOWN", ev)
-    console.log("POINTERUP", ev.buttons, tableId, inputId, ev.pageX, ev.pageY, ev.which, ev.pointerType)
+    console.log("POINTERUP", ev.buttons, tableId, inputId, ev.pageX, ev.pageY, ev.which, ev.pointerType, selected)
 
     const myTable = document.getElementById(tableId);
     //myTable.releasePointerCapture(ev.pointerId);
@@ -981,7 +984,14 @@ export function POINTER_UP(ev) { // pointer move
     myTable.removeEventListener("pointermove", POINTER_MOVE);
     myTable.removeEventListener("pointerup", POINTER_UP);
 
-    if (selected && (ev.pointerType === 'touch' || ev.pointerType === 'pen')) show_contextMemu(ev);
+    if (ev.button === 2) {
+        ev.preventDefault();
+        return;
+    }
+    //    if (selected && (ev.pointerType === 'touch' || ev.pointerType === 'pen')) show_contextMemu(ev);
+    if (selected) show_contextMemu(ev);
+
+    console.log("fertig contextMenu")
 
     ev.preventDefault();
 }

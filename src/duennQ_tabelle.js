@@ -163,4 +163,5 @@ export function setSelectionMode_element() {
         }
     }
 }
+
 console.log("exit duennQ-tabelle.js");

@@ -1,6 +1,6 @@
 import { app, Detect } from './index';
 import { selectedCellPoly } from './base_tabelle.js';
-
+import { remove_selected_Tabelle } from "./duennQ_tabelle.js";
 //(function () {
 
 "use strict";
@@ -24,16 +24,19 @@ import { selectedCellPoly } from './base_tabelle.js';
 function clickInsideElement(e, className) {
 
     let el = e.srcElement || e.target;
-    //console.log("click Inside Element", className, e.target, "-el-", el);
+    //console.log("click Inside Element:", className, e.target, "-el-", el);
 
     if (el.classList.contains(className)) {
+        console.log("el.classList.contains: ", className)
         return el;
     } else if (el.classList.contains('input_select')) {
+        console.log("el.classList.contains: input_select")
         return el;
     }
     else {
         while (el = el.parentNode) {
             if (el.classList && el.classList.contains(className)) {
+                console.log("parent", el)
                 return el;
             }
         }
@@ -62,6 +65,8 @@ function getPosition(e) {
         posy = e.clientY + document.body.scrollTop + document.documentElement.scrollTop;
     }
 
+    console.log("getPosition", posx, posy)
+
     return {
         x: posx,
         y: posy
@@ -84,7 +89,7 @@ function getPosition(e) {
 const contextMenuLinkClassName = "context-menu__link";
 const contextMenuActive = "context-menu--active";
 
-const taskItemClassName = "tabelle";   // tasks  tabelle
+const taskItemClassName = "tabellen";   // tasks  tabelle
 let taskItemInContext;
 
 let clickCoords;
@@ -120,12 +125,20 @@ export function init_contextmenu() {
  */
 function contextListener() {
     document.addEventListener("contextmenu", function (e) {
+        /*
+                if (e.button === 2) {
+                    console.log("//// contextListener")
+                    e.preventDefault();
+                    return;
+                }
+        */
         taskItemInContext = clickInsideElement(e, taskItemClassName);
 
-        //console.log("//// taskItem In Context", taskItemInContext);
+        console.log("//// contextListener  taskItem In Context", e.button, taskItemInContext);
 
         if (taskItemInContext) {
             e.preventDefault();
+            if (e.button === 2) return
             toggleMenuOn();
             positionMenu(e);
         } else {
@@ -138,19 +151,21 @@ function contextListener() {
 /**
  * Listens for click events.
  */
-function clickListener() {
+export function clickListener() {
     document.addEventListener("click", function (e) {
+
         const clickeElIsLink = clickInsideElement(e, contextMenuLinkClassName);
-        //console.log("+++ clickeElIsLink", clickeElIsLink);
+        console.log("+++ clickListener  clickeElIsLink", clickeElIsLink, e.button);
 
         if (clickeElIsLink) {
             e.preventDefault();
+            if (e.button === 2) return
             menuItemListener(clickeElIsLink);
         } else {
             //console.log("clickListener", e.button, e.which);
             //let button = e.which || e.button;  // e.which ||
             if (e.button === 0) {   // linke Maustaste
-                toggleMenuOff();
+                //toggleMenuOff();
             }
         }
     });
@@ -180,7 +195,7 @@ export function show_contextMemu(ev) {
     //-------------------------------------------------------------------------
     taskItemInContext = clickInsideElement(ev, taskItemClassName);
 
-    //console.log("//// taskItem In Context", taskItemInContext);
+    console.log("//// show_contextMemu  taskItem In Context", taskItemInContext);
 
     if (taskItemInContext) {
         ev.preventDefault();
@@ -197,7 +212,7 @@ export function show_contextMemu(ev) {
  * Listens for keyup events.
  */
 function keyupListener() {
-    //console.log("--- keyupListener");
+    console.log("--- keyupListener");
 
     window.onkeyup = function (e) {
         //console.log("keyupListener", e.code, e.key, e);   // geht auch
@@ -220,7 +235,7 @@ function resizeListener() {
  * Turns the custom context menu on.
  */
 function toggleMenuOn() {
-    //console.log("toggleMenuOn");
+    console.log("toggleMenuOn", menuState);
     if (menuState !== 1) {
         menuState = 1;
         menu.classList.add(contextMenuActive);
@@ -245,7 +260,7 @@ function toggleMenuOff() {
  */
 function positionMenu(e) {
 
-    //console.log("positionMenu");
+    console.log("positionMenu", e.pageX, e.pageY);
 
     clickCoords = getPosition(e);
     clickCoordsX = clickCoords.x;
@@ -520,7 +535,11 @@ function menuItemListener(link) {
             }
 
         });
+    } else if (link.getAttribute("data-action") === "close") {
+
     }
+
+    remove_selected_Tabelle();
 }
 
 /**
