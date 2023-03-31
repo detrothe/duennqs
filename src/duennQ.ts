@@ -40,11 +40,12 @@ function setMaterialEqual(ev) {
                 //tabelle.rows[i].cells[j].contentEditable = 'false';
                 //tabelle.rows[i].cells[j].classList.add('unsichtbar');
                 tabelle.rows[i].cells[j].style.width = '0px'
-                
+
                 if (i === 0) {
                     tabelle.rows[i].cells[j].innerText = ""  //.hidden = true
                     tabelle.rows[i].cells[j].style.padding = '0px'
                 } else {
+                    // @ts-ignore
                     tabelle.rows[i].cells[j].firstElementChild.hidden = true
                     tabelle.rows[i].cells[j].style.padding = '0px'
                 }
@@ -59,12 +60,13 @@ function setMaterialEqual(ev) {
                 //tabelle.rows[i].cells[j].innerText = 'edit';
                 //tabelle.rows[i].cells[j].contentEditable = 'true';
                 //tabelle.rows[i].cells[j].classList.remove('unsichtbar');
-                
+
                 if (i === 0) {
                     if (j === 1) tabelle.rows[i].cells[j].innerText = 'E-Modul [kN/cm²]'  //.hidden = true
                     if (j === 2) tabelle.rows[i].cells[j].innerText = 'ν'  //.hidden = true
                     tabelle.rows[i].cells[j].style.padding = '5px'
                 } else {
+                    // @ts-ignore
                     tabelle.rows[i].cells[j].firstElementChild.hidden = false
                 }
             }

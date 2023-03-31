@@ -753,18 +753,18 @@ export function KEYDOWN(ev) {
 
     //console.log("KEYDOWN, keycode, id_input, id_tabelle", ev.keyCode, ev.target.id, ev.target.offsetParent.offsetParent.id);
     //const tableCellId = ev.target.offsetParent.id;
-    console.log("KEYDOWN", ev.keyCode, ev.shiftKey,  ev)
+    console.log("KEYDOWN", ev.keyCode, ev.shiftKey, ev)
     //const tableIndex = table_index(tableId)
-    
-    if ( ev.shiftKey ) {
+
+    if (ev.shiftKey) {
         ev.preventDefault();
         return
     }
-    if ( ev.keyCode > 47 && ev.keyCode < 58 ) return  // Ziffern 0-9
-    if ( ev.keyCode === 69 || ev.keyCode === 190 || ev.keyCode === 188 ) return // e .  ,
-    if ( ev.keyCode === 13 || ev.keyCode === 8 || ev.keyCode === 46 ) return // return, del, entfernen
-    if ( ev.keyCode === 37 || ev.keyCode === 39 || ev.keyCode === 189 ) return  // rechts links -
-    if ( ev.keyCode === 9 || ev.keyCode === 27 ) return   // Tab, ESC
+    if (ev.keyCode > 47 && ev.keyCode < 58) return  // Ziffern 0-9
+    if (ev.keyCode === 69 || ev.keyCode === 190 || ev.keyCode === 188) return // e .  ,
+    if (ev.keyCode === 13 || ev.keyCode === 8 || ev.keyCode === 46) return // return, del, entfernen
+    if (ev.keyCode === 37 || ev.keyCode === 39 || ev.keyCode === 189) return  // rechts links -
+    if (ev.keyCode === 9 || ev.keyCode === 27) return   // Tab, ESC
 
     ev.preventDefault();
 }
@@ -779,7 +779,7 @@ export function POINTER_MOVE(ev) { // pointer move
 
     const tableId = ev.target.offsetParent.offsetParent.id;
     //console.log("tableId", tableId)
-    if (tableId === '') return;           // cursor steht auf irgendwas
+    if (tableId === '') return;           // cursor steht auf irgendwas, aber nicht auf tag <input>
 
     ev.preventDefault();
 
@@ -878,6 +878,7 @@ export function POINTER_MOVE(ev) { // pointer move
 
     for (let i = rowStart; i <= rowEnd; i++) {
         for (let j = colStart; j <= colEnd; j++) {
+            // @ts-ignore
             if (!tabelle.rows[i].cells[j].firstElementChild.hidden) tabelle.rows[i].cells[j].firstElementChild.className = "input_select";
         }
     }
@@ -956,6 +957,9 @@ export function POINTER_DOWN(ev) { // pointer move
         tableInfo[tableIndex].startRowIndex = row;
         tableInfo[tableIndex].startColIndex = col;
 
+        if (selectMode) {
+            ev.preventDefault();
+        }
         //console.log("selectedCellPoly", selectedCellPoly.row, selectedCellPoly.col, selectedCellPoly.wert, selectedCellPoly.activatedElement)
     }
 }

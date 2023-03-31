@@ -486,12 +486,16 @@ function menuItemListener(link) {
         }
 
         // Zellwert in zuletzt geklickter Zelle
-        let row = selectedCellPoly.row;
-        let col = selectedCellPoly.col;
+        let row = Number(selectedCellPoly.row);
+        let col = Number(selectedCellPoly.col);
+
+        console.log("insert", row, col)
 
         const tabelle = document.getElementById(selectedCellPoly.tableId);
         const nZeilen = tabelle.rows.length;
         const nSpalten = tabelle.rows[0].cells.length;
+
+        console.log("nZeilen,nSpalten", nZeilen, nSpalten)
 
         navigator.clipboard.readText().then(function (clipText) {
             //console.log("clipText", clipText);
@@ -504,9 +508,11 @@ function menuItemListener(link) {
                 let zeile = zeilen[i].split("\t");
                 //console.log("zeile", i, zeile, zeile.length);
                 for (j = 0; j < zeile.length; j++) {
-                    //console.log("z", i, j, zeile[j]);
+                    console.log("z", i, j, zeile[j], (row + i), nZeilen, (col + j), nSpalten);
                     if ((row + i) < nZeilen && (col + j) < nSpalten) {
-                        tabelle.rows[row + i].cells[col + j].firstElementChild.value = zeile[j];
+                        //console.log("z", i, j, zeile[j], (row + i), nZeilen, (col + j), nSpalten);
+                        let zahl = zeile[j].replace(/,/g, '.')
+                        tabelle.rows[row + i].cells[col + j].firstElementChild.value = zahl;
                     }
                 }
             }
