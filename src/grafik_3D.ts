@@ -633,6 +633,16 @@ export function draw_elements() {
                 xLabel.layers.set(1);
             }
 
+
+            //---------------------------------------------------------------------------------------------------
+            // Darstellung Links Rechts, Anfangsknoten
+            //---------------------------------------------------------------------------------------------------
+
+            if (show_LR_sides) {
+
+                zeichneLR_pfeile(i, mesh)
+            }
+
         }
 
 
@@ -1837,6 +1847,8 @@ export function draw_elements() {
 
         }
 
+
+
         //-----------------------------------------------------------------------------
         // Koodinatenkreuz
         //-----------------------------------------------------------------------------
@@ -2070,6 +2082,138 @@ function zeichneHPfeil(ielem: number, mesh: any) {
     mesh = new THREE.Mesh(geometry, material);
     scene.add(mesh);
 }
+
+
+//--------------------------------------------------------------------------------------------------------
+function zeichneLR_pfeile(ielem: number, mesh: any) {
+    //----------------------------------------------------------------------------------------------------
+
+    let i: number, istelle: number
+    let b: number, a: number, c: number, b2: number, d: number, atemp: number, btemp: number
+    let tau_i: number, sl: number, xi: number
+    let x1: number, x2: number, y1: number, y2: number, dx: number, dy: number
+    let xm1: number, ym1: number, xm2: number, ym2: number, xm3: number, ym3: number
+
+
+    const si = truss[ielem].sinus
+    const co = truss[ielem].cosinus
+
+    sl = truss[ielem].sl
+
+    a = slmax / 100   // Länge Pfeil
+    b = slmax / 800   // Breite Pfeil
+    b2 = slmax / 250  // Breite Pfeilspitze
+    c = slmax / 1000  // Abstand vor Querschnitt
+    d = slmax / 100   // Länge Pfeilspitze
+
+    const vertices = [];
+    const indices = [];
+
+
+    istelle = 1;
+
+    i = 1;
+    const nod1 = truss[ielem].nod[0];
+    const nod2 = truss[ielem].nod[1];
+    x1 = node[nod1].y;
+    x2 = node[nod2].y;
+    y1 = node[nod1].z;
+    y2 = node[nod2].z;
+
+
+    dx = co * (a + c) //x2 - x1
+    dy = si * (a + c) //y2 - y1
+
+    xi = istelle * sl / 4
+    tau_i = d
+
+
+    if (Math.abs(tau_i) < 1.e-12) {
+        atemp = a / 10
+        btemp = b / 10
+    } else {
+        atemp = a
+        btemp = b
+    }
+    xm1 = x1 + istelle * dx / 1 - co * atemp
+    ym1 = y1 + istelle * dy / 1 - si * atemp
+    xm2 = x1 + istelle * dx / 1 + co * atemp
+    ym2 = y1 + istelle * dy / 1 + si * atemp
+
+    vertices.push(-(xm1 + si * btemp), -(ym1 - co * btemp), c);
+    vertices.push(-(xm2 + si * btemp), -(ym2 - co * btemp), c);
+    vertices.push(-(xm2 - si * btemp), -(ym2 + co * btemp), c);
+    vertices.push(-(xm1 - si * btemp), -(ym1 + co * btemp), c);
+
+    xm3 = xm2 + co * d
+    ym3 = ym2 + si * d
+
+    vertices.push(-(xm2 + si * b2), -(ym2 - co * b2), c);
+    vertices.push(-(xm2 - si * b2), -(ym2 + co * b2), c);
+    vertices.push(-(xm3), -(ym3), c);
+
+
+    indices.push(0, 1, 2)
+    indices.push(2, 3, 0)
+    indices.push(4, 6, 5)
+
+    const geometry = new THREE.BufferGeometry();
+    geometry.setIndex(indices);
+    geometry.setAttribute('position', new THREE.Float32BufferAttribute(vertices, 3));
+
+    const material = new THREE.MeshPhongMaterial({
+        side: THREE.DoubleSide,
+        vertexColors: true
+    });
+
+    mesh = new THREE.Mesh(geometry, material);
+    scene.add(mesh);
+
+    x1 = truss[ielem].pts_y[0]
+    y1 = truss[ielem].pts_z[0]
+    x2 = truss[ielem].pts_y[1]
+    y2 = truss[ielem].pts_z[1]
+
+    let xm = -(x1 + x2 + si * a) / 2
+    let ym = -(y1 + y2 - co * a) / 2
+
+    let nameDiv = document.createElement("div");
+    nameDiv.className = "emotionLabel";
+    nameDiv.textContent = "R";
+    nameDiv.id = "elside" + i
+    //let height = nameDiv.getBoundingClientRect().height
+    //console.log("nameDiv", height, nameDiv)
+    let xLabel = new CSS2DObject(nameDiv);
+    xLabel.position.set(xm, ym, c);
+    xLabel.layers.set(1)
+    //console.log("xLabel", xLabel)
+    mesh.add(xLabel);
+    xLabel.layers.set(1);
+
+
+    x1 = truss[ielem].pts_y[3]
+    y1 = truss[ielem].pts_z[3]
+    x2 = truss[ielem].pts_y[2]
+    y2 = truss[ielem].pts_z[2]
+
+    xm = -(x1 + x2 - si * a) / 2
+    ym = -(y1 + y2 + co * a) / 2
+
+    nameDiv = document.createElement("div");
+    nameDiv.className = "emotionLabel";
+    nameDiv.textContent = "L";
+    nameDiv.id = "elside" + i
+    //let height = nameDiv.getBoundingClientRect().height
+    //console.log("nameDiv", height, nameDiv)
+    xLabel = new CSS2DObject(nameDiv);
+    xLabel.position.set(xm, ym, c);
+    xLabel.layers.set(1)
+    //console.log("xLabel", xLabel)
+    mesh.add(xLabel);
+    xLabel.layers.set(1);
+
+}
+
 
 //--------------------------------------------------------------------------------------------------------
 function label_webgl() {

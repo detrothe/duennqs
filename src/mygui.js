@@ -67,7 +67,7 @@ export function myPanel() {
         window.dispatchEvent(new Event("show_sigma_frame_webgl"));
     });
 
-    gui.add(obj, 'show_LR').name('links/rechts anzeigen').onChange(v => {
+    gui.add(obj, 'show_LR').name('rechts/links anzeigen').onChange(v => {
         window.dispatchEvent(new Event("show_LR_webgl"));
     });
     gui.add(obj, 'Reset')

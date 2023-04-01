@@ -1210,7 +1210,7 @@ export function duennQ() {
 
         const table = document.createElement("TABLE") as HTMLTableElement;   //TABLE??
         table.setAttribute("id", "id_table_spannung_mxs");
-        table.border = '0';
+        table.style.border = '0';
         myTableDiv.appendChild(table);  //appendChild() insert it in the document (table --> myTableDiv)
 
 
