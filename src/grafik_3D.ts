@@ -27,6 +27,7 @@ let show_webgl_woelb_V = false;
 let showSides = true;
 let showArrows = true;
 let showSigmaFrame = true;
+let show_LR_sides = false;
 
 
 
@@ -2196,6 +2197,13 @@ function showSigmaFrame_webgl() {
 }
 
 //--------------------------------------------------------------------------------------------------------
+function showLeft_Right_webgl() {
+    //--------------------------------------------------------------------------------------------------------
+    show_LR_sides = !show_LR_sides;
+    draw_elements();
+}
+
+//--------------------------------------------------------------------------------------------------------
 
 window.addEventListener('label_webgl', label_webgl);
 window.addEventListener('tau_webgl', tau_webgl);
@@ -2208,4 +2216,5 @@ window.addEventListener('scale_factor', scale_factor);
 window.addEventListener('show_sides_webgl', showSides_webgl);
 window.addEventListener('show_arrows_webgl', showArrows_webgl);
 window.addEventListener('show_sigma_frame_webgl', showSigmaFrame_webgl);
+window.addEventListener('show_LR_webgl', showLeft_Right_webgl);
 window.addEventListener('reset_webgl', reset_webgl);

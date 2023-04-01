@@ -17,6 +17,7 @@ export function myPanel() {
         show_sides: true,
         show_arrows: true,
         show_sigma_frame: true,
+        show_LR: false,
         Reset: function () {
             window.dispatchEvent(new Event("reset_webgl"));
         }
@@ -66,6 +67,9 @@ export function myPanel() {
         window.dispatchEvent(new Event("show_sigma_frame_webgl"));
     });
 
+    gui.add(obj, 'show_LR').name('links/rechts anzeigen').onChange(v => {
+        window.dispatchEvent(new Event("show_LR_webgl"));
+    });
     gui.add(obj, 'Reset')
 
     gui.close();

@@ -84,7 +84,7 @@
 		Übersicht
 	</h1>
 	<p>
-		Mit dieser App können Querschnittswerte und
+		Mit dieser Webanwendung können Querschnittswerte und
 		Spannungen von dünnwandigen Querschnitten berechnet werden. Es wird das Mittellinienmodell (Drahtmodell)
 		angewendet und zur Lösung wird
 		die finite Element Methode verwendet [1], [2]. Der Querschnitt wird
@@ -99,7 +99,8 @@
 		können quadratische Schubspannungsverläufe exakt darstellen.
 		Deshalb ist keine Verfeinerung erforderlich. Die Richtung der
 		Schubspannungen wird in den Viertelspunkten der Elemente an der
-		rechten und linken Seite mit Pfeilen angezeigt.
+		rechten und linken Seite mit Pfeilen angezeigt. Wenn man gedanklich vom Elementanfang zum Elementende blickt,
+		dann befindet sich die rechte Seite des Elementes an der rechten Hand.
 	</p>
 	<p>
 		Die
@@ -182,8 +183,7 @@
 		Schnittgrößen:
 	</p>
 	<p>
-		M<sub>xp</sub>
-		= 250 kNm; M<sub>xs</sub> = 150 kNm; M<sub>ω</sub> = 10 kNm²
+		M<sub>xp</sub> = 250 kNm; M<sub>xs</sub> = 150 kNm; M<sub>ω</sub> = 10 kNm²
 	</p>
 	<p>
 		V<sub>y</sub> = 1000 kN; V<sub>z</sub> = 500 kN
@@ -238,8 +238,8 @@
 			Beispiel an anderen Stellen der Tabelle eingesetzt werden. Auch können die Werte an andere Programme
 			übergeben werden (Tabellenkalkulation)</li>
 		<li><b>insert from clipboard:</b> Der Inhalt der Zwischenablage wird beginnend an der linken oberen Zelle des
-			markierten Bereichs eingefügt.
-		</li>
+			markierten Bereichs eingefügt. </li>
+		<li><b>close:</b> Der Dialog wird ohne weitere Ausführungen beendet.</li>
 	</ul>
 	</p>
 	<p>Bei iOS erfolgt die Auswahl im Kontextmenü mit einem Doppelklick. </p>
@@ -249,9 +249,25 @@
 	<p>Um den begrenzten Bildschirmplatz auf Smartphones und Tabletts besser zu nutzen, werden die Anzahl der Zeilen in
 		den Tabellen für die Knotenkoordinaten und Elemente
 		durch die Eingabe der Anzahl Knoten und Elemente bestimmt. Deshalb sind erst die neue Anzahl Elemente und Knoten
-		einzugeben und dann die Tabellen mit Hilfe des Buttons
+		einzugeben und dann die Größe der Tabellen mit Hilfe des Buttons
 		'resize Tabellen' zu änden. Der Vorgang kann beliebig oft wiederholt werden.
 	</p>
+	<p>
+	<h2 class="western">Bezeichnungen</h2>
+	</p>
+	<p>Schubspannungen aus primärer Torsion M<sub>xp</sub>: <br>
+		&tau;<sub>xs0,L</sub> = Schubspannung aus Anteil offener Querschnitt, linke Seite, linearer Verlauf über
+		Elementbreite<br>
+		&tau;<sub>xs0,R</sub> = Schubspannung aus Anteil offener Querschnitt, rechte Seite<br>
+		&tau;<sub>xs1</sub> = Schubspannung aus Anteil geschlossener Querschnitt, konstant über Elementbreite
+	</p>
+	<p>Schubspannungen aus Querkraft und sekundärer Torsion M<sub>xs</sub>: <br>
+		&tau;<sub>xsa</sub> = Schubspannung am Elementanfang a <br>
+		&tau;<sub>xsm</sub> = Schubspannung in Elementmitte m <br>
+		&tau;<sub>xse</sub> = Schubspannung am Elementende e, alle Spannungen konstant über Elementbreite
+	</p>
+	<p> Alle anderen Bezeichnungen analog.</p>
+
 	<p>
 	<h2 class="western">Installation als App auf dem Desktop</h2>
 	</p>
