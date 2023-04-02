@@ -1,7 +1,8 @@
 import * as d3 from "d3";
 import { set_nelem, set_nnodes, table_index, remove_selected_Tabelle } from "./duennQ_tabelle.js";
 import { berechnungErforderlich } from "./globals.js"
-import { show_contextMemu, clickListener } from './contextMenu.js';
+import { show_contextMenu, toggleMenuOff } from './contextMenu.js';
+import { app, Detect } from './index';
 
 export const selectedCellPoly = {   // export const
     isSelected: false,
@@ -804,7 +805,9 @@ export function POINTER_MOVE(ev) { // pointer move
     }
     //console.log("rect", ev.pointerType, ev.clientX - el.getBoundingClientRect().x, ev.clientY - el.getBoundingClientRect().y, el.getBoundingClientRect().width, el.getBoundingClientRect().height)
 
-    if (ev.pointerType === 'touch' || ev.pointerType === 'pen') {
+    let browser = Detect.browser
+
+    if (ev.pointerType === 'touch' || ev.pointerType === 'pen' || browser === 'Firefox') {
         //console.log("scrollLeft", document.body.scrollLeft, document.documentElement.scrollLeft, window.pageXOffset)
         let dx = ev.pageX - cellLeft;// + document.documentElement.scrollLeft;
         let dy = ev.pageY - cellTop; // + document.documentElement.scrollTop;
@@ -905,6 +908,7 @@ export function POINTER_DOWN(ev) { // pointer move
     selectedCellPoly.tableId = tableId;
 
     const selectMode = tableInfo[tableIndex].selectionMode
+    toggleMenuOff()
 
     //console.log("POINTERDOWN", ev)
     console.log("POINTERDOWN", selectMode, ev.button, tableId, inputId, ev.pageX, ev.pageY, ev.which, ev.pointerType)
@@ -981,17 +985,18 @@ export function POINTER_UP(ev) { // pointer move
     console.log("POINTERUP", ev.buttons, tableId, inputId, ev.pageX, ev.pageY, ev.which, ev.pointerType, selected)
 
     const myTable = document.getElementById(tableId);
-    //myTable.releasePointerCapture(ev.pointerId);
 
-    myTable.removeEventListener("pointermove", POINTER_MOVE);
-    myTable.removeEventListener("pointerup", POINTER_UP);
+    if (myTable) {
+        myTable.removeEventListener("pointermove", POINTER_MOVE);
+        myTable.removeEventListener("pointerup", POINTER_UP);
+    }
 
     if (ev.button === 2) {
         ev.preventDefault();
         return;
     }
     //    if (selected && (ev.pointerType === 'touch' || ev.pointerType === 'pen')) show_contextMemu(ev);
-    if (selected) show_contextMemu(ev);
+    if (selected) show_contextMenu(ev);
 
     console.log("fertig contextMenu")
 

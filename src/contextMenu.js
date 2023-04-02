@@ -1,7 +1,7 @@
 import { app, Detect } from './index';
 import { selectedCellPoly } from './base_tabelle.js';
 import { remove_selected_Tabelle } from "./duennQ_tabelle.js";
-//(function () {
+
 
 "use strict";
 
@@ -21,7 +21,9 @@ import { remove_selected_Tabelle } from "./duennQ_tabelle.js";
  * @param {String} className The class name to check against
  * @return {Boolean}
  */
+//----------------------------------------------------------------------------------------------
 function clickInsideElement(e, className) {
+    //------------------------------------------------------------------------------------------
 
     let el = e.srcElement || e.target;
     //console.log("click Inside Element:", className, e.target, "-el-", el);
@@ -51,7 +53,9 @@ function clickInsideElement(e, className) {
  * @param {Object} e The event passed in
  * @return {Object} Returns the x and y position
  */
+//----------------------------------------------------------------------------------------------
 function getPosition(e) {
+    //------------------------------------------------------------------------------------------
     let posx = 0;
     let posy = 0;
 
@@ -111,13 +115,31 @@ let windowHeight;
 /**
  * Initialise our application's code.
  */
+//----------------------------------------------------------------------------------------------
 export function init_contextmenu() {
+    //------------------------------------------------------------------------------------------
     //console.log("init_contextmenu", menu);
-    contextListener();
-    clickListener();
+    //contextListener();
+    //clickListener();
     keyupListener();
     resizeListener();
     //touchListener();
+    document.getElementById("context-menu").addEventListener('click', contextMenuClicked);
+}
+
+//----------------------------------------------------------------------------------------------
+function contextMenuClicked(ev) {
+    //------------------------------------------------------------------------------------------
+
+    console.log("in contextMenuClicked", ev)
+    const clickeElIsLink = clickInsideElement(ev, contextMenuLinkClassName);
+    console.log("+++ clickListener  clickeElIsLink", clickeElIsLink, ev.button);
+
+    if (clickeElIsLink) {
+        ev.preventDefault();
+        if (ev.button === 2) return
+        menuItemListener(clickeElIsLink);
+    }
 }
 
 /**
@@ -151,7 +173,9 @@ function contextListener() {
 /**
  * Listens for click events.
  */
+//----------------------------------------------------------------------------------------------
 export function clickListener() {
+    //------------------------------------------------------------------------------------------
     document.addEventListener("click", function (e) {
 
         const clickeElIsLink = clickInsideElement(e, contextMenuLinkClassName);
@@ -191,8 +215,8 @@ function touchListener() {
 */
 
 //-------------------------------------------------------------------------
-export function show_contextMemu(ev) {
-    //-------------------------------------------------------------------------
+export function show_contextMenu(ev) {
+    //---------------------------------------------------------------------
     taskItemInContext = clickInsideElement(ev, taskItemClassName);
 
     console.log("//// show_contextMemu  taskItem In Context", taskItemInContext);
@@ -211,7 +235,9 @@ export function show_contextMemu(ev) {
 /**
  * Listens for keyup events.
  */
+//----------------------------------------------------------------------------------------------
 function keyupListener() {
+    //------------------------------------------------------------------------------------------
     console.log("--- keyupListener");
 
     window.onkeyup = function (e) {
@@ -225,7 +251,9 @@ function keyupListener() {
 /**
  * Window resize event listener
  */
+//----------------------------------------------------------------------------------------------
 function resizeListener() {
+    //------------------------------------------------------------------------------------------
     window.onresize = function (e) {
         toggleMenuOff();
     };
@@ -234,7 +262,9 @@ function resizeListener() {
 /**
  * Turns the custom context menu on.
  */
+//----------------------------------------------------------------------------------------------
 function toggleMenuOn() {
+    //------------------------------------------------------------------------------------------
     console.log("toggleMenuOn", menuState);
     if (menuState !== 1) {
         menuState = 1;
@@ -246,7 +276,9 @@ function toggleMenuOn() {
 /**
  * Turns the custom context menu off.
  */
-function toggleMenuOff() {
+//----------------------------------------------------------------------------------------------
+export function toggleMenuOff() {
+    //------------------------------------------------------------------------------------------
     if (menuState !== 0) {
         menuState = 0;
         menu.classList.remove(contextMenuActive);
@@ -258,7 +290,9 @@ function toggleMenuOff() {
  *
  * @param {Object} e The event
  */
+//----------------------------------------------------------------------------------------------
 function positionMenu(e) {
+    //------------------------------------------------------------------------------------------
 
     console.log("positionMenu", e.pageX, e.pageY);
 
@@ -310,7 +344,9 @@ function positionMenu(e) {
  *
  * @param {HTMLElement} link The link that was clicked
  */
+//----------------------------------------------------------------------------------------------
 function menuItemListener(link) {
+    //------------------------------------------------------------------------------------------
     console.log("LINK", link.getAttribute("data-action"))
     //console.log("Task ID - " + taskItemInContext.getAttribute("data-id") + ", Task action - " + link.getAttribute("data-action"));
     toggleMenuOff();
@@ -542,9 +578,3 @@ function menuItemListener(link) {
     remove_selected_Tabelle();
 }
 
-/**
- * Run the app.
- */
-// init();
-
-//})();
