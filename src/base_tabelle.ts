@@ -755,9 +755,9 @@ export function KEYDOWN(ev) {
 
     //console.log("KEYDOWN, keycode, id_input, id_tabelle", ev.keyCode, ev.target.id, ev.target.offsetParent.offsetParent.id);
     //const tableCellId = ev.target.offsetParent.id;
-    console.log("KEYDOWN", ev.keyCode, ev.shiftKey, ev.key, ev)
-    //const tableIndex = table_index(tableId)
-    infoBox.innerHTML += "<br>key= " + ev.key + "  | keyCode= " + ev.keyCode
+
+    //console.log("KEYDOWN", ev.keyCode, ev.shiftKey, ev.key, ev)
+    //infoBox.innerHTML += "<br>key= " + ev.key + "  | keyCode= " + ev.keyCode
 
     if (ev.shiftKey) {
         ev.preventDefault();
