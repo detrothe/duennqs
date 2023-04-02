@@ -2,7 +2,8 @@ import * as d3 from "d3";
 import { set_nelem, set_nnodes, table_index, remove_selected_Tabelle } from "./duennQ_tabelle.js";
 import { berechnungErforderlich } from "./globals.js"
 import { show_contextMenu, toggleMenuOff } from './contextMenu.js';
-import { app, Detect } from './index';
+import { infoBox, Detect } from './index.js';
+
 
 export const selectedCellPoly = {   // export const
     isSelected: false,
@@ -756,6 +757,7 @@ export function KEYDOWN(ev) {
     //const tableCellId = ev.target.offsetParent.id;
     console.log("KEYDOWN", ev.keyCode, ev.shiftKey, ev.key, ev)
     //const tableIndex = table_index(tableId)
+    infoBox.innerHTML += "<br>key= " + ev.key + "  | keyCode= " + ev.keyCode
 
     if (ev.shiftKey) {
         ev.preventDefault();
@@ -768,6 +770,7 @@ export function KEYDOWN(ev) {
     if (ev.keyCode === 37 || ev.keyCode === 39 || ev.keyCode === 189) return  // rechts links -
     if (ev.keyCode === 9 || ev.keyCode === 27) return   // Tab, ESC
     if (ev.keyCode === 173) return   // - Zeichen bei Firefox
+    if (ev.keyCode === 0) return   // - Zeichen bei Android Firefox
 
     ev.preventDefault();
 }
