@@ -1,4 +1,4 @@
-import { app, Detect } from './index';
+import { Detect } from './index';
 import { selectedCellPoly } from './base_tabelle.js';
 import { remove_selected_Tabelle } from "./duennQ_tabelle.js";
 
@@ -29,16 +29,16 @@ function clickInsideElement(e, className) {
     //console.log("click Inside Element:", className, e.target, "-el-", el);
 
     if (el.classList.contains(className)) {
-        console.log("el.classList.contains: ", className)
+        //console.log("el.classList.contains: ", className)
         return el;
     } else if (el.classList.contains('input_select')) {
-        console.log("el.classList.contains: input_select")
+        //console.log("el.classList.contains: input_select")
         return el;
     }
     else {
         while (el = el.parentNode) {
             if (el.classList && el.classList.contains(className)) {
-                console.log("parent", el)
+                //console.log("parent", el)
                 return el;
             }
         }
@@ -69,7 +69,7 @@ function getPosition(e) {
         posy = e.clientY + document.body.scrollTop + document.documentElement.scrollTop;
     }
 
-    console.log("getPosition", posx, posy)
+    //console.log("getPosition", posx, posy)
 
     return {
         x: posx,
@@ -131,9 +131,9 @@ export function init_contextmenu() {
 function contextMenuClicked(ev) {
     //------------------------------------------------------------------------------------------
 
-    console.log("in contextMenuClicked", ev)
+    //console.log("in contextMenuClicked", ev)
     const clickeElIsLink = clickInsideElement(ev, contextMenuLinkClassName);
-    console.log("+++ clickListener  clickeElIsLink", clickeElIsLink, ev.button);
+    //console.log("+++ clickListener  clickeElIsLink", clickeElIsLink, ev.button);
 
     if (clickeElIsLink) {
         ev.preventDefault();
@@ -145,15 +145,10 @@ function contextMenuClicked(ev) {
 /**
  * Listens for contextmenu events.
  */
+/*
 function contextListener() {
     document.addEventListener("contextmenu", function (e) {
-        /*
-                if (e.button === 2) {
-                    console.log("//// contextListener")
-                    e.preventDefault();
-                    return;
-                }
-        */
+        
         taskItemInContext = clickInsideElement(e, taskItemClassName);
 
         console.log("//// contextListener  taskItem In Context", e.button, taskItemInContext);
@@ -169,7 +164,7 @@ function contextListener() {
         }
     });
 }
-
+*/
 /**
  * Listens for click events.
  */
@@ -219,7 +214,7 @@ export function show_contextMenu(ev) {
     //---------------------------------------------------------------------
     taskItemInContext = clickInsideElement(ev, taskItemClassName);
 
-    console.log("//// show_contextMemu  taskItem In Context", taskItemInContext);
+    //console.log("//// show_contextMemu  taskItem In Context", taskItemInContext);
 
     if (taskItemInContext) {
         ev.preventDefault();
@@ -238,7 +233,7 @@ export function show_contextMenu(ev) {
 //----------------------------------------------------------------------------------------------
 function keyupListener() {
     //------------------------------------------------------------------------------------------
-    console.log("--- keyupListener");
+    //console.log("--- keyupListener");
 
     window.onkeyup = function (e) {
         //console.log("keyupListener", e.code, e.key, e);   // geht auch
@@ -265,7 +260,7 @@ function resizeListener() {
 //----------------------------------------------------------------------------------------------
 function toggleMenuOn() {
     //------------------------------------------------------------------------------------------
-    console.log("toggleMenuOn", menuState);
+    //console.log("toggleMenuOn", menuState);
     if (menuState !== 1) {
         menuState = 1;
         menu.classList.add(contextMenuActive);
@@ -294,7 +289,7 @@ export function toggleMenuOff() {
 function positionMenu(e) {
     //------------------------------------------------------------------------------------------
 
-    console.log("positionMenu", e.pageX, e.pageY);
+    //console.log("positionMenu", e.pageX, e.pageY);
 
     clickCoords = getPosition(e);
     clickCoordsX = clickCoords.x;
@@ -347,7 +342,7 @@ function positionMenu(e) {
 //----------------------------------------------------------------------------------------------
 function menuItemListener(link) {
     //------------------------------------------------------------------------------------------
-    console.log("LINK", link.getAttribute("data-action"))
+    //console.log("LINK", link.getAttribute("data-action"))
     //console.log("Task ID - " + taskItemInContext.getAttribute("data-id") + ", Task action - " + link.getAttribute("data-action"));
     toggleMenuOff();
 

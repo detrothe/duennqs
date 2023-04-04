@@ -458,7 +458,7 @@ export function resize_Tabelle(idTable, nRowNew, nColNew) {
                     //newCell = newRow.insertCell(iSpalte);  // Insert a cell in the row at index 0
                     newText = document.createTextNode(String(iZeile));  // Append a text node to the cell
                     newCell.style.textAlign = 'center'
-                    newCell.style.backgroundColor = 'rgb(150,180, 180)';
+                    newCell.style.backgroundColor = '#b3ae00'  //'rgb(150,180, 180)';
                     newCell.style.padding = '0px';
                     newCell.style.margin = '0px';
                     newCell.appendChild(newText);
@@ -498,30 +498,6 @@ export function resize_Tabelle(idTable, nRowNew, nColNew) {
                     // el.addEventListener("pointermove", POINTERMOVE);
                     el.addEventListener("pointerdown", POINTER_DOWN);
 
-                    /*
-                    const newCell = row.insertCell(-1);
-                    //newCell.selekt = false;
-                    //newCell.setAttribute("selekt", "false");
-                    if (i === 0) {
-                        const newText = document.createTextNode(String(j));
-                        newCell.appendChild(newText);
-                        newCell.style.textAlign = "center";
-                        newCell.style.border = 'none';
-                        newCell.style.backgroundColor = 'rgb(150,180, 180)';
-                    } else {
-                        const str = idTable + "-" + i + "-" + j;
-                        const newText = document.createTextNode("");
-                        newCell.appendChild(newText);
-                        newCell.style.border = 'solid 1px';
-                        newCell.style.padding = '5px';
-                        newCell.contentEditable = 'true';
-                        newCell.addEventListener("mousemove", POINTER_MOVE);
-                        newCell.addEventListener("mousedown", POINTER_DOWN);
-                        newCell.addEventListener("keydown", newKEYDOWN);
-                        newCell.id = str;
-                        //newCell.wrap = false;
-                    }
-                    */
                 }
             }
         }
@@ -547,7 +523,7 @@ export function resize_Tabelle(idTable, nRowNew, nColNew) {
                     newCell = newRow.insertCell(iSpalte);  // Insert a cell in the row at index 0
                     newText = document.createTextNode(String(iZeile));  // Append a text node to the cell
                     newCell.style.textAlign = 'center'
-                    newCell.style.backgroundColor = 'rgb(150,180, 180)';
+                    newCell.style.backgroundColor = '#b3ae00'  //'rgb(150,180, 180)';
                     newCell.style.padding = '0px';
                     newCell.style.margin = '0px';
                     newCell.appendChild(newText);
@@ -583,55 +559,6 @@ export function resize_Tabelle(idTable, nRowNew, nColNew) {
 
                 }
 
-
-
-                /*
-                // Append a text node to the cell
-                let newText;
-                if (iSpalte === 0) {
-                    newText = document.createTextNode(String(iZeile));
-                } else {
-                    const str = idTable + "-" + iZeile + "-" + iSpalte;
-                    newCell.id = str;
-                    newText = document.createTextNode("");
-                }
-                newCell.appendChild(newText);
-                newCell.style.border = 'solid 1px';
-                newCell.style.padding = '5px';
-                //newCell.setAttribute("selekt", "false");
-                //newCell.selekt = false;
-                if (iSpalte === 0) {
-                    newCell.style.textAlign = "center";
-                    newCell.style.border = 'none';
-                    newCell.style.width = '50px';
-                    newCell.style.backgroundColor = 'rgb(150,180, 180)';
- 
-                } else {
-                    //newCell.style.backgroundColor = "#FFFFFF";
-                    if (material_equal.checked && iSpalte < 3) {
-                        //newCell.contentEditable = 'false';
-                        newCell.classList.add('unsichtbar');
-                    } else {
-                        //newCell.contentEditable = 'true';
-                    }
- 
-                    let el = document.createElement("input");
-                    el.setAttribute("type", "number");
-                    el.style.width = '100px';
-                    //el.style.backgroundColor = 'rgb(200,200,200)';
-                    el.style.border = 'none';
-                    el.style.borderWidth = '0px';
-                    el.style.padding = '5px';
-                    el.style.margin = '0px';
-                    el.style.borderRadius = '0px';
-                    const str = idTable + "-" + iZeile + "-" + iSpalte;
-                    el.id = str;
-                    //el.className = 'input_normal';
-                    el.addEventListener("keydown", newKEYDOWN);
- 
- 
-                }
-                */
             }
         }
 
@@ -673,6 +600,7 @@ export function meinetabelle(theDiv, id_table, nZeilen, columns) {
         th0.style.padding = '5px';
         th0.style.margin = '0px'
         th0.style.textAlign = 'center'
+        //th0.setAttribute('title', 'Hilfe')
         row.appendChild(th0);
 
     }
@@ -690,10 +618,11 @@ export function meinetabelle(theDiv, id_table, nZeilen, columns) {
                 newCell = newRow.insertCell(iSpalte);  // Insert a cell in the row at index 0
                 newText = document.createTextNode(String(iZeile));  // Append a text node to the cell
                 newCell.style.textAlign = 'center'
-                newCell.style.backgroundColor = 'rgb(150,180, 180)';
+                newCell.style.backgroundColor = '#b3ae00'   //'rgb(150,180, 180)';
                 newCell.style.padding = '0px';
                 newCell.style.margin = '0px';
                 newCell.appendChild(newText);
+                //newCell.setAttribute('title', 'Knotennummer')
             } else {
 
                 let el = document.createElement("input");
@@ -778,7 +707,7 @@ export function KEYDOWN(ev) {
 //------------------------------------------------------------------------------------------------
 export function POINTER_MOVE(ev) { // pointer move
     //--------------------------------------------------------------------------------------------
-    console.log("tagname", ev.target.tagName)
+    // console.log("tagname", ev.target.tagName)
     if (ev.target.tagName !== 'INPUT') return
 
     let rowIndex: number, colIndex: number
@@ -801,14 +730,17 @@ export function POINTER_MOVE(ev) { // pointer move
 
     const el = document.getElementById(inputId);
     //console.log("getBoundingClientRect", el.getBoundingClientRect().x, el.getBoundingClientRect().y);
-
-    if (el.className !== 'input_select') {
-        el.className = 'input_select';
-        selected = true
-    }
+    /*
+        if (el.className !== 'input_select') {
+            el.className = 'input_select';
+            selected = true
+        }
+        */
     //console.log("rect", ev.pointerType, ev.clientX - el.getBoundingClientRect().x, ev.clientY - el.getBoundingClientRect().y, el.getBoundingClientRect().width, el.getBoundingClientRect().height)
 
-    let browser = Detect.browser
+    //infoBox.innerHTML += "<br>POINTER Move" + ' | ' + ev.pointerType + ' | ' + tableId + ' | ' + inputId
+
+    const browser = Detect.browser
 
     if (ev.pointerType === 'touch' || ev.pointerType === 'pen' || browser === 'Firefox') {
         //console.log("scrollLeft", document.body.scrollLeft, document.documentElement.scrollLeft, window.pageXOffset)
@@ -820,7 +752,7 @@ export function POINTER_MOVE(ev) { // pointer move
         vorz = Math.abs(div) / div
         nx = Math.trunc(Math.abs(div)) * vorz
         if (vorz < 0.0) nx = nx - 1
-        console.log("div", dx, div, vorz, nx)
+        //console.log("div", dx, div, vorz, nx)
         div = dy / cellHeight
         vorz = Math.abs(div) / div
         ny = Math.trunc(Math.abs(div)) * vorz
@@ -828,7 +760,7 @@ export function POINTER_MOVE(ev) { // pointer move
         //ny = Number(Math.trunc(dy / cellHeight))
         spalte = Number(cellCol) + 1 * nx   //if (dx > cellWidth)
         zeile = Number(cellRow) + 1 * ny
-        console.log("::::", tableIndex, zeile, spalte)
+        //console.log("::::", tableIndex, zeile, spalte)
         if (spalte > tableInfo[tableIndex].nSpalten - 1) return;  //spalte = tableInfo[tableIndex].nSpalten
         if (zeile > tableInfo[tableIndex].nZeilen) return;    //zeile = tableInfo[tableIndex].nZeilen
         if (spalte < 1) return;  // spalte = 1
@@ -837,10 +769,12 @@ export function POINTER_MOVE(ev) { // pointer move
         //if (dy > cellHeight) zeile++
 
         const str = cellId + "-" + zeile + "-" + spalte;
-        console.log("dx, dy", dx, dy, str)
+        //console.log("dx, dy", dx, dy, str)
         const el = document.getElementById(str);
         el.className = 'input_select';
-        el.scrollIntoView({ behavior: "smooth", block: "center", inline: "center" });  // { behavior: "smooth", block: "end", inline: "nearest" }
+        if (browser !== 'Firefox') {
+            el.scrollIntoView({ behavior: "smooth", block: "center", inline: "center" });  // { behavior: "smooth", block: "end", inline: "nearest" }
+        }
         if (nx !== 0 || ny !== 0) selected = true
         rowIndex = zeile;
         colIndex = spalte;
@@ -851,6 +785,10 @@ export function POINTER_MOVE(ev) { // pointer move
         //console.log("Array", tableId, tableIndex, myArray.length, myArray[0], myArray[1], myArray[2])
         rowIndex = myArray[1];
         colIndex = myArray[2];
+        if (el.className !== 'input_select') {
+            el.className = 'input_select';
+            if ((selectedCellPoly.row !== rowIndex) || (selectedCellPoly.col !== colIndex)) selected = true
+        }
     }
 
 
@@ -871,7 +809,7 @@ export function POINTER_MOVE(ev) { // pointer move
         colStart = tableInfo[tableIndex].startColIndex;
         colEnd = colIndex;
     }
-    console.log("startend", rowStart, rowEnd, colStart, colEnd);
+    //console.log("startend", rowStart, rowEnd, colStart, colEnd);
 
     const tabelle = document.getElementById(tableId) as HTMLTableElement;
     //console.log("tabelle", tabelle)
@@ -916,10 +854,12 @@ export function POINTER_DOWN(ev) { // pointer move
     //console.log("POINTERDOWN", ev)
     console.log("POINTERDOWN", selectMode, ev.button, tableId, inputId, ev.pageX, ev.pageY, ev.which, ev.pointerType)
 
+    //infoBox.innerHTML += "<br>POINTERDOWN" + ' | ' + selectMode + ' | ' + ev.button + ' | ' + tableId + ' | ' + inputId + ' | ' + ev.pageX + ' | ' + ev.pageY + ' | ' + ev.which + ' | ' + ev.pointerType
+
     const myTable = document.getElementById(tableId);
     if (selectMode || ev.pointerType === 'mouse') {   // bei Mouse immer select mode
         //console.log("selectMode = true")
-        myTable.addEventListener("pointermove", POINTER_MOVE);
+        myTable.addEventListener("pointermove", POINTER_MOVE);  // , { passive: false }
         myTable.addEventListener("pointerup", POINTER_UP);
     }
 
@@ -1018,6 +958,7 @@ export function POINTER_OUT(ev) { // pointer move
 
     //console.log("POINTERDOWN", ev)
     console.log("POINTER_OUT", ev.buttons, tableId, inputId, ev.pageX, ev.pageY, ev.which, ev.pointerType)
+    //infoBox.innerHTML += "<br>POINTER OUT"
 
     const myTable = document.getElementById(tableId);
     myTable.releasePointerCapture(ev.pointerId);

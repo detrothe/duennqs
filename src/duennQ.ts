@@ -8,6 +8,8 @@ import { remove_selected_Tabelle, clear_Tabelle, setSelectionMode_node, setSelec
 import { label_svg, copy_svg } from "./systemlinien";
 import { set_myScreen } from "./index.js"
 import { draw_elements } from "./grafik_3D";
+import { unit_length_factor, unit_stress_factor } from "./einstellungen"
+
 //import {set_nnodes, set_nelem} from "./duennQ_tabelle.js"
 
 
@@ -259,6 +261,19 @@ let objCells: any, nSpalten: number
 const nTabelle = document.getElementById("nodeTable") as HTMLTableElement;
 console.log("nTabelle", nTabelle)
 
+objCells = nTabelle.rows.item(0).cells;  // Überschrift Punkt zentrieren
+
+objCells.item(0).setAttribute('title', 'Knotennummer');
+objCells.item(1).setAttribute('title', 'y-Koordinaten im Hilfskoordinatensystem');
+objCells.item(2).setAttribute('title', 'z-Koordinaten im Hilfskoordinatensystem');
+
+let el = document.getElementById("EMod_ref") as HTMLInputElement;
+el.value = (parseFloat(el.value) * unit_stress_factor).toString()
+
+el = document.getElementById("fyRd") as HTMLInputElement;
+el.value = (parseFloat(el.value) * unit_stress_factor).toString()
+
+
 nSpalten = nTabelle.rows[0].cells.length - 1;
 
 for (let i = 1; i < nTabelle.rows.length; i++) {
@@ -270,9 +285,9 @@ for (let i = 1; i < nTabelle.rows.length; i++) {
         //        console.log("child", objCells.item(j).firstChild.parentElement.id)  // abfrage der id
         //console.log("child", objCells.item(j).firstChild.parentElement)  // abfrage der id
         if (j === 1) {
-            w.setAttribute("value", String(xx[i - 1]));
+            w.setAttribute("value", String(xx[i - 1] * unit_length_factor));
         } else if (j === 2) {
-            w.setAttribute("value", String(yy[i - 1]));
+            w.setAttribute("value", String(yy[i - 1] * unit_length_factor));
         }
     }
 }
@@ -318,7 +333,13 @@ for (let i = 1; i < nTabelle.rows.length; i++) {
 
 const eTabelle = document.getElementById("elemTable") as HTMLTableElement;
 objCells = eTabelle.rows.item(0).cells;  // Überschrift Punkt zentrieren
-objCells.item(0).style.textAlign = "center";
+//objCells.item(0).style.textAlign = "center";
+
+objCells.item(0).setAttribute('title', 'Elementnummer');
+objCells.item(2).setAttribute('title', 'Querdehnzahl');
+objCells.item(4).setAttribute('title', 'Knoten-Inzidenz Elementanfang');
+objCells.item(5).setAttribute('title', 'Knoten-Inzidenz Elementende');
+
 nSpalten = eTabelle.rows[0].cells.length - 1;
 
 eTabelle.rows.item(0).cells.item(0).style.width = '50px'
@@ -332,11 +353,11 @@ for (let i = 1; i < eTabelle.rows.length; i++) {
 
         //objCells.item(j).id = "elemTable-" + i + "-" + j;
         if (j === 1) {
-            w.setAttribute("value", String(21000));
+            w.setAttribute("value", String(21000 * unit_stress_factor));
         } else if (j === 2) {
             w.setAttribute("value", String(0.3));
         } else if (j === 3) {
-            w.setAttribute("value", String(1.5));
+            w.setAttribute("value", String(1.5 * unit_length_factor));
         }
 
     }
@@ -475,7 +496,7 @@ export function duennQ() {
         mue = 0.3;
     } else {
         input = document.getElementById('EMod_ref') as HTMLInputElement | null;
-        bezugswerte.emodul = EModul = Number(testeZahl(input.value));
+        bezugswerte.emodul = EModul = Number(testeZahl(input.value) / unit_stress_factor);
         if (EModul < 1e-12) {
             alert("Referenz-Emodul muss größer 0 sein")
             return;
@@ -513,10 +534,10 @@ export function duennQ() {
         let child = nTabelle.rows[i + 1].cells[1].firstElementChild as HTMLInputElement
         //console.log("NODE i", i, child.value)
         wert = child.value
-        node[i].y = Number(testNumber(wert, i + 1, 1, 'nodeTable'));
+        node[i].y = Number(testNumber(wert, i + 1, 1, 'nodeTable') / unit_length_factor);
         child = nTabelle.rows[i + 1].cells[2].firstElementChild as HTMLInputElement
         wert = child.value
-        node[i].z = Number(testNumber(wert, i + 1, 2, 'nodeTable'));
+        node[i].z = Number(testNumber(wert, i + 1, 2, 'nodeTable') / unit_length_factor);
         //console.log("node,y,z", i, node[i].y, node[i].z)
     }
 
@@ -533,7 +554,7 @@ export function duennQ() {
         } else {
             let child = eTabelle.rows[i + 1].cells[1].firstElementChild as HTMLInputElement
             wert = child.value
-            truss[i].EModul = Number(testNumber(wert, i + 1, 1, 'elemTable'));
+            truss[i].EModul = Number(testNumber(wert, i + 1, 1, 'elemTable')) / unit_stress_factor;
             if (truss[i].EModul < 1e-12) {
                 alert("Emodul von Element " + String(i + 1) + " muss größer 0 sein")
                 return;
@@ -548,7 +569,7 @@ export function duennQ() {
         }
         let child = eTabelle.rows[i + 1].cells[3].firstElementChild as HTMLInputElement
         wert = child.value
-        truss[i].dicke = Number(testNumber(wert, i + 1, 3, 'elemTable'));
+        truss[i].dicke = Number(testNumber(wert, i + 1, 3, 'elemTable')) / unit_length_factor;
         if (truss[i].dicke < 1e-12) {
             alert("Dicke von Element " + String(i + 1) + " muss größer 0 sein")
             return;
@@ -570,7 +591,7 @@ export function duennQ() {
             return;
         }
         node[truss[i].nod[1]].nel++;
-        console.log("truss", i, truss[i].EModul, truss[i].mue, truss[i].dicke, truss[i].nod[0], truss[i].nod[1])
+        //console.log("truss", i, truss[i].EModul, truss[i].mue, truss[i].dicke, truss[i].nod[0], truss[i].nod[1])
         truss[i].GModul = truss[i].EModul / 2.0 / (1.0 + truss[i].mue)
         truss[i].ni = truss[i].EModul / EModul
         truss[i].ngi = truss[i].GModul / GModul
@@ -1084,6 +1105,10 @@ export function duennQ() {
         }
     }
 
+    //const txtarea = document.getElementById("freetext") as HTMLTextAreaElement
+    //console.log("textarea", txtarea.value)
+    //document.getElementById("my_text").innerHTML = txtarea.value
+
     tabQWerte.ys = document.getElementById("ys").innerText = myFormat(Gesamt_ys, 2, 2)   // Gesamt_ys.toFixed(2);
     tabQWerte.zs = document.getElementById("zs").innerText = myFormat(Gesamt_zs, 2, 2);
     tabQWerte.area = document.getElementById("area").innerText = myFormat(Gesamtflaeche, 2, 2);
@@ -1496,6 +1521,16 @@ export function duennQ() {
         if (node[i].y > ymax) ymax = node[i].y;
         if (node[i].z > zmax) zmax = node[i].z;
     }
+
+    // Schubmittelpunkt kann ausserhalb liegen
+
+    const yMq = yM + Gesamt_ys  // bezogen auf Hilfskoordinatensystem
+    const zMq = zM + Gesamt_zs
+
+    if (yMq < ymin) ymin = yMq;
+    if (zMq < zmin) zmin = zMq;
+    if (yMq > ymax) ymax = yMq;
+    if (zMq > zmax) zmax = zMq;
 
     slmax = Math.sqrt((ymax - ymin) ** 2 + (zmax - zmin) ** 2)
 

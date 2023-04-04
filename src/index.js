@@ -2,10 +2,13 @@ import './styles/main.css';
 import './styles/contextMenu.css';
 
 //import "./globals.js";
+import './einstellungen'
+
 import "./duenn3D.js";
 import './ergebnisse.js'
 import './base_tabelle.js'
 import './mypdf'
+
 
 import { sichtbar, currentTab } from "./utility.js";
 
@@ -15,6 +18,7 @@ import { init_contextmenu } from './contextMenu.js';
 
 import { logo_3D, main_3D, ttf_logo_3D } from "./grafik_3D";
 import { duennQ } from "./duennQ"
+import { setNewUnits } from './einstellungen';
 
 export const myScreen = {
     clientWidth: 0,
@@ -93,6 +97,8 @@ set_myScreen();
 export const Detect = new DetectOS();
 
 init_contextmenu();
+
+setNewUnits();
 
 {
     let myInfoDiv = document.getElementById("id_hilfe");  //in div

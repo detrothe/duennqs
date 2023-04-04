@@ -10,6 +10,8 @@ html {
     --sgroesse: 0.9rem;
     --abst_gl_v: 2px;
     --width_gl_button: 80px;
+    --sg_normal: 1rem;
+    /* normale Schriftgröße */
 }
 
 body {
@@ -19,7 +21,7 @@ body {
     overscroll-behavior: none;
     /* style text */
     text-align: left;
-    font-size: 1rem;
+    font-size: var(--sg_normal);
     /*12px;  */
     font-family: FreeSans, Verdana, Arial, Helvetica, sans-serif;
 
@@ -350,7 +352,7 @@ input:valid {
 }
 
 .input_kdtab {
-    width: 70px;
+    width: 80px;
 }
 
 /*#input-container { */
@@ -833,4 +835,17 @@ input[type=number] {
     background-color: rgb(255, 255, 255);
     color: rgb(0, 0, 0);
     /*touch-action: none;*/
+}
+
+#id_display_einstellungen {
+    float: right;
+    color: rgb(206, 196, 46);
+}
+
+#unitLength {
+    width: 50pt;
+}
+
+.unit_stress {
+    font-size: var(--sg_normal);
 }

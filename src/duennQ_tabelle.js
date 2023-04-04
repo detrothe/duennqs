@@ -162,6 +162,8 @@ export function setSelectionMode_element() {
             //if (el) el.className = 'input_normal';
         }
     }
+
+    //eTabelle.style.touchAction = str
 }
 
 console.log("exit duennQ-tabelle.js");

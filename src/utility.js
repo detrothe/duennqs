@@ -4,6 +4,7 @@ import { systemlinien } from "./systemlinien";
 //import { duennQ } from "./duennQ";
 import { draw_elements } from "./grafik_3D.js";
 import { my_jspdf } from "./mypdf.js";
+import { einstellungen } from "./einstellungen";
 
 export let currentTab;
 
@@ -120,6 +121,13 @@ export function sichtbar(displayName) {
         my_jspdf();
     } else {
         document.getElementById("id_pdf").style.display = "none";
+    }
+
+    if (displayName === 'einstellungen') {
+        document.getElementById("id_einstellungen").style.display = "block";
+        einstellungen();
+    } else {
+        document.getElementById("id_einstellungen").style.display = "none";
     }
 
 }

@@ -1977,7 +1977,7 @@ function zeichneHPfeil(ielem: number, mesh: any) {
     a = slmax / 100   // Länge Pfeil
     b = slmax / 800   // Breite Pfeil
     b2 = slmax / 250  // Breite Pfeilspitze
-    c = slmax / 1000  // Abstand vor Querschnitt
+    c = slmax / 500  // Abstand vor Querschnitt
     d = slmax / 100   // Länge Pfeilspitze
 
     const vertices = [];

@@ -12,6 +12,7 @@ import { tabQWerte, schnittgroesse, bezugswerte } from "./duennQ"
 import { nnodes, nelem } from "./duennQ_tabelle.js"
 import { truss, node } from "./duennQ"
 import { myFormat } from './utility.js';
+import { Detect } from './index.js';
 
 const zeilenAbstand = 1.15
 
@@ -111,6 +112,12 @@ export async function my_jspdf() {
   let fs1 = 15, fs = 11
   const links = 20;
 
+  let newLine = null;
+  if (Detect.OS === 'Windows') {
+    newLine = "\r\n";
+  } else {
+    newLine = "\n";
+  }
   Seite_No = 0
 
   // Default export is a4 paper, portrait, using millimeters for units
@@ -122,12 +129,43 @@ export async function my_jspdf() {
   doc.addFileToVFS("freesansbold.ttf", fontBold);
   doc.addFont("freesansbold.ttf", "freesans_bold", "normal");
 
-  doc.setFont("freesans_bold");
-  doc.setFontSize(fs1)
+  doc.setFont("freesans_normal");
+  doc.setFontSize(fs)
   let yy = 20;
 
   //doc.line(links, 1, 200, 1, "S");
   //doc.line(links, 295, 200, 295, "S");
+
+  const txtarea = document.getElementById("freetext") as HTMLTextAreaElement
+  console.log("textarea", txtarea.value)
+  const txt = txtarea.value
+  if (txt.length > 0) {
+    const myArray = txt.split(newLine);
+    for (let i = 0; i < myArray.length; i++) {
+      console.log("txt", i, myArray[i])
+
+      let index = myArray[i].indexOf('<b>')
+      if (index === 0) {  // Bold an Anfang
+        let txtN = myArray[i].slice(3, myArray[i].length)
+        console.log("txtN", txtN)
+        let indexE = txtN.indexOf("</b>")
+        txtN = txtN.slice(0, indexE)
+        console.log("Neuer Text", indexE, "|" + txtN + "|")
+        doc.setFont("freesans_bold");
+        doc.text(txtN, links, yy);
+        doc.setFont("freesans_normal");
+      }
+      else {
+        doc.text(myArray[i], links, yy);
+      }
+
+      yy = neueZeile(yy, fs, 1)
+    }
+  }
+  yy = neueZeile(yy, fs, 1)
+
+  doc.setFont("freesans_bold");
+  doc.setFontSize(fs1)
 
   doc.text("Dünnwandiger Querschnitt", links, yy);
 

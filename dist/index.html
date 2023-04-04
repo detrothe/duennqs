@@ -31,13 +31,15 @@
       <div id="input-container">
         <!-- <h2>Statik Werkzeugkasten</h2> -->
         <div class="topnav" id="myTopnav">
-          <a id="id_eingabe" href="javascript:eingabe1();">Eingabe</a>
 
+          <a id="id_eingabe" href="javascript:eingabe1();">Eingabe</a>
           <a href="javascript:ergebnisse();">Ergebnisse</a>
           <a href="javascript:duennQuer();">System</a>
           <a href="javascript:duenn3D();">3D</a>
           <a href="javascript:mypdf();">pdf</a>
           <a href="javascript:hilfe();">Info</a>
+
+          <a id="id_display_einstellungen" href="javascript:display_einstellungen();">ꔷꔷꔷ</a>
           <!--<div><span>Hallo</span><span>Welt</span></div> -->
         </div>
       </div>
@@ -45,7 +47,15 @@
 
     <div id="topleft" class="topLeft" style="background-color: #d8d8d8">
       <div id="eingabe_duennQ_top">
+
         <p>Querschnittswerte und Spannungen dünnwandiger Querschnitte</p>
+
+        <p>freier Text mit HTML Formatierung:<br>
+          <textarea id="freetext" name="freetext" rows="3" cols="50" placeholder="<b>Hausübung A1, SS 2023</b>
+            Benutzer: Detlef Rothe
+            Pos. EG-1"></textarea>
+        </p>
+
         <p>
           <label>Anzahl Knoten :</label>
           <input type="number" step="1" id="input_nodes" name="nnodes" class="input_int" value="6" width="10px" />
@@ -160,7 +170,7 @@
                   <input type="number" step="any" id="EMod_ref" name="EMod_ref" value="21000" class="input_kdtab"
                     pattern="[0-9.,eE+-]*" />
                 </td>
-                <td>kN/cm²</td>
+                <td class="unit_stress">kN/cm²</td>
                 <td style="text-align: right" title="Querdehnzahl">&nu;=</td>
                 <td>
                   <input type="number" step="any" id="mue_ref" name="mue_ref" value="0.3" class="input_kdtab"
@@ -180,7 +190,7 @@
                 <input type="number" step="any" id="fyRd" name="fyRd" value="23.5" class="input_kdtab"
                   pattern="[0-9.,eE+-]*" />
               </td>
-              <td>kN/cm²</td>
+              <td class="unit_stress">kN/cm²</td>
             </tr>
           </tbody>
         </table>
@@ -225,6 +235,10 @@
         -->
 
       <div id="ergebnisse">
+        <br>
+        <div id="my_text"></div>
+
+
         <p>Ergebnisse</p>
 
         <div id="querschnittswerte">
@@ -418,6 +432,21 @@
       <div id="id_pdf">
         <p id="id_pdf_info">pdf</p>
       </div>
+
+      <div id="id_einstellungen">
+        <br>
+        <p>Einheiten für Tabellen und Spannungen</p>
+        <label for="einheiten">Längeneinheit : </label>
+        <select name="einheiten" id="unitLength">
+          <option value="mm">mm</option>
+          <option value="cm" selected>cm</option>
+          <option value="m">m</option>
+        </select>
+        <br><br>
+        <input type="checkbox" id="id_cb_unitLength" name="cb_unitLength" value="cb_unitLength" />
+        <label for="id_cb_unitLength">Auswahl als Standard im Browser speichern</label>
+      </div>
+
     </div>
 
     <div class="topRight" style="background-color: #d8d8d8">
@@ -432,7 +461,7 @@
     </div>
 
     <div id="footer" class="footer">
-      Querschnittswerte und Spannungen dünnwandiger Querschnitte, 2-April-2023,
+      Querschnittswerte und Spannungen dünnwandiger Querschnitte, 4-April-2023,
       <a href="https://statikverstehen.de">&#169; statikverstehen.de </a>
     </div>
   </div>
