@@ -11,6 +11,22 @@ let old_unit_length = 'cm'
 readLocalStorage();
 
 //----------------------------------------------------------------------------------------------
+export function set_current_unit_length(unitLength: string) {
+    //------------------------------------------------------------------------------------------
+    // wird nur beim Einlesen einer Datei verwendet
+
+    current_unit_length = unitLength;
+    old_unit_length = unitLength;
+
+
+    const auswahl = document.getElementById("unitLength") as HTMLInputElement
+    auswahl.value = unitLength
+
+    set_unit_factors(unitLength)
+
+}
+
+//----------------------------------------------------------------------------------------------
 export function einstellungen() {
     //------------------------------------------------------------------------------------------
     setNewUnits()
@@ -75,6 +91,8 @@ export function einstellungen() {
     old_unit_length = current_unit_length
 
     set_unit_factors(current_unit_length)
+
+    setNewUnits()
 
 }
 

@@ -4,6 +4,8 @@ import { app } from "./index";
 //import { testeZahl } from "./utility";
 import { resizeTable } from "./base_tabelle.js";
 import { saveAs } from 'file-saver';
+import { current_unit_length, set_current_unit_length } from "./einstellungen"
+
 
 //------------------------------------------------------------------------------------------------
 function handleFileSelect_read() {
@@ -20,7 +22,7 @@ function handleFileSelect_read() {
 
         let files = Array.from(input.files);
         //    const files = evt.target.files; // FileList object
-        console.log("in select read");
+        console.log("in select read", files);
         let filename;
 
         // Loop through the FileList and render image files as thumbnails.
@@ -44,6 +46,14 @@ function handleFileSelect_read() {
                     console.log("in result", e.target.result);
                     let jobj = JSON.parse(e.target.result);
                     console.log("und zurück", jobj);
+
+                    if (jobj.unit_length === undefined) {
+                        console.log("#### jobj.unit_length ####", jobj.unit_length)
+                        set_current_unit_length("cm")
+                    } else {
+                        set_current_unit_length(jobj.unit_length)
+                    }
+
 
                     // in Tabelle schreiben
                     document.getElementById("input_nodes").value = jobj.nnodes;
@@ -143,6 +153,7 @@ async function handleFileSelect_save() {
         }
 
         let polyData = {
+            'unit_length': current_unit_length,
             'nnodes': n_nodes,
             'nelem': n_elem,
             'Vy': document.getElementById('Vy').value,
