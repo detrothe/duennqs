@@ -23,6 +23,7 @@ export function set_current_unit_length(unitLength: string) {
     auswahl.value = unitLength
 
     set_unit_factors(unitLength)
+    setNewUnits()
 
 }
 
