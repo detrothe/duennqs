@@ -17,6 +17,12 @@ export let ymin = -50.0, zmin = -50.0, ymax = 50.0, zmax = 50.0, slmax = 0.0;
 
 //------------------------------------------------------------------------------------------------
 
+//----------------------------------------------------------------------------------------------
+export function double2String(zahl: number, stellen: number = 12): string {
+    //------------------------------------------------------------------------------------------
+    let wert = Number(zahl.toPrecision(stellen)) * 1
+    return wert.toString();
+}
 
 
 //----------------------------------------------------------------------------------------------
@@ -294,7 +300,7 @@ for (let i = 1; i < nTabelle.rows.length; i++) {
         //        console.log("child", objCells.item(j).firstChild.parentElement.id)  // abfrage der id
         //console.log("child", objCells.item(j).firstChild.parentElement)  // abfrage der id
         if (j === 1) {
-            w.setAttribute("value", String(xx[i - 1] * unit_length_factor));
+            w.setAttribute("value", double2String(xx[i - 1] * unit_length_factor, 12));  // String(xx[i - 1] * unit_length_factor)
         } else if (j === 2) {
             w.setAttribute("value", String(yy[i - 1] * unit_length_factor));
         }
