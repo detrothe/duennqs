@@ -8,7 +8,7 @@ import { remove_selected_Tabelle, clear_Tabelle, setSelectionMode_node, setSelec
 import { label_svg, copy_svg } from "./systemlinien";
 import { set_myScreen } from "./index.js"
 import { draw_elements } from "./grafik_3D";
-import { unit_length_factor, unit_stress_factor } from "./einstellungen"
+import { current_unit_length, unit_length_factor, unit_stress_factor } from "./einstellungen"
 
 //import {set_nnodes, set_nelem} from "./duennQ_tabelle.js"
 
@@ -32,10 +32,12 @@ function setMaterialEqual(ev) {
     //let nSpalten = tabelle.rows[0].cells.length;
 
     if (ev.target.checked) {
-        console.log("editable", document.getElementById("EMod_ref").isContentEditable);
-        document.getElementById("EMod_ref").hidden = true;
-        document.getElementById("mue_ref").hidden = true;
-        console.log("Anzahl Zeilen", tabelle.rows.length);
+        //console.log("editable", document.getElementById("EMod_ref").isContentEditable);
+        document.getElementById("id_bezugswerte").style.visibility = 'hidden'
+        //document.getElementById("EMod_ref").hidden = true;
+        //document.getElementById("mue_ref").hidden = true;
+        //console.log("Anzahl Zeilen", tabelle.rows.length);
+
         for (let i = 0; i < tabelle.rows.length; i++) {
             for (let j = 1; j < 3; j++) {
                 //tabelle.rows[i].cells[j].innerText = 'NO';
@@ -44,7 +46,7 @@ function setMaterialEqual(ev) {
                 tabelle.rows[i].cells[j].style.width = '0px'
 
                 if (i === 0) {
-                    tabelle.rows[i].cells[j].innerText = ""  //.hidden = true
+                    tabelle.rows[i].cells[j].innerText = ""  //.style.visibility = 'hidden'
                     tabelle.rows[i].cells[j].style.padding = '0px'
                 } else {
                     // @ts-ignore
@@ -54,9 +56,12 @@ function setMaterialEqual(ev) {
             }
         }
     } else {
-        console.log("editable", document.getElementById("EMod_ref").isContentEditable);
-        document.getElementById("EMod_ref").hidden = false;
-        document.getElementById("mue_ref").hidden = false;
+        //console.log("editable", document.getElementById("EMod_ref").isContentEditable);
+        document.getElementById("id_bezugswerte").style.visibility = 'visible'
+
+        //document.getElementById("EMod_ref").hidden = false;
+        //document.getElementById("mue_ref").hidden = false;
+
         for (let i = 0; i < tabelle.rows.length; i++) {
             for (let j = 1; j < 3; j++) {
                 //tabelle.rows[i].cells[j].innerText = 'edit';
@@ -64,7 +69,11 @@ function setMaterialEqual(ev) {
                 //tabelle.rows[i].cells[j].classList.remove('unsichtbar');
 
                 if (i === 0) {
-                    if (j === 1) tabelle.rows[i].cells[j].innerText = 'E-Modul [kN/cm²]'  //.hidden = true
+                    if (j === 1) {
+                        if (current_unit_length === 'mm') tabelle.rows[i].cells[j].innerText = 'E-Modul [N/mm²]';  //.hidden = true
+                        else if (current_unit_length === 'cm') tabelle.rows[i].cells[j].innerText = 'E-Modul [kN/cm²]';  //.hidden = true
+                        else if (current_unit_length === 'm') tabelle.rows[i].cells[j].innerText = 'E-Modul [MN/m²]';  //.hidden = true
+                    }
                     if (j === 2) tabelle.rows[i].cells[j].innerText = 'ν'  //.hidden = true
                     tabelle.rows[i].cells[j].style.padding = '5px'
                 } else {
