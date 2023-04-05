@@ -18,6 +18,30 @@
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
 -->
+  <script src="jscolor.min.js"></script>
+
+  <script>
+    // These options apply to all color pickers on the page
+    jscolor.presets.default = {
+      width: 200,
+      height: 200,
+      fontsize: 16,
+      position: 'bottom',
+      previewPosition: 'bottom',
+      backgroundColor: '#f3f3f3',
+      borderColor: '#bbbbbb',
+      controlBorderColor: '#bbbbbb',
+      palette: [
+        '#000000', '#7d7d7d', '#870014', '#ec1c23', '#ff7e26',
+        '#fef100', '#22b14b', '#00a1e7', '#3f47cc', '#a349a4',
+        '#ffffff', '#c3c3c3', '#b87957', '#feaec9', '#ffc80d',
+        '#eee3af', '#b5e61d', '#99d9ea', '#7092be', '#c8bfe7',
+      ],
+      paletteCols: 10,
+      hideOnPaletteClick: true,
+    }
+  </script>
+
   <script type="module" src="./index.js"></script>
 </head>
 
@@ -439,8 +463,21 @@
           <option value="m">m</option>
         </select>
         <br><br>
+        <p>Tabellenfarbe außen:
+          <input id="id_color_table_out" value="#CFD915"
+            data-jscolor="{ preset: 'dark', closeButton: true, closeText: 'OK' }">
+        </p>
+        <p>Tabellenfarbe innen:
+          <input id="id_color_table_in" value="#b3ae00"
+            data-jscolor="{ preset: 'dark', closeButton: true, closeText: 'OK' }">
+        </p>
+        <br><br>
         <input type="checkbox" id="id_cb_unitLength" name="cb_unitLength" value="cb_unitLength" />
         <label for="id_cb_unitLength">Auswahl als Standard im Browser speichern</label>
+
+        <input type="checkbox" id="id_cb_unitDelete" name="cb_unitDelete" value="cb_unitDelete" />
+        <label for="id_cb_unitDelete">Speicher des Browsers löschen</label>
+        <br>
       </div>
 
     </div>
