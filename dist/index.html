@@ -169,10 +169,11 @@
         </table>
 
         <p><b>Bezugswerte</b></p>
-
-        <input type="checkbox" id="material_equal" name="material_equal" value="material_is_equal" />
-        <label for="material_equal">
-          alle Elemente haben gleiche Materialdaten</label>
+        <p>
+          <input type="checkbox" id="material_equal" name="material_equal" value="material_is_equal" />
+          <label for="material_equal">
+            alle Elemente haben gleiche Materialdaten</label>
+        </p>
 
         <!-- <form name="form_bezugswerte"> -->
         <table id="id_bezugswerte" class="table_eng">
@@ -453,12 +454,14 @@
       <div id="id_einstellungen">
         <br>
         <p>Einheiten für Tabellen und Spannungen</p>
-        <label for="einheiten">Längeneinheit : </label>
-        <select name="einheiten" id="unitLength">
-          <option value="mm">mm</option>
-          <option value="cm" selected>cm</option>
-          <option value="m">m</option>
-        </select>
+        <p>
+          <label for="einheiten">Längeneinheit : </label>
+          <select name="einheiten" id="unitLength">
+            <option value="mm">mm</option>
+            <option value="cm" selected>cm</option>
+            <option value="m">m</option>
+          </select>
+        </p>
         <br><br>
         <p>Tabellenfarbe außen:
           <input id="id_color_table_out" value="#CFD915"
@@ -469,11 +472,14 @@
             data-jscolor="{ preset: 'dark', closeButton: true, closeText: 'OK' }">
         </p>
         <br><br>
-        <input type="checkbox" id="id_cb_unitLength" name="cb_unitLength" value="cb_unitLength" />
-        <label for="id_cb_unitLength">Auswahl als Standard im Browser speichern</label>
-
-        <input type="checkbox" id="id_cb_unitDelete" name="cb_unitDelete" value="cb_unitDelete" />
-        <label for="id_cb_unitDelete">Speicher des Browsers löschen</label>
+        <p>
+          <input type="checkbox" id="id_cb_unitLength" name="cb_unitLength" value="cb_unitLength" />
+          <label for="id_cb_unitLength">Auswahl als Standard im Browser speichern</label>
+        </p>
+        <p>
+          <input type="checkbox" id="id_cb_unitDelete" name="cb_unitDelete" value="cb_unitDelete" />
+          <label for="id_cb_unitDelete">Speicher des Browsers löschen</label>
+        </p>
         <br>
       </div>
 

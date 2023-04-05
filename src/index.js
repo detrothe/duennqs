@@ -92,6 +92,8 @@ portrait.addEventListener("change", function (e) {
 //-------------------------------------------------------------------------------
 //-------------------------------------------------------------------------------
 
+//document.body.style.fontSize = '10px'
+
 set_myScreen();
 
 export const Detect = new DetectOS();
