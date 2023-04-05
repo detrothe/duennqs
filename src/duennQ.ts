@@ -37,7 +37,7 @@ function setMaterialEqual(ev) {
 
     //let nSpalten = tabelle.rows[0].cells.length;
 
-    if (ev.target.checked) {
+    if (ev.target.checked) {  // unsichtbar machen
         //console.log("editable", document.getElementById("EMod_ref").isContentEditable);
         document.getElementById("id_bezugswerte").style.visibility = 'hidden'
         //document.getElementById("EMod_ref").hidden = true;
@@ -61,7 +61,7 @@ function setMaterialEqual(ev) {
                 }
             }
         }
-    } else {
+    } else {    // sichtbar machen
         //console.log("editable", document.getElementById("EMod_ref").isContentEditable);
         document.getElementById("id_bezugswerte").style.visibility = 'visible'
 
@@ -71,8 +71,8 @@ function setMaterialEqual(ev) {
         for (let i = 0; i < tabelle.rows.length; i++) {
             for (let j = 1; j < 3; j++) {
                 //tabelle.rows[i].cells[j].innerText = 'edit';
-                //tabelle.rows[i].cells[j].contentEditable = 'true';
-                //tabelle.rows[i].cells[j].classList.remove('unsichtbar');
+                tabelle.rows[i].cells[j].hidden = false   //.style.visibility = 'visible'
+                tabelle.rows[i].cells[j].style.width = '50px'
 
                 if (i === 0) {
                     if (j === 1) {
@@ -89,16 +89,7 @@ function setMaterialEqual(ev) {
             }
         }
     }
-    /*
-        if ( input.checked ) {
-            document.getElementById("EMod_ref").contentEditable = 'false'; //.hidden=true;
-            document.getElementById("mue_ref").hidden=true;
-        } else {
-            document.getElementById("EMod_ref").contentEditable = 'true'; //.hidden=false;
-            document.getElementById("mue_ref").hidden=false;
-        }
 
-     */
 }
 
 
