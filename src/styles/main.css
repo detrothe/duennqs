@@ -569,7 +569,7 @@ input[type=number] {
 #id_myTable td.selected,
 #nodeTable td.selected,
 #elemTable td.selected {
-    background-color: rgb(206, 196, 46);
+    /*background-color: rgb(206, 196, 46);*/
     color: rgb(13, 13, 13);
 
 }

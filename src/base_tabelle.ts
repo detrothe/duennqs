@@ -3,6 +3,7 @@ import { set_nelem, set_nnodes, table_index, remove_selected_Tabelle } from "./d
 import { berechnungErforderlich } from "./globals.js"
 import { show_contextMenu, toggleMenuOff } from './contextMenu.js';
 import { infoBox, Detect } from './index.js';
+import { color_table_in, color_table_out } from './einstellungen.js'
 
 
 export const selectedCellPoly = {   // export const
@@ -162,7 +163,7 @@ export function resize_Tabelle(idTable, nRowNew, nColNew) {
                     //newCell = newRow.insertCell(iSpalte);  // Insert a cell in the row at index 0
                     newText = document.createTextNode(String(iZeile));  // Append a text node to the cell
                     newCell.style.textAlign = 'center'
-                    newCell.style.backgroundColor = '#b3ae00'  //'rgb(150,180, 180)';
+                    newCell.style.backgroundColor = color_table_in  //'#b3ae00'  //'rgb(150,180, 180)';
                     newCell.style.padding = '0px';
                     newCell.style.margin = '0px';
                     newCell.appendChild(newText);
@@ -228,7 +229,7 @@ export function resize_Tabelle(idTable, nRowNew, nColNew) {
                     newCell = newRow.insertCell(iSpalte);  // Insert a cell in the row at index 0
                     newText = document.createTextNode(String(iZeile));  // Append a text node to the cell
                     newCell.style.textAlign = 'center'
-                    newCell.style.backgroundColor = '#b3ae00'  //'rgb(150,180, 180)';
+                    newCell.style.backgroundColor = color_table_in  //'#b3ae00'  //'rgb(150,180, 180)';
                     newCell.style.padding = '0px';
                     newCell.style.margin = '0px';
                     newCell.appendChild(newText);
@@ -287,6 +288,7 @@ export function meinetabelle(theDiv, id_table, nZeilen, columns) {
     table.setAttribute("id", id_table);
     table.className = 'tabelle'  // wichtig für Context menue
     table.border = '0';
+    table.style.backgroundColor = color_table_out
     myTableDiv.appendChild(table);  //appendChild() insert it in the document (table --> myTableDiv)
 
 
@@ -318,7 +320,7 @@ export function meinetabelle(theDiv, id_table, nZeilen, columns) {
                 newCell = newRow.insertCell(iSpalte);  // Insert a cell in the row at index 0
                 newText = document.createTextNode(String(iZeile));  // Append a text node to the cell
                 newCell.style.textAlign = 'center'
-                newCell.style.backgroundColor = '#b3ae00'   //'rgb(150,180, 180)';
+                newCell.style.backgroundColor = color_table_in   //'#b3ae00'   //'rgb(150,180, 180)';
                 newCell.style.padding = '0px';
                 newCell.style.margin = '0px';
                 newCell.appendChild(newText);
@@ -338,12 +340,7 @@ export function meinetabelle(theDiv, id_table, nZeilen, columns) {
                 el.id = str;
                 //el.className = 'input_normal';
                 el.addEventListener("keydown", KEYDOWN);
-                //el.addEventListener("mousemove", newMOUSEMOVE);
 
-
-
-                //console.log("el", el)
-                //newText = document.createTextNode(String(i + 1));  // Append a text node to the cell
                 newCell = newRow.insertCell()
                 newCell.style.width = '6em'
                 newCell.style.border = 'solid';
@@ -357,16 +354,8 @@ export function meinetabelle(theDiv, id_table, nZeilen, columns) {
                 newCell.className = 'input_normal';
 
                 newCell.appendChild(el);
-                // el.addEventListener("pointermove", POINTERMOVE);
+
                 el.addEventListener("pointerdown", POINTER_DOWN);
-                // el.addEventListener("pointerup", POINTERUP);
-                // el.addEventListener("pointerout", POINTER_OUT);
-                //newCell.setAttribute("class", "table_spannung_cell_center");
-
-                //console.log("id-name", str)
-                //const w = document.getElementById(str)
-                //w.setAttribute("value", "12")
-
                 //console.log("rect", iZeile, iSpalte, el.getBoundingClientRect().x, newCell.getBoundingClientRect().y, newCell.getBoundingClientRect().width, newCell.getBoundingClientRect().height)
 
             }

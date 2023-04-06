@@ -1,6 +1,8 @@
 
 document.getElementById("unitLength").addEventListener('change', einstellungen);
-document.getElementById("id_cb_unitLength").addEventListener('change', saveLocalStorage);
+document.getElementById("id_cb_saveLocalStorage").addEventListener('change', saveLocalStorage);
+//document.getElementById("id_cb_deleteLocalStorage").addEventListener('click', deleteLocalStorage);
+
 document.getElementById("id_fontsize").addEventListener('change', set_font_size);
 document.getElementById("id_color_table_out").addEventListener('change', set_color_table_out);
 document.getElementById("id_color_table_in").addEventListener('change', set_color_table_in);
@@ -213,7 +215,7 @@ export function setNewUnits() {
 function saveLocalStorage() {
     //------------------------------------------------------------------------------------------
 
-    const input = document.getElementById('id_cb_unitLength') as HTMLInputElement | null;
+    const input = document.getElementById('id_cb_saveLocalStorage') as HTMLInputElement | null;
     console.log("in saveLocalStorage : ", input.checked)
 
     let el = document.getElementById("id_fontsize") as HTMLInputElement;
@@ -223,7 +225,7 @@ function saveLocalStorage() {
     color_table_out = el.value
 
     el = document.getElementById("id_color_table_in") as HTMLInputElement;
-    color_table_out = el.value
+    color_table_in = el.value
 
     if (input.checked) {
         window.localStorage.setItem('current_unit_length', current_unit_length);
@@ -253,9 +255,24 @@ export function readLocalStorage() {
         console.log("nix gemacht")
     }
 
-    my_fontsize = window.localStorage.getItem('id_fontsize');
-    color_table_out = window.localStorage.getItem('id_color_table_out');
-    color_table_in = window.localStorage.getItem('id_color_table_in');
+    const default_fontsize = window.localStorage.getItem('my_fontsize');
+    let el = document.getElementById("id_fontsize") as HTMLInputElement
+    if (el.value !== default_fontsize) {
+        el.value = default_fontsize
+        my_fontsize = default_fontsize
+        document.body.style.fontSize = my_fontsize
+    }
+
+    color_table_out = window.localStorage.getItem('color_table_out');
+    el = document.getElementById("id_color_table_out") as HTMLInputElement
+    el.value = color_table_out
+
+    color_table_in = window.localStorage.getItem('color_table_in');
+    el = document.getElementById("id_color_table_in") as HTMLInputElement
+    el.value = color_table_in
+
+
+    console.log("readLocalStorage", my_fontsize, color_table_out, color_table_in)
 
 }
 
@@ -274,4 +291,30 @@ function set_unit_factors(unitLength: string) {
         unit_stress_factor = 10.0  // MN/m²
     }
 
+}
+
+
+//----------------------------------------------------------------------------------------------
+export function set_table_colors() {
+    //------------------------------------------------------------------------------------------
+
+    const ntabelle = document.getElementById("nodeTable") as HTMLTableElement;
+    ntabelle.style.backgroundColor = color_table_out
+    for (let i = 1; i < ntabelle.rows.length; i++) {
+        ntabelle.rows[i].cells[0].style.backgroundColor = color_table_in
+    }
+
+    const etabelle = document.getElementById("elemTable") as HTMLTableElement;
+    etabelle.style.backgroundColor = color_table_out
+    for (let i = 1; i < etabelle.rows.length; i++) {
+        etabelle.rows[i].cells[0].style.backgroundColor = color_table_in
+    }
+
+}
+
+
+//----------------------------------------------------------------------------------------------
+export function deleteLocalStorage() {
+    //------------------------------------------------------------------------------------------
+    window.localStorage.clear()
 }
