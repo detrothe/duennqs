@@ -328,7 +328,7 @@ export function meinetabelle(theDiv, id_table, nZeilen, columns) {
             } else {
 
                 let el = document.createElement("input");
-                //el.setAttribute("type", "number");
+                el.setAttribute("type", "number");
                 el.style.width = '6em';   // 100px
                 //el.style.backgroundColor = 'rgb(200,200,200)';
                 el.style.border = 'none';

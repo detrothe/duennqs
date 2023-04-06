@@ -21,7 +21,7 @@ export let ymin = -50.0, zmin = -50.0, ymax = 50.0, zmax = 50.0, slmax = 0.0;
 export function double2String(zahl: number, stellen: number = 12): string {
     //------------------------------------------------------------------------------------------
     let wert = Number(zahl.toPrecision(stellen)) * 1
-    return wert.toString();
+    return String(wert);
 }
 
 
