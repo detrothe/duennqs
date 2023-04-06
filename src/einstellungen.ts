@@ -1,7 +1,7 @@
 
 document.getElementById("unitLength").addEventListener('change', einstellungen);
-document.getElementById("id_cb_saveLocalStorage").addEventListener('change', saveLocalStorage);
-//document.getElementById("id_cb_deleteLocalStorage").addEventListener('click', deleteLocalStorage);
+document.getElementById("id_cb_saveLocalStorage").addEventListener('click', saveLocalStorage);
+document.getElementById("id_cb_deleteLocalStorage").addEventListener('click', deleteLocalStorage);
 
 document.getElementById("id_fontsize").addEventListener('change', set_font_size);
 document.getElementById("id_color_table_out").addEventListener('change', set_color_table_out);
@@ -215,8 +215,8 @@ export function setNewUnits() {
 function saveLocalStorage() {
     //------------------------------------------------------------------------------------------
 
-    const input = document.getElementById('id_cb_saveLocalStorage') as HTMLInputElement | null;
-    console.log("in saveLocalStorage : ", input.checked)
+    //    const input = document.getElementById('id_cb_saveLocalStorage') as HTMLInputElement | null;
+    console.log("in saveLocalStorage : ")
 
     let el = document.getElementById("id_fontsize") as HTMLInputElement;
     my_fontsize = el.value
@@ -227,12 +227,10 @@ function saveLocalStorage() {
     el = document.getElementById("id_color_table_in") as HTMLInputElement;
     color_table_in = el.value
 
-    if (input.checked) {
-        window.localStorage.setItem('current_unit_length', current_unit_length);
-        window.localStorage.setItem('my_fontsize', my_fontsize);
-        window.localStorage.setItem('color_table_out', color_table_out);
-        window.localStorage.setItem('color_table_in', color_table_in);
-    }
+    window.localStorage.setItem('current_unit_length', current_unit_length);
+    window.localStorage.setItem('my_fontsize', my_fontsize);
+    window.localStorage.setItem('color_table_out', color_table_out);
+    window.localStorage.setItem('color_table_in', color_table_in);
 }
 
 
