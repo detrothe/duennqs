@@ -7,10 +7,10 @@ html {
 }
 
 :root {
-    --sgroesse: 0.9rem;
+    --sgroesse: 0.9em;
     --abst_gl_v: 2px;
     --width_gl_button: 80px;
-    --sg_normal: 1rem;
+    --sg_normal: 1em;
     /* normale Schriftgröße */
 }
 
@@ -127,7 +127,7 @@ a:link {
     /*padding: auto;
     margin: auto;*/
     text-align: center;
-    font-size: 0.7rem;
+    font-size: 0.7em;
     /*0.8rem;*/
     /*height: 50px;*/
     /*0.7rem*/
@@ -223,14 +223,22 @@ hr {
 
 td,
 th {
-    padding: 1px 4px;
-    width: 70px;
+    padding: 0px;
+    margin: 0px;
+    width: 6em;
+    /*width: 70px;*/
     /*background-color: orange;*/
 }
 
+
 p {
-    font-size: 1rem;
-    line-height: 2rem;
+    font-size: 1em;
+    line-height: 200%
+}
+
+textarea {
+    font-size: 1em;
+    font-family: FreeSans, Verdana, Arial, Helvetica, sans-serif;
 }
 
 #eingabe {
@@ -242,12 +250,7 @@ p {
     background-color: rgb(110, 180, 180);
 }
 
-/*
-#spannungen {
-    display: none;
-    background-color: rgb(110, 180, 180);
-}
-*/
+
 #ergebnisse {
     display: none;
     background-color: #D8D8D8;
@@ -279,15 +282,14 @@ p {
     /*background-color: #D8D8D8;*/
 }
 
-/*
-#wind_vertikal,
-#wind_satteldach {
-    display: none;
-}
-*/
-
-button {
-    font-size: 1rem;
+button,
+select {
+    font-size: 1em;
+    /*1rem;*/
+    border-radius: 3px;
+    border-width: 1px;
+    border-color: #303030;
+    color: #444;
 }
 
 button:active {
@@ -295,12 +297,15 @@ button:active {
 }
 
 .buttonTable {
-    font-size: 1rem;
-    width: 8em;
+    /*font-size: 1rem;*/
+    width: 10em;
 }
 
-input {
-    font-size: 1rem;
+
+input,
+label {
+    font-size: 1em;
+    /*1rem;*/
 }
 
 /*
@@ -315,7 +320,7 @@ input:valid {
 */
 .input_int {
     width: 50px;
-    font-size: 1rem;
+    /*font-size: 1rem;*/
 }
 
 /*
@@ -325,12 +330,17 @@ input:valid {
     margin: 0;
 }
 */
+.zelle {
+    width: 3.125em;
+}
+
 .zelle0 {
     /*width: 4em;*/
     text-align: right;
-    font-size: 1rem;
+    /*font-size: 1rem;*/
 }
 
+/*
 .zellew0 {
     white-space: nowrap;
     text-align: right;
@@ -338,105 +348,24 @@ input:valid {
 }
 
 .zelle100 {
-    /*width: 100px;*/
+    width: 100px;
     text-align: right;
     font-size: 1rem;
-}
-
-.zelle {
-    width: 50px;
 }
 
 .zelle1 {
     width: 60px;
 }
-
+*/
 .input_kdtab {
     width: 80px;
 }
 
-/*#input-container { */
-/*position: absolute;
-    top: 10px;
-    left: 10px;*/
-/* width: 62rem; */
-/*100%; */
-/* height: 50px; */
-/* } */
 
 #matrix_knoten {
     /*background-color: rgb(163, 173, 120);*/
 }
 
-/*
-#nodeTable {
-    touch-action: none;
-}
-*/
-/*
-#nodeTable td {
-    background-color: rgb(250, 250, 250);
-    white-space: nowrap;
-    font-size: 1rem;
-}
-
-#nodeTable td.highlight {
-    background-color: orange;
-    color: darkslateblue;
-    white-space: nowrap;
-}
-
-#nodeTable td.symmetry {
-    background-color: lightgray;
-    color: darkslateblue;
-    white-space: nowrap;
-}
-
-
-#nodeTable td.selected,
-#elemTable td.selected {
-    background-color: darkred;
-    color: white;
-    white-space: nowrap;
-}
-*/
-/*
-#nodeTable tr td:nth-child(2) {
-    width: 50px;
-    background-color: #D800D8;
-}
-
-#elemTable td {
-    background-color: rgb(250, 250, 250);
-    white-space: nowrap;
-    font-size: 1rem;
-}
-
-#elemTable td.highlight {
-    background-color: orange;
-    color: darkslateblue;
-    white-space: nowrap;
-}
-
-#elemTable td.unsichtbar {
-    background-color: rgb(150, 180, 180);
-    color: rgb(150, 180, 180);
-    white-space: nowrap;
-}
-*/
-#uTable td {
-    background-color: rgb(250, 250, 250);
-    white-space: nowrap;
-    font-size: 1rem;
-}
-
-/*
-#nodeTable th,
-#elemTable th {
-    font-weight: normal;
-    text-align: center;
-}
-*/
 
 td.selected {
     background-color: green;
@@ -446,69 +375,28 @@ td.selected {
     background-color: rgb(150, 180, 180);
 }
 
-.table_tangens td {
-    /*background-color: orange;*/
-    width: 200px;
-}
-
-.table_sigma td {
-    /*background-color: orange;*/
-    width: 100px;
-}
-
-#img_stress {
-    display: none;
-    /*    width: 100%;
-        height: auto;
-
-     */
-}
-
-#beton,
-#ksi_option {
-    font-size: 1rem;
-    width: 80px;
-}
-
-#windzone,
-#dachform {
-    font-size: 1rem;
-    width: 170px;
-}
-
 #my_dataviz {
     display: none;
 }
 
-/*
-#wind_vertikal td,
-#wind_satteldach td,
-#wind_vertikal th,
-#wind_satteldach th {
-    background-color: orange;
-    border: 0;
-}
-*/
 .table_eng th,
 td {
     border: none;
     /*1px solid black*/
     /*border-collapse: collapse;*/
     padding: 1px;
-    width: 90px;
+    width: 5.625em;
 }
 
 .td_eng {
     padding: 1px;
 }
 
-/*#querschnittwerte_table {}*/
-
 #querschnittwerte_table td {
     padding-left: 5px;
     padding-right: 5px;
     background-color: rgb(200, 200, 200);
-    width: 120px;
+    width: 7.5em;
 }
 
 .querschnittwerte_table_z0 {
@@ -614,129 +502,9 @@ td {
     z-index: 90;
 }
 
-#button_label_webgl {
-    position: absolute;
-    top: var(--abst_gl_v);
-    /*-15*/
-    left: 5px;
-}
-
-#button_tau_webgl {
-    position: absolute;
-    top: var(--abst_gl_v);
-    /*-15*/
-    left: calc(var(--width_gl_button) + 2px + 5px);
-    /* Leerzeichen nicht vergessen */
-    /*90px;*/
-}
-
-#button_sigma_webgl {
-    position: absolute;
-    top: var(--abst_gl_v);
-    /*-15*/
-    left: calc((var(--width_gl_button) + 2px) * 2 + 5px);
-    /*170px;*/
-}
-
-#button_woelb_M_webgl {
-    position: absolute;
-    top: var(--abst_gl_v);
-    /*-15*/
-    left: calc((var(--width_gl_button) + 2px) * 3 + 5px);
-    /*250px;*/
-}
-
-#button_woelb_V_webgl {
-    position: absolute;
-    top: var(--abst_gl_v);
-    /*-15*/
-    left: calc((var(--width_gl_button) + 2px) * 4 + 5px);
-    /*330px;*/
-}
-
-.button_webgl {
-    width: var(--width_gl_button);
-    z-index: 90;
-    background-color: black;
-    color: white;
-    border-radius: 3px;
-    border-color: gray;
-    border-style: solid;
-}
-
-.button_label_webgl_pressed {
-    background-color: orange;
-    width: var(--width_gl_button);
-    z-index: 90;
-    color: white;
-    border-radius: 3px;
-    border-color: gray;
-    border-style: solid;
-}
-
-.button_tau_webgl_pressed {
-    background-color: orange;
-    width: var(--width_gl_button);
-    z-index: 90;
-    color: white;
-    border-radius: 3px;
-    border-color: gray;
-    border-style: solid;
-}
-
-.button_sigma_webgl_pressed {
-    background-color: orange;
-    width: var(--width_gl_button);
-    z-index: 90;
-    color: white;
-    border-radius: 3px;
-    border-color: gray;
-    border-style: solid;
-}
-
-.button_woelb_M_webgl_pressed {
-    background-color: orange;
-    width: var(--width_gl_button);
-    z-index: 90;
-    color: white;
-    border-radius: 3px;
-    border-color: gray;
-    border-style: solid;
-}
-
-.button_woelb_V_webgl_pressed {
-    background-color: orange;
-    width: var(--width_gl_button);
-    z-index: 90;
-    color: white;
-    border-radius: 3px;
-    border-color: gray;
-    border-style: solid;
-}
-
-.button_webgl:active {
-    background-color: darkred;
-}
-
-.button_webgl:after {
-    background-color: yellowgreen;
-}
 
 #my-webgl {
     position: relative;
-}
-
-#label_x_achse,
-#label_y_achse,
-#label_z_achse {
-    position: absolute;
-    top: 100px;
-    left: 100px;
-    width: 100%;
-    text-align: left;
-    z-index: 100;
-    display: block;
-    color: #8b0000;
 }
 
 .emotionLabel {
@@ -750,7 +518,7 @@ td {
     border: 1px solid rgb(85, 82, 82);
     padding: 0px;
     /*pointer-events: none;*/
-    font-size: 16px;
+    font-size: 1em;
     /*1rem;*/
     z-index: 120;
 }
@@ -767,18 +535,7 @@ td {
     background-color: lightgray;
 }
 
-/*
-.unsichtbar {
-    color: rgb(250,250,250);
-    background-color: rgb(110, 110, 110);
-}
 
-.sichtbar {
-    color: #00bb00;
-    background-color: #D8D8D8;
-}
-
- */
 
 input[type=number]::-webkit-inner-spin-button,
 input[type=number]::-webkit-outer-spin-button {
@@ -805,7 +562,7 @@ input[type=number] {
 #id_myTable td,
 #nodeTable td,
 #elemTable td {
-    font-size: 1rem;
+    /*font-size: 1rem;*/
     /*touch-action: none;*/
 }
 
@@ -847,5 +604,6 @@ input[type=number] {
 }
 
 .unit_stress {
-    font-size: var(--sg_normal);
+    /*font-size: var(--sg_normal);*/
+    text-align: left;
 }

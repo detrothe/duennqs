@@ -170,7 +170,7 @@ export function resize_Tabelle(idTable, nRowNew, nColNew) {
 
                     let el = document.createElement("input");
                     el.setAttribute("type", "number");
-                    el.style.width = '100px';
+                    el.style.width = '6em';
                     //el.style.backgroundColor = 'rgb(200,200,200)';
                     el.style.border = 'none';
                     el.style.borderWidth = '0px';
@@ -188,6 +188,7 @@ export function resize_Tabelle(idTable, nRowNew, nColNew) {
                     //console.log("el", el)
                     //newText = document.createTextNode(String(i + 1));  // Append a text node to the cell
                     //newCell = newRow.insertCell()
+                    newCell.style.width = '6em'
                     newCell.style.border = 'solid';
                     newCell.style.borderWidth = '1px';
                     newCell.style.padding = '0px';
@@ -235,7 +236,7 @@ export function resize_Tabelle(idTable, nRowNew, nColNew) {
 
                     let el = document.createElement("input");
                     el.setAttribute("type", "number");
-                    el.style.width = '100px';
+                    el.style.width = '6em';
                     el.style.border = 'none';
                     el.style.borderWidth = '0px';
                     el.style.padding = '5px';
@@ -248,6 +249,7 @@ export function resize_Tabelle(idTable, nRowNew, nColNew) {
                     //el.addEventListener("mousemove", newMOUSEMOVE);
 
                     newCell = newRow.insertCell()
+                    newCell.style.width = '6em'
                     newCell.style.border = 'solid';
                     newCell.style.borderWidth = '1px';
                     newCell.style.padding = '0px';
@@ -280,13 +282,6 @@ export function meinetabelle(theDiv, id_table, nZeilen, columns) {
     const myTableDiv = document.getElementById(theDiv);  //in div
     //console.log("myTableDiv testtable1", myTableDiv)
 
-
-    // const tag = document.createElement("p"); // <p></p>
-    // tag.setAttribute("id", "id_spannung_mxs");
-    // const text = document.createTextNode("xxx");
-    // tag.appendChild(text);
-    // tag.innerHTML = "Schubspannungen aus Querkraft und sekundärer Torsion M<sub>xs</sub>"
-    // myTableDiv.appendChild(tag);
 
     const table = document.createElement("TABLE") as HTMLTableElement;   //TABLE??
     table.setAttribute("id", id_table);
@@ -331,8 +326,8 @@ export function meinetabelle(theDiv, id_table, nZeilen, columns) {
             } else {
 
                 let el = document.createElement("input");
-                el.setAttribute("type", "number");
-                el.style.width = '100px';
+                //el.setAttribute("type", "number");
+                el.style.width = '6em';   // 100px
                 //el.style.backgroundColor = 'rgb(200,200,200)';
                 el.style.border = 'none';
                 el.style.borderWidth = '0px';
@@ -350,6 +345,7 @@ export function meinetabelle(theDiv, id_table, nZeilen, columns) {
                 //console.log("el", el)
                 //newText = document.createTextNode(String(i + 1));  // Append a text node to the cell
                 newCell = newRow.insertCell()
+                newCell.style.width = '6em'
                 newCell.style.border = 'solid';
                 newCell.style.borderWidth = '1px';
                 newCell.style.padding = '0px';

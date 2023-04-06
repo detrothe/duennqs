@@ -8,7 +8,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimal-ui" />
   <!-- <meta name="viewport" content="width=device-width, initial-scale=1"> -->
   <meta charset="UTF-8" />
-  <!-- <meta name="apple-mobile-web-app-capable" content="yes"> -->
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
 
   <link rel="stylesheet" href="./index.css" />
 
@@ -462,13 +463,27 @@
             <option value="m">m</option>
           </select>
         </p>
-        <br><br>
+        <br>
+        <p>
+          <label for="fontSize">Schriftgröße : </label>
+          <select name="fontSize" id="id_fontsize">
+            <option value="0.625em">10</option>
+            <option value="0.7em">11</option>
+            <option value="0.75em">12</option>
+            <option value="0.8em">13</option>
+            <option value="0.875em">14</option>
+            <option value="0.95em">15</option>
+            <option value="1em" selected>16</option>
+            <option value="1.125em">18</option>
+          </select>
+        </p>
+        <br>
         <p>Tabellenfarbe außen:
-          <input id="id_color_table_out" value="#CFD915"
+          <input id="id_color_table_out" value="#CFD915" style="width: 150px; border-radius: 3px; border-width: 1px;"
             data-jscolor="{ preset: 'dark', closeButton: true, closeText: 'OK' }">
         </p>
         <p>Tabellenfarbe innen:
-          <input id="id_color_table_in" value="#b3ae00"
+          <input id="id_color_table_in" value="#b3ae00" style="width: 150px; border-radius: 3px; border-width: 1px;"
             data-jscolor="{ preset: 'dark', closeButton: true, closeText: 'OK' }">
         </p>
         <br><br>
@@ -485,7 +500,7 @@
 
     </div>
 
-    <div class="topRight" style="background-color: #d8d8d8">
+    <div class="topRight" style="background-color: #d8d8d8;">
       <div id="duennQ_save_daten">
         <p>
           <button type="button" id="readFile">Daten einlesen</button>

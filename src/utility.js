@@ -117,8 +117,12 @@ export function sichtbar(displayName) {
 
     if (displayName === 'mypdf') {
         document.getElementById("id_pdf").style.display = "block";
-        systemlinien(1500, 1500, 2.0);
-        my_jspdf();
+        if (berechnung_erfolgreich) {
+            systemlinien(1500, 1500, 2.0);
+            my_jspdf();
+        } else {
+            alert('Es liegt keine fehlerfreie Berechnung vor')
+        }
     } else {
         document.getElementById("id_pdf").style.display = "none";
     }

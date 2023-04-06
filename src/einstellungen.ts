@@ -1,14 +1,67 @@
 
 document.getElementById("unitLength").addEventListener('change', einstellungen);
 document.getElementById("id_cb_unitLength").addEventListener('change', saveLocalStorage);
+document.getElementById("id_fontsize").addEventListener('change', set_font_size);
+document.getElementById("id_color_table_out").addEventListener('change', set_color_table_out);
+document.getElementById("id_color_table_in").addEventListener('change', set_color_table_in);
 
 export let current_unit_length = 'cm'
 export let unit_length_factor = 1               // Multiplikator von cm nach neuer Einheit
 export let unit_stress_factor = 1               // Multiplikator von kN/cm² nach neuer Einheit
+export let my_fontsize = '1em'
+export let color_table_out = '#CFD915'
+export let color_table_in = '#b3ae00'
 
 let old_unit_length = 'cm'
 
 readLocalStorage();
+
+
+//----------------------------------------------------------------------------------------------
+export function set_font_size() {
+    //------------------------------------------------------------------------------------------
+
+    const el = document.getElementById("id_fontsize") as HTMLInputElement;
+    my_fontsize = el.value
+    //console.log("my_fontsize", my_fontsize)
+    document.body.style.fontSize = my_fontsize
+}
+
+//----------------------------------------------------------------------------------------------
+export function set_color_table_out() {
+    //------------------------------------------------------------------------------------------
+
+    const el = document.getElementById("id_color_table_out") as HTMLInputElement;
+    color_table_out = el.value
+    //console.log("color_table_out", color_table_out)
+
+    const ntabelle = document.getElementById("nodeTable") as HTMLTableElement;
+    ntabelle.style.backgroundColor = color_table_out
+
+    const etabelle = document.getElementById("elemTable") as HTMLTableElement;
+    etabelle.style.backgroundColor = color_table_out
+
+
+}
+
+//----------------------------------------------------------------------------------------------
+export function set_color_table_in() {
+    //------------------------------------------------------------------------------------------
+
+    const el = document.getElementById("id_color_table_in") as HTMLInputElement;
+    color_table_in = el.value
+    //console.log("color_table_in", color_table_in)
+
+
+    const ntabelle = document.getElementById("nodeTable") as HTMLTableElement;
+    for (let i = 1; i < ntabelle.rows.length; i++) {
+        ntabelle.rows[i].cells[0].style.backgroundColor = color_table_in
+    }
+    const etabelle = document.getElementById("elemTable") as HTMLTableElement;
+    for (let i = 1; i < etabelle.rows.length; i++) {
+        etabelle.rows[i].cells[0].style.backgroundColor = color_table_in
+    }
+}
 
 //----------------------------------------------------------------------------------------------
 export function set_current_unit_length(unitLength: string) {
@@ -24,6 +77,7 @@ export function set_current_unit_length(unitLength: string) {
 
     set_unit_factors(unitLength)
     setNewUnits()
+
 
 }
 
@@ -162,8 +216,20 @@ function saveLocalStorage() {
     const input = document.getElementById('id_cb_unitLength') as HTMLInputElement | null;
     console.log("in saveLocalStorage : ", input.checked)
 
+    let el = document.getElementById("id_fontsize") as HTMLInputElement;
+    my_fontsize = el.value
+
+    el = document.getElementById("id_color_table_out") as HTMLInputElement;
+    color_table_out = el.value
+
+    el = document.getElementById("id_color_table_in") as HTMLInputElement;
+    color_table_out = el.value
+
     if (input.checked) {
         window.localStorage.setItem('current_unit_length', current_unit_length);
+        window.localStorage.setItem('my_fontsize', my_fontsize);
+        window.localStorage.setItem('color_table_out', color_table_out);
+        window.localStorage.setItem('color_table_in', color_table_in);
     }
 }
 
@@ -186,6 +252,11 @@ export function readLocalStorage() {
     } else {
         console.log("nix gemacht")
     }
+
+    my_fontsize = window.localStorage.getItem('id_fontsize');
+    color_table_out = window.localStorage.getItem('id_color_table_out');
+    color_table_in = window.localStorage.getItem('id_color_table_in');
+
 }
 
 //----------------------------------------------------------------------------------------------

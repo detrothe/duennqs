@@ -72,7 +72,7 @@ function setMaterialEqual(ev) {
             for (let j = 1; j < 3; j++) {
                 //tabelle.rows[i].cells[j].innerText = 'edit';
                 tabelle.rows[i].cells[j].hidden = false   //.style.visibility = 'visible'
-                tabelle.rows[i].cells[j].style.width = '50px'
+                tabelle.rows[i].cells[j].style.width = '6em'
 
                 if (i === 0) {
                     if (j === 1) {
@@ -282,6 +282,8 @@ el.value = (parseFloat(el.value) * unit_stress_factor).toString()
 
 nSpalten = nTabelle.rows[0].cells.length - 1;
 
+nTabelle.rows.item(0).cells.item(0).style.width = '3.125em'
+
 for (let i = 1; i < nTabelle.rows.length; i++) {
     const objCells = nTabelle.rows.item(i).cells;
 
@@ -293,49 +295,12 @@ for (let i = 1; i < nTabelle.rows.length; i++) {
         if (j === 1) {
             w.setAttribute("value", double2String(xx[i - 1] * unit_length_factor, 12));  // String(xx[i - 1] * unit_length_factor)
         } else if (j === 2) {
-            w.setAttribute("value", String(yy[i - 1] * unit_length_factor));
+            w.setAttribute("value", double2String(yy[i - 1] * unit_length_factor, 12));
         }
     }
 }
 
-/*
 
-
-let objCells = nTabelle.rows.item(0).cells;  // Überschrift Punkt zentrieren
-objCells.item(0).style.textAlign = "center";
-
-objCells.item(1).innerHTML = 'y&#772; [cm]'
-objCells.item(2).innerHTML = 'z&#772; [cm]'
-
-let nSpalten = nTabelle.rows[0].cells.length - 1;
-
-nTabelle.rows.item(0).cells.item(0).style.width = '50px'
-
-for (let i = 1; i < nTabelle.rows.length; i++) {
-    const objCells = nTabelle.rows.item(i).cells;
-    objCells.item(0).contentEditable = 'false';
-    objCells.item(0).style.textAlign = "center";
-    objCells.item(0).style.backgroundColor = 'rgb(150,180, 180)';myTabelle
-    objCells.item(0).style.border = 'none';
-    objCells.item(0).style.width = '50px'
-
-    for (let j = 1; j <= nSpalten; j++) {
-        objCells.item(j).id = "nodeTable-" + i + "-" + j;
-        if (j === 1) {
-            objCells.item(j).innerText = String(xx[i - 1]);
-        } else if (j === 2) {
-            objCells.item(j).innerText = String(yy[i - 1]);
-        }
-        // @ts-ignore
-        objCells.item(j).wrap = false;
-        // @ts-ignore
-        objCells.item(j).selekt = false;
-        //objCells.item(j).inputMode = 'decimal'
-        //objCells.item(j).setAttribute("selekt", "false");
-    }
-    //console.log(objCells.item(0));
-}
-*/
 
 const eTabelle = document.getElementById("elemTable") as HTMLTableElement;
 objCells = eTabelle.rows.item(0).cells;  // Überschrift Punkt zentrieren
@@ -348,7 +313,7 @@ objCells.item(5).setAttribute('title', 'Knoten-Inzidenz Elementende');
 
 nSpalten = eTabelle.rows[0].cells.length - 1;
 
-eTabelle.rows.item(0).cells.item(0).style.width = '50px'
+eTabelle.rows.item(0).cells.item(0).style.width = '3.125em'
 
 for (let i = 1; i < eTabelle.rows.length; i++) {
     //const objCells = eTabelle.rows.item(i).cells;
@@ -359,11 +324,11 @@ for (let i = 1; i < eTabelle.rows.length; i++) {
 
         //objCells.item(j).id = "elemTable-" + i + "-" + j;
         if (j === 1) {
-            w.setAttribute("value", String(21000 * unit_stress_factor));
+            w.setAttribute("value", double2String(21000 * unit_stress_factor));
         } else if (j === 2) {
-            w.setAttribute("value", String(0.3));
+            w.setAttribute("value", double2String(0.3));
         } else if (j === 3) {
-            w.setAttribute("value", String(1.5 * unit_length_factor));
+            w.setAttribute("value", double2String(1.5 * unit_length_factor));
         }
 
     }
