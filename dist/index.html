@@ -478,20 +478,39 @@
           </select>
         </p>
         <br>
-        <p>Tabellenfarbe außen:
-          <input id="id_color_table_out" value="#CFD915" style="width: 150px; border-radius: 3px; border-width: 1px;"
-            data-jscolor="{ preset: 'dark', closeButton: true, closeText: 'OK' }">
-        </p>
-        <p>Tabellenfarbe innen:
-          <input id="id_color_table_in" value="#b3ae00" style="width: 150px; border-radius: 3px; border-width: 1px;"
-            data-jscolor="{ preset: 'dark', closeButton: true, closeText: 'OK' }">
-        </p>
+
+        <table>
+          <tbody>
+            <tr>
+              <td nowrap>
+                Tabellenfarbe außen: &nbsp;</td>
+              <td>
+                <input id="id_color_table_out" value="#CFD915"
+                  style="width: 150px; border-radius: 3px; border-width: 1px;"
+                  data-jscolor="{ preset: 'dark', closeButton: true, closeText: 'OK' }">
+              </td>
+            </tr>
+            <tr>
+              <td nowrap>Tabellenfarbe innen: &nbsp;</td>
+              <td>
+                <input id="id_color_table_in" value="#b3ae00"
+                  style="width: 150px; border-radius: 3px; border-width: 1px;"
+                  data-jscolor="{ preset: 'dark', closeButton: true, closeText: 'OK' }">
+              </td>
+            </tr>
+          </tbody>
+        </table>
+
         <br><br>
         <p>
-          <button type="button" id="id_cb_saveLocalStorage">Auswahl als Standardwerte im Browser speichern</button>
+
+          <button type="button" id="id_cb_saveLocalStorage">Auswahl als Standardwerte im Browser
+            speichern</button>
         </p>
         <p>
-          <button type="button" id="id_cb_deleteLocalStorage">Standardwerte im Speicher des Browsers löschen</button>
+          <button type="button" id="id_cb_deleteLocalStorage">Standardwerte im Speicher des Browsers
+            löschen</button>
+
         </p>
         <br>
       </div>

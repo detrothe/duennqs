@@ -12,7 +12,7 @@ import { tabQWerte, schnittgroesse, bezugswerte } from "./duennQ"
 import { nnodes, nelem } from "./duennQ_tabelle.js"
 import { truss, node } from "./duennQ"
 import { myFormat } from './utility.js';
-import { Detect } from './index.js';
+import { app, Detect } from './index.js';
 
 const zeilenAbstand = 1.15
 
@@ -78,6 +78,7 @@ function neueZeile(yy: number, fs: number, anzahl = 1): number {
 function testSeite(yy: number, fs: number, anzahl: number, nzeilen: number): number {
   //--------------------------------------------------------------------------------------------
   let y = yy + nzeilen * zeilenAbstand * (fs * 0.352778)
+  console.log("y", y, nzeilen)
   if (y > 270) {
     Seite_No++
     doc.text("Seite" + Seite_No, 100, 290);
@@ -326,7 +327,9 @@ export async function my_jspdf() {
 
 
   doc.line(links, yy, 200, yy, "S");
-  yy = neueZeile(yy, fs1, 2)
+  //  yy = neueZeile(yy, fs1, 2)
+  yy = testSeite(yy, fs1, 2, 12)
+
   doc.setFontSize(fs1)
   doc.setFont("freesans_bold");
   doc.text("ideelle Querschnittswerte", links, yy);
@@ -405,6 +408,7 @@ export async function my_jspdf() {
   //-----------------
   yy = neueZeile(yy, fs, 2)
   doc.text("Alle Spannungen in kN/cm²", links, yy);
+  yy = neueZeile(yy, fs, 1)
 
 
   {
@@ -695,11 +699,16 @@ export async function my_jspdf() {
 
     doc.addImage(imgData, "PNG", 0, yy, 200, 200); // * myScreen.clientHeight / myScreen.svgWidth);
 
-    const filename = window.prompt(
-      "Name der Datei mit Extension, z.B. test.pdf\nDie Datei wird im Default Download Ordner gespeichert"
-    );
-
     letzteSeite();
+
+    let filename: string
+
+    if (!app.hasFSAccess) {
+
+      filename = window.prompt(
+        "Name der Datei mit Extension, z.B. test.pdf\nDie Datei wird im Default Download Ordner gespeichert"
+      );
+    }
 
     try {
       doc.save(filename);
@@ -707,7 +716,7 @@ export async function my_jspdf() {
       alert(error.message);
     }
     document.getElementById("id_pdf_info").innerText =
-      "pdf-file saved with name " + "a4.pdf" + " in your Download folder";
+      "pdf-file saved with name " + filename + " in your Download folder";
 
   }
 }

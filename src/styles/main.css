@@ -290,6 +290,7 @@ select {
     border-width: 1px;
     border-color: #303030;
     color: #444;
+    padding: 0.2em;
 }
 
 button:active {
