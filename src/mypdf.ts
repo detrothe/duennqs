@@ -715,8 +715,13 @@ export async function my_jspdf() {
     } catch (error) {
       alert(error.message);
     }
-    document.getElementById("id_pdf_info").innerText =
-      "pdf-file saved with name " + filename + " in your Download folder";
+
+    if (filename) {
+      document.getElementById("id_pdf_info").innerText =
+        "pdf-file saved with name " + filename + " in your Download folder";
+    } else {
+      document.getElementById("id_pdf_info").innerText = "";
+    }
 
   }
 }
