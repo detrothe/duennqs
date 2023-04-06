@@ -254,21 +254,26 @@ export function readLocalStorage() {
     }
 
     const default_fontsize = window.localStorage.getItem('my_fontsize');
-    let el = document.getElementById("id_fontsize") as HTMLInputElement
-    if (el.value !== default_fontsize) {
-        el.value = default_fontsize
-        my_fontsize = default_fontsize
-        document.body.style.fontSize = my_fontsize
+    if (default_fontsize) {
+        const el = document.getElementById("id_fontsize") as HTMLInputElement
+        if (el.value !== default_fontsize) {
+            el.value = default_fontsize
+            my_fontsize = default_fontsize
+            document.body.style.fontSize = my_fontsize
+        }
     }
-
-    color_table_out = window.localStorage.getItem('color_table_out');
-    el = document.getElementById("id_color_table_out") as HTMLInputElement
-    el.value = color_table_out
-
-    color_table_in = window.localStorage.getItem('color_table_in');
-    el = document.getElementById("id_color_table_in") as HTMLInputElement
-    el.value = color_table_in
-
+    let color = window.localStorage.getItem('color_table_out');
+    if (color) {
+        const el = document.getElementById("id_color_table_out") as HTMLInputElement
+        el.value = color
+        color_table_out = color
+    }
+    color = window.localStorage.getItem('color_table_in');
+    if (color) {
+        const el = document.getElementById("id_color_table_in") as HTMLInputElement
+        el.value = color
+        color_table_in = color
+    }
 
     console.log("readLocalStorage", my_fontsize, color_table_out, color_table_in)
 
