@@ -239,7 +239,7 @@ export function readLocalStorage() {
     //------------------------------------------------------------------------------------------
 
     let unitLength = window.localStorage.getItem('current_unit_length');
-    console.log("unit of length found in local storage", unitLength)
+    //console.log("unit of length found in local storage", unitLength)
 
     if (unitLength) {
         current_unit_length = unitLength
@@ -262,12 +262,14 @@ export function readLocalStorage() {
             document.body.style.fontSize = my_fontsize
         }
     }
+
     let color = window.localStorage.getItem('color_table_out');
     if (color) {
         const el = document.getElementById("id_color_table_out") as HTMLInputElement
         el.value = color
         color_table_out = color
     }
+
     color = window.localStorage.getItem('color_table_in');
     if (color) {
         const el = document.getElementById("id_color_table_in") as HTMLInputElement
@@ -275,7 +277,7 @@ export function readLocalStorage() {
         color_table_in = color
     }
 
-    console.log("readLocalStorage", my_fontsize, color_table_out, color_table_in)
+    //console.log("readLocalStorage", my_fontsize, color_table_out, color_table_in)
 
 }
 
@@ -296,7 +298,7 @@ function set_unit_factors(unitLength: string) {
 
 }
 
-
+/*
 //----------------------------------------------------------------------------------------------
 export function set_table_colors() {
     //------------------------------------------------------------------------------------------
@@ -314,7 +316,7 @@ export function set_table_colors() {
     }
 
 }
-
+*/
 
 //----------------------------------------------------------------------------------------------
 export function deleteLocalStorage() {
