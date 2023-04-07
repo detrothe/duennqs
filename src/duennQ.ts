@@ -1144,7 +1144,7 @@ export function duennQ() {
 
         const table = document.createElement("TABLE") as HTMLTableElement;   //TABLE??
         table.setAttribute("id", "id_table_spannung_mxp");
-        table.border = '0';
+        table.style.border = 'none';
         myTableDiv.appendChild(table);  //appendChild() insert it in the document (table --> myTableDiv)
 
         const thead = table.createTHead();
@@ -1206,7 +1206,7 @@ export function duennQ() {
 
         const table = document.createElement("TABLE") as HTMLTableElement;   //TABLE??
         table.setAttribute("id", "id_table_spannung_mxs");
-        table.style.border = '0';
+        table.style.border = 'none';
         myTableDiv.appendChild(table);  //appendChild() insert it in the document (table --> myTableDiv)
 
 
@@ -1270,7 +1270,7 @@ export function duennQ() {
 
         const table = document.createElement("TABLE") as HTMLTableElement;   //TABLE??
         table.setAttribute("id", "id_table_schubspannung");
-        table.border = '0';
+        table.style.border = 'none';
         myTableDiv.appendChild(table);  //appendChild() insert it in the document (table --> myTableDiv)
 
         const thead = table.createTHead();
@@ -1374,7 +1374,7 @@ export function duennQ() {
 
         const table = document.createElement("TABLE") as HTMLTableElement;   //TABLE??
         table.setAttribute("id", "id_table_normalspannung");
-        table.border = '0';
+        table.style.border = 'none';
         myTableDiv.appendChild(table);  //appendChild() insert it in the document (table --> myTableDiv)
 
 
@@ -1429,7 +1429,7 @@ export function duennQ() {
 
         const table = document.createElement("TABLE") as HTMLTableElement;
         table.setAttribute("id", "id_table_vergleichsspannung");
-        table.border = '0';
+        table.style.border = 'none';
         myTableDiv.appendChild(table);  //appendChild() insert it in the document (table --> myTableDiv)
 
 

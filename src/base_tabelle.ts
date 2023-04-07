@@ -287,7 +287,7 @@ export function meinetabelle(theDiv, id_table, nZeilen, columns) {
     const table = document.createElement("TABLE") as HTMLTableElement;   //TABLE??
     table.setAttribute("id", id_table);
     table.className = 'tabelle'  // wichtig für Context menue
-    table.border = '0';
+    table.style.border = 'none';
     table.style.backgroundColor = color_table_out
     myTableDiv.appendChild(table);  //appendChild() insert it in the document (table --> myTableDiv)
 
