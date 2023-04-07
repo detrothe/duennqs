@@ -34,6 +34,10 @@ export function systemlinien(clientWidth?: number, clientHeight?: number, faktor
 
     if (typeof clientHeight === 'undefined') {
         clientHeight = myScreen.clientHeight
+        const el = document.getElementById("input-container")
+        let height = el.getBoundingClientRect().height
+        //console.log("systemlinien", height, document.getElementById("myTopnav").getBoundingClientRect().height)
+        clientHeight -= height
     }
     console.log("WIDTH HEIGHT", clientWidth, clientHeight);
 

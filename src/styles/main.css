@@ -432,6 +432,7 @@ td {
     display: none;
     width: 1000px;
     height: 1000px;
+
     /*background-color: rgb(110, 180, 180);*/
 }
 
@@ -619,17 +620,20 @@ input[type=number] {
 .input_int {
     width: 3.125em;
     margin: 0;
-    border-radius: 1px;
-    border: solid 1px #303030;
-    /*50px;*/
-    /*font-size: 1rem;*/
+    padding: 1px;
+    border-top: 1px solid #444;
+    border-bottom: 1px solid #444;
+    border-left: 0;
+    border-right: 0;
+    border-radius: 0;
+    text-align: center;
 }
 
 .spinner {
-    border: solid 1px #303030;
+    border: solid 1px #444;
     margin: 0;
-
-    width: 1.25em;
+    padding: 1px;
+    width: 1em;
     /*vertical-align: middle;
     background-color: lightslategrey */
 }
