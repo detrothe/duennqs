@@ -131,7 +131,7 @@ ttf_logo_3D();
     } else {
         infoBox.innerHTML += "<br>showSaveFilePicker wird NICHT unterstützt";
     }
-    const div = document.getElementById('eingabe_duennQ_top');
+    const div = document.querySelector('body') //document.getElementById('eingabe_duennQ_top');
 
     infoBox.innerHTML += "<br>used font-size: " + css(div, 'font-size')
     infoBox.innerHTML += "<br>getComputedStyle: " + getComputedStyle(div).font

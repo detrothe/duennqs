@@ -80,9 +80,18 @@
 
         <p>
           <label>Anzahl Knoten :</label>
-          <input type="number" step="1" id="input_nodes" name="nnodes" class="input_int" value="6" width="10px" />
+          <span>
+            <button id="id_input_node_dec" class="spinner kreis">-</button>
+            <input type="number" step="1" id="input_nodes" name="nnodes" class="input_int" value="6" />
+            <button id="id_input_node_incr" class="spinner kreis">+</button>
+          </span>
+
           <label>&nbsp;&nbsp; Anzahl Elemente :</label>
+
+          <button id="id_input_elem_dec" class="spinner kreis">-</button>
           <input type="number" id="input_nelem" name="nelem" class="input_int" value="6" />
+          <button id="id_input_elem_incr" class="spinner kreis">+</button>
+
           <br />
         </p>
 

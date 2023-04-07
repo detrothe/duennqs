@@ -321,6 +321,8 @@ input:valid {
 */
 .input_int {
     width: 3.125em;
+    margin: 0;
+
     /*50px;*/
     /*font-size: 1rem;*/
 }
@@ -602,7 +604,8 @@ input[type=number] {
 .input_normal {
     background-color: rgb(255, 255, 255);
     color: rgb(0, 0, 0);
-    /*touch-action: none;*/
+    /*font-variant-numeric: oldstyle-nums tabular-nums;
+    touch-action: none;*/
 }
 
 #id_display_einstellungen {
@@ -617,4 +620,46 @@ input[type=number] {
 .unit_stress {
     /*font-size: var(--sg_normal);*/
     text-align: left;
+}
+
+.spinner {
+    border: solid 1px rgb(0, 0, 0);
+    margin: 0;
+    padding: 0;
+    width: 1.25em;
+    height: 1.25em;
+    vertical-align: middle;
+    background-color: lightslategrey
+}
+
+.spinner:hover {
+    background: lightgrey;
+}
+
+.decrement {
+    /*.decrement*/
+    border-radius: 5px 0 0 5px;
+    margin-right: 0;
+    padding: 0;
+    font-size: 1.125em;
+    color: #d60000;
+}
+
+.increment {
+    /*.increment*/
+    border-radius: 0 5px 5px 0;
+    color: #d60000;
+    font-size: 1.125em;
+
+}
+
+.kreis {
+    border-radius: 0.625em 0.625em 0.625em 0.625em;
+    color: #d60000;
+    /*font-size: 1.125em;
+    vertical-align: center;
+    
+    align-items: center;
+    justify-content: center;
+    */
 }

@@ -18,6 +18,33 @@ window.nnodes = nnodes;
 console.log("nnodes=", nnodes)
 console.log("nelem=", nelem)
 
+
+document.getElementById('id_input_node_incr').addEventListener('click', increment_nnodes, false);
+document.getElementById('id_input_node_dec').addEventListener('click', decrement_nnodes, false);
+document.getElementById('id_input_elem_incr').addEventListener('click', increment_nelem, false);
+document.getElementById('id_input_elem_dec').addEventListener('click', decrement_nelem, false);
+
+//----------------------------------------------------------------------------------------------
+function increment_nnodes() {
+    nnodes++
+    input_nodes.value = nnodes
+}
+//----------------------------------------------------------------------------------------------
+function decrement_nnodes() {
+    nnodes--
+    input_nodes.value = nnodes
+}
+//----------------------------------------------------------------------------------------------
+function increment_nelem() {
+    nelem++
+    input_nelem.value = nelem
+}
+//----------------------------------------------------------------------------------------------
+function decrement_nelem() {
+    nelem--
+    input_nelem.value = nelem
+}
+
 //----------------------------------------------------------------------------------------------
 input_nodes.onchange = function () {
 
