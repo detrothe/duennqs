@@ -135,6 +135,7 @@ ttf_logo_3D();
 
     infoBox.innerHTML += "<br>used font-size: " + css(div, 'font-size')
     infoBox.innerHTML += "<br>getComputedStyle: " + getComputedStyle(div).font
+    infoBox.innerHTML += "<br>getRenderedFontFamilyName: " + getRenderedFontFamilyName(document.querySelector('body'));
 }
 
 //duennQ();
@@ -142,4 +143,16 @@ ttf_logo_3D();
 
 function css(element, property) {
     return window.getComputedStyle(element, null).getPropertyValue(property);
+}
+
+function getRenderedFontFamilyName(element) {
+    // Font families set in CSS for the element
+    const fontFamilies = window.getComputedStyle(element, null).getPropertyValue("font-family");
+    // const hardcodedFamilies = '-apple-system, BlinkMacSystemFont, "Segoe UI Adjusted", "Segoe UI", "Liberation Sans", sans-serif';
+
+    // Remove the " sign from names (font families with spaces in their names) and split names to the array
+    const fontFamiliesArr = fontFamilies.replaceAll('"', "").split(", ");
+
+    // Find the first loaded font from the array
+    return fontFamiliesArr.find(e => document.fonts.check(`12px ${e}`));
 }
