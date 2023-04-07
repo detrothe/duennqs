@@ -171,7 +171,7 @@ export function resize_Tabelle(idTable, nRowNew, nColNew) {
 
                     let el = document.createElement("input");
                     el.setAttribute("type", "number");
-                    el.style.width = '6em';
+                    el.style.width = 'inherit'   //'6em';
                     //el.style.backgroundColor = 'rgb(200,200,200)';
                     el.style.border = 'none';
                     el.style.borderWidth = '0px';
@@ -237,7 +237,7 @@ export function resize_Tabelle(idTable, nRowNew, nColNew) {
 
                     let el = document.createElement("input");
                     el.setAttribute("type", "number");
-                    el.style.width = '6em';
+                    el.style.width = 'inherit'  //'6em';
                     el.style.border = 'none';
                     el.style.borderWidth = '0px';
                     el.style.padding = '5px';
@@ -329,7 +329,7 @@ export function meinetabelle(theDiv, id_table, nZeilen, columns) {
 
                 let el = document.createElement("input");
                 el.setAttribute("type", "number");
-                el.style.width = '6em';   // 100px
+                el.style.width = 'inherit' //'6em';   // 100px
                 //el.style.backgroundColor = 'rgb(200,200,200)';
                 el.style.border = 'none';
                 el.style.borderWidth = '0px';

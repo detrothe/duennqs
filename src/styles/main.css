@@ -320,7 +320,8 @@ input:valid {
 }
 */
 .input_int {
-    width: 50px;
+    width: 3.125em;
+    /*50px;*/
     /*font-size: 1rem;*/
 }
 
@@ -338,6 +339,7 @@ input:valid {
 .zelle0 {
     /*width: 4em;*/
     text-align: right;
+    white-space: nowrap;
     /*font-size: 1rem;*/
 }
 
@@ -359,7 +361,8 @@ input:valid {
 }
 */
 .input_kdtab {
-    width: 80px;
+    width: 5em;
+    /*80px;*/
 }
 
 
@@ -391,6 +394,13 @@ td {
 
 .td_eng {
     padding: 1px;
+    width: 3em;
+}
+
+.td_eng_right {
+    text-align: right;
+    padding: 1px;
+    width: 3em;
 }
 
 #querschnittwerte_table td {
