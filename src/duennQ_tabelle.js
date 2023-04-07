@@ -28,21 +28,25 @@ document.getElementById('id_input_elem_dec').addEventListener('click', decrement
 function increment_nnodes() {
     nnodes++
     input_nodes.value = nnodes
+    set_InfosNeueBerechnungErforderlich()
 }
 //----------------------------------------------------------------------------------------------
 function decrement_nnodes() {
     nnodes--
     input_nodes.value = nnodes
+    set_InfosNeueBerechnungErforderlich()
 }
 //----------------------------------------------------------------------------------------------
 function increment_nelem() {
     nelem++
     input_nelem.value = nelem
+    set_InfosNeueBerechnungErforderlich()
 }
 //----------------------------------------------------------------------------------------------
 function decrement_nelem() {
     nelem--
     input_nelem.value = nelem
+    set_InfosNeueBerechnungErforderlich()
 }
 
 //----------------------------------------------------------------------------------------------
@@ -50,10 +54,7 @@ input_nodes.onchange = function () {
 
     nnodes = Number(this.value);
     console.log("neues nnodes", nnodes)
-    berechnungErforderlich(true);
-    document.getElementById("resize").disabled = false
-    document.getElementById("resize").style.color = "#dd0000"
-    document.getElementById("rechnen").setAttribute('disabled', true)
+    set_InfosNeueBerechnungErforderlich()
 }
 
 //----------------------------------------------------------------------------------------------
@@ -61,6 +62,11 @@ input_nelem.onchange = function () {
 
     nelem = Number(this.value);
     console.log("neues nelem", nelem)
+    set_InfosNeueBerechnungErforderlich()
+}
+
+//----------------------------------------------------------------------------------------------
+function set_InfosNeueBerechnungErforderlich() {
     berechnungErforderlich(true);
     document.getElementById("resize").disabled = false
     document.getElementById("resize").style.color = "#dd0000"
