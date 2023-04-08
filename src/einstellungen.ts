@@ -8,6 +8,7 @@ document.getElementById("id_color_table_out").addEventListener('change', set_col
 document.getElementById("id_color_table_in").addEventListener('change', set_color_table_in);
 
 export let current_unit_length = 'cm'
+export let current_unit_stress = 'kN/cm²'
 export let unit_length_factor = 1               // Multiplikator von cm nach neuer Einheit
 export let unit_stress_factor = 1               // Multiplikator von kN/cm² nach neuer Einheit
 export let my_fontsize = '1em'
@@ -208,6 +209,14 @@ export function setNewUnits() {
 
     current_unit_length = unit
 
+    if (unit === 'mm') {
+        current_unit_stress = 'N/mm²'
+    } else if (unit === 'cm') {
+        current_unit_stress = 'kN/cm²'
+    } else if (unit === 'm') {
+        current_unit_stress = 'MN/m²'
+    }
+
 }
 
 
@@ -284,6 +293,8 @@ export function readLocalStorage() {
 //----------------------------------------------------------------------------------------------
 function set_unit_factors(unitLength: string) {
     //------------------------------------------------------------------------------------------
+
+    // Umrechnung von cm in ... , kN/cm² in ...
 
     if (unitLength === 'mm') {
         unit_length_factor = 10.0

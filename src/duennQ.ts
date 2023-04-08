@@ -8,7 +8,7 @@ import { remove_selected_Tabelle, clear_Tabelle, setSelectionMode_node, setSelec
 import { label_svg, copy_svg } from "./systemlinien";
 import { set_myScreen } from "./index.js"
 import { draw_elements } from "./grafik_3D";
-import { current_unit_length, unit_length_factor, unit_stress_factor } from "./einstellungen"
+import { current_unit_length, current_unit_stress, unit_length_factor, unit_stress_factor } from "./einstellungen"
 
 //import {set_nnodes, set_nelem} from "./duennQ_tabelle.js"
 
@@ -439,6 +439,7 @@ export function duennQ() {
     //console.log("Mxs", Mt2)
     input = document.getElementById('fyRd') as HTMLInputElement | null;
     fyRd = Number(testeZahl(input.value) / unit_stress_factor);
+    console.log("fyRd", fyRd)
 
     while (node.length > 0) node.pop();
     while (truss.length > 0) truss.pop();
@@ -1059,13 +1060,6 @@ export function duennQ() {
             } else {
                 truss[i].sigma_v[j] = Math.sqrt(sigma2 + 3 * tau_L ** 2)
             }
-            //Sheets("Eingabe").Cells(20 + i, 24 + j) = truss[i].sigma_v(j)
-            if (truss[i].sigma_v[j] > fyRd) {
-                //Sheets("Eingabe").Cells(20 + i, 24 + j).Font.Color = -16776961
-            } else {
-                //Sheets("Eingabe").Cells(20 + i, 24 + j).Font.ColorIndex = xlAutomatic
-            }
-
         }
     }
 
@@ -1132,7 +1126,7 @@ export function duennQ() {
         tag.setAttribute("id", "id_spannung_mxp");
         const text = document.createTextNode("xxx");
         tag.appendChild(text);
-        tag.innerHTML = "Alle Spannungen in kN/cm²<br><br>Schubspannungen aus primärer Torsion M<sub>xp</sub>"
+        tag.innerHTML = "Alle Spannungen in " + current_unit_stress + "<br><br>Schubspannungen aus primärer Torsion M<sub>xp</sub>"
         myTableDiv.appendChild(tag);
 
         const table = document.createElement("TABLE") as HTMLTableElement;   //TABLE??
@@ -1172,15 +1166,15 @@ export function duennQ() {
             newCell.setAttribute("class", "table_spannung_cell_center");
 
             newCell = newRow.insertCell(1);  // Insert a cell in the row at index 1
-            newText = document.createTextNode(myFormat(truss[i].tau_p0L[0], 2, 2));  // Append a text node to the cell
+            newText = document.createTextNode(myFormat(truss[i].tau_p0L[0] * unit_stress_factor, 2, 2));  // Append a text node to the cell
             newCell.appendChild(newText);
 
             newCell = newRow.insertCell(2);  // Insert a cell in the row at index 1
-            newText = document.createTextNode(myFormat(truss[i].tau_p0R[0], 2, 2));  // Append a text node to the cell
+            newText = document.createTextNode(myFormat(truss[i].tau_p0R[0] * unit_stress_factor, 2, 2));  // Append a text node to the cell
             newCell.appendChild(newText);
 
             newCell = newRow.insertCell(3);  // Insert a cell in the row at index 1
-            newText = document.createTextNode(myFormat(truss[i].tau_p1[0], 2, 2));  // Append a text node to the cell
+            newText = document.createTextNode(myFormat(truss[i].tau_p1[0] * unit_stress_factor, 2, 2));  // Append a text node to the cell
             newCell.appendChild(newText);
         }
     }
@@ -1237,15 +1231,15 @@ export function duennQ() {
             newCell.setAttribute("class", "table_spannung_cell_center");
 
             newCell = newRow.insertCell(1);  // Insert a cell in the row at index 1
-            newText = document.createTextNode(myFormat(truss[i].tau_s[0], 2, 2));  // Append a text node to the cell
+            newText = document.createTextNode(myFormat(truss[i].tau_s[0] * unit_stress_factor, 2, 2));  // Append a text node to the cell
             newCell.appendChild(newText);
 
             newCell = newRow.insertCell(2);  // Insert a cell in the row at index 1
-            newText = document.createTextNode(myFormat(truss[i].tau_s[1], 2, 2));  // Append a text node to the cell
+            newText = document.createTextNode(myFormat(truss[i].tau_s[1] * unit_stress_factor, 2, 2));  // Append a text node to the cell
             newCell.appendChild(newText);
 
             newCell = newRow.insertCell(3);  // Insert a cell in the row at index 1
-            newText = document.createTextNode(myFormat(truss[i].tau_s[2], 2, 2));  // Append a text node to the cell
+            newText = document.createTextNode(myFormat(truss[i].tau_s[2] * unit_stress_factor, 2, 2));  // Append a text node to the cell
             newCell.appendChild(newText);
         }
     }
@@ -1328,27 +1322,27 @@ export function duennQ() {
             newCell.setAttribute("class", "table_spannung_cell_center");
 
             newCell = newRow.insertCell(1);  // Insert a cell in the row at index 1
-            newText = document.createTextNode(myFormat(truss[i].stress_L[0], 2, 2));  // Append a text node to the cell
+            newText = document.createTextNode(myFormat(truss[i].stress_L[0] * unit_stress_factor, 2, 2));  // Append a text node to the cell
             newCell.appendChild(newText);
 
             newCell = newRow.insertCell(2);  // Insert a cell in the row at index 1
-            newText = document.createTextNode(myFormat(truss[i].stress_L[1], 2, 2));  // Append a text node to the cell
+            newText = document.createTextNode(myFormat(truss[i].stress_L[1] * unit_stress_factor, 2, 2));  // Append a text node to the cell
             newCell.appendChild(newText);
 
             newCell = newRow.insertCell(3);  // Insert a cell in the row at index 1
-            newText = document.createTextNode(myFormat(truss[i].stress_L[2], 2, 2));  // Append a text node to the cell
+            newText = document.createTextNode(myFormat(truss[i].stress_L[2] * unit_stress_factor, 2, 2));  // Append a text node to the cell
             newCell.appendChild(newText);
 
             newCell = newRow.insertCell(4);  // Insert a cell in the row at index 1
-            newText = document.createTextNode(myFormat(truss[i].stress_R[0], 2, 2));  // Append a text node to the cell
+            newText = document.createTextNode(myFormat(truss[i].stress_R[0] * unit_stress_factor, 2, 2));  // Append a text node to the cell
             newCell.appendChild(newText);
 
             newCell = newRow.insertCell(5);  // Insert a cell in the row at index 1
-            newText = document.createTextNode(myFormat(truss[i].stress_R[1], 2, 2));  // Append a text node to the cell
+            newText = document.createTextNode(myFormat(truss[i].stress_R[1] * unit_stress_factor, 2, 2));  // Append a text node to the cell
             newCell.appendChild(newText);
 
             newCell = newRow.insertCell(6);  // Insert a cell in the row at index 1
-            newText = document.createTextNode(myFormat(truss[i].stress_R[2], 2, 2));  // Append a text node to the cell
+            newText = document.createTextNode(myFormat(truss[i].stress_R[2] * unit_stress_factor, 2, 2));  // Append a text node to the cell
             newCell.appendChild(newText);
         }
     }
@@ -1399,11 +1393,11 @@ export function duennQ() {
             newCell.setAttribute("class", "table_spannung_cell_center");
 
             newCell = newRow.insertCell(1);  // Insert a cell in the row at index 1
-            newText = document.createTextNode(myFormat(truss[i].sigma_x[0], 3, 3));  // Append a text node to the cell
+            newText = document.createTextNode(myFormat(truss[i].sigma_x[0] * unit_stress_factor, 3, 3));  // Append a text node to the cell
             newCell.appendChild(newText);
 
             newCell = newRow.insertCell(2);  // Insert a cell in the row at index 1
-            newText = document.createTextNode(myFormat(truss[i].sigma_x[2], 3, 3));  // Append a text node to the cell
+            newText = document.createTextNode(myFormat(truss[i].sigma_x[2] * unit_stress_factor, 3, 3));  // Append a text node to the cell
             newCell.appendChild(newText);
 
         }
@@ -1458,17 +1452,17 @@ export function duennQ() {
             newCell.setAttribute("class", "table_spannung_cell_center");
 
             newCell = newRow.insertCell(1);  // Insert a cell in the row at index 1
-            newText = document.createTextNode(myFormat(truss[i].sigma_v[0], 3, 3));  // Append a text node to the cell
+            newText = document.createTextNode(myFormat(truss[i].sigma_v[0] * unit_stress_factor, 3, 3));  // Append a text node to the cell
             newCell.appendChild(newText);
             if (truss[i].sigma_v[0] > fyRd) newCell.style.color = 'red'
 
             newCell = newRow.insertCell(2);  // Insert a cell in the row at index 1
-            newText = document.createTextNode(myFormat(truss[i].sigma_v[1], 3, 3));  // Append a text node to the cell
+            newText = document.createTextNode(myFormat(truss[i].sigma_v[1] * unit_stress_factor, 3, 3));  // Append a text node to the cell
             newCell.appendChild(newText);
             if (truss[i].sigma_v[1] > fyRd) newCell.style.color = 'red'
 
             newCell = newRow.insertCell(3);  // Insert a cell in the row at index 1
-            newText = document.createTextNode(myFormat(truss[i].sigma_v[2], 3, 3));  // Append a text node to the cell
+            newText = document.createTextNode(myFormat(truss[i].sigma_v[2] * unit_stress_factor, 3, 3));  // Append a text node to the cell
             newCell.appendChild(newText);
             if (truss[i].sigma_v[2] > fyRd) newCell.style.color = 'red'
 

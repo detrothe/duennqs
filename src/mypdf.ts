@@ -13,6 +13,7 @@ import { nnodes, nelem } from "./duennQ_tabelle.js"
 import { truss, node } from "./duennQ"
 import { myFormat } from './utility.js';
 import { app, Detect } from './index.js';
+import { current_unit_stress, unit_stress_factor } from "./einstellungen"
 
 const zeilenAbstand = 1.15
 
@@ -407,7 +408,7 @@ export async function my_jspdf() {
 
   //-----------------
   yy = neueZeile(yy, fs, 2)
-  doc.text("Alle Spannungen in kN/cm²", links, yy);
+  doc.text("Alle Spannungen in " + current_unit_stress, links, yy);
   yy = neueZeile(yy, fs, 1)
 
 
@@ -441,15 +442,15 @@ export async function my_jspdf() {
     for (let i = 0; i < nzeilen; i++) {
       doc.text(String(i + 1), spalte[0], yy);
 
-      str = myFormat(truss[i].tau_p0L[0], 2, 2)
+      str = myFormat(truss[i].tau_p0L[0] * unit_stress_factor, 2, 2)
       texWid = doc.getTextWidth(str)
       doc.text(str, spalte[1] + 20 - texWid, yy);
 
-      str = myFormat(truss[i].tau_p0R[0], 2, 2)
+      str = myFormat(truss[i].tau_p0R[0] * unit_stress_factor, 2, 2)
       texWid = doc.getTextWidth(str)
       doc.text(str, spalte[2] + 20 - texWid, yy);
 
-      str = myFormat(truss[i].tau_p1[0], 2, 2)
+      str = myFormat(truss[i].tau_p1[0] * unit_stress_factor, 2, 2)
       texWid = doc.getTextWidth(str)
       doc.text(str, spalte[3] + 20 - texWid, yy);
 
@@ -489,7 +490,7 @@ export async function my_jspdf() {
     for (let i = 0; i < nzeilen; i++) {
       doc.text(String(i + 1), spalte[0], yy);
       for (let j = 1; j < nspalten; j++) {
-        str = myFormat(truss[i].tau_s[j - 1], 2, 2)
+        str = myFormat(truss[i].tau_s[j - 1] * unit_stress_factor, 2, 2)
         texWid = doc.getTextWidth(str)
         doc.text(str, spalte[j] + 20 - texWid, yy);
       }
@@ -556,12 +557,12 @@ export async function my_jspdf() {
     for (let i = 0; i < nzeilen; i++) {
       doc.text(String(i + 1), spalte[0], yy);
       for (let j = 1; j < 4; j++) {
-        str = myFormat(truss[i].stress_L[j - 1], 2, 2)
+        str = myFormat(truss[i].stress_L[j - 1] * unit_stress_factor, 2, 2)
         texWid = doc.getTextWidth(str)
         doc.text(str, spalte[j] + 20 - texWid, yy);
       }
       for (let j = 4; j < nspalten; j++) {
-        str = myFormat(truss[i].stress_R[j - 4], 2, 2)
+        str = myFormat(truss[i].stress_R[j - 4] * unit_stress_factor, 2, 2)
         texWid = doc.getTextWidth(str)
         doc.text(str, spalte[j] + 20 - texWid, yy);
         //doc.text(myFormat(truss[i].stress_R[j - 4], 2, 2), spalte[j], yy);
@@ -603,7 +604,7 @@ export async function my_jspdf() {
     for (let i = 0; i < nzeilen; i++) {
       doc.text(String(i + 1), spalte[0], yy);
       for (let j = 1; j < nspalten; j++) {
-        str = myFormat(truss[i].sigma_x[j - 1], 3, 3)
+        str = myFormat(truss[i].sigma_x[j - 1] * unit_stress_factor, 3, 3)
         texWid = doc.getTextWidth(str)
         doc.text(str, spalte[j] + 20 - texWid, yy);
       }
@@ -658,7 +659,7 @@ export async function my_jspdf() {
     for (let i = 0; i < nzeilen; i++) {
       doc.text(String(i + 1), spalte[0], yy);
       for (let j = 1; j < nspalten; j++) {
-        str = myFormat(truss[i].sigma_v[j - 1], 3, 3)
+        str = myFormat(truss[i].sigma_v[j - 1] * unit_stress_factor, 3, 3)
         texWid = doc.getTextWidth(str)
         doc.text(str, spalte[j] + 20 - texWid, yy);
       }
