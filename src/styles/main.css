@@ -548,6 +548,12 @@ td {
     z-index: 90;
 }
 
+#id_unit_webgl {
+    position: absolute;
+    top: 500px;
+    left: 200px;
+    z-index: 300;
+}
 
 #my-webgl {
     position: relative;
