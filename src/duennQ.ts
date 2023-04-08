@@ -38,11 +38,7 @@ function setMaterialEqual(ev) {
     //let nSpalten = tabelle.rows[0].cells.length;
 
     if (ev.target.checked) {  // unsichtbar machen
-        //console.log("editable", document.getElementById("EMod_ref").isContentEditable);
-        document.getElementById("id_bezugswerte").style.visibility = 'hidden'
-        //document.getElementById("EMod_ref").hidden = true;
-        //document.getElementById("mue_ref").hidden = true;
-        //console.log("Anzahl Zeilen", tabelle.rows.length);
+        //document.getElementById("id_bezugswerte").style.visibility = 'hidden'
 
         for (let i = 0; i < tabelle.rows.length; i++) {
             for (let j = 1; j < 3; j++) {
@@ -62,11 +58,8 @@ function setMaterialEqual(ev) {
             }
         }
     } else {    // sichtbar machen
-        //console.log("editable", document.getElementById("EMod_ref").isContentEditable);
-        document.getElementById("id_bezugswerte").style.visibility = 'visible'
+        //document.getElementById("id_bezugswerte").style.visibility = 'visible'
 
-        //document.getElementById("EMod_ref").hidden = false;
-        //document.getElementById("mue_ref").hidden = false;
 
         for (let i = 0; i < tabelle.rows.length; i++) {
             for (let j = 1; j < 3; j++) {
@@ -445,7 +438,7 @@ export function duennQ() {
 
     //console.log("Mxs", Mt2)
     input = document.getElementById('fyRd') as HTMLInputElement | null;
-    fyRd = Number(testeZahl(input.value));
+    fyRd = Number(testeZahl(input.value) / unit_stress_factor);
 
     while (node.length > 0) node.pop();
     while (truss.length > 0) truss.pop();
@@ -461,24 +454,24 @@ export function duennQ() {
     const material_equal = document.getElementById('material_equal') as HTMLInputElement | null;
     //console.log("in setMaterialEqual", material_equal.checked);
 
-
-    if (material_equal.checked) {
-        EModul = 21000.0;
-        mue = 0.3;
-    } else {
-        input = document.getElementById('EMod_ref') as HTMLInputElement | null;
-        bezugswerte.emodul = EModul = Number(testeZahl(input.value) / unit_stress_factor);
-        if (EModul < 1e-12) {
-            alert("Referenz-Emodul muss größer 0 sein")
-            return;
-        }
-        input = document.getElementById('mue_ref') as HTMLInputElement | null;
-        bezugswerte.mue = mue = Number(testeZahl(input.value));
-        if (mue < 0) {
-            alert("Referenz-Querdehnung muss größer oder gleich 0 sein")
-            return;
-        }
+    /*
+        if (material_equal.checked) {
+            EModul = 21000.0;
+            mue = 0.3;
+        } else { */
+    input = document.getElementById('EMod_ref') as HTMLInputElement | null;
+    bezugswerte.emodul = EModul = Number(testeZahl(input.value) / unit_stress_factor);
+    if (EModul < 1e-12) {
+        alert("Referenz-Emodul muss größer 0 sein")
+        return;
     }
+    input = document.getElementById('mue_ref') as HTMLInputElement | null;
+    bezugswerte.mue = mue = Number(testeZahl(input.value));
+    if (mue < 0) {
+        alert("Referenz-Querdehnung muss größer oder gleich 0 sein")
+        return;
+    }
+    /*}*/
     const GModul = EModul / 2.0 / (1.0 + mue)
     //console.log("Bezugswerte", EModul, mue, GModul)
 
@@ -520,8 +513,8 @@ export function duennQ() {
     for (i = 0; i < nelem; i++) {
 
         if (material_equal.checked) {
-            truss[i].EModul = 21000.0;
-            truss[i].mue = 0.3;
+            truss[i].EModul = bezugswerte.emodul;
+            truss[i].mue = bezugswerte.mue;
         } else {
             let child = eTabelle.rows[i + 1].cells[1].firstElementChild as HTMLInputElement
             wert = child.value
@@ -1467,14 +1460,17 @@ export function duennQ() {
             newCell = newRow.insertCell(1);  // Insert a cell in the row at index 1
             newText = document.createTextNode(myFormat(truss[i].sigma_v[0], 3, 3));  // Append a text node to the cell
             newCell.appendChild(newText);
+            if (truss[i].sigma_v[0] > fyRd) newCell.style.color = 'red'
 
             newCell = newRow.insertCell(2);  // Insert a cell in the row at index 1
             newText = document.createTextNode(myFormat(truss[i].sigma_v[1], 3, 3));  // Append a text node to the cell
             newCell.appendChild(newText);
+            if (truss[i].sigma_v[1] > fyRd) newCell.style.color = 'red'
 
             newCell = newRow.insertCell(3);  // Insert a cell in the row at index 1
             newText = document.createTextNode(myFormat(truss[i].sigma_v[2], 3, 3));  // Append a text node to the cell
             newCell.appendChild(newText);
+            if (truss[i].sigma_v[2] > fyRd) newCell.style.color = 'red'
 
         }
     }

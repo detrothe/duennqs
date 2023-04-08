@@ -126,6 +126,7 @@ ttf_logo_3D();
     infoBox.innerHTML = "clientwidth=" + myScreen.clientWidth + "&nbsp;,&nbsp;&nbsp;    clientheight=" + myScreen.clientHeight;
     infoBox.innerHTML += "<br>Browser: " + Detect.browser + " Version " + Detect.version;
     infoBox.innerHTML += "<br>OS: " + Detect.OS + " , isMac: " + app.isMac;
+    infoBox.innerHTML += "<br>Browser Language: " + navigator.language;
     if (app.hasFSAccess) {
         infoBox.innerHTML += "<br>showSaveFilePicker wird unterstützt";
     } else {
@@ -134,8 +135,8 @@ ttf_logo_3D();
     const div = document.querySelector('body') //document.getElementById('eingabe_duennQ_top');
 
     infoBox.innerHTML += "<br>used font-size: " + css(div, 'font-size')
-    infoBox.innerHTML += "<br>getComputedStyle: " + getComputedStyle(div).font
-    infoBox.innerHTML += "<br>getRenderedFontFamilyName: " + getRenderedFontFamilyName(document.querySelector('body'));
+    //infoBox.innerHTML += "<br>getComputedStyle: " + getComputedStyle(div).font
+    //infoBox.innerHTML += "<br>getRenderedFontFamilyName: " + getRenderedFontFamilyName(document.querySelector('body'));
 }
 
 //duennQ();
@@ -144,7 +145,7 @@ ttf_logo_3D();
 function css(element, property) {
     return window.getComputedStyle(element, null).getPropertyValue(property);
 }
-
+/*
 function getRenderedFontFamilyName(element) {
     // Font families set in CSS for the element
     const fontFamilies = window.getComputedStyle(element, null).getPropertyValue("font-family");
@@ -156,3 +157,4 @@ function getRenderedFontFamilyName(element) {
     // Find the first loaded font from the array
     return fontFamiliesArr.find(e => document.fonts.check(`12px ${e}`));
 }
+*/
