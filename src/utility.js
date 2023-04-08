@@ -69,6 +69,7 @@ export function sichtbar(displayName) {
 
     if (displayName === 'ergebnisse') {
         document.getElementById("ergebnisse").style.display = "block";
+        /*
         document.getElementById("querschnittswerte").style.display = "block";
 
         document.getElementById("spannung_mxp").style.display = "block";
@@ -76,8 +77,10 @@ export function sichtbar(displayName) {
         document.getElementById("normalspannung").style.display = "block";
         document.getElementById("vergleichsspannung").style.display = "block";
         document.getElementById("schubspannung").style.display = "block";
+        */
     } else {
         document.getElementById("ergebnisse").style.display = "none";
+        /*
         document.getElementById("querschnittswerte").style.display = "none";
 
         document.getElementById("spannung_mxp").style.display = "none";
@@ -85,6 +88,7 @@ export function sichtbar(displayName) {
         document.getElementById("normalspannung").style.display = "none";
         document.getElementById("vergleichsspannung").style.display = "none";
         document.getElementById("schubspannung").style.display = "none";
+        */
     }
     if (displayName === 'duennQ') {
         set_myScreen();

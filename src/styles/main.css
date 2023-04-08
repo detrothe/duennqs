@@ -301,11 +301,11 @@ textarea {
     background-color: #D8D8D8;
 }
 
+/*
 #querschnittswerte {
     display: none;
-    /*background-color: #D8D8D8;*/
 }
-
+*/
 button,
 select {
     font-size: 1em;
@@ -434,6 +434,7 @@ td {
     text-align: right;
 }
 
+/*
 #spannung_mxp,
 #spannung_mxs,
 #normalspannung,
@@ -441,7 +442,7 @@ td {
 #schubspannung {
     display: none;
 }
-
+*/
 .table_spannung_cell_center {
     text-align: center;
 }
