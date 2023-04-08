@@ -110,7 +110,7 @@ export function sichtbar(displayName) {
 
     if (displayName === 'hilfe') {
         set_myScreen();
-        let breite = Math.min(myScreen.clientWidth, 800);
+        let breite = Math.min(myScreen.clientWidth, 760);
         document.getElementById("id_doc").setAttribute("width", breite + "px");
         document.getElementById("id_doc").setAttribute("height", myScreen.clientHeight + "px");
 

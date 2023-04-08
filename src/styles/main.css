@@ -326,6 +326,11 @@ button:active {
     width: 10em;
 }
 
+.buttonTable:disabled {
+    /*font-size: 1rem;*/
+    color: rgb(199, 199, 199);
+    border-color: rgb(199, 199, 199);
+}
 
 input,
 label {
@@ -679,25 +684,13 @@ input[type=number] {
 
 .decrement {
     /*.decrement*/
-    border-radius: 3px 1px 1px 3px;
+    border-radius: 3px 0px 0px 3px;
     color: #000000;
 }
 
 .increment {
     /*.increment*/
-    border-radius: 1px 3px 3px 1px;
+    border-radius: 0px 3px 3px 0px;
     color: #000000;
 
-}
-
-.kreis {
-    border-radius: 3px 3px 3px 3px;
-    /*125em 0.3125em 0.3125em 0.3125em;*/
-    color: #cbd600df;
-    /*font-size: 1.125em;
-    vertical-align: center;
-    
-    align-items: center;
-    justify-content: center;
-    */
 }
