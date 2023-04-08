@@ -40,6 +40,7 @@ export function systemlinien(clientWidth?: number, clientHeight?: number, faktor
         clientHeight -= height
     }
     console.log("WIDTH HEIGHT", clientWidth, clientHeight);
+    console.log("my-svg width", document.getElementById("my-svg").style.width, document.getElementById("my-svg").style.height)
 
     const y_s = Gesamt_ys;
     const z_s = Gesamt_zs;

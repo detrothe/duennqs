@@ -16,7 +16,7 @@ html {
 
 body {
     /* remove margins and scroll bars */
-    margin: 2px;
+    margin: 0px;
     overflow: auto;
     overscroll-behavior: none;
     /* style text */
@@ -27,6 +27,7 @@ body {
 
     /* color text */
     color: #444;
+    background-color: #dddedf;
 
 }
 
@@ -74,12 +75,6 @@ a:link {
     margin: 0;
 }
 
-.unten_grafik,
-.unten_webgl {
-    padding: 0px;
-    margin: 0;
-}
-
 /* Style the topLeft column */
 .topLeft {
     grid-area: topLeft;
@@ -90,7 +85,7 @@ a:link {
 /* Style the topRight column */
 .topRight {
     grid-area: topRight;
-    padding: 0;
+    padding-left: 5px;
     margin: 0;
 }
 
@@ -131,6 +126,7 @@ a:link {
     grid-area: unten_webgl;
     padding: 0;
     margin: 0;
+    background-color: #d60000;
 }
 
 /* Style the footer */
@@ -185,6 +181,7 @@ a:link {
     text-align: center;
 }
 
+/*
 #satz {
     color: red;
 }
@@ -196,7 +193,7 @@ hr {
     margin-right: 0;
     border-width: 2px;
 }
-
+*/
 .topnav {
     overflow: hidden;
     background-color: #303030;
@@ -217,6 +214,7 @@ hr {
 .topnav a:hover {
     background-color: #D8D8D8;
     color: darkblue;
+    margin: 0;
 }
 
 .topnav a:focus {
@@ -224,7 +222,8 @@ hr {
     color: darkblue;
     border-style: solid solid none none;
     border-color: #D8D8D8;
-    border-radius: 0px 8px 0px 0px;
+    border-radius: 0px 10px 0px 0px;
+    margin: 0;
 }
 
 .topnav a.active {
@@ -447,10 +446,14 @@ td {
 #my-svg {
     position: relative;
     display: none;
-    width: 1000px;
-    height: 1000px;
-
-    /*background-color: rgb(110, 180, 180);*/
+    width: inherit;
+    /*1000px;*/
+    height: inherit;
+    padding: 0;
+    margin: 0;
+    /*1000px;*/
+    overflow: hidden;
+    background-color: rgb(245, 6, 61);
 }
 
 #cursor_coordy {
@@ -516,7 +519,11 @@ td {
     /*position: relative;*/
     /*top: -50px;*/
     background-color: rgb(142, 156, 167);
-    /*z-index: 90;*/
+    margin: 0;
+    padding: 0;
+    width: inherit;
+    height: inherit;
+    overflow: hidden;
 }
 
 #panel_gui {

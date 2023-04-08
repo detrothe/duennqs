@@ -46,8 +46,8 @@ export function set_myScreen() {
     } else {
         myScreen.svgWidth = myScreen.clientWidth;
     }
-    document.getElementById("my-svg").style.width = myScreen.svgWidth + 'px';
-    document.getElementById("my-svg").style.height = myScreen.clientHeight + 'px';
+    //document.getElementById("my-svg").style.width = myScreen.svgWidth + 'px';
+    //document.getElementById("my-svg").style.height = myScreen.clientHeight + 'px';
 }
 
 
@@ -135,6 +135,8 @@ ttf_logo_3D();
     const div = document.querySelector('body') //document.getElementById('eingabe_duennQ_top');
 
     infoBox.innerHTML += "<br>used font-size: " + css(div, 'font-size')
+    //geht nicht infoBox.innerHTML += "<br>width of body: " + document.body.style.width
+    //geht nicht infoBox.innerHTML += "<br>width of grid-container: " + document.createElement("grid-container").style.width
     //infoBox.innerHTML += "<br>getComputedStyle: " + getComputedStyle(div).font
     //infoBox.innerHTML += "<br>getRenderedFontFamilyName: " + getRenderedFontFamilyName(document.querySelector('body'));
 }
