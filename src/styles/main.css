@@ -55,14 +55,21 @@ a:link {
     margin: auto;
     padding: 0;
     grid-template-areas:
-        'header header header header header'
-        'topLeft topLeft topRight topRight topRight'
-        /*'left left left left left' */
-        'unten_grafik unten_grafik unten_grafik unten_grafik unten_grafik'
-        'unten_webgl unten_webgl unten_webgl unten_webgl unten_webgl'
-        'footer footer footer footer footer';
-    /* grid-column-gap: 10px; - if you want gap between the columns */
+        'header header'
+        'topLeft topRight'
+        'unten_grafik unten_grafik'
+        'unten_webgl unten_webgl'
+        'footer footer';
 }
+
+/* grid-column-gap: 10px; - if you want gap between the columns */
+/*
+            'header header header header header'
+                'topLeft topLeft topRight topRight topRight'
+                'unten_grafik unten_grafik unten_grafik unten_grafik unten_grafik'
+                'unten_webgl unten_webgl unten_webgl unten_webgl unten_webgl'
+                'footer footer footer footer footer';
+                */
 
 .topLeft,
 .topRight,
@@ -269,6 +276,7 @@ textarea {
 #ergebnisse {
     display: none;
     background-color: #D8D8D8;
+    padding: 5px;
 }
 
 #knotentabelle {
@@ -378,8 +386,8 @@ input:valid {
 }
 
 
-#matrix_knoten {
-    /*background-color: rgb(163, 173, 120);*/
+#id_einstellungen {
+    padding: 5px;
 }
 
 
