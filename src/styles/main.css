@@ -52,14 +52,33 @@ a:link {
 .grid-container {
     display: grid;
     width: min(100%, 1500px);
-    margin: auto;
+    margin: 0;
+    margin-left: auto;
+    margin-right: auto;
     padding: 0;
+    gap: 0;
     grid-template-areas:
         'header header'
         'topLeft topRight'
         'unten_grafik unten_grafik'
         'unten_webgl unten_webgl'
         'footer footer';
+}
+
+/* Responsive layout - makes the three columns stack on top of each other instead of next to each other */
+@media (max-width: 770px) {
+    .grid-container {
+        display: grid;
+        margin: 0;
+        padding: 0;
+        grid-template-areas:
+            'header'
+            'topRight'
+            'topLeft'
+            'unten_grafik'
+            'unten_webgl'
+            'footer';
+    }
 }
 
 /* grid-column-gap: 10px; - if you want gap between the columns */
@@ -75,8 +94,6 @@ a:link {
 .topRight,
 .left,
 .middle,
-.rand,
-.rand1,
 .right {
     padding: 0px;
     margin: 0;
@@ -86,14 +103,19 @@ a:link {
 .topLeft {
     grid-area: topLeft;
     padding: 0px;
-
+    margin: 0px;
+    background-color: #D8D8D8;
+    /*background-color: #c42929;*/
 }
 
 /* Style the topRight column */
 .topRight {
     grid-area: topRight;
-    padding-left: 5px;
-    margin: 0;
+    padding: 0px;
+    /*padding-left: 5px;*/
+    margin: 0px;
+    background-color: #D8D8D8;
+    /*background-color: #83c429;*/
 }
 
 /* Style the left column */
@@ -111,7 +133,7 @@ a:link {
     grid-area: right;
 }
 
-/* Style the right column */
+/*
 .rand {
     grid-area: rand;
     background-color: #f5f5f5;
@@ -119,10 +141,8 @@ a:link {
 
 .rand1 {
     grid-area: rand1;
-    /*background-color: #f5f5f5;*/
-    /*width: 0px;*/
 }
-
+*/
 .unten_grafik {
     grid-area: unten_grafik;
     padding: 0;
@@ -151,19 +171,6 @@ a:link {
     /*0.7rem*/
 }
 
-/* Responsive layout - makes the three columns stack on top of each other instead of next to each other */
-@media (max-width: 770px) {
-    .grid-container {
-        grid-template-areas:
-            'header header header'
-            'topRight topRight topRight'
-            'topLeft topLeft topLeft'
-            /* 'left left left' */
-            'unten_grafik unten_grafik unten_grafik'
-            'unten_webgl unten_webgl unten_webgl'
-            'footer footer footer';
-    }
-}
 
 /* Responsive layout -  */
 /*
@@ -233,8 +240,9 @@ hr {
     margin: 0;
 }
 
+/*
 .topnav a.active {
-    /* wozu ? */
+     wozu ?
     background-color: #4CAF50;
     color: green;
 }
@@ -242,7 +250,7 @@ hr {
 .topnav .info {
     display: none;
 }
-
+*/
 td,
 th {
     padding: 0px;
@@ -280,24 +288,28 @@ textarea {
 }
 
 #knotentabelle {
-    display: none;
+    /*display: none;*/
     background-color: #D8D8D8;
-    z-index: 190;
+    /*z-index: 190;*/
 }
 
 #eingabe_duennQ_top {
     display: none;
     background-color: #D8D8D8;
+    padding: 0;
     padding-left: 5px;
 }
 
 #duennQ_save_daten {
     display: none;
     background-color: #D8D8D8;
+    margin: 0;
+    padding: 0;
+    padding-left: 5px;
 }
 
 #elementtabelle {
-    display: none;
+    /*display: none;*/
     background-color: #D8D8D8;
 }
 
@@ -392,7 +404,11 @@ input:valid {
 
 
 #id_einstellungen {
-    padding: 5px;
+    padding: 0;
+    margin: 0;
+    padding-left: 5px;
+    background-color: #D8D8D8;
+    /*background-color: darkkhaki;*/
 }
 
 
@@ -543,20 +559,33 @@ td {
 #panel_gui {
     position: absolute;
     top: var(--abst_gl_v);
-    /*-15*/
+
     left: 5px;
     z-index: 90;
-}
-
-#id_unit_webgl {
-    position: absolute;
-    top: 500px;
-    left: 200px;
-    z-index: 300;
+    margin: 0;
+    padding: 0;
 }
 
 #my-webgl {
     position: relative;
+    margin: 0px;
+    padding: 0px;
+    /*background-color: #bbb*/
+    background-color: #D8D8D8;
+    /*background-color: blueviolet;*/
+}
+
+#unit_webgl {
+    position: absolute;
+    top: 1em;
+    left: calc(100% - 12em);
+    width: 12em;
+    text-align: left;
+    z-index: 80;
+    /*display: block;*/
+    padding: 0;
+    margin: 0px;
+    user-select: none;
 }
 
 .emotionLabel {
@@ -638,7 +667,7 @@ input[type=number] {
 
 .input_select {
     background-color: orange;
-    color: darkslateblue;
+    color: : darkslateblue;
     /*touch-action: none;*/
 }
 

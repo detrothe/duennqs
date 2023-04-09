@@ -45,10 +45,7 @@
 
 <body>
   <div class="grid-container">
-    <!--
-        <div id="rand"  class="rand" style="background-color:#D6D8D8;"></div>
-        <div id="rand1" class="rand1" style="background-color:#D6D8D8;"></div>
-    -->
+
     <div class="header">
       <div id="input-container">
         <!-- <h2>Statik Werkzeugkasten</h2> -->
@@ -67,7 +64,7 @@
       </div>
     </div>
 
-    <div id="topleft" class="topLeft" style="background-color: #d8d8d8">
+    <div class="topLeft"> <!-- id="topleft" -->
       <div id="eingabe_duennQ_top">
 
         <p>Querschnittswerte und Spannungen dünnwandiger Querschnitte</p>
@@ -244,11 +241,6 @@
         </div>
 
         <p><br><br><br><br><br><br><br><br><br></p>
-        <!--
-        <div id="testtabelle">
-          <p>Test Tabelle</p>
-        </div>
-       -->
 
       </div>
 
@@ -425,11 +417,9 @@
         <button id="button_copy_svg">Copy</button>
       </div>
 
-      <div id="my-webgl" class="unten_webgl" style="background-color: #bbb">
-        <canvas id="c3">
-          <!--<div id="id_unit_weggl">Einheit:</div>-->
-
-        </canvas>
+      <div id="my-webgl" class="unten_webgl">
+        <canvas id="c3"></canvas>
+        <div id="unit_webgl">Einheit :</div>
 
         <div id="panel_gui"></div>
 
@@ -511,7 +501,7 @@
 
     </div>
 
-    <div class="topRight" style="background-color: #d8d8d8;">
+    <div id='id_topRight' class="topRight">
       <div id="duennQ_save_daten">
         <p>
           <button type="button" id="readFile">Daten einlesen</button>
@@ -523,7 +513,7 @@
     </div>
 
     <div id="footer" class="footer">
-      Querschnittswerte und Spannungen dünnwandiger Querschnitte, 8-April-2023,
+      Querschnittswerte und Spannungen dünnwandiger Querschnitte, 9-April-2023,
       <a href="https://statikverstehen.de">&#169; statikverstehen.de </a>
     </div>
   </div>

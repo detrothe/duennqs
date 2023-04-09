@@ -17,6 +17,7 @@ import { TTFLoader } from "./renderers/TTFLoader.js";
 import { TextGeometry } from './renderers/TextGeometry.js';
 
 import { berechnung_erfolgreich } from "./globals.js";
+import { current_unit_length, current_unit_stress, unit_length_factor, unit_stress_factor } from "./einstellungen"
 
 let show_webgl_label = false;
 let show_webgl_tau = false;
@@ -512,6 +513,18 @@ export function draw_elements() {
         controls.target.set(-dx, -dy, 0);
 
 
+        const el_info = document.getElementById("unit_webgl")
+        if (show_webgl_tau || show_webgl_sigma || show_webgl_sigmaV) {
+            el_info.innerHTML = "Spannungen in " + current_unit_stress
+        } else if (show_webgl_woelb_M) {
+            el_info.innerHTML = "Wölbordinate ω in " + current_unit_length + '²'
+        } else if (show_webgl_woelb_V) {
+            el_info.innerHTML = "Verschiebung u in " + current_unit_length
+        } else {
+            el_info.innerHTML = ""
+        }
+
+
         //___________________________________________________________________________
 
         maxWoelb_M = 0.0
@@ -576,16 +589,22 @@ export function draw_elements() {
             punkteR.push(new TPunkt())
         }
 
-        //punkteL[0].x = 3
+        // ______________________
+        // Querschnitt darstellen
+        // ______________________
+
+        let nod1: number, nod2: number
 
         for (let i = 0; i < nelem; i++) {
 
 
-            //console.log("elem i=", i)
-            x1 = -node[truss[i].nod[0]].y
-            y1 = -node[truss[i].nod[0]].z
-            x2 = -node[truss[i].nod[1]].y
-            y2 = -node[truss[i].nod[1]].z
+            nod1 = truss[i].nod[0];
+            nod2 = truss[i].nod[1];
+
+            x1 = -node[nod1].y
+            y1 = -node[nod1].z
+            x2 = -node[nod2].y
+            y2 = -node[nod2].z
             xm = (x1 + x2) / 2
             ym = (y1 + y2) / 2
 
@@ -625,12 +644,46 @@ export function draw_elements() {
                 nameDiv.textContent = String(i + 1);
                 nameDiv.id = "elNo" + i
                 //console.log("nameDiv", nameDiv)
-                const xLabel = new CSS2DObject(nameDiv);
+                nameDiv.style.backgroundColor = '#f0fff0'
+                nameDiv.style.color = '#000000'
+                nameDiv.style.borderRadius = '0.3125em'
+                nameDiv.style.padding = '3px'
+                let xLabel = new CSS2DObject(nameDiv);
                 xLabel.position.set(xm, ym, 0);
                 xLabel.layers.set(1)
                 //console.log("xLabel", xLabel)
                 mesh.add(xLabel);
                 xLabel.layers.set(1);
+
+                // Knotennummern darstellen
+
+                nameDiv = document.createElement("div");
+                nameDiv.className = "emotionLabel";
+                nameDiv.textContent = String(nod1 + 1);
+                //nameDiv.id = "knlNo" + i
+                nameDiv.style.backgroundColor = '#f0fff0'
+                nameDiv.style.color = 'blue'
+                nameDiv.style.borderColor = 'blue'
+                xLabel = new CSS2DObject(nameDiv);
+                xLabel.position.set(x1, y1, 0);
+                xLabel.layers.set(1)
+                mesh.add(xLabel);
+                xLabel.layers.set(1);
+
+                nameDiv = document.createElement("div");
+                nameDiv.className = "emotionLabel";
+                nameDiv.textContent = String(nod2 + 1);
+                //nameDiv.id = "elNo" + i
+                nameDiv.style.backgroundColor = '#f0fff0'
+                nameDiv.style.color = 'blue'
+                nameDiv.style.borderColor = 'blue'
+                nameDiv.style.padding = '3px'
+                xLabel = new CSS2DObject(nameDiv);
+                xLabel.position.set(x2, y2, 0);
+                xLabel.layers.set(1)
+                mesh.add(xLabel);
+                xLabel.layers.set(1);
+
             }
 
 
@@ -644,6 +697,7 @@ export function draw_elements() {
             }
 
         }
+
 
 
         if (maxWoelb_V > 0.0000000000001 && show_webgl_woelb_V) {
@@ -729,7 +783,7 @@ export function draw_elements() {
                 if (show_webgl_label) {
                     let nameDiv = document.createElement("div");
                     nameDiv.className = "emotionLabel";
-                    wert = (maxU.u).toPrecision(3);
+                    wert = (maxU.u * unit_length_factor).toPrecision(3);
                     nameDiv.textContent = wert
                     nameDiv.id = "elNo" + i
                     nameDiv.style.backgroundColor = '#ffffff'
@@ -810,7 +864,7 @@ export function draw_elements() {
                 if (show_webgl_label) {
                     let nameDiv = document.createElement("div");
                     nameDiv.className = "emotionLabel";
-                    wert = (node[i].omega).toPrecision(3);
+                    wert = (node[i].omega * unit_length_factor * unit_length_factor).toPrecision(3);
                     nameDiv.textContent = wert
                     nameDiv.id = "omega" + i
                     nameDiv.style.backgroundColor = '#ffffff'
@@ -834,7 +888,7 @@ export function draw_elements() {
             let Ueberhoehung = 0.2 * slmax / maxSigma * scaleFactor    // Skalieren
             console.log("Normalspannung", maxSigma, Ueberhoehung)
 
-            let j = 0, nod1: number, nod2: number, sigma1: number, sigma2: number
+            let j = 0, sigma1: number, sigma2: number
             let farbe: any;
             let origin, dir;
             let length: number;
@@ -1129,7 +1183,7 @@ export function draw_elements() {
                         for (j = 0; j < 4; j++) {
                             let nameDiv = document.createElement("div");
                             nameDiv.className = "emotionLabel";
-                            wert = (truss[i].sigma_xe[j]).toFixed(3);
+                            wert = (truss[i].sigma_xe[j] * unit_stress_factor).toFixed(3);
                             nameDiv.textContent = wert;
                             nameDiv.id = "sig4" + j
                             nameDiv.style.backgroundColor = '#ffffff'
@@ -1146,7 +1200,7 @@ export function draw_elements() {
 
                     let nameDiv = document.createElement("div");
                     nameDiv.className = "emotionLabel";
-                    wert = (sigma1).toFixed(3);
+                    wert = (sigma1 * unit_stress_factor).toFixed(3);
                     nameDiv.textContent = wert;
                     nameDiv.id = "sig1"
                     nameDiv.style.backgroundColor = '#ffffff'
@@ -1157,7 +1211,7 @@ export function draw_elements() {
 
                     nameDiv = document.createElement("div");
                     nameDiv.className = "emotionLabel";
-                    wert = (sigma2).toFixed(3);
+                    wert = (sigma2 * unit_stress_factor).toFixed(3);
                     nameDiv.textContent = wert;
                     nameDiv.id = "sig2"
                     nameDiv.style.backgroundColor = '#ffffff'
@@ -1181,7 +1235,7 @@ export function draw_elements() {
 
             //let tau = Array(3)
 
-            let xi: number, tau_i: number, sl: number, nod1: number
+            let xi: number, tau_i: number, sl: number
             const maxtau = {
                 tau: 0.0,
                 wert: 0.0,
@@ -1269,10 +1323,6 @@ export function draw_elements() {
                     transparent: true,
                     side: THREE.DoubleSide
                 }))
-                //flaeche.rotateY(-1.570795)
-                //nod1 = truss[i].nod[0];
-                //flaeche.translateX(-node[nod1].y)
-                //flaeche.translateY(-node[nod1].z)
 
                 flaecheR.translateX(-truss[i].pts_y[0])
                 flaecheR.translateY(-truss[i].pts_z[0])
@@ -1436,46 +1486,56 @@ export function draw_elements() {
                 scene.add(lineL);
 
                 if (show_webgl_label) {
+                    let nameDiv: HTMLDivElement, xLabel: any
 
-                    let nameDiv = document.createElement("div");
-                    nameDiv.className = "emotionLabel";
-                    wert = (punkteR[0].z / Ueberhoehung).toFixed(3);
-                    nameDiv.textContent = wert;
-                    nameDiv.id = "elNoTauR1" + i
-                    nameDiv.style.backgroundColor = '#ffffff'
-                    let xLabel = new CSS2DObject(nameDiv);
-                    xLabel.position.set(punkteR[0].x, punkteR[0].y, punkteR[0].z);
-                    xLabel.layers.set(1)
-                    mesh.add(xLabel);
-
-                    if (Mxp !== 0.0) {
+                    let zahl = punkteR[0].z / Ueberhoehung * unit_stress_factor
+                    if (Math.abs(zahl) > 1.e-10) {
                         nameDiv = document.createElement("div");
                         nameDiv.className = "emotionLabel";
-                        wert = (punkteL[0].z / Ueberhoehung).toFixed(3);
+                        wert = (zahl).toFixed(3);
                         nameDiv.textContent = wert;
-                        nameDiv.id = "elNoTauL1" + i
+                        nameDiv.id = "elNoTauR1" + i
                         nameDiv.style.backgroundColor = '#ffffff'
                         xLabel = new CSS2DObject(nameDiv);
-                        xLabel.position.set(punkteL[0].x, punkteL[0].y, punkteL[0].z);
+                        xLabel.position.set(punkteR[0].x, punkteR[0].y, punkteR[0].z);
                         xLabel.layers.set(1)
                         mesh.add(xLabel);
                     }
-                    {
-                        let nameDiv = document.createElement("div");
+                    if (Math.abs(punkteL[0].z - punkteR[0].z) > 1.e-10) {
+                        zahl = punkteL[0].z / Ueberhoehung * unit_stress_factor
+                        if (Mxp !== 0.0 && (Math.abs(zahl) > 1.e-10)) {
+                            nameDiv = document.createElement("div");
+                            nameDiv.className = "emotionLabel";
+                            wert = (zahl).toFixed(3);
+                            nameDiv.textContent = wert;
+                            nameDiv.id = "elNoTauL1" + i
+                            nameDiv.style.backgroundColor = '#ffffff'
+                            xLabel = new CSS2DObject(nameDiv);
+                            xLabel.position.set(punkteL[0].x, punkteL[0].y, punkteL[0].z);
+                            xLabel.layers.set(1)
+                            mesh.add(xLabel);
+                        }
+                    }
+
+                    zahl = punkteR[teilung].z / Ueberhoehung * unit_stress_factor
+                    if (Math.abs(zahl) > 1.e-10) {
+                        nameDiv = document.createElement("div");
                         nameDiv.className = "emotionLabel";
-                        wert = (punkteR[teilung].z / Ueberhoehung).toFixed(3);
+                        wert = (zahl).toFixed(3);
                         nameDiv.textContent = wert;
                         nameDiv.id = "elNoTauR2" + i
                         nameDiv.style.backgroundColor = '#ffffff'
-                        let xLabel = new CSS2DObject(nameDiv);
+                        xLabel = new CSS2DObject(nameDiv);
                         xLabel.position.set(punkteR[teilung].x, punkteR[teilung].y, punkteR[teilung].z);
                         xLabel.layers.set(1)
                         mesh.add(xLabel);
-
-                        if (Mxp !== 0.0) {
+                    }
+                    if (Math.abs(punkteL[teilung].z - punkteR[teilung].z) > 1.e-10) {
+                        zahl = punkteL[teilung].z / Ueberhoehung * unit_stress_factor
+                        if (Mxp !== 0.0 && (Math.abs(zahl) > 1.e-10)) {
                             nameDiv = document.createElement("div");
                             nameDiv.className = "emotionLabel";
-                            wert = (punkteL[teilung].z / Ueberhoehung).toFixed(3);
+                            wert = (zahl).toFixed(3);
                             nameDiv.textContent = wert;
                             nameDiv.id = "elNoTauL2" + i
                             nameDiv.style.backgroundColor = '#ffffff'
@@ -1485,16 +1545,19 @@ export function draw_elements() {
                             mesh.add(xLabel);
                         }
                     }
-                    nameDiv = document.createElement("div");
-                    nameDiv.className = "emotionLabel";
-                    wert = (maxtau.tau / Ueberhoehung).toFixed(3);
-                    nameDiv.textContent = wert;
-                    nameDiv.id = "elNoTaum1" + i
-                    nameDiv.style.backgroundColor = '#ffffff'
-                    xLabel = new CSS2DObject(nameDiv);
-                    xLabel.position.set(maxtau.x, maxtau.y, maxtau.wert);
-                    xLabel.layers.set(1)
-                    mesh.add(xLabel);
+                    zahl = maxtau.tau / Ueberhoehung * unit_stress_factor
+                    if (Math.abs(zahl) > 1.e-10) {
+                        nameDiv = document.createElement("div");
+                        nameDiv.className = "emotionLabel";
+                        wert = (zahl).toFixed(3);
+                        nameDiv.textContent = wert;
+                        nameDiv.id = "elNoTaum1" + i
+                        nameDiv.style.backgroundColor = '#ffffff'
+                        xLabel = new CSS2DObject(nameDiv);
+                        xLabel.position.set(maxtau.x, maxtau.y, maxtau.wert);
+                        xLabel.layers.set(1)
+                        mesh.add(xLabel);
+                    }
 
                 }
 
@@ -1612,10 +1675,7 @@ export function draw_elements() {
                     transparent: true,
                     side: THREE.DoubleSide
                 }))
-                //flaeche.rotateY(-1.570795)
-                //nod1 = truss[i].nod[0];
-                //flaeche.translateX(-node[nod1].y)
-                //flaeche.translateY(-node[nod1].z)
+
 
                 flaecheR.translateX(-truss[i].pts_y[0])
                 flaecheR.translateY(-truss[i].pts_z[0])
@@ -1779,35 +1839,45 @@ export function draw_elements() {
                 scene.add(lineL);
 
                 if (show_webgl_label) {
-                    // Element Anfang
-                    let nameDiv = document.createElement("div");
-                    nameDiv.className = "emotionLabel";
-                    wert = (punkteR[0].z / Ueberhoehung).toFixed(3);
-                    nameDiv.textContent = wert;
-                    nameDiv.id = "elNoTauR1" + i
-                    nameDiv.style.backgroundColor = '#ffffff'
-                    let xLabel = new CSS2DObject(nameDiv);
-                    xLabel.position.set(punkteR[0].x, punkteR[0].y, punkteR[0].z);
-                    xLabel.layers.set(1)
-                    mesh.add(xLabel);
+                    let nameDiv: HTMLDivElement, xLabel: any
 
-                    if (Mxp !== 0.0 || showSigmaFrame) {
+                    // Element Anfang
+                    let zahl = punkteR[0].z / Ueberhoehung * unit_stress_factor
+                    if (Math.abs(zahl) > 1.e-10) {
                         nameDiv = document.createElement("div");
                         nameDiv.className = "emotionLabel";
-                        wert = (punkteL[0].z / Ueberhoehung).toFixed(3);
+                        wert = (zahl).toFixed(3);
                         nameDiv.textContent = wert;
-                        nameDiv.id = "elNoTauL1" + i
+                        nameDiv.id = "elNoTauR1" + i
                         nameDiv.style.backgroundColor = '#ffffff'
                         xLabel = new CSS2DObject(nameDiv);
-                        xLabel.position.set(punkteL[0].x, punkteL[0].y, punkteL[0].z);
+                        xLabel.position.set(punkteR[0].x, punkteR[0].y, punkteR[0].z);
                         xLabel.layers.set(1)
                         mesh.add(xLabel);
                     }
+                    if (Math.abs(punkteL[0].z - punkteR[0].z) > 1.e-10) {
+                        zahl = punkteL[0].z / Ueberhoehung * unit_stress_factor
+                        if (Math.abs(zahl) > 1.e-10) {
+                            if (Mxp !== 0.0 || showSigmaFrame) {
+                                nameDiv = document.createElement("div");
+                                nameDiv.className = "emotionLabel";
+                                wert = (zahl).toFixed(3);
+                                nameDiv.textContent = wert;
+                                nameDiv.id = "elNoTauL1" + i
+                                nameDiv.style.backgroundColor = '#ffffff'
+                                xLabel = new CSS2DObject(nameDiv);
+                                xLabel.position.set(punkteL[0].x, punkteL[0].y, punkteL[0].z);
+                                xLabel.layers.set(1)
+                                mesh.add(xLabel);
+                            }
+                        }
+                    }
                     // Element Ende
-                    {
-                        let nameDiv = document.createElement("div");
+                    zahl = punkteR[teilung].z / Ueberhoehung * unit_stress_factor
+                    if (Math.abs(zahl) > 1.e-10) {
+                        nameDiv = document.createElement("div");
                         nameDiv.className = "emotionLabel";
-                        wert = (punkteR[teilung].z / Ueberhoehung).toFixed(3);
+                        wert = (zahl).toFixed(3);
                         nameDiv.textContent = wert;
                         nameDiv.id = "elNoTauR2" + i
                         nameDiv.style.backgroundColor = '#ffffff'
@@ -1815,31 +1885,39 @@ export function draw_elements() {
                         xLabel.position.set(punkteR[teilung].x, punkteR[teilung].y, punkteR[teilung].z);
                         xLabel.layers.set(1)
                         mesh.add(xLabel);
-
-                        if (Mxp !== 0.0 || showSigmaFrame) {
-                            nameDiv = document.createElement("div");
-                            nameDiv.className = "emotionLabel";
-                            wert = (punkteL[teilung].z / Ueberhoehung).toFixed(3);
-                            nameDiv.textContent = wert;
-                            nameDiv.id = "elNoTauL3" + i
-                            nameDiv.style.backgroundColor = '#ffffff'
-                            xLabel = new CSS2DObject(nameDiv);
-                            xLabel.position.set(punkteL[teilung].x, punkteL[teilung].y, punkteL[teilung].z);
-                            xLabel.layers.set(1)
-                            mesh.add(xLabel);
+                    }
+                    if (Math.abs(punkteL[teilung].z - punkteR[teilung].z) > 1.e-10) {
+                        zahl = punkteL[teilung].z / Ueberhoehung * unit_stress_factor
+                        if (Math.abs(zahl) > 1.e-10) {
+                            if (Mxp !== 0.0 || showSigmaFrame) {
+                                nameDiv = document.createElement("div");
+                                nameDiv.className = "emotionLabel";
+                                wert = (zahl).toFixed(3);
+                                nameDiv.textContent = wert;
+                                nameDiv.id = "elNoTauL3" + i
+                                nameDiv.style.backgroundColor = '#ffffff'
+                                xLabel = new CSS2DObject(nameDiv);
+                                xLabel.position.set(punkteL[teilung].x, punkteL[teilung].y, punkteL[teilung].z);
+                                xLabel.layers.set(1)
+                                mesh.add(xLabel);
+                            }
                         }
                     }
+
                     // maximaler Wert
-                    nameDiv = document.createElement("div");
-                    nameDiv.className = "emotionLabel";
-                    wert = (maxsigmaV.sigmaV / Ueberhoehung).toFixed(3);
-                    nameDiv.textContent = wert;
-                    nameDiv.id = "elNoTaum1" + i
-                    nameDiv.style.backgroundColor = '#ffffff'
-                    xLabel = new CSS2DObject(nameDiv);
-                    xLabel.position.set(maxsigmaV.x, maxsigmaV.y, maxsigmaV.wert);
-                    xLabel.layers.set(1)
-                    mesh.add(xLabel);
+                    zahl = maxsigmaV.sigmaV / Ueberhoehung * unit_stress_factor
+                    if (Math.abs(zahl) > 1.e-10) {
+                        nameDiv = document.createElement("div");
+                        nameDiv.className = "emotionLabel";
+                        wert = (zahl).toFixed(3);
+                        nameDiv.textContent = wert;
+                        nameDiv.id = "elNoTaum1" + i
+                        nameDiv.style.backgroundColor = '#ffffff'
+                        xLabel = new CSS2DObject(nameDiv);
+                        xLabel.position.set(maxsigmaV.x, maxsigmaV.y, maxsigmaV.wert);
+                        xLabel.layers.set(1)
+                        mesh.add(xLabel);
+                    }
 
                 }
 
@@ -2181,6 +2259,7 @@ function zeichneLR_pfeile(ielem: number, mesh: any) {
     nameDiv.className = "emotionLabel";
     nameDiv.textContent = "R";
     nameDiv.id = "elside" + i
+    nameDiv.style.backgroundColor = '#f0fff0'
     //let height = nameDiv.getBoundingClientRect().height
     //console.log("nameDiv", height, nameDiv)
     let xLabel = new CSS2DObject(nameDiv);
@@ -2205,6 +2284,7 @@ function zeichneLR_pfeile(ielem: number, mesh: any) {
     nameDiv.id = "elside" + i
     //let height = nameDiv.getBoundingClientRect().height
     //console.log("nameDiv", height, nameDiv)
+    nameDiv.style.backgroundColor = '#f0fff0'
     xLabel = new CSS2DObject(nameDiv);
     xLabel.position.set(xm, ym, c);
     xLabel.layers.set(1)
