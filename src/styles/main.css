@@ -597,8 +597,8 @@ td {
     margin-bottom: 0px;
     margin-right: 0px;
     border: 1px solid rgb(85, 82, 82);
-    padding: 0px;
-    /*pointer-events: none;*/
+    padding: 2px;
+    border-radius: 2px;
     font-size: 1em;
     /*1rem;*/
     z-index: 120;
@@ -667,7 +667,7 @@ input[type=number] {
 
 .input_select {
     background-color: orange;
-    color: : darkslateblue;
+    color: darkslateblue;
     /*touch-action: none;*/
 }
 

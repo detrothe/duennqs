@@ -10,11 +10,11 @@ export function eingabe1() {
     console.log("in eingabe");
     sichtbar('eingabe')
 
-    let element = document.getElementById("id_eingabe");
+    let element = document.getElementById("id_eingabe");  // id_eingabe
     /*
-    const evt = new MouseEvent("click" );
-    //evt.button = 0;     // linke Maustaste
-    element.dispatchEvent(evt);
+        const evt = new Event("click");  // { "bubbles": true, "cancelable": false }
+        evt.button = 0;     // linke Maustaste
+        element.dispatchEvent(evt);
     */
     element.focus({ focusVisible: false });
 }

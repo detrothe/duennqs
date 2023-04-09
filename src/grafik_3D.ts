@@ -589,9 +589,9 @@ export function draw_elements() {
             punkteR.push(new TPunkt())
         }
 
-        // ______________________
-        // Querschnitt darstellen
-        // ______________________
+        // ┏━━━━━━━━━━━━━━━━━━━━━━━┓
+        // ┃Querschnitt darstellen ┃
+        // ┗━━━━━━━━━━━━━━━━━━━━━━━┛
 
         let nod1: number, nod2: number
 
@@ -646,7 +646,7 @@ export function draw_elements() {
                 //console.log("nameDiv", nameDiv)
                 nameDiv.style.backgroundColor = '#f0fff0'
                 nameDiv.style.color = '#000000'
-                nameDiv.style.borderRadius = '0.3125em'
+                nameDiv.style.borderRadius = '5px'
                 nameDiv.style.padding = '3px'
                 let xLabel = new CSS2DObject(nameDiv);
                 xLabel.position.set(xm, ym, depthBeam / 2);
@@ -2261,6 +2261,8 @@ function zeichneLR_pfeile(ielem: number, mesh: any) {
     nameDiv.textContent = "R";
     nameDiv.id = "elside" + i
     nameDiv.style.backgroundColor = '#f0fff0'
+    nameDiv.style.padding = '2px'
+    nameDiv.style.borderRadius = '3px'
     //let height = nameDiv.getBoundingClientRect().height
     //console.log("nameDiv", height, nameDiv)
     let xLabel = new CSS2DObject(nameDiv);
@@ -2286,6 +2288,8 @@ function zeichneLR_pfeile(ielem: number, mesh: any) {
     //let height = nameDiv.getBoundingClientRect().height
     //console.log("nameDiv", height, nameDiv)
     nameDiv.style.backgroundColor = '#f0fff0'
+    nameDiv.style.padding = '2px'
+    nameDiv.style.borderRadius = '3px'
     xLabel = new CSS2DObject(nameDiv);
     xLabel.position.set(xm, ym, c);
     xLabel.layers.set(1)
