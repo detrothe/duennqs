@@ -576,12 +576,12 @@ export function draw_elements() {
 
         if (show_webgl_sigma || show_webgl_tau || show_webgl_woelb_M || show_webgl_woelb_V || show_webgl_sigmaV) {
             if (maxTau > 1e-12 || maxSigma > 1e-12 || maxWoelb_M > 1e-12) {
-                depthBeam = 0.1;
+                depthBeam = slmax / 1500;
             } else {
-                depthBeam = 5;
+                depthBeam = slmax / 30;    // war 5
             }
         } else {
-            depthBeam = 5;
+            depthBeam = slmax / 30;
         }
 
         for (i = 0; i < teilung + 1; i++) {
@@ -649,7 +649,7 @@ export function draw_elements() {
                 nameDiv.style.borderRadius = '0.3125em'
                 nameDiv.style.padding = '3px'
                 let xLabel = new CSS2DObject(nameDiv);
-                xLabel.position.set(xm, ym, 0);
+                xLabel.position.set(xm, ym, depthBeam / 2);
                 xLabel.layers.set(1)
                 //console.log("xLabel", xLabel)
                 mesh.add(xLabel);
@@ -664,8 +664,9 @@ export function draw_elements() {
                 nameDiv.style.backgroundColor = '#f0fff0'
                 nameDiv.style.color = 'blue'
                 nameDiv.style.borderColor = 'blue'
+                nameDiv.style.padding = '3px'
                 xLabel = new CSS2DObject(nameDiv);
-                xLabel.position.set(x1, y1, 0);
+                xLabel.position.set(x1, y1, depthBeam / 2);
                 xLabel.layers.set(1)
                 mesh.add(xLabel);
                 xLabel.layers.set(1);
@@ -679,7 +680,7 @@ export function draw_elements() {
                 nameDiv.style.borderColor = 'blue'
                 nameDiv.style.padding = '3px'
                 xLabel = new CSS2DObject(nameDiv);
-                xLabel.position.set(x2, y2, 0);
+                xLabel.position.set(x2, y2, depthBeam / 2);
                 xLabel.layers.set(1)
                 mesh.add(xLabel);
                 xLabel.layers.set(1);
