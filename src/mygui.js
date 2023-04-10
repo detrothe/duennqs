@@ -1,6 +1,8 @@
 import GUI from 'lil-gui';
 
 let scale_factor = 1.0;
+let scale_factor_arrows = 1.0;
+
 
 //--------------------------------------------------------------------------------------------------------
 export function myPanel() {
@@ -16,6 +18,7 @@ export function myPanel() {
         scale: 1.0,
         show_sides: true,
         show_arrows: true,
+        scale_arrows: 1.0,
         show_sigma_frame: true,
         show_LR: false,
         Reset: function () {
@@ -63,6 +66,12 @@ export function myPanel() {
         window.dispatchEvent(new Event("show_arrows_webgl"));
     });
 
+    gui.add(obj, 'scale_arrows', 0, 2, 0.1).name('Skalierung Pfeile').onFinishChange(v => {
+        console.log("skalierung Pfeile", v)
+        scale_factor_arrows = v;
+        window.dispatchEvent(new Event("scale_factor_arrows"));
+    });
+
     gui.add(obj, 'show_sigma_frame').name('sigma Fläche').onChange(v => {
         window.dispatchEvent(new Event("show_sigma_frame_webgl"));
     });
@@ -80,5 +89,12 @@ export function myPanel() {
 export function get_scale_factor() {
     //--------------------------------------------------------------------------------------------------------
     return scale_factor;
+
+}
+
+//--------------------------------------------------------------------------------------------------------
+export function get_scale_factor_arrows() {
+    //--------------------------------------------------------------------------------------------------------
+    return scale_factor_arrows;
 
 }

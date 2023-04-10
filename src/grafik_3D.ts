@@ -2,7 +2,7 @@
 import * as THREE from 'three';
 import { MeshLine, MeshLineMaterial } from './renderers/THREE_MeshLine.js';
 
-import { myPanel, get_scale_factor } from "./mygui.js"
+import { myPanel, get_scale_factor, get_scale_factor_arrows } from "./mygui.js"
 
 import { OrbitControls } from './OrbitControls.js';
 
@@ -47,7 +47,7 @@ let renderer = null as THREE.WebGLRenderer;
 let labelRenderer = null as CSS2DRenderer
 
 let scaleFactor: number = 1.0;
-
+let scaleFactorArrows: number = 1.0;
 class TPunkt {
     x: number;
     y: number;
@@ -2053,11 +2053,11 @@ function zeichneHPfeil(ielem: number, mesh: any) {
 
     sl = truss[ielem].sl
 
-    a = slmax / 100   // Länge Pfeil
-    b = slmax / 800   // Breite Pfeil
-    b2 = slmax / 250  // Breite Pfeilspitze
+    a = scaleFactorArrows * slmax / 100   // Länge Pfeil
+    b = scaleFactorArrows * slmax / 800   // Breite Pfeil
+    b2 = scaleFactorArrows * slmax / 250  // Breite Pfeilspitze
     c = slmax / 500  // Abstand vor Querschnitt
-    d = slmax / 100   // Länge Pfeilspitze
+    d = scaleFactorArrows * slmax / 100   // Länge Pfeilspitze
 
     const vertices = [];
     const indices = [];
@@ -2396,6 +2396,15 @@ function scale_factor() {
 }
 
 //--------------------------------------------------------------------------------------------------------
+function scale_factor_arrows() {
+    //--------------------------------------------------------------------------------------------------------
+
+    scaleFactorArrows = get_scale_factor_arrows();
+    console.log("arrowFactor=", scaleFactorArrows)
+    draw_elements();
+}
+
+//--------------------------------------------------------------------------------------------------------
 function reset_webgl() {
     //--------------------------------------------------------------------------------------------------------
 
@@ -2442,6 +2451,7 @@ window.addEventListener('woelb_M_webgl', woelb_M_webgl);
 window.addEventListener('woelb_V_webgl', woelb_V_webgl);
 
 window.addEventListener('scale_factor', scale_factor);
+window.addEventListener('scale_factor_arrows', scale_factor_arrows);
 window.addEventListener('show_sides_webgl', showSides_webgl);
 window.addEventListener('show_arrows_webgl', showArrows_webgl);
 window.addEventListener('show_sigma_frame_webgl', showSigmaFrame_webgl);
