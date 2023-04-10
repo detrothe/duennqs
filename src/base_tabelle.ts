@@ -372,7 +372,7 @@ export function meinetabelle(theDiv, id_table, nZeilen, columns) {
 export function KEYDOWN(ev) {
     //--------------------------------------------------------------------------------------------
 
-    //console.log("KEYDOWN, keycode, id_input, id_tabelle", ev.keyCode, ev.target.id, ev.target.offsetParent.offsetParent.id);
+    console.log("KEYDOWN, keycode, id_input, id_tabelle", ev.keyCode, ev.target.id, ev.target.offsetParent.offsetParent.id);
     //const tableCellId = ev.target.offsetParent.id;
 
     //console.log("KEYDOWN", ev.keyCode, ev.shiftKey, ev.key, ev)
@@ -397,7 +397,9 @@ export function KEYDOWN(ev) {
 //------------------------------------------------------------------------------------------------
 export function POINTER_MOVE(ev) { // pointer move
     //--------------------------------------------------------------------------------------------
-    // console.log("tagname", ev.target.tagName)
+    //console.log("tagname", ev.target.tagName)
+    ev.preventDefault();
+
     if (ev.target.tagName !== 'INPUT') return
 
     let rowIndex: number, colIndex: number
@@ -406,7 +408,7 @@ export function POINTER_MOVE(ev) { // pointer move
     //console.log("tableId", tableId)
     if (tableId === '') return;           // cursor steht auf irgendwas, aber nicht auf tag <input>
 
-    ev.preventDefault();
+    //    ev.preventDefault();
 
     const inputId = ev.target.id
 
@@ -432,7 +434,8 @@ export function POINTER_MOVE(ev) { // pointer move
 
     const browser = Detect.browser
 
-    if (ev.pointerType === 'touch' || ev.pointerType === 'pen' || browser === 'Firefox') {
+    //if (ev.pointerType === 'touch' || ev.pointerType === 'pen' || browser === 'Firefox') {
+    {
         //console.log("scrollLeft", document.body.scrollLeft, document.documentElement.scrollLeft, window.pageXOffset)
         let dx = ev.pageX - cellLeft;// + document.documentElement.scrollLeft;
         let dy = ev.pageY - cellTop; // + document.documentElement.scrollTop;
@@ -463,23 +466,26 @@ export function POINTER_MOVE(ev) { // pointer move
         const el = document.getElementById(str);
         el.className = 'input_select';
         if (browser !== 'Firefox') {
-            el.scrollIntoView({ behavior: "smooth", block: "center", inline: "center" });  // { behavior: "smooth", block: "end", inline: "nearest" }
+            if (ev.pointerType === 'touch' || ev.pointerType === 'pen') {
+                el.scrollIntoView({ behavior: "smooth", block: "center", inline: "center" });  // { behavior: "smooth", block: "end", inline: "nearest" }
+            }
         }
         if (nx !== 0 || ny !== 0) selected = true
         rowIndex = zeile;
         colIndex = spalte;
 
-    } else {
+    }
+    /* else {
         const text = ev.target.id;
         const myArray = text.split("-");
-        //console.log("Array", tableId, tableIndex, myArray.length, myArray[0], myArray[1], myArray[2])
+        console.log("Array", tableId, tableIndex, myArray.length, myArray[0], myArray[1], myArray[2])
         rowIndex = myArray[1];
         colIndex = myArray[2];
         if (el.className !== 'input_select') {
             el.className = 'input_select';
             if ((selectedCellPoly.row !== rowIndex) || (selectedCellPoly.col !== colIndex)) selected = true
         }
-    }
+    }*/
 
 
     let rowStart: number, rowEnd: number, colStart: number, colEnd: number;
@@ -614,7 +620,7 @@ export function POINTER_UP(ev) { // pointer move
 
     selectedCellPoly.tableId = tableId;
 
-    //console.log("POINTERDOWN", ev)
+    //console.log("POINTER_UP", ev)
     console.log("POINTERUP", ev.buttons, tableId, inputId, ev.pageX, ev.pageY, ev.which, ev.pointerType, selected)
 
     const myTable = document.getElementById(tableId);
