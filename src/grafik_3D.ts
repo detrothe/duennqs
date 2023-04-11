@@ -720,11 +720,6 @@ export function draw_elements() {
                             linewidth: 2
                         });
             */
-            const material = new MeshLineMaterial({
-                color: 0x0000dd,
-                lineWidth: slmax / 100,
-                sizeAttenuation: 1,
-            });
 
             for (let i = 0; i < nelem; i++) {
                 //console.log("elem i=", i)
@@ -742,6 +737,12 @@ export function draw_elements() {
                 dx = sl / teilung;
                 const points = [];
                 maxU.u = 0.0;
+
+                const material = new MeshLineMaterial({
+                    color: 0x0000dd,
+                    lineWidth: truss[i].dicke,   //slmax / 100
+                    sizeAttenuation: 1,
+                });
 
                 for (let istelle = 0; istelle <= teilung; istelle++) {
 
@@ -2303,21 +2304,10 @@ function zeichneLR_pfeile(ielem: number, mesh: any) {
 //--------------------------------------------------------------------------------------------------------
 function label_webgl() {
     //--------------------------------------------------------------------------------------------------------
-    //console.log("isNAN",isNaN(Gesamt_ys),yM)
-
-    if (Gesamt_ys === undefined || isNaN(yM)) return; // noch nie gerechnet oder Fehler bei Berechnung
 
     show_webgl_label = !show_webgl_label;
-    /*
-    let element = document.getElementById("button_label_webgl");
-    if (show_webgl_label) {
-        element.className = 'button_label_webgl_pressed'
-    } else {
-        element.className = 'button_webgl'
-        console.log("in false");
-    }
-    console.log("in label_webgl", show_webgl_label, element.className);
-    */
+
+    if (Gesamt_ys === undefined || isNaN(yM)) return; // noch nie gerechnet oder Fehler bei Berechnung
     draw_elements();
 
 }
@@ -2326,19 +2316,11 @@ function label_webgl() {
 function tau_webgl() {
     //--------------------------------------------------------------------------------------------------------
 
-    if (Gesamt_ys === undefined || isNaN(yM)) return;
-
     console.log("in tau_webgl");
     show_webgl_tau = !show_webgl_tau;
-    /*
-    let element = document.getElementById("button_tau_webgl");
-    if (show_webgl_tau) {
-        element.className = 'button_tau_webgl_pressed'
-    } else {
-        element.className = 'button_webgl'
-        console.log("in false");
-    }
-*/
+
+    if (Gesamt_ys === undefined || isNaN(yM)) return;
+
     draw_elements();
 }
 
@@ -2346,10 +2328,10 @@ function tau_webgl() {
 function sigma_webgl() {
     //--------------------------------------------------------------------------------------------------------
 
-    if (Gesamt_ys === undefined || isNaN(yM)) return;
-
     //console.log("in sigma_webgl");
     show_webgl_sigma = !show_webgl_sigma;
+
+    if (Gesamt_ys === undefined || isNaN(yM)) return;
     draw_elements();
 }
 
@@ -2357,20 +2339,21 @@ function sigma_webgl() {
 function sigmaV_webgl() {
     //--------------------------------------------------------------------------------------------------------
 
-    if (Gesamt_ys === undefined || isNaN(yM)) return;
     console.log("in sigmaV_webgl");
     show_webgl_sigmaV = !show_webgl_sigmaV;
+
+    if (Gesamt_ys === undefined || isNaN(yM)) return;
     draw_elements();
 }
 //--------------------------------------------------------------------------------------------------------
 function woelb_M_webgl() {
     //--------------------------------------------------------------------------------------------------------
 
-    if (Gesamt_ys === undefined || isNaN(yM)) return;
 
     console.log("in woelb_M_webgl");
     show_webgl_woelb_M = !show_webgl_woelb_M;
 
+    if (Gesamt_ys === undefined || isNaN(yM)) return;
     draw_elements();
 }
 
@@ -2378,11 +2361,11 @@ function woelb_M_webgl() {
 function woelb_V_webgl() {
     //--------------------------------------------------------------------------------------------------------
 
-    if (Gesamt_ys === undefined || isNaN(yM)) return;
 
     console.log("in woelb_V_webgl");
     show_webgl_woelb_V = !show_webgl_woelb_V;
 
+    if (Gesamt_ys === undefined || isNaN(yM)) return;
     draw_elements();
 }
 

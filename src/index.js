@@ -39,8 +39,8 @@ export function set_myScreen() {
     console.log("myScreen", myScreen.clientWidth, myScreen.clientHeight, myScreen.svgWidth)
     console.log("devicePixelRatio", window.devicePixelRatio, screen.width, screen.height, screen.orientation)
 
-    if (myScreen.clientWidth > 1500) {
-        myScreen.svgWidth = 1500;  //myScreen.clientWidth - 900;
+    if (myScreen.clientWidth > 2500) {
+        myScreen.svgWidth = 2500;  //myScreen.clientWidth - 900;
         //    } else if (myScreen.clientWidth < 600) {
         //        myScreen.svgWidth = myScreen.clientWidth
     } else {

@@ -28,6 +28,21 @@ export function set_font_size() {
     my_fontsize = el.value
     //console.log("my_fontsize", my_fontsize)
     document.body.style.fontSize = my_fontsize
+
+    let elements: any
+    elements = document.getElementsByClassName("allow-touch-styles");
+    for (let i = 0; i < elements.length; i++) {
+        console.log("allow-touch-styles", i, elements[i])
+    }
+
+    elements = document.getElementsByClassName("lil-gui");
+    for (let i = 0; i < elements.length; i++) {
+        console.log("lil-gui", i, elements[i])
+    }
+    /*
+    const gui = document.getElementById("panel_gui") as HTMLInputElement;
+    console.log("fs gui", gui.style.fontSize)
+    */
 }
 
 //----------------------------------------------------------------------------------------------

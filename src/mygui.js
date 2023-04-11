@@ -26,7 +26,8 @@ export function myPanel() {
         }
     }
 
-    const gui = new GUI({ container: document.getElementById('panel_gui') });
+    const gui = new GUI({ container: document.getElementById('panel_gui'), width: 230 }); // , touchStyles: true
+    //gui.domElement.classList.add('allow-touch-styles');
 
     gui.add(obj, 'label').onChange(v => {
         window.dispatchEvent(new Event("label_webgl"));
