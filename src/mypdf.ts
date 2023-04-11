@@ -78,8 +78,23 @@ function neueZeile(yy: number, fs: number, anzahl = 1): number {
 //----------------------------------------------------------------------------------------------
 function testSeite(yy: number, fs: number, anzahl: number, nzeilen: number): number {
   //--------------------------------------------------------------------------------------------
-  let y = yy + nzeilen * zeilenAbstand * (fs * 0.352778)
-  console.log("y", y, nzeilen)
+  const laenge = nzeilen * zeilenAbstand * (fs * 0.352778)
+  if (laenge > 270) {  // ganze Tabelle passt nicht auf eine Seite
+
+    if (yy + (anzahl + 3) * zeilenAbstand * (fs * 0.352778) > 270) {  // 3 Zeilen sollten mindestens unter Überschrift passen
+      Seite_No++
+      doc.text("Seite" + Seite_No, 100, 290);
+
+      doc.addPage();
+      return 20;
+
+    } else {
+      return yy + anzahl * zeilenAbstand * (fs * 0.352778);
+    }
+  }
+
+  let y = yy + Math.min(laenge, 100)
+  console.log("y", y, nzeilen, laenge)
   if (y > 270) {
     Seite_No++
     doc.text("Seite" + Seite_No, 100, 290);
