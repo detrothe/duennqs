@@ -93,7 +93,7 @@ function testSeite(yy: number, fs: number, anzahl: number, nzeilen: number): num
     }
   }
 
-  let y = yy + Math.min(laenge, 100)
+  let y = yy + Math.min(laenge, 50)   // wenn 5cm Platz auf Seite, sonst neue Seite anfangen
   console.log("y", y, nzeilen, laenge)
   if (y > 270) {
     Seite_No++
