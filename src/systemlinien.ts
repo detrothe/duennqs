@@ -6,7 +6,7 @@ import { CTrans } from './trans.js';
 import { truss, node, Gesamt_ys, Gesamt_zs, yM, zM, phi0 } from "./duennQ"
 import { ymin, ymax, zmin, zmax, slmax } from "./duennQ";
 
-import { myScreen } from "./index.js";
+import { myScreen } from "./first.js";
 import { nnodes, nelem } from "./duennQ_tabelle.js"
 import { saveAs } from 'file-saver';
 

@@ -1,5 +1,6 @@
 import { berechnung_erfolgreich } from "./globals.js";
-import { myScreen, set_myScreen } from "./index.js";
+import { myScreen } from './first.js'
+import { set_myScreen } from "./index.js";
 import { systemlinien } from "./systemlinien";
 //import { duennQ } from "./duennQ";
 import { draw_elements } from "./grafik_3D.js";

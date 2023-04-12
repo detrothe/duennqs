@@ -16,6 +16,7 @@ html {
 
 body {
     /* remove margins and scroll bars */
+    display: none;
     margin: 0px;
     overflow: auto;
     overscroll-behavior: none;
@@ -51,12 +52,11 @@ a:link {
 /* The grid container */
 .grid-container {
     display: grid;
-    width: min(100%, 2500px);
+    /*width: min(100%, 2500px);*/
     margin: 0;
     margin-left: auto;
     margin-right: auto;
     padding: 0;
-    gap: 0;
     grid-template-areas:
         'header header'
         'topLeft topRight'

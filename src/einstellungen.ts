@@ -1,4 +1,7 @@
-
+import { set_myScreen } from "./index.js";
+console.log("enter einstellungen")
+import { testeZahl } from "./utility.js";
+console.log("vor getElementId")
 document.getElementById("unitLength").addEventListener('change', einstellungen);
 document.getElementById("id_cb_saveLocalStorage").addEventListener('click', saveLocalStorage);
 document.getElementById("id_cb_deleteLocalStorage").addEventListener('click', deleteLocalStorage);
@@ -6,6 +9,7 @@ document.getElementById("id_cb_deleteLocalStorage").addEventListener('click', de
 document.getElementById("id_fontsize").addEventListener('change', set_font_size);
 document.getElementById("id_color_table_out").addEventListener('change', set_color_table_out);
 document.getElementById("id_color_table_in").addEventListener('change', set_color_table_in);
+document.getElementById("id_body_width").addEventListener('change', set_body_width);
 
 export let current_unit_length = 'cm'
 export let current_unit_stress = 'kN/cm²'
@@ -14,14 +18,29 @@ export let unit_stress_factor = 1               // Multiplikator von kN/cm² nac
 export let my_fontsize = '1em'
 export let color_table_out = '#CFD915'
 export let color_table_in = '#b3ae00'
+export let body_width = 5000    //document.documentElement.clientWidth
+export let current_body_width = 5000
 
 let old_unit_length = 'cm'
+console.log("vor readLocalStorage")
 
 readLocalStorage();
 
 
 //----------------------------------------------------------------------------------------------
-export function set_font_size() {
+function set_body_width() {
+    //------------------------------------------------------------------------------------------
+    const el = document.getElementById("id_body_width") as HTMLInputElement;
+    let wert = Number(testeZahl(el.value))
+    //if (wert > document.documentElement.clientWidth) wert = document.documentElement.clientWidth
+    if (wert > 200) {  // Mindestbreite, sonst kann man nichts mehr eingeben
+        body_width = wert
+        set_myScreen()
+    }
+}
+
+//----------------------------------------------------------------------------------------------
+function set_font_size() {
     //------------------------------------------------------------------------------------------
 
     const el = document.getElementById("id_fontsize") as HTMLInputElement;
@@ -46,7 +65,7 @@ export function set_font_size() {
 }
 
 //----------------------------------------------------------------------------------------------
-export function set_color_table_out() {
+function set_color_table_out() {
     //------------------------------------------------------------------------------------------
 
     const el = document.getElementById("id_color_table_out") as HTMLInputElement;
@@ -63,7 +82,7 @@ export function set_color_table_out() {
 }
 
 //----------------------------------------------------------------------------------------------
-export function set_color_table_in() {
+function set_color_table_in() {
     //------------------------------------------------------------------------------------------
 
     const el = document.getElementById("id_color_table_in") as HTMLInputElement;
@@ -100,7 +119,7 @@ export function set_current_unit_length(unitLength: string) {
 }
 
 //----------------------------------------------------------------------------------------------
-export function einstellungen() {
+function einstellungen() {
     //------------------------------------------------------------------------------------------
     setNewUnits()
 
@@ -255,6 +274,10 @@ function saveLocalStorage() {
     window.localStorage.setItem('my_fontsize', my_fontsize);
     window.localStorage.setItem('color_table_out', color_table_out);
     window.localStorage.setItem('color_table_in', color_table_in);
+
+    el = document.getElementById("id_body_width") as HTMLInputElement;
+    let wert = Number(testeZahl(el.value))
+    if (wert > 200) window.localStorage.setItem('body_width', el.value);  // nur vernünftige werte abspeichern
 }
 
 
@@ -262,6 +285,7 @@ function saveLocalStorage() {
 export function readLocalStorage() {
     //------------------------------------------------------------------------------------------
 
+    console.log("enter readLocalStorage")
     let unitLength = window.localStorage.getItem('current_unit_length');
     //console.log("unit of length found in local storage", unitLength)
 
@@ -301,6 +325,15 @@ export function readLocalStorage() {
         color_table_in = color
     }
 
+    console.log("vor body_width")
+    const item = window.localStorage.getItem('body_width');
+    if (item) {
+        const el = document.getElementById("id_body_width") as HTMLInputElement
+        el.value = item
+        set_body_width()
+    }
+
+    console.log("exit readLocalStorage")
     //console.log("readLocalStorage", my_fontsize, color_table_out, color_table_in)
 
 }
@@ -349,3 +382,5 @@ export function deleteLocalStorage() {
     //------------------------------------------------------------------------------------------
     window.localStorage.clear()
 }
+
+console.log("exit einstellungen")

@@ -1,4 +1,6 @@
 
+console.log("entering duennQ")
+
 import { berechnungErfolgreich } from "./globals.js";
 import { resizeTable, meinetabelle } from "./base_tabelle.js"
 import './dateien.js';
@@ -246,135 +248,137 @@ for (let i = 1; i <= nelem; i++) {
 const xx = [0.0, 30.0, 110.0, 140.0, 85.0, 55.0];
 const yy = [0.0, 0.0, 0.0, 0.0, 60.0, 60.0];
 
+export function createTables() {
+
+    //tabulate('#knotentabelle', 'nodeTable', nodeArray, ['No', 'y [cm]', 'z [cm]']);  // nodeObj.
+    meinetabelle("knotentabelle", "nodeTable", nnodes, ['No', 'y&#772; [cm]', 'z&#772; [cm]']);
+    meinetabelle("elementtabelle", "elemTable", nelem, ["El No", 'E-Modul [kN/cm²]', 'ν', 'Dicke t [cm]', 'nod1', 'nod2']);
+
+    //tabulate('#elementtabelle', 'elemTable', elemArray, ["El No", 'E-Modul [kN/cm²]', 'ν', 'Dicke t [cm]', 'nod1', 'nod2']);  // elemObj.
+
+    let objCells: any, nSpalten: number
 
 
-//tabulate('#knotentabelle', 'nodeTable', nodeArray, ['No', 'y [cm]', 'z [cm]']);  // nodeObj.
-meinetabelle("knotentabelle", "nodeTable", nnodes, ['No', 'y&#772; [cm]', 'z&#772; [cm]']);
-meinetabelle("elementtabelle", "elemTable", nelem, ["El No", 'E-Modul [kN/cm²]', 'ν', 'Dicke t [cm]', 'nod1', 'nod2']);
+    const nTabelle = document.getElementById("nodeTable") as HTMLTableElement;
+    console.log("nTabelle", nTabelle)
 
-//tabulate('#elementtabelle', 'elemTable', elemArray, ["El No", 'E-Modul [kN/cm²]', 'ν', 'Dicke t [cm]', 'nod1', 'nod2']);  // elemObj.
+    objCells = nTabelle.rows.item(0).cells;  // Überschrift Punkt zentrieren
 
-let objCells: any, nSpalten: number
+    objCells.item(0).setAttribute('title', 'Knotennummer');
+    objCells.item(1).setAttribute('title', 'y-Koordinaten im Hilfskoordinatensystem');
+    objCells.item(2).setAttribute('title', 'z-Koordinaten im Hilfskoordinatensystem');
 
+    let el = document.getElementById("EMod_ref") as HTMLInputElement;
+    el.value = (parseFloat(el.value) * unit_stress_factor).toString()
 
-const nTabelle = document.getElementById("nodeTable") as HTMLTableElement;
-console.log("nTabelle", nTabelle)
-
-objCells = nTabelle.rows.item(0).cells;  // Überschrift Punkt zentrieren
-
-objCells.item(0).setAttribute('title', 'Knotennummer');
-objCells.item(1).setAttribute('title', 'y-Koordinaten im Hilfskoordinatensystem');
-objCells.item(2).setAttribute('title', 'z-Koordinaten im Hilfskoordinatensystem');
-
-let el = document.getElementById("EMod_ref") as HTMLInputElement;
-el.value = (parseFloat(el.value) * unit_stress_factor).toString()
-
-el = document.getElementById("fyRd") as HTMLInputElement;
-el.value = (parseFloat(el.value) * unit_stress_factor).toString()
+    el = document.getElementById("fyRd") as HTMLInputElement;
+    el.value = (parseFloat(el.value) * unit_stress_factor).toString()
 
 
-nSpalten = nTabelle.rows[0].cells.length - 1;
+    nSpalten = nTabelle.rows[0].cells.length - 1;
 
-nTabelle.rows.item(0).cells.item(0).style.width = '3.125em'
+    nTabelle.rows.item(0).cells.item(0).style.width = '3.125em'
 
-for (let i = 1; i < nTabelle.rows.length; i++) {
-    const objCells = nTabelle.rows.item(i).cells;
+    for (let i = 1; i < nTabelle.rows.length; i++) {
+        const objCells = nTabelle.rows.item(i).cells;
 
-    for (let j = 1; j <= nSpalten; j++) {
-        const str = "nodeTable-" + i + "-" + j;
-        const w = document.getElementById(str)
-        //        console.log("child", objCells.item(j).firstChild.parentElement.id)  // abfrage der id
-        //console.log("child", objCells.item(j).firstChild.parentElement)  // abfrage der id
-        if (j === 1) {
-            w.setAttribute("value", double2String(xx[i - 1] * unit_length_factor, 12));  // String(xx[i - 1] * unit_length_factor)
-        } else if (j === 2) {
-            w.setAttribute("value", double2String(yy[i - 1] * unit_length_factor, 12));
+        for (let j = 1; j <= nSpalten; j++) {
+            const str = "nodeTable-" + i + "-" + j;
+            const w = document.getElementById(str)
+            //        console.log("child", objCells.item(j).firstChild.parentElement.id)  // abfrage der id
+            //console.log("child", objCells.item(j).firstChild.parentElement)  // abfrage der id
+            if (j === 1) {
+                w.setAttribute("value", double2String(xx[i - 1] * unit_length_factor, 12));  // String(xx[i - 1] * unit_length_factor)
+            } else if (j === 2) {
+                w.setAttribute("value", double2String(yy[i - 1] * unit_length_factor, 12));
+            }
         }
     }
-}
 
 
 
-const eTabelle = document.getElementById("elemTable") as HTMLTableElement;
-objCells = eTabelle.rows.item(0).cells;  // Überschrift Punkt zentrieren
-//objCells.item(0).style.textAlign = "center";
+    const eTabelle = document.getElementById("elemTable") as HTMLTableElement;
+    objCells = eTabelle.rows.item(0).cells;  // Überschrift Punkt zentrieren
+    //objCells.item(0).style.textAlign = "center";
 
-objCells.item(0).setAttribute('title', 'Elementnummer');
-objCells.item(2).setAttribute('title', 'Querdehnzahl');
-objCells.item(4).setAttribute('title', 'Knoten-Inzidenz Elementanfang');
-objCells.item(5).setAttribute('title', 'Knoten-Inzidenz Elementende');
+    objCells.item(0).setAttribute('title', 'Elementnummer');
+    objCells.item(2).setAttribute('title', 'Querdehnzahl');
+    objCells.item(4).setAttribute('title', 'Knoten-Inzidenz Elementanfang');
+    objCells.item(5).setAttribute('title', 'Knoten-Inzidenz Elementende');
 
-nSpalten = eTabelle.rows[0].cells.length - 1;
+    nSpalten = eTabelle.rows[0].cells.length - 1;
 
-eTabelle.rows.item(0).cells.item(0).style.width = '3.125em'
+    eTabelle.rows.item(0).cells.item(0).style.width = '3.125em'
 
-for (let i = 1; i < eTabelle.rows.length; i++) {
-    //const objCells = eTabelle.rows.item(i).cells;
+    for (let i = 1; i < eTabelle.rows.length; i++) {
+        //const objCells = eTabelle.rows.item(i).cells;
 
-    for (let j = 1; j <= nSpalten; j++) {
-        const str = "elemTable-" + i + "-" + j;
-        const w = document.getElementById(str)
+        for (let j = 1; j <= nSpalten; j++) {
+            const str = "elemTable-" + i + "-" + j;
+            const w = document.getElementById(str)
 
-        //objCells.item(j).id = "elemTable-" + i + "-" + j;
-        if (j === 1) {
-            w.setAttribute("value", double2String(21000 * unit_stress_factor));
-        } else if (j === 2) {
-            w.setAttribute("value", double2String(0.3));
-        } else if (j === 3) {
-            w.setAttribute("value", double2String(1.5 * unit_length_factor));
+            //objCells.item(j).id = "elemTable-" + i + "-" + j;
+            if (j === 1) {
+                w.setAttribute("value", double2String(21000 * unit_stress_factor));
+            } else if (j === 2) {
+                w.setAttribute("value", double2String(0.3));
+            } else if (j === 3) {
+                w.setAttribute("value", double2String(1.5 * unit_length_factor));
+            }
+
         }
-
     }
+
+    // Inzidenzen
+    /* I-Querschnitt
+    eTabelle.rows[1].cells[4].innerText = "1";
+    eTabelle.rows[1].cells[5].innerText = "2";
+    eTabelle.rows[2].cells[4].innerText = "2";
+    eTabelle.rows[2].cells[5].innerText = "3";
+    eTabelle.rows[3].cells[4].innerText = "2";
+    eTabelle.rows[3].cells[5].innerText = "4";
+    eTabelle.rows[4].cells[4].innerText = "5";
+    eTabelle.rows[4].cells[5].innerText = "4";
+    eTabelle.rows[5].cells[4].innerText = "4";
+    eTabelle.rows[5].cells[5].innerText = "6";
+    
+    // Quadratischer Hohlquerschnitt
+    eTabelle.rows[1].cells[4].innerText = "1";
+    eTabelle.rows[1].cells[5].innerText = "2";
+    eTabelle.rows[2].cells[4].innerText = "2";
+    eTabelle.rows[2].cells[5].innerText = "3";
+    eTabelle.rows[3].cells[4].innerText = "3";
+    eTabelle.rows[3].cells[5].innerText = "4";
+    eTabelle.rows[4].cells[4].innerText = "4";
+    eTabelle.rows[4].cells[5].innerText = "1";
+    */
+    // Hohlquerschnitt mit Flügeln
+    // @ts-ignore
+    eTabelle.rows[1].cells[4].firstElementChild.value = "1";
+    // @ts-ignore
+    eTabelle.rows[1].cells[5].firstElementChild.value = "2";
+    // @ts-ignore
+    eTabelle.rows[2].cells[4].firstElementChild.value = "2";
+    // @ts-ignore
+    eTabelle.rows[2].cells[5].firstElementChild.value = "3";
+    // @ts-ignore
+    eTabelle.rows[3].cells[4].firstElementChild.value = "3";
+    // @ts-ignore
+    eTabelle.rows[3].cells[5].firstElementChild.value = "4";
+    // @ts-ignore
+    eTabelle.rows[4].cells[4].firstElementChild.value = "3";
+    // @ts-ignore
+    eTabelle.rows[4].cells[5].firstElementChild.value = "5";
+    // @ts-ignore
+    eTabelle.rows[5].cells[4].firstElementChild.value = "2";
+    // @ts-ignore
+    eTabelle.rows[5].cells[5].firstElementChild.value = "6";
+    // @ts-ignore
+    eTabelle.rows[6].cells[4].firstElementChild.value = "5";
+    // @ts-ignore
+    eTabelle.rows[6].cells[5].firstElementChild.value = "6";
+
 }
-
-// Inzidenzen
-/* I-Querschnitt
-eTabelle.rows[1].cells[4].innerText = "1";
-eTabelle.rows[1].cells[5].innerText = "2";
-eTabelle.rows[2].cells[4].innerText = "2";
-eTabelle.rows[2].cells[5].innerText = "3";
-eTabelle.rows[3].cells[4].innerText = "2";
-eTabelle.rows[3].cells[5].innerText = "4";
-eTabelle.rows[4].cells[4].innerText = "5";
-eTabelle.rows[4].cells[5].innerText = "4";
-eTabelle.rows[5].cells[4].innerText = "4";
-eTabelle.rows[5].cells[5].innerText = "6";
-
-// Quadratischer Hohlquerschnitt
-eTabelle.rows[1].cells[4].innerText = "1";
-eTabelle.rows[1].cells[5].innerText = "2";
-eTabelle.rows[2].cells[4].innerText = "2";
-eTabelle.rows[2].cells[5].innerText = "3";
-eTabelle.rows[3].cells[4].innerText = "3";
-eTabelle.rows[3].cells[5].innerText = "4";
-eTabelle.rows[4].cells[4].innerText = "4";
-eTabelle.rows[4].cells[5].innerText = "1";
-*/
-// Hohlquerschnitt mit Flügeln
-// @ts-ignore
-eTabelle.rows[1].cells[4].firstElementChild.value = "1";
-// @ts-ignore
-eTabelle.rows[1].cells[5].firstElementChild.value = "2";
-// @ts-ignore
-eTabelle.rows[2].cells[4].firstElementChild.value = "2";
-// @ts-ignore
-eTabelle.rows[2].cells[5].firstElementChild.value = "3";
-// @ts-ignore
-eTabelle.rows[3].cells[4].firstElementChild.value = "3";
-// @ts-ignore
-eTabelle.rows[3].cells[5].firstElementChild.value = "4";
-// @ts-ignore
-eTabelle.rows[4].cells[4].firstElementChild.value = "3";
-// @ts-ignore
-eTabelle.rows[4].cells[5].firstElementChild.value = "5";
-// @ts-ignore
-eTabelle.rows[5].cells[4].firstElementChild.value = "2";
-// @ts-ignore
-eTabelle.rows[5].cells[5].firstElementChild.value = "6";
-// @ts-ignore
-eTabelle.rows[6].cells[4].firstElementChild.value = "5";
-// @ts-ignore
-eTabelle.rows[6].cells[5].firstElementChild.value = "6";
 
 //----------------------------------------------------------------------------------------------
 
@@ -1525,4 +1529,4 @@ document.getElementById("select_mode_element").addEventListener('change', setSel
 // @ts-ignore
 window.setMaterialEqual = setMaterialEqual;   // jetzt auch in html sichtbar
 
-
+console.log("exit duennQ")

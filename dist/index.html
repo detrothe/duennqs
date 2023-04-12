@@ -71,8 +71,8 @@
 
         <p>freier Text mit HTML Formatierung:<br>
           <textarea id="freetext" name="freetext" rows="3" cols="50" placeholder="<b>Hausübung A1, SS 2023</b>
-            Bearbeitet von: Melis Muster
-            Pos. EG-1"></textarea>
+          Bearbeitet von: Melis Muster
+          Pos. EG-1"></textarea>
         </p>
 
         <p>
@@ -440,7 +440,7 @@
         <br>
         <p>Einheiten für Tabellen und Spannungen</p>
         <p>
-          <label for="einheiten">Längeneinheit : </label>
+          <label for="einheiten" title="nach Änderung ist eine Neuberechnung erforderlich">Längeneinheit : </label>
           <select name="einheiten" id="unitLength">
             <option value="mm">mm</option>
             <option value="cm" selected>cm</option>
@@ -461,10 +461,23 @@
             <option value="1.125em">18</option>
           </select>
         </p>
-        <br>
 
+
+        <br>
         <table>
           <tbody>
+            <tr>
+              <td style="white-space:nowrap"
+                title='verwendete Breite im Browserfenster, interessant für große Bildschirme'>
+                Breite Browserfenster:
+              </td>
+              <td style="white-space:nowrap"><input type='number' id="id_body_width" name="body_width" value="5000"
+                  style="width: 150px; border-radius: 3px; border-width: 1px;">&nbsp; px</td>
+            </tr>
+            <tr>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+            </tr>
             <tr>
               <td style="white-space:nowrap">
                 Tabellenfarbe außen: &nbsp;</td>
@@ -513,7 +526,7 @@
     </div>
 
     <div id="footer" class="footer">
-      Querschnittswerte und Spannungen dünnwandiger Querschnitte, 11-April-2023,
+      Querschnittswerte und Spannungen dünnwandiger Querschnitte, 12-April-2023,
       <a href="https://statikverstehen.de">&#169; statikverstehen.de </a>
     </div>
   </div>

@@ -1,6 +1,8 @@
+
 import './styles/main.css';
 import './styles/contextMenu.css';
 
+import { myScreen } from './first.js'
 //import "./globals.js";
 import './einstellungen'
 
@@ -9,6 +11,7 @@ import './ergebnisse.js'
 import './base_tabelle.js'
 import './mypdf'
 
+import { createTables } from './duennQ'
 
 import { sichtbar, currentTab } from "./utility.js";
 
@@ -17,21 +20,37 @@ import { init_contextmenu } from './contextMenu.js';
 
 
 import { logo_3D, main_3D, ttf_logo_3D } from "./grafik_3D";
-import { duennQ } from "./duennQ"
-import { setNewUnits } from './einstellungen';
-
-export const myScreen = {
-    clientWidth: 0,
-    clientHeight: 0,
-    svgWidth: 0
-}
+//import { duennQ } from "./duennQ"
+import { setNewUnits, body_width, current_body_width } from './einstellungen';
 
 // myScreen.clientWidth = document.documentElement.clientWidth;
 // myScreen.clientHeight = document.documentElement.clientHeight;
 
 export const infoBox = document.getElementById("infoBox");
 
+addEventListener("resize", (event) => {
+    //console.log("in resize")
+    set_myScreen()
+});
+
+//-------------------------------------------------------------------------------
 export function set_myScreen() {
+    //---------------------------------------------------------------------------
+
+    console.log("body_width", body_width)
+
+    //const currentBodyWidth = document.body.style.width
+
+    if (body_width < document.documentElement.clientWidth) {
+        document.body.style.width = body_width + 'px'
+        document.body.style.position = 'relative'
+        document.body.style.left = (document.documentElement.clientWidth - body_width) / 2 + 'px'
+    } else {
+        document.body.style.width = '100%'   //document.documentElement.clientWidth
+        document.body.style.position = 'relative'
+        document.body.style.left = '0px'
+        document.body.style.right = '0px'
+    }
 
     myScreen.clientWidth = document.documentElement.clientWidth;
     myScreen.clientHeight = document.documentElement.clientHeight;
@@ -39,8 +58,8 @@ export function set_myScreen() {
     console.log("myScreen", myScreen.clientWidth, myScreen.clientHeight, myScreen.svgWidth)
     console.log("devicePixelRatio", window.devicePixelRatio, screen.width, screen.height, screen.orientation)
 
-    if (myScreen.clientWidth > 2500) {
-        myScreen.svgWidth = 2500;  //myScreen.clientWidth - 900;
+    if (myScreen.clientWidth > body_width) {
+        myScreen.svgWidth = body_width;  //myScreen.clientWidth - 900;
         //    } else if (myScreen.clientWidth < 600) {
         //        myScreen.svgWidth = myScreen.clientWidth
     } else {
@@ -48,6 +67,7 @@ export function set_myScreen() {
     }
     //document.getElementById("my-svg").style.width = myScreen.svgWidth + 'px';
     //document.getElementById("my-svg").style.height = myScreen.clientHeight + 'px';
+
 }
 
 
@@ -99,7 +119,11 @@ export const Detect = new DetectOS();
 
 init_contextmenu();
 
+createTables();
+
 setNewUnits();
+
+document.body.style.display = 'block'
 
 {
     let myInfoDiv = document.getElementById("id_hilfe");  //in div
@@ -112,6 +136,10 @@ setNewUnits();
     myInfoDiv.appendChild(tag);
 
     console.log("my locale", navigator.language)
+
+    if (window.devicePixelRatio !== 1) {
+        const el = document.getElementById("id_body_width").setAttribute('disabled', true)
+    }
 }
 
 main_3D();
@@ -141,7 +169,7 @@ ttf_logo_3D();
     //infoBox.innerHTML += "<br>getRenderedFontFamilyName: " + getRenderedFontFamilyName(document.querySelector('body'));
 }
 
-//duennQ();
+
 
 
 function css(element, property) {

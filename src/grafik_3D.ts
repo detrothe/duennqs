@@ -9,7 +9,7 @@ import { OrbitControls } from './OrbitControls.js';
 import { node, truss, Gesamt_ys, Gesamt_zs, yM, zM, phi0 } from "./duennQ"
 import { nnodes, nelem } from "./duennQ_tabelle.js"
 import { ymin, ymax, zmin, zmax, slmax, Mxp } from "./duennQ";
-import { myScreen } from "./index.js";
+import { myScreen } from "./first.js";
 import { CSS2DObject, CSS2DRenderer } from "./renderers/CSS2DRenderer.js"
 
 import { FontLoader, Font } from "./renderers/FontLoaders.js";

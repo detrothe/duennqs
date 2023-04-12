@@ -659,3 +659,5 @@ export function POINTER_OUT(ev) { // pointer move
     const myTable = document.getElementById(tableId);
     myTable.releasePointerCapture(ev.pointerId);
 }
+
+console.log("exit base_tabelle")

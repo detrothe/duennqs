@@ -37,3 +37,5 @@ window.hilfe = hilfe;         // jetzt auch in html sichtbar
 
 window.ergebnisse = ergebnisse;   // jetzt auch in html sichtbar
 window.display_einstellungen = display_einstellungen;   // jetzt auch in html sichtbar
+
+console.log("exit ergebnisse")

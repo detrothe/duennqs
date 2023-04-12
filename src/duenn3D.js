@@ -1,4 +1,4 @@
-import {sichtbar} from "./utility.js";
+import { sichtbar } from "./utility.js";
 
 //------------------------------------------------------------------------------------------------
 
@@ -31,3 +31,5 @@ export function mypdf() {
 
 // @ts-ignore
 window.mypdf = mypdf;   // jetzt auch in html sichtbar
+
+console.log("exit duenn3D")
