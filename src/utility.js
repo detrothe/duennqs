@@ -117,6 +117,10 @@ export function sichtbar(displayName) {
         let breite = Math.min(myScreen.clientWidth, 760);
         document.getElementById("id_doc").setAttribute("width", breite + "px");
         document.getElementById("id_doc").setAttribute("height", myScreen.clientHeight + "px");
+        let left = (myScreen.svgWidth - breite) / 2
+        if (left < 0) left = 0
+        document.getElementById("id_doc_frame").style.left = left + 'px';
+        console.log("id_doc_frame", (myScreen.clientWidth - breite) / 2)
 
         document.getElementById("id_hilfe").style.display = "block";
     } else {
