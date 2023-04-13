@@ -10,19 +10,22 @@
 	<meta name="changed" content="2023-02-10T12:41:09.206468363" />
 	<meta name="AppVersion" content="15.0000" />
 	<style type="text/css">
-		p {
+		body {
+			font-size: 1em;
 			font-family: "FreeSans", sans-serif;
+		}
+
+		p {
 			line-height: 150%;
 			text-align: left;
 			orphans: 2;
 			widows: 2;
-			margin-bottom: 0.25cm;
+			margin-bottom: 0.6em;
 			direction: ltr;
 			background: transparent
 		}
 
 		ul {
-			font-family: "FreeSans", sans-serif;
 			line-height: 125%;
 		}
 
@@ -33,16 +36,15 @@
 			page-break-inside: avoid;
 			orphans: 2;
 			widows: 2;
-			margin-top: 0.85cm;
-			margin-bottom: 0cm;
+			margin-top: 2em;
+			margin-bottom: 0;
 			direction: ltr;
 			background: transparent;
 			page-break-after: avoid
 		}
 
 		h1.western {
-			font-family: "FreeSans", sans-serif;
-			font-size: 15pt;
+			font-size: 1.2em;
 			font-weight: bold
 		}
 
@@ -54,16 +56,15 @@
 			page-break-inside: avoid;
 			orphans: 2;
 			widows: 2;
-			margin-top: 0.35cm;
-			margin-bottom: 0cm;
+			margin-top: 0.83em;
+			margin-bottom: 0;
 			direction: ltr;
 			background: transparent;
 			page-break-after: avoid
 		}
 
 		h2.western {
-			font-family: "FreeSans", sans-serif;
-			font-size: 14pt;
+			font-size: 1.125em;
 			font-weight: bold
 		}
 
@@ -272,17 +273,17 @@
 		<li><b>Omega:</b> Wölbordinate &omega;</li>
 		<li><b>Verschiebung u:</b> Die Verschiebung u (Verwölbung) des Querschnitts infolge der Schubspannungen. </li>
 		<li><b>Skalierung:</b> Skalierung der Spannungen.</li>
-		<li><b>Seiten anzeigen:</b> Bei Darstellung der Schuibspannungen können die Seitenflächen ausgeblendet werden.
+		<li><b>Seiten anzeigen:</b> Bei Darstellung der Schubspannungen können die Seitenflächen ausgeblendet werden.
 		</li>
 		<li><b>Pfeile anzeigen:</b> Darstellung der wirklichen Richtungen der Schubspannungen.</li>
 		<li><b>Skalierung Pfeile:</b> Skalierung der Richtungspfeile.</li>
 		<li><b>Sigma Fläche:</b> Drahtmodell-Darstellung der Normalspannungen über die Fläche der Elemente. Wenn diese
 			Option gewählt wird,
 			dann werden die Vergleichsspannungen auch an den Flächenrändern berechnet. Sonst wird die Vergleichsspannung
-			aus der Normalspannung
-			in der Mittelfläche verwendet.
+			aus der Normalspannung in der Mittelfläche verwendet.
 		</li>
-		<li><b>rechts/links anzeigen:</b> Beschriftung der Seiten und Darstellung des Element-Anfangsknotens durch einen
+		<li><b>rechts/links anzeigen:</b> Beschriftung der Elementseiten und Darstellung des Element-Anfangsknotens
+			durch einen
 			Pfeil.</li>
 		<li><b>Reset:</b> Rotationswinkel und Zoom werden zurückgesetzt.</li>
 	</ul>
@@ -308,12 +309,14 @@
 	<p>
 	<h2 class="western">Installation als App auf dem Desktop</h2>
 	</p>
-	<p>Diese Anwendung ist als Webanwendung (Web App) programmiert, so dass sie unter Android und iOS auf dem Desktop
-		installiert
-		werden kann.
+	<p>Diese Anwendung ist als Webanwendung (Web App) programmiert, so dass sie unter allen Betriebssystemen auf dem
+		Desktop
+		installiert werden kann.
 		Dafür wird auf dem Desktop ein Icon erstellt. Damit verhält sich die App wie eine aus einem Store installierte
 		App.
-		DuennQs wird natürlich weiterhin im installierten Browser ausgeführt, allerdings im Vollbildmodus.
+		DuennQs wird natürlich weiterhin im installierten Browser ausgeführt, allerdings im Vollbildmodus. Die
+		Installation
+		unterscheidet sich je nach Betriebssystem, -version und Browser.<br>
 		Nachdem duennQs erstmalig im Browser gestartet wurde, wählt man unter Android im Chrome Browser rechts oben aus
 		dem Anwendungsmenü <i>(Drei-Punkte-Menü)</i> die Option 'App installieren'.
 		Ein Dialog erscheint, der zu bestätigen ist. Danach kann der Browser geschlossen werden. Auf dem Desktop gibt es
@@ -326,6 +329,7 @@
 		folgender Abschnitt im Anwendungsmenü <i> (Drei-Punkte-Menü)</i>
 		<img src="app-install-windows.png" name="Bild4"
 			style="width:423px; height:111px; border:0px; margin: auto; display: block;" />
+		<br>Bei neueren Browserversionen werden Sie unter Umständen direkt gefragt, ob eine Installation gewünscht wird.
 	</p>
 	<p>Unter den PC-Betriebsystemen Microsoft Windows und Linux kann alternativ mit der F11-Taste in den Vollbildmodus
 		umgeschaltet werden.</p>
