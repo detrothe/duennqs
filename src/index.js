@@ -137,7 +137,7 @@ document.body.style.display = 'block'
 
     console.log("my locale", navigator.language)
 
-    if (window.devicePixelRatio !== 1) {
+    if (window.devicePixelRatio > 1.5) {
         const el = document.getElementById("id_body_width").setAttribute('disabled', true)
     }
 }
