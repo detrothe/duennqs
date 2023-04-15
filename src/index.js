@@ -152,7 +152,8 @@ ttf_logo_3D();
 
 {
     infoBox.innerHTML = '<br><b>Einige System-Informationen</b><br>';
-    infoBox.innerHTML += 'ScreenWidth=' + screen.width + "&nbsp;,&nbsp;&nbsp;    ScreenHeight= " + screen.height;
+    infoBox.innerHTML += 'ScreenWidth=' + Math.round(screen.width * window.devicePixelRatio)
+        + " px &nbsp;,&nbsp;&nbsp;    ScreenHeight= " + Math.round(screen.height * window.devicePixelRatio) + ' px';
     infoBox.innerHTML += "<br>Browser: clientwidth=" + myScreen.clientWidth + "&nbsp;,&nbsp;&nbsp;    clientheight=" + myScreen.clientHeight;
     infoBox.innerHTML += "<br>Browser: " + Detect.browser + " Version " + Detect.version;
     infoBox.innerHTML += "<br>OS: " + Detect.OS + " , isMac: " + app.isMac;
