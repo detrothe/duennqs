@@ -9,7 +9,7 @@ export function myPanel() {
     //--------------------------------------------------------------------------------------------------------
 
     let obj = {
-        label: false,
+        Label: false,
         tau: false,
         sigma: false,
         sigmaV: false,
@@ -29,7 +29,7 @@ export function myPanel() {
     const gui = new GUI({ container: document.getElementById('panel_gui'), width: 230 }); // , touchStyles: true
     //gui.domElement.classList.add('allow-touch-styles');
 
-    gui.add(obj, 'label').onChange(v => {
+    gui.add(obj, 'Label').name('Beschriftung').onChange(v => {
         window.dispatchEvent(new Event("label_webgl"));
     });
 
