@@ -69,7 +69,7 @@
     <div class="topLeft"> <!-- id="topleft" -->
       <div id="eingabe_duennQ_top">
 
-        <p>Querschnittswerte und Spannungen dünnwandiger Querschnitte</p>
+        <p><b>Querschnittswerte und Spannungen dünnwandiger Querschnitte</b></p>
 
         <p>freier Text mit HTML Formatierung:<br>
           <textarea id="freetext" name="freetext" rows="3" cols="50" placeholder="<b>Hausübung A1, SS 2023</b>
@@ -127,34 +127,40 @@
             <tr>
               <td class="td_eng_right">V<sub>y</sub>=</td>
               <td>
-                <input type="number" step="any" id="Vy" name="Vy" class="input_kdtab" pattern="[0-9.,eE+-]*" />
+                <input type="number" step="any" id="Vy" name="Vy" class="input_kdtab" pattern="[0-9.,eE+-]*"
+                  onchange="berechnungErforderlich()" />
               </td>
               <td class="td_eng">kN</td>
               <td class="td_eng_right">M<sub>xp</sub>=</td>
               <td>
-                <input type="number" step="any" id="Mxp" name="Mxp" class="input_kdtab" pattern="[0-9.,eE+-]*" />
+                <input type="number" step="any" id="Mxp" name="Mxp" class="input_kdtab" pattern="[0-9.,eE+-]*"
+                  onchange="berechnungErforderlich()" />
               </td>
               <td class="td_eng">kNm</td>
               <td class="td_eng_right">N=</td>
               <td>
-                <input type="number" step="any" id="Nx" name="Nx" class="input_kdtab" pattern="[0-9.,eE+-]*" />
+                <input type="number" step="any" id="Nx" name="Nx" class="input_kdtab" pattern="[0-9.,eE+-]*"
+                  onchange="berechnungErforderlich()" />
               </td>
               <td class="td_eng">kN</td>
             </tr>
             <tr>
               <td class="td_eng_right">V<sub>z</sub>=</td>
               <td>
-                <input type="number" step='any' id="Vz" name="Vz" class="input_kdtab" pattern="[0-9.,eE+-]*" />
+                <input type="number" step='any' id="Vz" name="Vz" class="input_kdtab" pattern="[0-9.,eE+-]*"
+                  onchange="berechnungErforderlich()" />
               </td>
               <td class="td_eng">kN</td>
               <td class="td_eng_right">M<sub>xs</sub>=</td>
               <td>
-                <input type="number" step="any" id="Mxs" name="Mxs" class="input_kdtab" pattern="[0-9.,eE+-]*" />
+                <input type="number" step="any" id="Mxs" name="Mxs" class="input_kdtab" pattern="[0-9.,eE+-]*"
+                  onchange="berechnungErforderlich()" />
               </td>
               <td class="td_eng">kNm</td>
               <td class="td_eng_right">M<sub>y</sub>=</td>
               <td>
-                <input type="number" step="any" id="My" name="My" class="input_kdtab" pattern="[0-9.,eE+-]*" />
+                <input type="number" step="any" id="My" name="My" class="input_kdtab" pattern="[0-9.,eE+-]*"
+                  onchange="berechnungErforderlich()" />
               </td>
               <td class="td_eng">kNm</td>
             </tr>
@@ -164,12 +170,14 @@
               <td class="td_eng"></td>
               <td class="td_eng_right">M<sub>&omega;</sub>=</td>
               <td>
-                <input type="number" step="any" id="Momega" name="Momega" class="input_kdtab" pattern="[0-9.,eE+-]*" />
+                <input type="number" step="any" id="Momega" name="Momega" class="input_kdtab" pattern="[0-9.,eE+-]*"
+                  onchange="berechnungErforderlich()" />
               </td>
               <td class="td_eng">kNm²</td>
               <td class="td_eng_right">M<sub>z</sub>=</td>
               <td>
-                <input type="number" step="any" id="Mz" name="Mz" class="input_kdtab" pattern="[0-9.,eE+-]*" />
+                <input type="number" step="any" id="Mz" name="Mz" class="input_kdtab" pattern="[0-9.,eE+-]*"
+                  onchange="berechnungErforderlich()" />
               </td>
               <td class="td_eng">kNm</td>
             </tr>
@@ -192,13 +200,13 @@
               <td class="zelle0">E-Modul=</td>
               <td>
                 <input type="number" step="any" id="EMod_ref" name="EMod_ref" value="21000" class="input_kdtab"
-                  pattern="[0-9.,eE+-]*" />
+                  pattern="[0-9.,eE+-]*" onchange="berechnungErforderlich()" />
               </td>
               <td class="unit_stress td_eng">kN/cm²</td>
               <td class="td_eng_right" title="Querdehnzahl">&nu;=</td>
               <td>
                 <input type="number" step="any" id="mue_ref" name="mue_ref" value="0.3" class="input_kdtab"
-                  pattern="[0-9.,eE+-]*" />
+                  pattern="[0-9.,eE+-]*" onchange="berechnungErforderlich()" />
               </td>
             </tr>
           </tbody>
@@ -214,7 +222,7 @@
               <td class="zelle0">f<sub>y,Rd</sub> =</td>
               <td>
                 <input type="number" step="any" id="fyRd" name="fyRd" value="23.5" class="input_kdtab"
-                  pattern="[0-9.,eE+-]*" />
+                  pattern="[0-9.,eE+-]*" onchange="berechnungErforderlich()" />
               </td>
               <td class="unit_stress">kN/cm²</td>
             </tr>
@@ -269,12 +277,12 @@
               <tr>
                 <td class="querschnittwerte_table_z0">y&#772;<sub>s</sub>=</td>
                 <td class="zelle" id="ys"></td>
-                <td class="zelle">cm</td>
+                <td class="zelle unit_laenge">cm</td>
               </tr>
               <tr>
                 <td class="querschnittwerte_table_z0">z&#772;<sub>s</sub>=</td>
                 <td class="zelle" id="zs"></td>
-                <td class="zelle">cm</td>
+                <td class="zelle  unit_laenge">cm</td>
               </tr>
               <tr>
                 <td class="querschnittwerte_table_z0">A=</td>
@@ -314,12 +322,12 @@
               <tr>
                 <td class="querschnittwerte_table_z0">y<sub>M</sub>=</td>
                 <td class="zelle" id="yM"></td>
-                <td class="zelle">cm</td>
+                <td class="zelle unit_laenge">cm</td>
               </tr>
               <tr>
                 <td class="querschnittwerte_table_z0">z<sub>M</sub>=</td>
                 <td class="zelle" id="zM"></td>
-                <td class="zelle">cm</td>
+                <td class="zelle unit_laenge">cm</td>
               </tr>
               <tr>
                 <td class="querschnittwerte_table_z0">I<sub>t</sub>=</td>
@@ -530,7 +538,7 @@
     </div>
 
     <div id="footer" class="footer">
-      Querschnittswerte und Spannungen dünnwandiger Querschnitte, 16-April-2023,
+      Querschnittswerte und Spannungen dünnwandiger Querschnitte, 17-April-2023,
       <a href="https://statikverstehen.de">&#169; statikverstehen.de </a>
     </div>
   </div>

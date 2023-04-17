@@ -1071,8 +1071,8 @@ export function duennQ() {
     //console.log("textarea", txtarea.value)
     //document.getElementById("my_text").innerHTML = txtarea.value
 
-    tabQWerte.ys = document.getElementById("ys").innerText = myFormat(Gesamt_ys, 2, 2)   // Gesamt_ys.toFixed(2);
-    tabQWerte.zs = document.getElementById("zs").innerText = myFormat(Gesamt_zs, 2, 2);
+    tabQWerte.ys = document.getElementById("ys").innerText = myFormat(Gesamt_ys * unit_length_factor, 2, 2)   // Gesamt_ys.toFixed(2);
+    tabQWerte.zs = document.getElementById("zs").innerText = myFormat(Gesamt_zs * unit_length_factor, 2, 2);
     tabQWerte.area = document.getElementById("area").innerText = myFormat(Gesamtflaeche, 2, 2);
     tabQWerte.Iyy = document.getElementById("Iys").innerText = myFormat(Gesamt_Iyy, 2, 2);
     tabQWerte.Izz = document.getElementById("Izs").innerText = myFormat(Gesamt_Izz, 2, 2);
@@ -1081,8 +1081,8 @@ export function duennQ() {
     tabQWerte.I22 = document.getElementById("I22").innerText = myFormat(I22, 1, 2);
     tabQWerte.phi_h = document.getElementById("phi_h").innerText = myFormat((phi0 * 180.0 / Math.PI), 2, 2);
 
-    tabQWerte.yM = document.getElementById("yM").innerText = myFormat(yM, 2, 2);
-    tabQWerte.zM = document.getElementById("zM").innerText = myFormat(zM, 2, 2);
+    tabQWerte.yM = document.getElementById("yM").innerText = myFormat(yM * unit_length_factor, 2, 2);
+    tabQWerte.zM = document.getElementById("zM").innerText = myFormat(zM * unit_length_factor, 2, 2);
     tabQWerte.It = document.getElementById("I_t").innerText = myFormat(Gesamt_It, 1, 2);
     tabQWerte.Iomega = document.getElementById("I_omega").innerText = myFormat(I_omega, 1, 2);
 
@@ -1096,6 +1096,12 @@ export function duennQ() {
     tabQWerte.i_M2 = document.getElementById("i_M2").innerText = myFormat(iM2, 2, 2);
     tabQWerte.i_p2 = document.getElementById("i_p2").innerText = myFormat(iP2, 2, 2);
 
+
+    const collection = document.getElementsByClassName('unit_laenge');
+
+    for (i = 0; i < collection.length; i++) {
+        collection[i].innerHTML = current_unit_length;
+    }
 
     // Altes löschen
 

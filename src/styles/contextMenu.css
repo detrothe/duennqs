@@ -90,6 +90,7 @@ body {
   background-color: #fff;
   border: solid 1px #dfdfdf;
   box-shadow: 1px 1px 2px #cfcfcf;
+  border-radius: 8px;
 }
 
 .context-menu--active {
@@ -114,11 +115,11 @@ body {
 .context-menu__link {
   display: block;
   padding: 4px 12px;
-  color: #0066aa;
+  color: #111111;
   text-decoration: none;
 }
 
 .context-menu__link:hover {
-  color: #fff;
-  background-color: #0066aa;
+  color: #dfdfdf;
+  background-color: #333333;
 }

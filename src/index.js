@@ -22,6 +22,8 @@ import { init_contextmenu } from './contextMenu.js';
 import { logo_3D, main_3D, ttf_logo_3D } from "./grafik_3D";
 //import { duennQ } from "./duennQ"
 import { setNewUnits, body_width, current_body_width } from './einstellungen';
+import { berechnungErforderlich } from "./globals.js"
+
 
 // myScreen.clientWidth = document.documentElement.clientWidth;
 // myScreen.clientHeight = document.documentElement.clientHeight;
@@ -145,6 +147,7 @@ document.body.style.display = 'block'
 main_3D();
 
 eingabe1();  // Tabellenblatt eingabe sichtbar schalten
+berechnungErforderlich(true);
 
 logo_3D();
 

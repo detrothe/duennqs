@@ -1,8 +1,8 @@
-import * as d3 from "d3";
+//import * as d3 from "d3";
 import { set_nelem, set_nnodes, table_index, remove_selected_Tabelle } from "./duennQ_tabelle.js";
 import { berechnungErforderlich } from "./globals.js"
 import { show_contextMenu, toggleMenuOff } from './contextMenu.js';
-import { infoBox, Detect } from './index.js';
+import { Detect } from './index.js';
 import { color_table_in, color_table_out } from './einstellungen.js'
 
 
@@ -182,6 +182,7 @@ export function resize_Tabelle(idTable, nRowNew, nColNew) {
                     el.id = str;
                     //el.className = 'input_normal';
                     el.addEventListener("keydown", KEYDOWN);
+                    el.addEventListener("change", function () { berechnungErforderlich(true); });
                     //el.addEventListener("mousemove", newMOUSEMOVE);
 
 
@@ -247,6 +248,7 @@ export function resize_Tabelle(idTable, nRowNew, nColNew) {
                     el.id = str;
                     //el.className = 'input_normal';
                     el.addEventListener("keydown", KEYDOWN);
+                    el.addEventListener("change", function () { berechnungErforderlich(true); });
                     //el.addEventListener("mousemove", newMOUSEMOVE);
 
                     newCell = newRow.insertCell()
@@ -340,6 +342,7 @@ export function meinetabelle(theDiv, id_table, nZeilen, columns) {
                 el.id = str;
                 //el.className = 'input_normal';
                 el.addEventListener("keydown", KEYDOWN);
+                el.addEventListener("change", function () { berechnungErforderlich(true); });
 
                 newCell = newRow.insertCell()
                 newCell.style.width = '6em'

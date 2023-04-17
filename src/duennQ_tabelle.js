@@ -24,6 +24,7 @@ document.getElementById('id_input_node_dec').addEventListener('click', decrement
 document.getElementById('id_input_elem_incr').addEventListener('click', increment_nelem, false);
 document.getElementById('id_input_elem_dec').addEventListener('click', decrement_nelem, false);
 
+
 //----------------------------------------------------------------------------------------------
 function increment_nnodes() {
     nnodes++

@@ -73,26 +73,10 @@ export function sichtbar(displayName) {
         //document.getElementById("ergebnisse").setAttribute("width", myScreen.clientWidth / 2 + 'px');
         //document.getElementById("id_topRight").setAttribute("width", '0px');
         // document.getElementById("id_topRight").style.width = 0;
-        /*
-        document.getElementById("querschnittswerte").style.display = "block";
 
-        document.getElementById("spannung_mxp").style.display = "block";
-        document.getElementById("spannung_mxs").style.display = "block";
-        document.getElementById("normalspannung").style.display = "block";
-        document.getElementById("vergleichsspannung").style.display = "block";
-        document.getElementById("schubspannung").style.display = "block";
-        */
     } else {
         document.getElementById("ergebnisse").style.display = "none";
-        /*
-                document.getElementById("querschnittswerte").style.width = myScreen.clientWidth;
-                
-                        document.getElementById("spannung_mxp").style.display = "none";
-                        document.getElementById("spannung_mxs").style.display = "none";
-                        document.getElementById("normalspannung").style.display = "none";
-                        document.getElementById("vergleichsspannung").style.display = "none";
-                        document.getElementById("schubspannung").style.display = "none";
-                        */
+
     }
     if (displayName === 'duennQ') {
         set_myScreen();

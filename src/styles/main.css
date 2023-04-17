@@ -81,14 +81,6 @@ a:link {
     }
 }
 
-/* grid-column-gap: 10px; - if you want gap between the columns */
-/*
-            'header header header header header'
-                'topLeft topLeft topRight topRight topRight'
-                'unten_grafik unten_grafik unten_grafik unten_grafik unten_grafik'
-                'unten_webgl unten_webgl unten_webgl unten_webgl unten_webgl'
-                'footer footer footer footer footer';
-                */
 
 .topLeft,
 .topRight,
@@ -350,25 +342,6 @@ label {
     /*1rem;*/
 }
 
-/*
-input:invalid {
-    color: red;
-}
-*/
-/*
-input:valid {
-    color: rgb(187, 255, 0);
-}
-*/
-
-
-/*
-.input_sym {
-    width: 500px;
-    padding: 0px;
-    margin: 0;
-}
-*/
 .zelle {
     width: 3.125em;
 }
@@ -380,23 +353,6 @@ input:valid {
     /*font-size: 1rem;*/
 }
 
-/*
-.zellew0 {
-    white-space: nowrap;
-    text-align: right;
-    font-size: 1rem;
-}
-
-.zelle100 {
-    width: 100px;
-    text-align: right;
-    font-size: 1rem;
-}
-
-.zelle1 {
-    width: 60px;
-}
-*/
 .input_kdtab {
     width: 5em;
     /*80px;*/
@@ -455,15 +411,7 @@ td {
     text-align: right;
 }
 
-/*
-#spannung_mxp,
-#spannung_mxs,
-#normalspannung,
-#vergleichsspannung,
-#schubspannung {
-    display: none;
-}
-*/
+
 .table_spannung_cell_center {
     text-align: center;
 }
@@ -639,7 +587,7 @@ input[type=number] {
     padding: 5px;
     margin: 5px;
     background-color: rgb(207, 217, 21);
-    border-radius: 3px 3px 3px 3px;
+    border-radius: 5px;
 }
 
 #id_myTable td,
@@ -680,7 +628,7 @@ input[type=number] {
 
 #id_display_einstellungen {
     float: right;
-    color: rgb(206, 196, 46);
+    color: #cec42e;
 }
 
 #unitLength {

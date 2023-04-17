@@ -1,5 +1,5 @@
 import { jsPDF, jsPDFAPI } from "jspdf";
-import autoTable from "jspdf-autotable";
+//import autoTable from "jspdf-autotable";
 import { Canvg } from "canvg";
 //import { app, infoBox } from "./index.js";
 
@@ -13,7 +13,7 @@ import { nnodes, nelem } from "./duennQ_tabelle.js"
 import { truss, node } from "./duennQ"
 import { myFormat } from './utility.js';
 import { app, Detect } from './index.js';
-import { current_unit_stress, unit_stress_factor } from "./einstellungen"
+import { current_unit_stress, unit_stress_factor, unit_length_factor, current_unit_length } from "./einstellungen"
 
 const zeilenAbstand = 1.15
 
@@ -126,15 +126,12 @@ function letzteSeite() {
 export async function my_jspdf() {
   //--------------------------------------------------------------------------------------------
 
+  let str: string, texWid: number
+
   let fs1 = 15, fs = 11
   const links = 20;
 
-  let newLine = null;
-  if (Detect.OS === 'Windows') {
-    newLine = "\r\n";
-  } else {
-    newLine = "\n";
-  }
+  const newLine = "\n";
   Seite_No = 0
 
   // Default export is a4 paper, portrait, using millimeters for units
@@ -157,22 +154,50 @@ export async function my_jspdf() {
   console.log("textarea", txtarea.value)
   const txt = txtarea.value
   if (txt.length > 0) {
+    let bold = false
     const myArray = txt.split(newLine);
     for (let i = 0; i < myArray.length; i++) {
       console.log("txt", i, myArray[i])
 
-      let index = myArray[i].indexOf('<b>')
-      if (index === 0) {  // Bold an Anfang
-        let txtN = myArray[i].slice(3, myArray[i].length)
-        console.log("txtN", txtN)
-        let indexE = txtN.indexOf("</b>")
-        txtN = txtN.slice(0, indexE)
-        console.log("Neuer Text", indexE, "|" + txtN + "|")
-        doc.setFont("freesans_bold");
-        doc.text(txtN, links, yy);
-        doc.setFont("freesans_normal");
+      let indexA = myArray[i].indexOf('<b>')
+      let indexE = myArray[i].indexOf('</b>')
+      let txtL = '', txtM = '', txtR = ''
+
+      if (indexA > 0) txtL = myArray[i].slice(0, indexA)
+      if (indexA >= 0 && indexE > 0) txtM = myArray[i].slice(indexA + 3, indexE)
+
+      if (indexA >= 0 && indexE === -1) {                      // Fett nur zeilenweise
+        txtM = myArray[i].slice(indexA + 3, myArray[i].length)
+        bold = true
+      } else if (indexA === -1 && indexE > 0) {
+        txtM = myArray[i].slice(0, indexE)
+        bold = false
       }
-      else {
+      if (indexE >= 0) {
+        txtR = myArray[i].slice(indexE + 4, myArray[i].length)
+      }
+      console.log("txtLMR", txtL + '|' + txtM + '|' + txtR + '|')
+      console.log("IndexAE", indexA, indexE)
+      let col = links
+      if (txtL.length > 0) {
+        doc.setFont("freesans_normal");
+        doc.text(txtL, col, yy);
+        texWid = doc.getTextWidth(txtL)
+        col += texWid
+      }
+      if (txtM.length > 0) {
+        doc.setFont("freesans_bold");
+        doc.text(txtM, col, yy);
+        texWid = doc.getTextWidth(txtM)
+        col += texWid
+      }
+      if (txtR.length > 0) {
+        doc.setFont("freesans_normal");
+        doc.text(txtR, col, yy);
+      }
+      if (indexA === -1 && indexE === -1) {
+        if (bold) doc.setFont("freesans_bold");
+        else doc.setFont("freesans_normal");
         doc.text(myArray[i], links, yy);
       }
 
@@ -241,8 +266,6 @@ export async function my_jspdf() {
 
     yy = testSeite(yy, fs1, 1, 4 + nzeilen)
     doc.text("Knotenkoordinaten", links, yy)
-
-    let str: string, texWid: number
 
     doc.setFontSize(fs)
     doc.setFont("freesans_bold");
@@ -360,17 +383,17 @@ export async function my_jspdf() {
 
   htmlText("y<sub>s</sub> = ", links, yy)
   doc.text("‾", links, yy)
-  doc.text(tabQWerte.ys + ' cm', links + xsp1, yy)
+  doc.text(tabQWerte.ys + ' ' + current_unit_length, links + xsp1, yy)
   htmlText("y<sub>M</sub> = ", links + xsp, yy)
-  doc.text(tabQWerte.yM + ' cm', links + xsp + xsp1, yy)
+  doc.text(tabQWerte.yM + ' ' + current_unit_length, links + xsp + xsp1, yy)
 
   yy = neueZeile(yy, fs1)
 
   htmlText("z<sub>s</sub> = ", links, yy)
   doc.text("‾", links, yy)
-  doc.text(tabQWerte.zs + ' cm', links + xsp1, yy)
+  doc.text(tabQWerte.zs + ' ' + current_unit_length, links + xsp1, yy)
   htmlText("z<sub>M</sub> = ", links + xsp, yy)
-  doc.text(tabQWerte.zM + ' cm', links + xsp + xsp1, yy)
+  doc.text(tabQWerte.zM + ' ' + current_unit_length, links + xsp + xsp1, yy)
 
   yy = neueZeile(yy, fs1)
 
