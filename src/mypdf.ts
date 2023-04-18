@@ -755,12 +755,7 @@ export async function my_jspdf() {
       alert(error.message);
     }
 
-    if (filename) {
-      document.getElementById("id_pdf_info").innerText =
-        "pdf-file saved with name " + filename + " in your Download folder";
-    } else {
-      document.getElementById("id_pdf_info").innerText = "";
-    }
+    document.getElementById("id_pdf_info").innerText = "pdf-file saved in your Download folder";
 
   }
 }
