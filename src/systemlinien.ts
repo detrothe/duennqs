@@ -426,14 +426,14 @@ export async function copy_svg() {
 
 
         let filename: string = 'graph.svg'
-
-        if (!app.hasFSAccess) {
-
-            filename = window.prompt(
-                "Name der Datei mit Extension, z.B. graph.svg\nDie Datei wird im Default Download Ordner gespeichert", 'graph.svg'
-            );
-        }
-
+        /*
+                if (!app.hasFSAccess) {
+        
+                    filename = window.prompt(
+                        "Name der Datei mit Extension, z.B. graph.svg\nDie Datei wird im Default Download Ordner gespeichert", 'graph.svg'
+                    );
+                }
+        */
 
         try {
             saveAs(svgBlob, filename);

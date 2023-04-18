@@ -741,14 +741,14 @@ export async function my_jspdf() {
     letzteSeite();
 
     let filename: string = 'duennqs.pdf'
-
-    if (!app.hasFSAccess) {
-
-      filename = window.prompt(
-        "Name der Datei mit Extension, z.B. test.pdf\nDie Datei wird im Default Download Ordner gespeichert", 'duennqs.pdf'
-      );
-    }
-
+    /*
+        if (!app.hasFSAccess) {
+    
+          filename = window.prompt(
+            "Name der Datei mit Extension, z.B. test.pdf\nDie Datei wird im Default Download Ordner gespeichert", 'duennqs.pdf'
+          );
+        }
+    */
     try {
       doc.save(filename);
     } catch (error) {
