@@ -485,7 +485,6 @@ function menuItemListener(link) {
         let newClip = "";
         let wertInSpalte1 = false;
 
-        //let txt = Intl.NumberFormat().resolvedOptions().locale
         let numberFormat_OS = Intl.NumberFormat().resolvedOptions().locale.split("-")
 
         let newLine = null;

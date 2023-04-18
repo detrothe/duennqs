@@ -12,7 +12,7 @@ import { tabQWerte, schnittgroesse, bezugswerte } from "./duennQ"
 import { nnodes, nelem } from "./duennQ_tabelle.js"
 import { truss, node } from "./duennQ"
 import { myFormat } from './utility.js';
-import { app, Detect } from './index.js';
+import { app } from './index.js';
 import { current_unit_stress, unit_stress_factor, unit_length_factor, current_unit_length } from "./einstellungen"
 
 const zeilenAbstand = 1.15
@@ -740,7 +740,7 @@ export async function my_jspdf() {
 
     letzteSeite();
 
-    let filename: string
+    let filename: string = 'duennqs.pdf'
 
     if (!app.hasFSAccess) {
 

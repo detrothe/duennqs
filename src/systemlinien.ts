@@ -9,6 +9,7 @@ import { ymin, ymax, zmin, zmax, slmax } from "./duennQ";
 import { myScreen } from "./first.js";
 import { nnodes, nelem } from "./duennQ_tabelle.js"
 import { saveAs } from 'file-saver';
+import { app } from './index.js';
 
 export let svg = null;
 let tr = null;
@@ -422,7 +423,23 @@ export async function copy_svg() {
 
         const preface = '<?xml version="1.0" standalone="no"?>\r\n';
         const svgBlob = new Blob([preface, svg], { type: "image/svg+xml;charset=utf-8" });
-        saveAs(svgBlob, "graph.svg");
+
+
+        let filename: string = 'graph.svg'
+
+        if (!app.hasFSAccess) {
+
+            filename = window.prompt(
+                "Name der Datei mit Extension, z.B. graph.svg\nDie Datei wird im Default Download Ordner gespeichert"
+            );
+        }
+
+
+        try {
+            saveAs(svgBlob, filename);
+        } catch (error) {
+            alert(error.message);
+        }
     }
 
 }
