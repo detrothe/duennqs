@@ -425,7 +425,7 @@ export async function copy_svg() {
         const svgBlob = new Blob([preface, svg], { type: "image/svg+xml;charset=utf-8" });
 
 
-        let filename: string = 'graph.svg'
+        let filename: string = 'duennqs.svg'
         /*
                 if (!app.hasFSAccess) {
         
