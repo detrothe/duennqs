@@ -430,7 +430,7 @@ export async function copy_svg() {
         if (!app.hasFSAccess) {
 
             filename = window.prompt(
-                "Name der Datei mit Extension, z.B. graph.svg\nDie Datei wird im Default Download Ordner gespeichert"
+                "Name der Datei mit Extension, z.B. graph.svg\nDie Datei wird im Default Download Ordner gespeichert", 'graph.svg'
             );
         }
 
