@@ -485,6 +485,9 @@ function menuItemListener(link) {
         let newClip = "";
         let wertInSpalte1 = false;
 
+        //let txt = Intl.NumberFormat().resolvedOptions().locale
+        let numberFormat_OS = Intl.NumberFormat().resolvedOptions().locale.split("-")
+
         let newLine = null;
         if (Detect.OS === 'Windows') {
             newLine = "\r\n";
@@ -503,6 +506,9 @@ function menuItemListener(link) {
                 if (child.className === 'input_select') {
                     if (wertInSpalte1) newClip += "\t";
                     let wert = tabelle.rows[i].cells[j].firstElementChild.value;
+                    if (numberFormat_OS[0] === 'de') {
+                        wert = wert.replace('.', ',')
+                    }
                     newClip += wert;
                     wertInSpalte1 = true;
                 }
@@ -511,6 +517,9 @@ function menuItemListener(link) {
             if (child.className === 'input_select') {
                 if (wertInSpalte1) newClip += "\t";
                 let wert = tabelle.rows[i].cells[nSpalten - 1].firstElementChild.value;
+                if (numberFormat_OS[0] === 'de') {
+                    wert = wert.replace('.', ',')
+                }
                 newClip += wert + newLine;
             } else {
                 if (wertInSpalte1) newClip += newLine;

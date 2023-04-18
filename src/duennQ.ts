@@ -248,7 +248,9 @@ for (let i = 1; i <= nelem; i++) {
 const xx = [0.0, 30.0, 110.0, 140.0, 85.0, 55.0];
 const yy = [0.0, 0.0, 0.0, 0.0, 60.0, 60.0];
 
+//----------------------------------------------------------------------------------------------
 export function createTables() {
+    //------------------------------------------------------------------------------------------
 
     //tabulate('#knotentabelle', 'nodeTable', nodeArray, ['No', 'y [cm]', 'z [cm]']);  // nodeObj.
     meinetabelle("knotentabelle", "nodeTable", nnodes, ['No', 'y&#772; [cm]', 'z&#772; [cm]']);
