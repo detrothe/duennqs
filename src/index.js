@@ -172,7 +172,9 @@ ttf_logo_3D();
     //let txt = Intl.DateTimeFormat().resolvedOptions().locale
     let txt = Intl.NumberFormat().resolvedOptions().locale
     let txtArray = txt.split("-")
-    infoBox.innerHTML += "<br>OS Language by NumberFormat " + txtArray[0]
+    infoBox.innerHTML += "<br>OS Language by NumberFormat: " + txtArray[0]
+    infoBox.innerHTML += "<br>URL: " + window.location
+    infoBox.innerHTML += "<br>Hostname: " + window.location.hostname
     //geht nicht infoBox.innerHTML += "<br>width of body: " + document.body.style.width
     //geht nicht infoBox.innerHTML += "<br>width of grid-container: " + document.createElement("grid-container").style.width
     //infoBox.innerHTML += "<br>getComputedStyle: " + getComputedStyle(div).font

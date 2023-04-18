@@ -277,9 +277,9 @@ export async function my_jspdf() {
     spalte[2] = spalte[1] + 20
 
     htmlText("Node No", spalte[0], yy)
-    htmlText("y [cm]", spalte[1] + 10, yy)
+    htmlText("y [" + current_unit_length + "]", spalte[1] + 10, yy)
     doc.text("‾", spalte[1] + 10, yy)
-    htmlText("z [cm]", spalte[2] + 10, yy)
+    htmlText("z [" + current_unit_length + "]", spalte[2] + 10, yy)
     doc.text("‾", spalte[2] + 10, yy)
 
     doc.setFontSize(fs)
@@ -289,11 +289,11 @@ export async function my_jspdf() {
     for (let i = 0; i < nzeilen; i++) {
       doc.text(String(i + 1), spalte[0], yy);
 
-      str = myFormat(node[i].y, 2, 2)
+      str = myFormat(node[i].y * unit_length_factor, 2, 2)
       texWid = doc.getTextWidth(str)
       doc.text(str, spalte[1] + 20 - texWid, yy);
 
-      str = myFormat(node[i].z, 2, 2)
+      str = myFormat(node[i].z * unit_length_factor, 2, 2)
       texWid = doc.getTextWidth(str)
       doc.text(str, spalte[2] + 20 - texWid, yy);
 
@@ -333,14 +333,14 @@ export async function my_jspdf() {
     doc.setFont("freesans_normal");
     yy = neueZeile(yy, fs, 1)
 
-    doc.text("[kN/cm²]", spalte[1] + 5, yy);
-    doc.text("[cm]", spalte[3] + 12, yy);
+    doc.text("[" + current_unit_stress + "]", spalte[1] + 5, yy);
+    doc.text("[" + current_unit_length + "]", spalte[3] + 12, yy);
     yy = neueZeile(yy, fs1, 1)
 
     for (let i = 0; i < nzeilen; i++) {
       doc.text(String(i + 1), spalte[0], yy);
 
-      str = myFormat(truss[i].EModul, 1, 2)
+      str = myFormat(truss[i].EModul * unit_stress_factor, 1, 2)
       texWid = doc.getTextWidth(str)
       doc.text(str, spalte[1] + 20 - texWid, yy);
 
@@ -348,7 +348,7 @@ export async function my_jspdf() {
       texWid = doc.getTextWidth(str)
       doc.text(str, spalte[2] + 20 - texWid, yy);
 
-      str = myFormat(truss[i].dicke, 1, 2)
+      str = myFormat(truss[i].dicke * unit_length_factor, 1, 2)
       texWid = doc.getTextWidth(str)
       doc.text(str, spalte[3] + 20 - texWid, yy);
 
