@@ -24,8 +24,7 @@
     "@types/three": "^0.150.1",
     "canvg": "^4.0.1",
     "esbuild": "^0.17.15",
-    "jspdf": "^2.5.1",
-    "jspdf-autotable": "^3.5.28"
+    "jspdf": "^2.5.1"
   },
   "repository": {
     "type": "git",
