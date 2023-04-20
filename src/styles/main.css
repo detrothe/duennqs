@@ -537,7 +537,8 @@ td {
 }
 
 .emotionLabel {
-    color: #d60000;
+    color: #02024f;
+    /* #d60000 */
     /* font-family: Calibri, Candara, Segoe, "Segoe UI", Optima, Arial, sans-serif; */
     margin-top: 0px;
     /*-5px 0 0 15px;*/

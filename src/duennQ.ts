@@ -124,6 +124,7 @@ class TSchnittgroessen {
 class TBezugswerte {
     emodul: number
     mue: number
+    fyrd: number
 }
 
 export const tabQWerte = new TTabQWerte;
@@ -444,7 +445,7 @@ export function duennQ() {
 
     //console.log("Mxs", Mt2)
     input = document.getElementById('fyRd') as HTMLInputElement | null;
-    fyRd = Number(testeZahl(input.value) / unit_stress_factor);
+    bezugswerte.fyrd = fyRd = Number(testeZahl(input.value) / unit_stress_factor);
     console.log("fyRd", fyRd)
 
     while (node.length > 0) node.pop();

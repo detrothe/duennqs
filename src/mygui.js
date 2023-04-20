@@ -13,6 +13,7 @@ export function myPanel() {
         tau: false,
         sigma: false,
         sigmaV: false,
+        show_fyrd: false,
         woelb_M: false,
         woelb_V: false,
         scale: 1.0,
@@ -43,6 +44,10 @@ export function myPanel() {
 
     gui.add(obj, 'sigmaV').name('Vergleichsspannung').onChange(v => {
         window.dispatchEvent(new Event("sigmaV_webgl"));
+    });
+
+    gui.add(obj, 'show_fyrd').name('fyRd anzeigen').onChange(v => {
+        window.dispatchEvent(new Event("show_fyrd_webgl"));
     });
 
     gui.add(obj, 'woelb_M').name('omega').onChange(v => {

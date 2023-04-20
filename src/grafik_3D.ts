@@ -6,7 +6,7 @@ import { myPanel, get_scale_factor, get_scale_factor_arrows } from "./mygui.js"
 
 import { OrbitControls } from './OrbitControls.js';
 
-import { node, truss, Gesamt_ys, Gesamt_zs, yM, zM, phi0 } from "./duennQ"
+import { node, truss, Gesamt_ys, Gesamt_zs, yM, zM, phi0, bezugswerte } from "./duennQ"
 import { nnodes, nelem } from "./duennQ_tabelle.js"
 import { ymin, ymax, zmin, zmax, slmax, Mxp } from "./duennQ";
 import { myScreen } from "./first.js";
@@ -29,6 +29,7 @@ let showSides = true;
 let showArrows = true;
 let showSigmaFrame = true;
 let show_LR_sides = false;
+let show_fyrd = false;
 
 
 
@@ -1923,11 +1924,55 @@ export function draw_elements() {
 
                 }
 
+                if (show_fyrd) {
+
+                    x1 = truss[i].pts_y[0]
+                    y1 = truss[i].pts_z[0]
+                    x2 = truss[i].pts_y[1]
+                    y2 = truss[i].pts_z[1]
+                    const geometry = new THREE.BufferGeometry();
+                    const pos = [];
+
+                    const fyrd = bezugswerte.fyrd * Ueberhoehung
+                    pos.push(-truss[i].pts_y[0], -truss[i].pts_z[0], fyrd);
+                    pos.push(-truss[i].pts_y[1], -truss[i].pts_z[1], fyrd);
+                    pos.push(-truss[i].pts_y[2], -truss[i].pts_z[2], fyrd);
+
+                    pos.push(-truss[i].pts_y[2], -truss[i].pts_z[2], fyrd);
+                    pos.push(-truss[i].pts_y[3], -truss[i].pts_z[3], fyrd);
+                    pos.push(-truss[i].pts_y[0], -truss[i].pts_z[0], fyrd);
+
+                    geometry.setAttribute('position', new THREE.Float32BufferAttribute(pos, 3));
+                    const materialSide = new THREE.MeshBasicMaterial({
+                        color: 'rgb(192, 0, 0)',
+                        transparent: false,
+                        opacity: 0.5,
+                        side: THREE.DoubleSide
+                    });
+                    const meshSideR = new THREE.Mesh(geometry, materialSide);
+                    scene.add(meshSideR)
+
+                    if (show_webgl_label && i === 0) {
+                        let nameDiv: HTMLDivElement, xLabel: any
+                        let zahl = bezugswerte.fyrd * unit_stress_factor
+                        nameDiv = document.createElement("div");
+                        nameDiv.className = "emotionLabel";
+                        wert = (zahl).toFixed(1);
+                        nameDiv.textContent = wert;
+                        //nameDiv.id = "elNo0auR1" + i
+                        nameDiv.style.backgroundColor = '#c00000'
+                        nameDiv.style.color = '#ffffff'
+                        xLabel = new CSS2DObject(nameDiv);
+                        xLabel.position.set(-truss[i].pts_y[0], -truss[i].pts_z[0], fyrd);
+                        xLabel.layers.set(1)
+                        mesh.add(xLabel);
+                    }
+
+                }
+
             }
 
         }
-
-
 
         //-----------------------------------------------------------------------------
         // Koodinatenkreuz
@@ -2425,6 +2470,12 @@ function showLeft_Right_webgl() {
 }
 
 //--------------------------------------------------------------------------------------------------------
+function show_fyrd_webgl() {
+    //--------------------------------------------------------------------------------------------------------
+    show_fyrd = !show_fyrd;
+    draw_elements();
+}
+//--------------------------------------------------------------------------------------------------------
 
 window.addEventListener('label_webgl', label_webgl);
 window.addEventListener('tau_webgl', tau_webgl);
@@ -2439,4 +2490,5 @@ window.addEventListener('show_sides_webgl', showSides_webgl);
 window.addEventListener('show_arrows_webgl', showArrows_webgl);
 window.addEventListener('show_sigma_frame_webgl', showSigmaFrame_webgl);
 window.addEventListener('show_LR_webgl', showLeft_Right_webgl);
+window.addEventListener('show_fyrd_webgl', show_fyrd_webgl);
 window.addEventListener('reset_webgl', reset_webgl);
