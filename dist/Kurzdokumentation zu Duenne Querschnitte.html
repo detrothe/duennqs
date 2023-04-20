@@ -103,6 +103,10 @@
 		rechten und linken Seite mit Pfeilen angezeigt. Wenn man gedanklich vom Elementanfang zum Elementende blickt,
 		dann befindet sich die rechte Seite des Elementes an der rechten Hand.
 	</p>
+	<p>Da die Elemente unterschiedliche Materialeigenschaften haben können, sind Referenzwerte anzugeben. Diese sind
+		auch in einem
+		Stabwerksprogramm als Materialdaten zu verwenden.
+	</p>
 	<p>
 		Die
 		Normalspannungen infolge N, M<sub>y</sub> und M<sub>z</sub> werden
@@ -120,7 +124,7 @@
 	</p>
 	<ul>
 		<li>
-			<p>Der Querschnitt kann unsymmetrisch, offen und/oder geschlosssen speichern </p>
+			<p>Der Querschnitt kann unsymmetrisch, offen und/oder geschlosssen sein </p>
 		</li>
 		<li>
 			<p>
@@ -276,6 +280,7 @@
 		<li><b>Vergleichsspannung:</b> Darstellung der Vergleichsspannungen nach Mises: \(σ_v = \sqrt{σ^2+3·τ^2} \)
 			<br>Siehe auch Option 'Sigma Fläche'
 		</li>
+		<li><b>fyRd anzeigen:</b> Grafische Darstellung der Spannung f<sub>y,Rd</sub> über die Querschnittsfläche</li>
 		<li><b>Omega:</b> Wölbordinate &omega;</li>
 		<li><b>Verschiebung u:</b> Die Verschiebung u (Verwölbung) des Querschnitts infolge der Schubspannungen. </li>
 		<li><b>Skalierung:</b> Skalierung der Spannungen.</li>
@@ -298,6 +303,11 @@
 	<p>
 	<h2 class="western">Bezeichnungen</h2>
 	</p>
+	<p>Knoten-Inzidenzen der Elemente<br>
+		nod1 = Knoten-Inzidenz am Elementanfang<br>
+		nod2 = Knoten-Inzidenz am Elementende</p>
+
+	<p>A<sub>geom</sub> = geometrische Querschnittsfläche, Fläche ohne Berücksichtigung der Materialdaten.</p>
 	<p>Schubspannungen aus primärer Torsion M<sub>xp</sub>: <br>
 		&tau;<sub>xs0,L</sub> = Schubspannung aus Anteil offener Querschnitt, linke Seite, linearer Verlauf über
 		Elementbreite<br>

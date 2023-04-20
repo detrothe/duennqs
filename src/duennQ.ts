@@ -93,6 +93,7 @@ class TTabQWerte {  // Tabelle Querschnittswerte für pdf
     zs: string
     ys: string
     area: string
+    area_geom: string
     Iyy: string
     Izz: string
     Iyz: string
@@ -400,7 +401,7 @@ export function duennQ() {
         It_geschlossen: number, omega_m: number, area: number,
         rt: number, ry: number, rz: number, y_m: number, z_m: number;
 
-    let Gesamtflaeche: number, I11: number, I22: number,
+    let Gesamtflaeche: number, I11: number, I22: number, area_geom: number,
         Gesamt_Iyy: number, Gesamt_Izz: number, Gesamt_Iyz: number, Gesamt_It: number, It_offen: number,
         yMh: number, zMh: number                             // Schubmittelpunkt bezogen auf Schwerpunkt im Hauptachsensystem
 
@@ -594,6 +595,7 @@ export function duennQ() {
     // Berechnung der Stablänge, der Inzidenzen und Elementsteifigkeitsmatrix
 
     Gesamtflaeche = 0.0;
+    area_geom = 0.0;
     Gesamt_ys = 0.0;
     Gesamt_zs = 0.0;
     It_offen = 0.0;
@@ -642,6 +644,7 @@ export function duennQ() {
         truss[i].Hebelz = (z1 + z2) / 2.0;
 
         Gesamtflaeche = Gesamtflaeche + truss[i].ni * truss[i].Flaeche;
+        area_geom += truss[i].Flaeche;
         Gesamt_ys = Gesamt_ys + truss[i].ni * truss[i].Flaeche * (y1 + y2) / 2.0;
         Gesamt_zs = Gesamt_zs + truss[i].ni * truss[i].Flaeche * (z1 + z2) / 2.0;
         It_offen = It_offen + truss[i].ngi * sl * t * t * t / 3.0;
@@ -1077,6 +1080,7 @@ export function duennQ() {
     tabQWerte.ys = document.getElementById("ys").innerText = myFormat(Gesamt_ys * unit_length_factor, 2, 2)   // Gesamt_ys.toFixed(2);
     tabQWerte.zs = document.getElementById("zs").innerText = myFormat(Gesamt_zs * unit_length_factor, 2, 2);
     tabQWerte.area = document.getElementById("area").innerText = myFormat(Gesamtflaeche, 2, 2);
+    tabQWerte.area_geom = document.getElementById("area_geom").innerText = myFormat(area_geom, 2, 2);
     tabQWerte.Iyy = document.getElementById("Iys").innerText = myFormat(Gesamt_Iyy, 2, 2);
     tabQWerte.Izz = document.getElementById("Izs").innerText = myFormat(Gesamt_Izz, 2, 2);
     tabQWerte.Iyz = document.getElementById("Iyzs").innerText = myFormat(Gesamt_Iyz, 2, 2);

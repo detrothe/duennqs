@@ -367,7 +367,7 @@ export async function my_jspdf() {
 
   doc.line(links, yy, 200, yy, "S");
   //  yy = neueZeile(yy, fs1, 2)
-  yy = testSeite(yy, fs1, 2, 12)
+  yy = testSeite(yy, fs1, 2, 13)
 
   doc.setFontSize(fs1)
   doc.setFont("freesans_bold");
@@ -443,6 +443,11 @@ export async function my_jspdf() {
   doc.text(tabQWerte.phi_h + ' °', links + xsp1, yy)
   htmlText("i<sub>p</sub><sup>2</sup> = ", links + xsp, yy)
   doc.text(tabQWerte.i_p2 + ' cm²', links + xsp + xsp1, yy)
+
+  yy = neueZeile(yy, fs1)
+
+  htmlText("A<sub>geom</sub> = ", links, yy)
+  doc.text(tabQWerte.area_geom + ' cm²', links + xsp1, yy)
 
   //-----------------
   yy = neueZeile(yy, fs, 2)

@@ -526,8 +526,22 @@ td {
 #unit_webgl {
     position: absolute;
     top: 1em;
-    left: calc(100% - 12em);
-    width: 12em;
+    left: calc(100% - 15em);
+    width: 15em;
+    text-align: left;
+    z-index: 80;
+    /*display: block;*/
+    padding: 0;
+    margin: 0px;
+    user-select: none;
+
+}
+
+#maxValues_webgl {
+    position: absolute;
+    top: 3em;
+    left: calc(100% - 15em);
+    width: 15em;
     text-align: left;
     z-index: 80;
     /*display: block;*/

@@ -526,6 +526,9 @@ export function draw_elements() {
         }
 
 
+        const el_maxValues = document.getElementById("maxValues_webgl")
+        el_maxValues.innerHTML = ""
+
         //___________________________________________________________________________
 
         maxWoelb_M = 0.0
@@ -896,6 +899,9 @@ export function draw_elements() {
             let origin, dir;
             let length: number;
             let hex: number;
+            let min_sig: number = 1.e30,
+                max_sig: number = -1.e30
+
             /*
                         const material1 = new THREE.MeshBasicMaterial({
                             color: 'darkgrey',
@@ -915,6 +921,12 @@ export function draw_elements() {
                 y2 = -node[nod2].z
                 sigma1 = truss[i].sigma_x[0]
                 sigma2 = truss[i].sigma_x[2]
+
+                if (sigma1 > max_sig) max_sig = sigma1
+                if (sigma1 < min_sig) min_sig = sigma1
+                if (sigma2 > max_sig) max_sig = sigma2
+                if (sigma2 < min_sig) min_sig = sigma2
+
 
                 if (sigma1 * sigma2 >= 0) {
 
@@ -1182,6 +1194,11 @@ export function draw_elements() {
                     const line1 = new THREE.LineSegments(geometry1, material);
                     scene.add(line1);
 
+                    for (j = 0; j < 4; j++) {
+                        if (truss[i].sigma_xe[j] > max_sig) max_sig = truss[i].sigma_xe[j]
+                        if (truss[i].sigma_xe[j] < min_sig) min_sig = truss[i].sigma_xe[j]
+                    }
+
                     if (show_webgl_label) {
                         for (j = 0; j < 4; j++) {
                             let nameDiv = document.createElement("div");
@@ -1227,6 +1244,12 @@ export function draw_elements() {
 
             }
 
+            if (Math.abs(max_sig) > 1.e-10 || Math.abs(min_sig) > 1.e-10) {
+                const low = min_sig * unit_stress_factor
+                const high = max_sig * unit_stress_factor
+                el_maxValues.innerHTML = 'min./max. &sigma; : ' + low.toFixed(2) + ' / ' + high.toFixed(2)
+            }
+
 
         }
 
@@ -1238,7 +1261,10 @@ export function draw_elements() {
 
             //let tau = Array(3)
 
-            let xi: number, tau_i: number, sl: number
+            let xi: number, tau_i: number, sl: number,
+                min_tau: number = 1.e30,
+                max_tau: number = -1.e30
+
             const maxtau = {
                 tau: 0.0,
                 wert: 0.0,
@@ -1295,6 +1321,8 @@ export function draw_elements() {
                         maxtau.x = punkteR[istelle].x
                         maxtau.y = punkteR[istelle].y
                     }
+                    if (tau_i > max_tau) max_tau = tau_i
+                    if (tau_i < min_tau) min_tau = tau_i
 
                     tau_i = (sl ** 2 - 3 * sl * xi + 2 * xi ** 2) * truss[i].stress_L[0]
                         + 4 * xi * (sl - xi) * truss[i].stress_L[1]
@@ -1312,6 +1340,8 @@ export function draw_elements() {
                         maxtau.x = punkteL[istelle].x
                         maxtau.y = punkteL[istelle].y
                     }
+                    if (tau_i > max_tau) max_tau = tau_i
+                    if (tau_i < min_tau) min_tau = tau_i
                 }
 
                 polyShapeR.lineTo(-sl, 0.0)
@@ -1569,6 +1599,14 @@ export function draw_elements() {
                 if (showArrows) zeichneHPfeil(i, mesh)
             }
 
+            if (Math.abs(max_tau) > 1.e-10) {
+                const low = min_tau / Ueberhoehung * unit_stress_factor
+                const high = max_tau / Ueberhoehung * unit_stress_factor
+                el_maxValues.innerHTML = 'min./max. &tau; : ' + low.toFixed(2) + ' / ' + high.toFixed(2)
+            }
+
+
+
         }
 
         //---------------------------------------------------------------------------------------------------
@@ -1579,7 +1617,7 @@ export function draw_elements() {
 
             let sigma = Array(3)   // tau = Array(3), 
 
-            let xi: number, tau_i: number, sig_i: number, sl: number, sig_V: number
+            let xi: number, tau_i: number, sig_i: number, sl: number, sig_V: number, maxSigV: number = 0.0
 
             const maxsigmaV = {
                 sigmaV: 0.0,
@@ -1969,9 +2007,15 @@ export function draw_elements() {
                     }
 
                 }
+                maxSigV = Math.max(maxSigV, maxsigmaV.sigmaV / Ueberhoehung * unit_stress_factor)
 
             }
-
+            {
+                if (Math.abs(maxSigV) > 1.e-10) {
+                    wert = (maxSigV).toFixed(2);
+                    el_maxValues.innerHTML = 'max. &sigma;<sub>v</sub> : ' + wert
+                }
+            }
         }
 
         //-----------------------------------------------------------------------------
