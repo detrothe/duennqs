@@ -426,14 +426,14 @@ export async function copy_svg() {
 
 
         let filename: string = 'duennqs.svg'
-        /*
-                if (!app.hasFSAccess) {
-        
-                    filename = window.prompt(
-                        "Name der Datei mit Extension, z.B. graph.svg\nDie Datei wird im Default Download Ordner gespeichert", 'graph.svg'
-                    );
-                }
-        */
+
+        if (app.hasFSAccess && app.isMac) {
+
+            filename = window.prompt(
+                "Name der Datei mit Extension, z.B. duennqs.svg\nDie Datei wird im Default Download Ordner gespeichert", 'duennqs.svg'
+            );
+        }
+
 
         try {
             saveAs(svgBlob, filename);

@@ -750,7 +750,7 @@ export async function my_jspdf() {
     if (app.hasFSAccess && app.isMac) {
 
       filename = window.prompt(
-        "Name der Datei mit Extension, z.B. duennqs.pdf", 'duennqs.pdf'
+        "Name der Datei mit Extension, z.B. duennqs.pdf\nDie Datei wird im Default Download Ordner gespeichert", 'duennqs.pdf'
       );
     }
 
