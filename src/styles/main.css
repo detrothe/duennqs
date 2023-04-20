@@ -526,8 +526,8 @@ td {
 #unit_webgl {
     position: absolute;
     top: 1em;
-    left: calc(100% - 15em);
-    width: 15em;
+    left: calc(100% - 14em);
+    width: 14em;
     text-align: left;
     z-index: 80;
     /*display: block;*/
@@ -540,8 +540,8 @@ td {
 #maxValues_webgl {
     position: absolute;
     top: 3em;
-    left: calc(100% - 15em);
-    width: 15em;
+    left: calc(100% - 14em);
+    width: 14em;
     text-align: left;
     z-index: 80;
     /*display: block;*/

@@ -1247,7 +1247,7 @@ export function draw_elements() {
             if (Math.abs(max_sig) > 1.e-10 || Math.abs(min_sig) > 1.e-10) {
                 const low = min_sig * unit_stress_factor
                 const high = max_sig * unit_stress_factor
-                el_maxValues.innerHTML = 'min./max. &sigma; : ' + low.toFixed(2) + ' / ' + high.toFixed(2)
+                el_maxValues.innerHTML = 'min/max &sigma; : ' + low.toFixed(2) + ' / ' + high.toFixed(2)
             }
 
 
@@ -1602,7 +1602,7 @@ export function draw_elements() {
             if (Math.abs(max_tau) > 1.e-10) {
                 const low = min_tau / Ueberhoehung * unit_stress_factor
                 const high = max_tau / Ueberhoehung * unit_stress_factor
-                el_maxValues.innerHTML = 'min./max. &tau; : ' + low.toFixed(2) + ' / ' + high.toFixed(2)
+                el_maxValues.innerHTML = 'min/max &tau; : ' + low.toFixed(2) + ' / ' + high.toFixed(2)
             }
 
 
