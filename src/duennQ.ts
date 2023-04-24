@@ -577,6 +577,8 @@ export function duennQ() {
         }
     }
 
+    const t0 = performance.now();
+
     node[0].Lx = 1                               // ein Freiheitsgrad muss gelagert werden
 
     // Berechnung der Gleichungsnummern
@@ -1072,6 +1074,9 @@ export function duennQ() {
             }
         }
     }
+
+    const t1 = performance.now();
+    console.log(`FEM Berechnung took ${t1 - t0} milliseconds`)
 
     //const txtarea = document.getElementById("freetext") as HTMLTextAreaElement
     //console.log("textarea", txtarea.value)

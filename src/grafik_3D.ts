@@ -99,6 +99,7 @@ export function main_3D() {
     controls = new OrbitControls(camera, labelRenderer.domElement);
     controls.enableDamping = true;
     controls.target.set(0, 0, 0);
+    controls.target.setP
     controls.update();
 
     //camera.left = -2*ymax;

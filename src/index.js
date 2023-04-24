@@ -180,9 +180,36 @@ ttf_logo_3D();
     //infoBox.innerHTML += "<br>getComputedStyle: " + getComputedStyle(div).font
     //infoBox.innerHTML += "<br>getRenderedFontFamilyName: " + getRenderedFontFamilyName(document.querySelector('body'));
 }
+/*
+{
 
 
+    let j, k, l, sum
 
+    const n = 500;
+    const a = Array.from(Array(n), () => new Array(n).fill(1.0));
+    const b = Array.from(Array(n), () => new Array(n).fill(2.0));
+    const c = Array.from(Array(n), () => new Array(n).fill(0.0));
+    const t0 = performance.now();
+
+    for (j = 0; j < n; j++) {
+        for (k = 0; k < n; k++) {
+            sum = 0.0;
+            for (l = 0; l < n; l++) {
+                sum = sum + a[j][l] * b[l][k];
+            }
+            c[j][k] = sum;
+        }
+    }
+
+    const t1 = performance.now();
+    console.log(`Matrix multiplication took ${t1 - t0} milliseconds`)
+
+    infoBox.innerHTML += `<br>Matrix multiplication took ${t1 - t0} milliseconds`
+    infoBox.innerHTML += '<br>' + c[n - 1][n - 1]
+
+}
+*/
 
 function css(element, property) {
     return window.getComputedStyle(element, null).getPropertyValue(property);
