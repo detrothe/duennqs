@@ -25,6 +25,7 @@ import { setNewUnits, body_width, current_body_width } from './einstellungen';
 import { berechnungErforderlich } from "./globals.js"
 
 
+
 // myScreen.clientWidth = document.documentElement.clientWidth;
 // myScreen.clientHeight = document.documentElement.clientHeight;
 
@@ -154,13 +155,27 @@ logo_3D();
 ttf_logo_3D();
 
 {
+
     infoBox.innerHTML = '<br><b>Einige System-Informationen</b><br>';
     infoBox.innerHTML += 'ScreenWidth≈' + Math.round(screen.width * window.devicePixelRatio)
         + " px &nbsp;,&nbsp;&nbsp;    ScreenHeight≈ " + Math.round(screen.height * window.devicePixelRatio) + ' px';
     infoBox.innerHTML += "<br>Browser: clientwidth=" + myScreen.clientWidth + "&nbsp;,&nbsp;&nbsp;    clientheight=" + myScreen.clientHeight;
     infoBox.innerHTML += "<br>Browser: " + Detect.browser + " Version " + Detect.version;
     infoBox.innerHTML += "<br>OS: " + Detect.OS + " , isMac: " + app.isMac;
-    infoBox.innerHTML += "<br>Browser Language: " + navigator.language;
+
+    infoBox.innerHTML += "<br><br>platform browser name: " + platform.name;
+    infoBox.innerHTML += "<br>platform browser version: " + platform.version;
+    infoBox.innerHTML += "<br>platform product: " + platform.product;
+    infoBox.innerHTML += "<br>platform manufacturer: " + platform.manufacturer;
+    infoBox.innerHTML += "<br>platform layout: " + platform.layout;
+    infoBox.innerHTML += "<br>platform os: " + platform.os;
+    infoBox.innerHTML += "<br>platform description: " + platform.description;
+
+    if (navigator.userAgentData) {
+        infoBox.innerHTML += "<br>navigator.userAgentData.mobile: " + navigator.userAgentData.mobile;
+        infoBox.innerHTML += "<br>navigator.userAgentData.platform: " + navigator.userAgentData.platform;
+    }
+    infoBox.innerHTML += "<br><br>Browser Language: " + navigator.language;
     if (app.hasFSAccess) {
         infoBox.innerHTML += "<br>showSaveFilePicker wird unterstützt";
     } else {
