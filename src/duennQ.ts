@@ -8,7 +8,7 @@ import { gauss } from "./gauss.js"
 import { testeZahl, myFormat, testNumber } from './utility.js';
 import { remove_selected_Tabelle, clear_Tabelle, setSelectionMode_node, setSelectionMode_element, nelem, nnodes } from "./duennQ_tabelle.js";
 import { label_svg, copy_svg } from "./systemlinien";
-import { set_myScreen } from "./index.js"
+import { set_myScreen, infoBox } from "./index.js"
 import { draw_elements } from "./grafik_3D";
 import { current_unit_length, current_unit_stress, unit_length_factor, unit_stress_factor } from "./einstellungen"
 
@@ -425,6 +425,12 @@ export function duennQ() {
     set_myScreen();
 
     remove_selected_Tabelle();  // alte Fehlermarkierungen entfernen
+
+    {
+        const eTabelle = document.getElementById("elemTable") as HTMLTableElement;
+        console.log("Tabellenbreite = ",eTabelle.getBoundingClientRect().width);
+        infoBox.innerHTML += "<br>Tabellenbreite: " + eTabelle.getBoundingClientRect().width;
+    }
 
     // Schnittgrößen einlesen
     let input = document.getElementById('Vy') as HTMLInputElement | null;
