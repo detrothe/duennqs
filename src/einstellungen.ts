@@ -309,6 +309,27 @@ export function readLocalStorage() {
             my_fontsize = default_fontsize
             document.body.style.fontSize = my_fontsize
         }
+    } else {
+        const width = Math.min(document.documentElement.clientWidth,document.documentElement.clientHeight)
+        const el = document.getElementById("id_fontsize") as HTMLInputElement
+        if ( width < 300 ) {
+            let size = '0.625em'    // 10
+            el.value = size
+            my_fontsize = size
+            document.body.style.fontSize = size
+        }
+        else if ( width < 400 ) {
+            let size = '0.7em'    // 11
+            el.value = size
+            my_fontsize = size
+            document.body.style.fontSize = size
+        }
+        else if ( width < 535 ) {
+            let size = '0.875em'  // 14
+            el.value = size
+            my_fontsize = size
+            document.body.style.fontSize = size
+        }
     }
 
     let color = window.localStorage.getItem('color_table_out');
