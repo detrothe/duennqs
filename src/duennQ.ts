@@ -425,13 +425,13 @@ export function duennQ() {
     set_myScreen();
 
     remove_selected_Tabelle();  // alte Fehlermarkierungen entfernen
-
+/*
     {
         const eTabelle = document.getElementById("elemTable") as HTMLTableElement;
         console.log("Tabellenbreite = ",eTabelle.getBoundingClientRect().width);
         infoBox.innerHTML += "<br>Tabellenbreite: " + eTabelle.getBoundingClientRect().width;
     }
-
+*/
     // Schnittgrößen einlesen
     let input = document.getElementById('Vy') as HTMLInputElement | null;
     schnittgroesse.Vy = Vy = Number(testeZahl(input.value));
