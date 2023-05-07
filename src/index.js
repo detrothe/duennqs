@@ -163,14 +163,6 @@ ttf_logo_3D();
     infoBox.innerHTML += "<br>Browser: " + Detect.browser + " Version " + Detect.version;
     infoBox.innerHTML += "<br>OS: " + Detect.OS + " , isMac: " + app.isMac;
 
-    infoBox.innerHTML += "<br><br>platform browser name: " + platform.name;
-    infoBox.innerHTML += "<br>platform browser version: " + platform.version;
-    infoBox.innerHTML += "<br>platform product: " + platform.product;
-    infoBox.innerHTML += "<br>platform manufacturer: " + platform.manufacturer;
-    infoBox.innerHTML += "<br>platform layout: " + platform.layout;
-    infoBox.innerHTML += "<br>platform os: " + platform.os;
-    infoBox.innerHTML += "<br>platform description: " + platform.description;
-
     if (navigator.userAgentData) {
         infoBox.innerHTML += "<br>navigator.userAgentData.mobile: " + navigator.userAgentData.mobile;
         infoBox.innerHTML += "<br>navigator.userAgentData.platform: " + navigator.userAgentData.platform;
