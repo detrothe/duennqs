@@ -310,21 +310,26 @@ export function readLocalStorage() {
             document.body.style.fontSize = my_fontsize
         }
     } else {
-        const width = Math.min(document.documentElement.clientWidth,document.documentElement.clientHeight)
+        const width = Math.min(document.documentElement.clientWidth, document.documentElement.clientHeight)
         const el = document.getElementById("id_fontsize") as HTMLInputElement
-        if ( width < 300 ) {
+        if (width < 380) {
             let size = '0.625em'    // 10
             el.value = size
             my_fontsize = size
             document.body.style.fontSize = size
         }
-        else if ( width < 400 ) {
+        else if (width < 420) {
             let size = '0.7em'    // 11
             el.value = size
             my_fontsize = size
             document.body.style.fontSize = size
+        } else if (width < 450) {
+            let size = '0.75em'    // 12
+            el.value = size
+            my_fontsize = size
+            document.body.style.fontSize = size
         }
-        else if ( width < 535 ) {
+        else if (width < 535) {
             let size = '0.875em'  // 14
             el.value = size
             my_fontsize = size
