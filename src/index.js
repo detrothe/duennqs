@@ -22,7 +22,7 @@ import { init_contextmenu } from './contextMenu.js';
 import { logo_3D, main_3D, ttf_logo_3D } from "./grafik_3D";
 //import { duennQ } from "./duennQ"
 import { setNewUnits, body_width, current_body_width } from './einstellungen';
-import { berechnungErforderlich } from "./globals.js"
+import { berechnungErforderlich, set_text_berechnung_erforderlich } from "./globals.js"
 
 
 
@@ -30,6 +30,7 @@ import { berechnungErforderlich } from "./globals.js"
 // myScreen.clientHeight = document.documentElement.clientHeight;
 
 export const infoBox = document.getElementById("infoBox");
+
 
 addEventListener("resize", (event) => {
     //console.log("in resize")
@@ -79,6 +80,7 @@ export function set_myScreen() {
 
 export const app = {
     appName: 'duennQs',
+    browserLanguage: 'de',
     file: {
         handle: null,
         name: null,
@@ -119,7 +121,13 @@ portrait.addEventListener("change", function (e) {
 set_myScreen();
 
 export const Detect = new DetectOS();
+{
+    let txt = navigator.language
+    let txtArray = txt.split("-")
 
+    app.browserLanguage = txtArray[0]
+    console.log("app.browserLanguage", app.browserLanguage)
+}
 init_contextmenu();
 
 createTables();
@@ -186,6 +194,39 @@ ttf_logo_3D();
     //geht nicht infoBox.innerHTML += "<br>width of grid-container: " + document.createElement("grid-container").style.width
     //infoBox.innerHTML += "<br>getComputedStyle: " + getComputedStyle(div).font
     //infoBox.innerHTML += "<br>getRenderedFontFamilyName: " + getRenderedFontFamilyName(document.querySelector('body'));
+}
+{
+
+    if (app.browserLanguage != 'de') {
+
+        document.getElementById("id_doc").src = "docu_en.html";
+        //console.log("language not de", app.browserLanguage)
+
+        document.getElementById("lab_headline").innerHTML = "<b>Properties and stresses of thin-walled cross sections</b>";
+
+        document.getElementById("lab_freier_text").innerText = "free text with HTML formatting for bold :";
+
+        document.getElementById("id_eingabe").text = "Input";
+        document.getElementById("id_results").text = "Results";
+        document.getElementById("lab_nnodes").innerText = "Number of nodes :";
+        document.getElementById("lab_nelem").innerText = "Number of elements :";
+        document.getElementById("lab_schnittgroessen").innerHTML = "<b>Internal forces</b>";
+        document.getElementById("lab_bezugswerte").innerHTML = "<b>Reference values</b>";
+        document.getElementById("lab_material_equal").innerHTML = "all elements have the same material data";
+        document.getElementById("lab_vergleichsspannung").innerHTML = "<b>Equivalent stress</b>";
+        document.getElementById("lab_knoten").innerHTML = "<b>Nodes</b>";
+        document.getElementById("lab_elemente").innerHTML = "<b>Elements</b>";
+
+        document.getElementById("readFile").innerHTML = "read input data";
+        document.getElementById("saveFile").innerHTML = "save input data";
+
+        document.getElementById("resize").innerHTML = "resize table";
+        document.getElementById("clearTable").innerHTML = "clear tables";
+        document.getElementById("rechnen").innerHTML = "calculate";
+
+        set_text_berechnung_erforderlich('New calculation required')
+
+    }
 }
 /*
 {

@@ -8,7 +8,7 @@ import { gauss } from "./gauss.js"
 import { testeZahl, myFormat, testNumber } from './utility.js';
 import { remove_selected_Tabelle, clear_Tabelle, setSelectionMode_node, setSelectionMode_element, nelem, nnodes } from "./duennQ_tabelle.js";
 import { label_svg, copy_svg } from "./systemlinien";
-import { set_myScreen, infoBox } from "./index.js"
+import { set_myScreen, app } from "./index.js"
 import { draw_elements } from "./grafik_3D";
 import { current_unit_length, current_unit_stress, unit_length_factor, unit_stress_factor } from "./einstellungen"
 
@@ -256,8 +256,11 @@ export function createTables() {
 
     //tabulate('#knotentabelle', 'nodeTable', nodeArray, ['No', 'y [cm]', 'z [cm]']);  // nodeObj.
     meinetabelle("knotentabelle", "nodeTable", nnodes, ['No', 'y&#772; [cm]', 'z&#772; [cm]']);
+    //if (app.browserLanguage == 'de') {
     meinetabelle("elementtabelle", "elemTable", nelem, ["El No", 'E-Modul [kN/cm²]', 'ν', 'Dicke t [cm]', 'nod1', 'nod2']);
-
+    //} else {
+    //    meinetabelle("elementtabelle", "elemTable", nelem, ["El No", 'E-Modul [kN/cm²]', 'ν', 'thickness t [cm]', 'nod1', 'nod2']);
+    //}
     //tabulate('#elementtabelle', 'elemTable', elemArray, ["El No", 'E-Modul [kN/cm²]', 'ν', 'Dicke t [cm]', 'nod1', 'nod2']);  // elemObj.
 
     let objCells: any, nSpalten: number
@@ -268,10 +271,15 @@ export function createTables() {
 
     objCells = nTabelle.rows.item(0).cells;  // Überschrift Punkt zentrieren
 
-    objCells.item(0).setAttribute('title', 'Knotennummer');
-    objCells.item(1).setAttribute('title', 'y-Koordinaten im Hilfskoordinatensystem');
-    objCells.item(2).setAttribute('title', 'z-Koordinaten im Hilfskoordinatensystem');
-
+    if (app.browserLanguage == 'de') {
+        objCells.item(0).setAttribute('title', 'Knotennummer');
+        objCells.item(1).setAttribute('title', 'y-Koordinaten im Hilfskoordinatensystem');
+        objCells.item(2).setAttribute('title', 'z-Koordinaten im Hilfskoordinatensystem');
+    } else {
+        objCells.item(0).setAttribute('title', 'node number');
+        objCells.item(1).setAttribute('title', 'y coordinates in the auxiliary coordinate system');
+        objCells.item(2).setAttribute('title', 'z coordinates in the auxiliary coordinate system');
+    }
     let el = document.getElementById("EMod_ref") as HTMLInputElement;
     el.value = (parseFloat(el.value) * unit_stress_factor).toString()
 
@@ -305,11 +313,17 @@ export function createTables() {
     objCells = eTabelle.rows.item(0).cells;  // Überschrift Punkt zentrieren
     //objCells.item(0).style.textAlign = "center";
 
-    objCells.item(0).setAttribute('title', 'Elementnummer');
-    objCells.item(2).setAttribute('title', 'Querdehnzahl');
-    objCells.item(4).setAttribute('title', 'Knoten-Inzidenz Elementanfang');
-    objCells.item(5).setAttribute('title', 'Knoten-Inzidenz Elementende');
-
+    if (app.browserLanguage == 'de') {
+        objCells.item(0).setAttribute('title', 'Elementnummer');
+        objCells.item(2).setAttribute('title', 'Querdehnzahl');
+        objCells.item(4).setAttribute('title', 'Knoten-Inzidenz Elementanfang');
+        objCells.item(5).setAttribute('title', 'Knoten-Inzidenz Elementende');
+    } else {
+        objCells.item(0).setAttribute('title', 'element number');
+        objCells.item(2).setAttribute('title', "Poisson's ratio");
+        objCells.item(4).setAttribute('title', 'Node incidence element start');
+        objCells.item(5).setAttribute('title', 'Node incidence element end');
+    }
     nSpalten = eTabelle.rows[0].cells.length - 1;
 
     eTabelle.rows.item(0).cells.item(0).style.width = '3.125em'
@@ -425,13 +439,13 @@ export function duennQ() {
     set_myScreen();
 
     remove_selected_Tabelle();  // alte Fehlermarkierungen entfernen
-/*
-    {
-        const eTabelle = document.getElementById("elemTable") as HTMLTableElement;
-        console.log("Tabellenbreite = ",eTabelle.getBoundingClientRect().width);
-        infoBox.innerHTML += "<br>Tabellenbreite: " + eTabelle.getBoundingClientRect().width;
-    }
-*/
+    /*
+        {
+            const eTabelle = document.getElementById("elemTable") as HTMLTableElement;
+            console.log("Tabellenbreite = ",eTabelle.getBoundingClientRect().width);
+            infoBox.innerHTML += "<br>Tabellenbreite: " + eTabelle.getBoundingClientRect().width;
+        }
+    */
     // Schnittgrößen einlesen
     let input = document.getElementById('Vy') as HTMLInputElement | null;
     schnittgroesse.Vy = Vy = Number(testeZahl(input.value));

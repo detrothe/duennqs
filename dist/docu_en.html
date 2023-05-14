@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="de">
+<html lang="en">
 
 <head>
 	<meta charset="UTF-8" />
@@ -111,90 +111,66 @@
 		<a href="#">Übersicht</a>
 	</h1>
 	<p>
-		Mit dieser Webanwendung können Querschnittswerte und
-		Spannungen von dünnwandigen Querschnitten berechnet werden. Es wird das Mittellinienmodell (Drahtmodell)
-		angewendet und zur Lösung wird
-		die finite Element Methode verwendet [1], [2]. Der Querschnitt wird
-		ähnlich wie ein Stabwerk oder Fachwerk durch mehrere gerade Elemente
-		beschrieben, die über Knoten miteinander verbunden sind. Die Theorie
-		erfordert, dass jedes Element mindestens eine Verbindung zu einem anderen
-		Element haben muss. Es dürfen also keine Elemente „alleine“ im
-		Querschnitt sein. Dies bedeutet, dass es von jedem Element einen Pfad zu allen anderen Elementen geben muss.
-		<br> Die Knotenkoordinaten werden in einem y&#772;-z&#772; Hilfskoordinatensystem eingegeben, dessen Ursprung
-		beliebig gewählt werden kann.
-		<br> Die Elemente haben einen Anfangs- und Endknoten und
-		können quadratische Schubspannungsverläufe exakt darstellen.
-		Deshalb ist keine Verfeinerung erforderlich. Die Richtung der
-		Schubspannungen wird in den Viertelspunkten der Elemente an der
-		rechten und linken Seite mit Pfeilen angezeigt. Wenn man gedanklich vom Elementanfang zum Elementende blickt,
-		dann befindet sich die rechte Seite des Elementes an der rechten Hand.
-	</p>
-	<p>Da die Elemente unterschiedliche Materialeigenschaften haben können, sind Referenzwerte anzugeben. Diese sind
-		auch in einem Stabwerksprogramm als Materialdaten zu verwenden, wenn die berechneten ideellen Querschnittswerte
-		für einen Stab-Querschnitt verwendet werden.
+With this web application, cross-section values and stresses of thin-walled cross-sections can be calculated. The centerline model (wire model) is applied and the finite element method is used for the solution [1], [2]. The cross-section is described similarly to a beam or truss by several straight elements connected by nodes. The theory requires that each element must have at least one connection to another element. Thus, no elements may be "alone" in the cross section. This means that there must be a path from each element to all other elements.
+
+The node coordinates are entered in a ȳ-z̄ auxiliary coordinate system whose origin can be selected as desired.
+The elements have a start and end node and can accurately represent quadratic shear stress curves. Therefore, no refinement is required. The direction of the shear stresses is indicated by arrows in the quarter points of the elements on the right and left sides. If you look mentally from the element start to the element end, the right side of the element is at the right hand.
+
+Since the elements may have different material properties, reference values must be specified. These must also be used as material data in a member program if the calculated ideal cross-section values are used for a member cross-section.
+
+The normal stresses due to N, My and Mz are calculated with the usual formulas of mechanics assuming that the cross-sections remain plane according to Bernoulli.
+
+The shear stresses are positive if they act in the direction of the local coordinate system of the element. The positive local direction points from the initial to the final node of the element.
+
 	</p>
 	<p>
-		Die
-		Normalspannungen infolge N, M<sub>y</sub> und M<sub>z</sub> werden
-		mit den üblichen Formeln der Mechanik unter Annahme des Ebenbleibens
-		der Querschnitte nach Bernoulli berechnet.
-	</p>
-	<p>
-		Die
-		Schubspannungen sind positiv, wenn sie in Richtung des lokalen
-		Koordinatensystems des Elementes wirken. Die positive lokale Richtung
-		zeigt vom Anfangs- zum Endknoten des Elementes.
-	</p>
-	<p>
-		Eigenschaften des Programms:
+		Features of the program:
 	</p>
 	<ul>
 		<li>
-			<p>Der Querschnitt kann unsymmetrisch, offen und/oder geschlosssen sein </p>
+			<p>The cross section can be asymmetrical, open and/or closed </p>
 		</li>
 		<li>
 			<p>
-				Linear elastisches Material
+				Linear elastic material
 			</p>
 		<li>
 			<p>
-				Die Breite der Elemente ist elementweise konstant
+				The width of the elements is constant element by element
 			</p>
 		<li>
 			<p>
-				Jedes Element hat eigene Materialeigenschaften
+				Each element has its own material properties
 			</p>
 		<li>
 			<p>
-				Berechnung aller Querschnittswerte
+				Calculation of all cross-section values
 			</p>
 		<li>
 			<p>
-				Spannungsberechnung infolge von Normal- und Querkräften N, V<sub>y</sub> und
+				Stress calculation due to normal and shear forces N, V<sub>y</sub> and
 				V<sub>z</sub>,<br />
-				Biegemomente M<sub>y</sub> und M<sub>z</sub>,
+				Bending moments M<sub>y</sub> and M<sub>z</sub>,
 				<br />
-				Primärer und sekundärer Torsion M<sub>xp</sub> , M<sub>xs</sub>
-				sowie Wölbbimoment M<sub>ω</sub>.
+				primary and secondary torsion M<sub>xp</sub> , M<sub>xs</sub>
+				and camber moment M<sub>ω</sub>.
 
 			</p>
 	</ul>
 	<p>
-		Der Querschnitt wird in der y-z Ebene und in einer 3D-Ansicht
-		dargestellt. Die Schubspannungen werden parallel zur x-Achse flächig
-		über die Elementdicke gezeichnet.
+		The cross-section is displayed in the y-z plane and in a 3D view. The shear stresses are drawn parallel to the x-axis over the element thickness.
 		<br /><br />
 	</p>
 	<h2 class="western" id="vorzeichen">
-		<a href="#">Koordinatensystem und Vorzeichen</a>
+		<a href="#">Coordinate system and sign definitions </a>
 	</h2>
 	<p>
 		<img src="Vorzeichen_Querschnitt.png" name="Vorzeichen"
 			style="max-width:100%; width:480px; height:auto; border:0px; margin: auto; display: block;" /> <!--width:480px; height:433px-->
-		Vorzeichen der Schnittgrößen<br>
+		Sign of the internal forces<br>
 		<img src="vorzeichen.png" name="Vorzeichen-Richtung"
 			style="width:351px; height:353px; border:0px; margin: auto; display: block;" />
-		Vorzeichen Element<br />
+		Sign definitions of an element<br />
 		<br />
 	</p>
 	<h1 class="western" id="beispiel">
@@ -234,23 +210,14 @@
 	<p>
 	<h2 class="western">Eingabe</h2>
 	</p>
-	<p>Als Dezimal-Trennzeichen ist das Komma oder der Punkt zulässig.
-		Ein Tausender-Trennzeichen ist nicht zulässig.
-	</p>
-	<p>Um die Knoten- und Elementeingabe zu beschleunigen, können einzelne Zellwerte oder Zeilen der Tabellen kopiert
-		bzw. generiert
-		werden.
-		Es kann durch Drücken der linken Maustaste ein Block selektiert werden.
-		Nach dem Loslassen der Maustaste erscheint ein Kontextmenü. <br>
-		Bei <b>Touch screens:</b> Bei Eingabe mit dem Finger oder Stift ist zuerst der
-		Selektiermodus durch Anklicken der Checkbox über einer Tabelle zu aktivieren. Beim Übersteichen mit dem Finger
-		oder dem Stift werden dann wie bei der Maus
-		die selektierten Zellen farblich markiert. Nach Heben des Fingers/Stifts erscheint das Kontextmenu.
-		Während des Selektiermodus können keine Werte eingegeben werden.
+	<p>The decimal separator is the comma or the point. A thousands separator is not permitted.
+
+In order to speed up the node and element input, individual cell values or rows of the tables can be copied or generated. A block can be selected by pressing the left mouse button. After releasing the mouse button a context menu appears.
+For touch screens: When entering with the finger or pen, the selection mode must first be activated by clicking the checkbox above a table. When crossing over with the finger or the pen, the selected cells are then highlighted in color, as with the mouse. After lifting the finger/pen the context menu appears. No values can be entered during the selection mode.
 	</p>
 	<p>
 		<img src="contextmenu.png" name="Bild4" style="width:180px; height:195px; margin-left:3em" />
-		Kontextmenü
+		Context menu
 		<br />
 	</p>
 	<p>
@@ -347,41 +314,21 @@
 	<p>
 	<h2 class="western" id="voreinstellungen"><a href="#">Voreinstellungen</a></h2>
 	</p>
-	<P>In dem ꔷꔷꔷ Punkte Menü kann unter anderem die Längeneinheit eingestellt werden. Die Einheit für die Spannung wird
-		angepasst: mm → N/mm² ; cm → kN/cm² ; m → MN/m² . Die neu eingestellte Einheit
-		wird sofort in die Eingabeseite übernommen.
-		Danach ist noch eine Neuberechnung durchzuführen, damit die Einheiten der Ergebnisse angepasst werden. <br>
-		Desweiteren kann noch die Schriftgröße und die Tabellenfarbe eingestellt werden.<br>
-		Die Einstellungen der Seite können als Voreinstellung im lokalen Speicher des verwendeten Browsers gespeichert
-		werden und stehen nach einem
-		Programmneustart wieder zur Verfügung. Die Voreinstellungen können mit dem darunterliegenden Button wieder
-		gelöscht werden.<br>
-		Bei dem lokalen Speicher (local storage) handelt es sich nicht um Cookies. Diese Webanwendung führt alle
-		Berechnungen
-		auf dem lokalen Rechner im Browser in JavaScript durch. Es werden keine Daten mit einem Webserver ausgetauscht.
-		Nach dem Programmstart ist deshalb keine Netzwerkverbindung mehr erforderlich.
+	<P>In the ꔷꔷꔷ points menu, among other things, the unit of length can be set. The unit for the stress is adjusted: mm → N/mm² ; cm → kN/cm² ; m → MN/m² . The newly set unit is immediately transferred to the input page. Afterwards, a recalculation must still be performed so that the units of the results are adjusted.
+Furthermore, the font size and the table color can be set.
+The settings of the page can be saved as a presetting in the local memory of the used browser and are available again after a program restart. The presets can be deleted with the button below.
+The local storage is not a cookie. This web application performs all calculations on the local computer in the browser in JavaScript. No data is exchanged with a web server. Therefore, after starting the program, a network connection is no longer required.
 	</P>
 	<p>
-		Die Option 'Breite Browserfenster' ist nur interessant bei sehr breiten Bildschirmen und wenn der Browser im
-		Fullscreenmodus betrieben wird. Dann kann die Ausgabebreite der Anwendung reduziert werden. Die Bereich wird
-		mittig zentriert.
+The 'Wide browser window' option is only interesting for very wide screens and when the browser is operated in fullscreen mode. Then the output width of the application can be reduced. The area will be centered.
 
 	</P>
 
 	<p>
 	<h2 class="western" id="installation"><a href="#">Installation als App auf dem Desktop</a></h2>
 	</p>
-	<p>Diese Anwendung ist als Webanwendung (Web App) programmiert, so dass sie unter allen Betriebssystemen auf dem
-		Desktop installiert werden kann.
-		Dafür wird auf dem Desktop ein Icon erstellt. Damit verhält sich die App wie eine aus einem Store installierte
-		App.
-		DuennQs wird natürlich weiterhin im installierten Browser ausgeführt, allerdings ohne Bedienelemente wie zum
-		Beispiel die Adressleiste. Die Installation
-		unterscheidet sich je nach Betriebssystem, -version und Browser.<br>
-		Nachdem duennQs erstmalig im Browser gestartet wurde, wählt man unter Android im Chrome Browser rechts oben aus
-		dem Anwendungsmenü <i>(Drei-Punkte-Menü)</i> die Option 'App installieren'.
-		Ein Dialog erscheint, der zu bestätigen ist. Danach kann der Browser geschlossen werden. Auf dem Desktop gibt es
-		jetzt ein neues Icon mit Namen DuennQs.
+	<p>This application is programmed as a web application (Web App) so that it can be installed on the desktop under all operating systems. For this purpose, an icon is created on the desktop. This makes the app behave like an app installed from a store. DuennQs will still run in the installed browser, of course, but without controls such as the address bar. The installation process differs depending on the operating system, version, and browser.
+After duennQs has been started in the browser for the first time, on Android in the Chrome browser, select 'Install App' from the application menu (three-dot menu) at the top right. A dialog appears, which must be confirmed. After that, the browser can be closed. There is now a new icon on the desktop called DuennQs.
 	</p>
 	<p>Für die Installation unter iOS ist der Safari Browser zu verwenden. Hier heißt der Befehl 'Zum Home-Bildschirm'
 		mit einem Addieren-Symbol</p>
@@ -413,16 +360,7 @@
 	<p>Probleme: Unter Android Firefox funktioniert die Selektion der Zellen in den Tabellen nicht.</p>
 
 	<h2 class="western" id="tastatur"><a href="#">Virtuelle Tastatur</a></h2>
-	<p>Auf manchen Android Geräten, besonders von Samsung, enthält die numerische Tastatur keine Taste für ein negatives
-		Vorzeichen.
-		Leider überlässt es die HTML Spezifikation dem Gerätehersteller, ob die numerische Tastatur eine Taste für das
-		negative Vorzeichen enthält. Der tiefere Sinn dahinter erschliesst nach den vielen Interneteinträgen zu
-		urteilen wohl nur wenigen Menschen.
-		Es wird in diesen Fällen empfohlen, eine zusätzliche virtuelle Tastatur zu installieren. Als Alternative
-		bietet sich zum Beispiel die Original Google Android Tastatur Gboard aus dem Play Store an. Nach der
-		Installation muss
-		die Tastatur noch aktiviert werden. Am Besten gleich im Play Store durchführen. Später kann man immer zwischen
-		den installierten Tastaturen wechseln ( Icon rechts unten auf der Tastatur).
+	<p>On some Android devices, especially from Samsung, the numeric keyboard does not include a key for a negative sign. Unfortunately, the HTML specification leaves it up to the device manufacturer whether the numeric keyboard contains a key for the negative sign. Judging from the many Internet entries, the deeper meaning behind this is probably only clear to a few people. In these cases, it is recommended to install an additional virtual keyboard. For example, the original Google Android keyboard Gboard from the Play Store is an alternative. The keyboard still has to be activated after the installation. It is best to do this right away in the Play Store. Later, you can always switch between the installed keyboards (icon at the bottom right of the keyboard).
 	</p>
 
 	<p>

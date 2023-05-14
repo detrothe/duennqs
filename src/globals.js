@@ -1,5 +1,6 @@
 export let berechnung_erfolgreich = false;
 export let berechnung_erforderlich = true;
+let txt_berechnung = "Neue Berechnung erforderlich"
 
 export function berechnungErfolgreich(wert) {
     berechnung_erfolgreich = wert;
@@ -11,7 +12,12 @@ export function berechnungErforderlich(wert = true) {
     document.getElementById("resize").setAttribute('disabled', true)
     document.getElementById("rechnen").style.color = "#dd0000"
     document.getElementById("rechnen").disabled = false
-    document.getElementById("info_berechnung").innerText = "Neue Berechnung erforderlich"
+    document.getElementById("info_berechnung").innerText = txt_berechnung
+}
+
+export function set_text_berechnung_erforderlich(txt) {
+    txt_berechnung = txt
+    document.getElementById("info_berechnung").innerText = txt_berechnung
 }
 
 

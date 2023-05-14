@@ -1,6 +1,7 @@
-import { set_myScreen } from "./index.js";
+import { set_myScreen, app } from "./index.js";
 console.log("enter einstellungen")
 import { testeZahl } from "./utility.js";
+
 console.log("vor getElementId")
 document.getElementById("unitLength").addEventListener('change', einstellungen);
 document.getElementById("id_cb_saveLocalStorage").addEventListener('click', saveLocalStorage);
@@ -212,20 +213,26 @@ export function setNewUnits() {
         objCells.item(2).innerHTML = 'z&#772; [m]'
     }
 
+    let dicke: string
+    if (app.browserLanguage == 'de') {
+        dicke = 'Dicke'
+    } else {
+        dicke = 'thickness'
+    }
     const eTabelle = document.getElementById("elemTable") as HTMLTableElement;
     objCells = eTabelle.rows.item(0).cells;  // Überschrift Punkt zentrieren
 
     if (unit === 'mm') {
         objCells.item(1).innerHTML = 'E-Modul [N/mm²]'
-        objCells.item(3).innerHTML = 'Dicke t [mm]'
+        objCells.item(3).innerHTML = dicke + ' t [mm]'
     }
     else if (unit === 'cm') {
         objCells.item(1).innerHTML = 'E-Modul [kN/cm²]'
-        objCells.item(3).innerHTML = 'Dicke t [cm]'
+        objCells.item(3).innerHTML = dicke + ' t [cm]'
     }
     if (unit === 'm') {
         objCells.item(1).innerHTML = 'E-Modul [MN/m²]'
-        objCells.item(3).innerHTML = 'Dicke t [m]'
+        objCells.item(3).innerHTML = dicke + ' t [m]'
     }
 
     const el = document.getElementsByClassName("unit_stress")
