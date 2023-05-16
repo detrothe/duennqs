@@ -217,7 +217,7 @@ export function setNewUnits() {
     if (app.browserLanguage == 'de') {
         dicke = 'Dicke'
     } else {
-        dicke = 'thickness'
+        dicke = 'width'
     }
     const eTabelle = document.getElementById("elemTable") as HTMLTableElement;
     objCells = eTabelle.rows.item(0).cells;  // Überschrift Punkt zentrieren

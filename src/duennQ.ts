@@ -259,7 +259,7 @@ export function createTables() {
     //if (app.browserLanguage == 'de') {
     meinetabelle("elementtabelle", "elemTable", nelem, ["El No", 'E-Modul [kN/cm²]', 'ν', 'Dicke t [cm]', 'nod1', 'nod2']);
     //} else {
-    //    meinetabelle("elementtabelle", "elemTable", nelem, ["El No", 'E-Modul [kN/cm²]', 'ν', 'thickness t [cm]', 'nod1', 'nod2']);
+    //    meinetabelle("elementtabelle", "elemTable", nelem, ["El No", 'E-Modul [kN/cm²]', 'ν', 'width t [cm]', 'nod1', 'nod2']);
     //}
     //tabulate('#elementtabelle', 'elemTable', elemArray, ["El No", 'E-Modul [kN/cm²]', 'ν', 'Dicke t [cm]', 'nod1', 'nod2']);  // elemObj.
 

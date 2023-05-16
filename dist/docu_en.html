@@ -111,7 +111,8 @@
 	</h1>
 	<p>
 		With this web application, cross-section values and stresses of thin-walled cross-sections can be calculated.
-		The centerline model (wire model) is applied and the finite element method is used for the solution [1], [2], [3].
+		The centerline model (wire model) is applied and the finite element method is used for the solution [1], [2],
+		[3].
 		The cross-section is described similarly to a beam or truss by several straight elements connected by nodes. The
 		theory requires that each element must have at least one connection to another element. Thus, no elements may be
 		"alone" in the cross section. This means that there must be a path from each element to all other elements.
@@ -280,51 +281,50 @@
 		<li><b>Beschriftung:</b> Beschriftung der Elemente und Spannungen. Die Art der Beschriftung ist abhängig von der
 			Wahl
 			weiterer Optionen. </li>
-		<li><b>Schubspannung:</b> Darstellung der Schubspannungen.</li>
-		<li><b>Normalspannung:</b> Darstellung der Normalspannungen.</li>
-		<li><b>Vergleichsspannung:</b> Darstellung der Vergleichsspannungen nach Mises: \(σ_v = \sqrt{σ^2+3·τ^2} \)
+		<li><b>Schubspannung:</b> Display of shear stresses.</li>
+		<li><b>Normalspannung:</b> Display of normal stresses.</li>
+		<li><b>Vergleichsspannung:</b> Display of the comparative stresses according to Mises: \(σ_v = \sqrt{σ^2+3·τ^2}
+			\)
 			<br>Siehe auch Option 'Sigma Fläche'
 		</li>
-		<li><b>fyRd anzeigen:</b> Grafische Darstellung der Spannung f<sub>y,Rd</sub> über die Querschnittsfläche</li>
-		<li><b>Omega:</b> Wölbordinate &omega;</li>
-		<li><b>Verschiebung u:</b> Die Verschiebung u (Verwölbung) des Querschnitts infolge der Schubspannungen. </li>
-		<li><b>Skalierung:</b> Skalierung der Spannungen.</li>
-		<li><b>Seiten anzeigen:</b> Bei Darstellung der Schubspannungen können die Seitenflächen ausgeblendet werden.
+		<li><b>fyRd anzeigen:</b> Graphical representation of the stress f<sub>y,Rd</sub> across the cross-sectional
+			area</li>
+		<li><b>Omega:</b> Camber ordinate &omega;</li>
+		<li><b>Verschiebung u:</b> The displacement u (warping) of the cross section due to the shear stresses. </li>
+		<li><b>Skalierung:</b> Scaling of the stresses.</li>
+		<li><b>Seiten anzeigen:</b> When displaying the shear stresses, the side surfaces can be hidden.
 		</li>
-		<li><b>Pfeile anzeigen:</b> Darstellung der wirklichen Richtungen der Schubspannungen.</li>
-		<li><b>Skalierung Pfeile:</b> Skalierung der Richtungspfeile.</li>
-		<li><b>Sigma Fläche:</b> Drahtmodell-Darstellung der Normalspannungen über die Fläche der Elemente. Wenn diese
-			Option gewählt wird,
-			dann werden die Vergleichsspannungen auch an den Flächenrändern berechnet. Sonst wird die Vergleichsspannung
-			aus der Normalspannung in der Mittelfläche verwendet.
+		<li><b>Pfeile anzeigen:</b> Representation of the real directions of the shear stresses.</li>
+		<li><b>Skalierung Pfeile:</b> Scaling of the direction arrows.</li>
+		<li><b>Sigma Fläche:</b> Wire model representation of normal stresses over the surface of the elements. If this
+			option is selected, then the equivalent stresses are also calculated at the surface edges. Otherwise, the
+			equivalent stress from the normal stress in the center surface is used.
 		</li>
-		<li><b>rechts/links anzeigen:</b> Beschriftung der Elementseiten und Darstellung des Element-Anfangsknotens
-			durch einen
-			Pfeil.</li>
-		<li><b>Reset:</b> Rotationswinkel und Zoom werden zurückgesetzt.</li>
+		<li><b>rechts/links anzeigen:</b> Labeling of the element sides and representation of the element start node by
+			an arrow.</li>
+		<li><b>Reset:</b> Rotation angle and zoom are reset.</li>
 	</ul>
 	</p>
 
 	<p>
 	<h2 class="western" id="bezeichnungen"><a href="#">Designations</a></h2>
 	</p>
-	<p>Knoten-Inzidenzen der Elemente<br>
-		nod1 = Knoten-Inzidenz am Elementanfang<br>
-		nod2 = Knoten-Inzidenz am Elementende</p>
+	<p>Node incidences of the elements<br>
+		nod1 = Node incidence at element start<br>
+		nod2 = Node incidence at element end</p>
 
-	<p>A<sub>geom</sub> = geometrische Querschnittsfläche, Fläche ohne Berücksichtigung der Materialdaten.</p>
-	<p>Schubspannungen aus primärer Torsion M<sub>xp</sub>: <br>
-		&tau;<sub>xs0,L</sub> = Schubspannung aus Anteil offener Querschnitt, linke Seite, linearer Verlauf über
-		Elementbreite<br>
-		&tau;<sub>xs0,R</sub> = Schubspannung aus Anteil offener Querschnitt, rechte Seite<br>
-		&tau;<sub>xs1</sub> = Schubspannung aus Anteil geschlossener Querschnitt, konstant über Elementbreite
+	<p>A<sub>geom</sub> = geometric cross-sectional area, area without consideration of material data.</p>
+	<p>Shear stresses from primary torsion M<sub>xp</sub>: <br>
+		&tau;<sub>xs0,L</sub> = Shear stress from portion of open cross section, left side, linear progression over element width<br>
+		&tau;<sub>xs0,R</sub> = Shear stress from portion of open cross section, right side<br>
+		&tau;<sub>xs1</sub> = Shear stress from portion of closed cross section, constant over element width
 	</p>
-	<p>Schubspannungen aus Querkraft und sekundärer Torsion M<sub>xs</sub>: <br>
-		&tau;<sub>xsa</sub> = Schubspannung am Elementanfang a <br>
-		&tau;<sub>xsm</sub> = Schubspannung in Elementmitte m <br>
-		&tau;<sub>xse</sub> = Schubspannung am Elementende e, alle Spannungen konstant über Elementbreite
+	<p>Shear stresses from shear force and secondary torsion M<sub>xs</sub>: <br>
+		&tau;<sub>xsa</sub> = Shear stress at the element start a <br>
+		&tau;<sub>xsm</sub> = Shear stress in element center m <br>
+		&tau;<sub>xse</sub> = Shear stress at the element end e, all stresses constant over element width
 	</p>
-	<p> Alle anderen Bezeichnungen analog.</p>
+	<p>All other designations analogous.</p>
 	<p>
 	<h2 class="western" id="voreinstellungen"><a href="#">Default settings</a></h2>
 	</p>
