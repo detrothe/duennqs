@@ -91,36 +91,46 @@
 		a[href^="#"]:before {
 			content: '➡ ';
 		}
-	    
 	</style>
 </head>
 
 <body lang="de-DE" link="#0000ff" vlink="#800000" dir="ltr">
-	<h1 class="western">Inhaltsverzeichnis</h1>
-	<p class="western"><a href="#uebersicht">Übersicht</a><br>
-		<a href="#vorzeichen">Koordinatensystem und Vorzeichen</a><br>
-		<a href="#beispiel">Beispiel</a><br>
-		<a href="#hinweiseApp">Hinweise zur Bedienung der App</a><br>
-		<a href="#bezeichnungen">Bezeichnungen</a><br>
-		<a href="#voreinstellungen">Voreinstellungen</a><br>
-		<a href="#installation">Installation als App auf dem Desktop</a><br>
-		<a href="#kompatibilitaet">Kompatibilität</a><br>
-		<a href="#tastatur">Hilfe: Meine Tastatur hat keine Minus-Taste, virtuelle Tastatur</a><br>
+	<h1 class="western">Table of contents</h1>
+	<p class="western"><a href="#uebersicht">Overview</a><br>
+		<a href="#vorzeichen">Coordinate system and sign definitions</a><br>
+		<a href="#beispiel">Example</a><br>
+		<a href="#hinweiseApp">Notes on the operation of the app</a><br>
+		<a href="#bezeichnungen">Designations</a><br>
+		<a href="#voreinstellungen">Default settings</a><br>
+		<a href="#installation">Installation as an app on the desktop</a><br>
+		<a href="#kompatibilitaet">Compatibility</a><br>
+		<a href="#tastatur">Help: My keyboard has no minus key, virtual keyboard</a><br>
 
 	<h1 lang="de-DE" class="western" id="uebersicht">
-		<a href="#">Übersicht</a>
+		<a href="#">Overview</a>
 	</h1>
 	<p>
-With this web application, cross-section values and stresses of thin-walled cross-sections can be calculated. The centerline model (wire model) is applied and the finite element method is used for the solution [1], [2]. The cross-section is described similarly to a beam or truss by several straight elements connected by nodes. The theory requires that each element must have at least one connection to another element. Thus, no elements may be "alone" in the cross section. This means that there must be a path from each element to all other elements.
+		With this web application, cross-section values and stresses of thin-walled cross-sections can be calculated.
+		The centerline model (wire model) is applied and the finite element method is used for the solution [1], [2], [3].
+		The cross-section is described similarly to a beam or truss by several straight elements connected by nodes. The
+		theory requires that each element must have at least one connection to another element. Thus, no elements may be
+		"alone" in the cross section. This means that there must be a path from each element to all other elements.
 
-The node coordinates are entered in a ȳ-z̄ auxiliary coordinate system whose origin can be selected as desired.
-The elements have a start and end node and can accurately represent quadratic shear stress curves. Therefore, no refinement is required. The direction of the shear stresses is indicated by arrows in the quarter points of the elements on the right and left sides. If you look mentally from the element start to the element end, the right side of the element is at the right hand.
+		The node coordinates are entered in a ȳ-z̄ auxiliary coordinate system whose origin can be selected as desired.
+		The elements have a start and end node and can accurately represent quadratic shear stress curves. Therefore, no
+		refinement is required. The direction of the shear stresses is indicated by arrows in the quarter points of the
+		elements on the right and left sides. If you look mentally from the element start to the element end, the right
+		side of the element is at the right hand.
 
-Since the elements may have different material properties, reference values must be specified. These must also be used as material data in a member program if the calculated ideal cross-section values are used for a member cross-section.
+		Since the elements may have different material properties, reference values must be specified. These must also
+		be used as material data in a member program if the calculated ideal cross-section values are used for a member
+		cross-section.
 
-The normal stresses due to N, My and Mz are calculated with the usual formulas of mechanics assuming that the cross-sections remain plane according to Bernoulli.
+		The normal stresses due to N, My and Mz are calculated with the usual formulas of mechanics assuming that the
+		cross-sections remain plane according to Bernoulli.
 
-The shear stresses are positive if they act in the direction of the local coordinate system of the element. The positive local direction points from the initial to the final node of the element.
+		The shear stresses are positive if they act in the direction of the local coordinate system of the element. The
+		positive local direction points from the initial to the final node of the element.
 
 	</p>
 	<p>
@@ -158,7 +168,8 @@ The shear stresses are positive if they act in the direction of the local coordi
 			</p>
 	</ul>
 	<p>
-		The cross-section is displayed in the y-z plane and in a 3D view. The shear stresses are drawn parallel to the x-axis over the element thickness.
+		The cross-section is displayed in the y-z plane and in a 3D view. The shear stresses are drawn parallel to the
+		x-axis over the element thickness.
 		<br /><br />
 	</p>
 	<h2 class="western" id="vorzeichen">
@@ -166,7 +177,8 @@ The shear stresses are positive if they act in the direction of the local coordi
 	</h2>
 	<p>
 		<img src="Vorzeichen_Querschnitt.png" name="Vorzeichen"
-			style="max-width:100%; width:480px; height:auto; border:0px; margin: auto; display: block;" /> <!--width:480px; height:433px-->
+			style="max-width:100%; width:480px; height:auto; border:0px; margin: auto; display: block;" />
+		<!--width:480px; height:433px-->
 		Sign of the internal forces<br>
 		<img src="vorzeichen.png" name="Vorzeichen-Richtung"
 			style="width:351px; height:353px; border:0px; margin: auto; display: block;" />
@@ -174,22 +186,23 @@ The shear stresses are positive if they act in the direction of the local coordi
 		<br />
 	</p>
 	<h1 class="western" id="beispiel">
-		<a href="#">Beispiel</a>
+		<a href="#">Example</a>
 	</h1>
-	<h2 class="western"> Einzelliger Hohlkastenquerschnitt </h2>
+	<h2 class="western"> Single cell box girder cross section </h2>
 	<p>
-		Dieses Beispiel wurde in [2] behandelt. Die Querschnittsdaten wurden beim Programmstart automatisch geladen.
+		This example was treated in [2]. The cross-section data were automatically loaded at program startup.
 	</p>
 	<p>
 		<img src="beispiel_querschnitt.png" name="Bild3"
-			style="max-width:100%; width:401px; height:auto; border:0px; margin: auto; display: block;" /> <!--width:401px; height:238px-->
+			style="max-width:100%; width:401px; height:auto; border:0px; margin: auto; display: block;" />
+		<!--width:401px; height:238px-->
 		<br />
 		<br />
 	</p>
 
 
 	<p>
-		Schnittgrößen:
+		Internal forces:
 	</p>
 	<p>
 		M<sub>xp</sub> = 250 kNm; M<sub>xs</sub> = 150 kNm; M<sub>ω</sub> = 10 kNm²
@@ -205,15 +218,20 @@ The shear stresses are positive if they act in the direction of the local coordi
 	</p>
 
 	<p>
-	<h1 class="western" id="hinweiseApp"><a href="#">Hinweise zur Bedienung der App</a></h1>
+	<h1 class="western" id="hinweiseApp"><a href="#">Notes on the operation of the app</a></h1>
 	</p>
 	<p>
-	<h2 class="western">Eingabe</h2>
+	<h2 class="western">Input of the data</h2>
 	</p>
 	<p>The decimal separator is the comma or the point. A thousands separator is not permitted.
 
-In order to speed up the node and element input, individual cell values or rows of the tables can be copied or generated. A block can be selected by pressing the left mouse button. After releasing the mouse button a context menu appears.
-For touch screens: When entering with the finger or pen, the selection mode must first be activated by clicking the checkbox above a table. When crossing over with the finger or the pen, the selected cells are then highlighted in color, as with the mouse. After lifting the finger/pen the context menu appears. No values can be entered during the selection mode.
+		In order to speed up the node and element input, individual cell values or rows of the tables can be copied or
+		generated. A block can be selected by pressing the left mouse button. After releasing the mouse button a context
+		menu appears.
+		For touch screens: When entering with the finger or pen, the selection mode must first be activated by clicking
+		the checkbox above a table. When crossing over with the finger or the pen, the selected cells are then
+		highlighted in color, as with the mouse. After lifting the finger/pen the context menu appears. No values can be
+		entered during the selection mode.
 	</p>
 	<p>
 		<img src="contextmenu.png" name="Bild4" style="width:180px; height:195px; margin-left:3em" />
@@ -222,40 +240,36 @@ For touch screens: When entering with the finger or pen, the selection mode must
 	</p>
 	<p>
 	<ul>
-		<li><b>copy first cell value:</b> Es wird der Wert der zuerst selektierten Zelle in die anderen selektierten
-			Zellen
-			kopiert.</li>
-		<li><b>copy first row values:</b> Es sind mindestens zwei Zeilen zu selektieren. Es werden die Werte der
-			obersten Zeile
-			spaltenweise nach unten kopiert.</li>
-		<li><b>increment by 1:</b> Es sind mindestens zwei Zeilen zu selektieren. Es werden die Werte der obersten Zeile
-			spaltenweise um 1 erhöht.</li>
-		<li><b>increment by delta:</b> Es sind mindestens drei Zeilen zu selektieren. Es werden spaltenweise die
-			Differenzen
-			zwischen der obersten und der darunterliegenden Zeile
-			bestimmt. Die darunterliegenden Zeilen werden spaltenweise mit den berechneten Deltawerten verändert. </li>
-		<li><b>copy to clipboard:</b> Der Inhalt der selektierten Zellen wird in die Zwischenablage kopiert und kann zum
-			Beispiel an anderen Stellen der Tabelle eingesetzt werden. Auch können die Werte an andere Programme
-			übergeben werden (Tabellenkalkulation)</li>
-		<li><b>insert from clipboard:</b> Der Inhalt der Zwischenablage wird beginnend an der linken oberen Zelle des
-			markierten Bereichs eingefügt. </li>
-		<li><b>close:</b> Der Dialog wird ohne weitere Ausführungen beendet.</li>
+		<li><b>copy first cell value:</b> The value of the first selected cell is copied to the other selected cells.
+		</li>
+		<li><b>copy first row values:</b> At least two rows are to be selected. The values of the uppermost row are
+			copied downwards column by column.</li>
+		<li><b>increment by 1:</b> At least two rows are to be selected. The values of the top row are incremented by 1
+			column by column.</li>
+		<li><b>increment by delta:</b> At least three rows are to be selected. The differences between the top row and
+			the row below are determined column by column. The rows below are changed column by column with the
+			calculated delta values. </li>
+		<li><b>copy to clipboard:</b> The content of the selected cells is copied to the clipboard and can be used in
+			other places in the table, for example. The values can also be transferred to other programs (spreadsheet).
+		</li>
+		<li><b>insert from clipboard:</b> The clipboard content is pasted starting at the upper left cell of the
+			selected area. </li>
+		<li><b>close:</b> The dialog is ended without further explanations.</li>
 	</ul>
 	</p>
-	<p>Bei iOS erfolgt die Auswahl im Kontextmenü mit einem Doppelklick. </p>
+	<p>For iOS, the selection is made in the context menu with a double click. </p>
 
-	<p>Hinweis: An jedes Tablett und Smartphone läßt sich eine Bluetooth Maus und/oder Tastatur anschließen.</p>
+	<p>Note: A Bluetooth mouse and/or keyboard can be connected to any tablet or smartphone.</p>
 
-	<p>Um den begrenzten Bildschirmplatz auf Smartphones und Tabletts besser zu nutzen, werden die Anzahl der Zeilen in
-		den Tabellen für die Knotenkoordinaten und Elemente
-		durch die Eingabe der Anzahl Knoten und Elemente bestimmt. Deshalb sind erst die neue Anzahl Elemente und Knoten
-		einzugeben und dann die Größe der Tabellen mit Hilfe des Buttons
-		'resize Tabellen' zu änden. Der Vorgang kann beliebig oft wiederholt werden.
+	<p>To make better use of the limited screen space on smartphones and tablets, the number of rows in the tables for
+		node coordinates and elements are determined by entering the number of nodes and elements. Therefore, the new
+		number of elements and nodes must be entered first and then the size of the tables must be changed using the
+		'resize tables' button. The process can be repeated as often as necessary.
 	</p>
 	<p>
-	<h2 class="western"><a href="#">Darstellungen 3D</a></h2>
+	<h2 class="western"><a href="#">3D representations</a></h2>
 	</p>
-	<P>Die Darstellungsoptionen können beliebig kombiniert werden.</P>
+	<P>The display options can be combined at will.</P>
 	<p>
 		<img src="controls.png" name="Controls" style="width:201px; height:369px; margin-left:3em" />
 		Controls
@@ -292,7 +306,7 @@ For touch screens: When entering with the finger or pen, the selection mode must
 	</p>
 
 	<p>
-	<h2 class="western" id="bezeichnungen"><a href="#">Bezeichnungen</a></h2>
+	<h2 class="western" id="bezeichnungen"><a href="#">Designations</a></h2>
 	</p>
 	<p>Knoten-Inzidenzen der Elemente<br>
 		nod1 = Knoten-Inzidenz am Elementanfang<br>
@@ -312,55 +326,75 @@ For touch screens: When entering with the finger or pen, the selection mode must
 	</p>
 	<p> Alle anderen Bezeichnungen analog.</p>
 	<p>
-	<h2 class="western" id="voreinstellungen"><a href="#">Voreinstellungen</a></h2>
+	<h2 class="western" id="voreinstellungen"><a href="#">Default settings</a></h2>
 	</p>
-	<P>In the ꔷꔷꔷ points menu, among other things, the unit of length can be set. The unit for the stress is adjusted: mm → N/mm² ; cm → kN/cm² ; m → MN/m² . The newly set unit is immediately transferred to the input page. Afterwards, a recalculation must still be performed so that the units of the results are adjusted.
-Furthermore, the font size and the table color can be set.
-The settings of the page can be saved as a presetting in the local memory of the used browser and are available again after a program restart. The presets can be deleted with the button below.
-The local storage is not a cookie. This web application performs all calculations on the local computer in the browser in JavaScript. No data is exchanged with a web server. Therefore, after starting the program, a network connection is no longer required.
+	<P>In the ꔷꔷꔷ points menu, among other things, the unit of length can be set. The unit for the stress is adjusted:
+		mm → N/mm² ; cm → kN/cm² ; m → MN/m² . The newly set unit is immediately transferred to the input page.
+		Afterwards, a recalculation must still be performed so that the units of the results are adjusted.
+		Furthermore, the font size and the table color can be set.
+		The settings of the page can be saved as a presetting in the local memory of the used browser and are available
+		again after a program restart. The presets can be deleted with the button below.
+		The local storage is not a cookie. This web application performs all calculations on the local computer in the
+		browser in JavaScript. No data is exchanged with a web server. Therefore, after starting the program, a network
+		connection is no longer required.
 	</P>
 	<p>
-The 'Wide browser window' option is only interesting for very wide screens and when the browser is operated in fullscreen mode. Then the output width of the application can be reduced. The area will be centered.
+		The 'Wide browser window' option is only interesting for very wide screens and when the browser is operated in
+		fullscreen mode. Then the output width of the application can be reduced. The area will be centered.
 
 	</P>
 
 	<p>
-	<h2 class="western" id="installation"><a href="#">Installation als App auf dem Desktop</a></h2>
+	<h2 class="western" id="installation"><a href="#">Installation as an app on the desktop</a></h2>
 	</p>
-	<p>This application is programmed as a web application (Web App) so that it can be installed on the desktop under all operating systems. For this purpose, an icon is created on the desktop. This makes the app behave like an app installed from a store. DuennQs will still run in the installed browser, of course, but without controls such as the address bar. The installation process differs depending on the operating system, version, and browser.
-After duennQs has been started in the browser for the first time, on Android in the Chrome browser, select 'Install App' from the application menu (three-dot menu) at the top right. A dialog appears, which must be confirmed. After that, the browser can be closed. There is now a new icon on the desktop called DuennQs.
+	<p>This application is programmed as a web application (Web App) so that it can be installed on the desktop under
+		all operating systems. For this purpose, an icon is created on the desktop. This makes the app behave like an
+		app installed from a store. DuennQs will still run in the installed browser, of course, but without controls
+		such as the address bar. The installation process differs depending on the operating system, version, and
+		browser.
+		After duennQs has been started in the browser for the first time, on Android in the Chrome browser, select
+		'Install App' from the application menu (three-dot menu) at the top right. A dialog appears, which must be
+		confirmed. After that, the browser can be closed. There is now a new icon on the desktop called DuennQs.
 	</p>
-	<p>Für die Installation unter iOS ist der Safari Browser zu verwenden. Hier heißt der Befehl 'Zum Home-Bildschirm'
-		mit einem Addieren-Symbol</p>
+	<p>For installation on iOS, use the Safari browser. Here the command is called 'Go to Home Screen' with an add icon
+	</p>
 
-	<p>Die Installation unter Microsoft Windows ist ähnlich der Installation unter Android. Im Edge Browser steht
-		folgender Abschnitt im Anwendungsmenü <i> (Drei-Punkte-Menü)</i>
+	<p>The installation on Microsoft Windows is similar to the installation on Android. In the Edge browser, the
+		following section is in the application menu <i> (three-dot menu)</i>
 		<img src="app-install-windows.png" name="Bild4"
-			style="max-width:100%; width:423px; height:auto; border:0px; margin: auto; display: block;" /> <!--width:423px; height:111px-->
-		<br>Bei neueren Chrome Versionen werden Sie unter Umständen direkt gefragt, ob eine Installation gewünscht wird,
-		siehe Symbol rechts in der Adressleiste :
+			style="max-width:100%; width:423px; height:auto; border:0px; margin: auto; display: block;" />
+		<!--width:423px; height:111px-->
+		<br>With newer Chrome versions you may be asked directly if an installation is desired, see icon on the right
+		side of the address bar :
 		<img src="chrome_install.png" name="chrome_install"
-			style="max-width:100%; width:436px; height:auto; border:0px; margin: auto; display: block;" />  <!--width:436px; height:155px-->
+			style="max-width:100%; width:436px; height:auto; border:0px; margin: auto; display: block;" />
+		<!--width:436px; height:155px-->
 	</p>
-	<p>Unter macOS ist der Microsoft Edge or Google Chrome Browser zur Installation zu verwenden.</p>
-	<p>Der Firefox Browser unterstützt die Installation zur Zeit noch nicht. <br>
-		Unter den PC-Betriebsystemen Microsoft Windows und Linux kann alternativ mit der F11-Taste in den Vollbildmodus
-		umgeschaltet werden.
+	<p>On macOS, the Microsoft Edge or Google Chrome browser is to be used for installation.</p>
+	<p>The Firefox browser does not support the installation at this time. <br>
+		Under the PC operating systems Microsoft Windows and Linux, you can alternatively switch to full screen mode
+		with the F11 key.
 	</p>
-	<p>Eine Deinstallation erfolgt durch einfaches Löschen des Icons auf dem Desktop.</p>
+	<p>Uninstallation is done by simply deleting the icon on the desktop.</p>
 
 
-	<h2 class="western" id="kompatibilitaet"><a href="#">Kompatibilität und Probleme</a></h2>
+	<h2 class="western" id="kompatibilitaet"><a href="#">Compatibility and problems</a></h2>
 
-	<p>Es wurden folgenden Betriebssysteme getestet: Windows 10↑, macOS Catalina 10.15.7↑, Ubuntu 22.04↑, Android 9-13,
+	<p>The following operating systems were tested: Windows 10↑, macOS Catalina 10.15.7↑, Ubuntu 22.04↑, Android 9-13,
 		iOS 15.7.3↑. </p>
-	<p>Es wurden folgende Browser in der aktuellsten Version getestet: Chrome, Chromium, Edge, Safari, Firefox.
-		Nur die aktuellen Versionen werden getestet und unterstützt.
+	<p>The following browsers were tested in the latest version: Chrome, Chromium, Edge, Safari, Firefox.
+		Only the latest versions are tested and supported.
 	</p>
-	<p>Probleme: Unter Android Firefox funktioniert die Selektion der Zellen in den Tabellen nicht.</p>
+	<p>Problems: On Android Firefox the selection of cells in the tables does not work.</p>
 
-	<h2 class="western" id="tastatur"><a href="#">Virtuelle Tastatur</a></h2>
-	<p>On some Android devices, especially from Samsung, the numeric keyboard does not include a key for a negative sign. Unfortunately, the HTML specification leaves it up to the device manufacturer whether the numeric keyboard contains a key for the negative sign. Judging from the many Internet entries, the deeper meaning behind this is probably only clear to a few people. In these cases, it is recommended to install an additional virtual keyboard. For example, the original Google Android keyboard Gboard from the Play Store is an alternative. The keyboard still has to be activated after the installation. It is best to do this right away in the Play Store. Later, you can always switch between the installed keyboards (icon at the bottom right of the keyboard).
+	<h2 class="western" id="tastatur"><a href="#">Virtual keyboard</a></h2>
+	<p>On some Android devices, especially from Samsung, the numeric keyboard does not include a key for a negative
+		sign. Unfortunately, the HTML specification leaves it up to the device manufacturer whether the numeric keyboard
+		contains a key for the negative sign. Judging from the many Internet entries, the deeper meaning behind this is
+		probably only clear to a few people. In these cases, it is recommended to install an additional virtual
+		keyboard. For example, the original Google Android keyboard Gboard from the Play Store is an alternative. The
+		keyboard still has to be activated after the installation. It is best to do this right away in the Play Store.
+		Later, you can always switch between the installed keyboards (icon at the bottom right of the keyboard).
 	</p>
 
 	<p>
@@ -370,7 +404,7 @@ After duennQs has been started in the browser for the first time, on Android in 
 
 
 	<h1 class="western">
-		<a href="#">Literatur</a>
+		<a href="#">Literature</a>
 	</h1>
 
 	<p>
@@ -382,6 +416,11 @@ After duennQs has been started in the browser for the first time, on Android in 
 		[2] Matthias Kraus; Rolf Kindmann:
 		Finite-Elemente-Methoden im Stahlbau, 2.Auflage, Ernst W. &amp; Sohn
 		Verlag, 2019
+	</p>
+	<p>
+		[3] Rolf Kindmann; Matthias Kraus :
+		Steel Structures: Design using FEM, Ernst W. &amp; Sohn
+		Verlag, 2011
 	</p>
 </body>
 
