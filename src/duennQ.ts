@@ -1539,8 +1539,11 @@ export function duennQ() {
 
     //systemlinien();
     berechnungErfolgreich(true);
-    document.getElementById("info_berechnung").innerText = "Berechnung erfolgreich"
-
+    if (app.browserLanguage == 'de') {
+        document.getElementById("info_berechnung").innerText = "Berechnung erfolgreich"
+    } else {
+        document.getElementById("info_berechnung").innerText = "Calculation successful"
+    }
     draw_elements();
 
 }
