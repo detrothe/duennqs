@@ -269,10 +269,10 @@
         <!-- <div id="my_text"></div> -->
 
 
-        <p>Ergebnisse</p>
+        <p id="lab_ergebnisse">Ergebnisse</p>
 
         <div id="querschnittswerte">
-          <h3>ideelle Querschnittswerte</h3>
+          <h3 id="lab_ideelle_Querschnittswerte">ideelle Querschnittswerte</h3>
           <table id="querschnittwerte_table">
             <tbody>
               <tr>
@@ -457,9 +457,9 @@
 
       <div id="id_einstellungen">
         <br>
-        <p>Einheiten für Tabellen und Spannungen</p>
+        <p id="lab_einheiten">Einheiten für Tabellen und Spannungen</p>
         <p>
-          <label for="einheiten" title="nach Änderung ist eine Neuberechnung erforderlich">Längeneinheit : </label>
+          <label for="einheiten" id="lab_unit_length" title="nach Änderung ist eine Neuberechnung erforderlich">Längeneinheit : </label>
           <select name="einheiten" id="unitLength">
             <option value="mm">mm</option>
             <option value="cm" selected>cm</option>
@@ -468,7 +468,7 @@
         </p>
         <br>
         <p>
-          <label for="fontSize">Schriftgröße : </label>
+          <label for="fontSize" id="lab_font_size">Schriftgröße : </label>
           <select name="fontSize" id="id_fontsize">
             <option value="0.5em">8</option>
             <option value="0.5625em">9</option>
@@ -488,7 +488,7 @@
         <table>
           <tbody>
             <tr>
-              <td style="white-space:nowrap"
+              <td style="white-space:nowrap" id="lab_width_browser"
                 title='verwendete Breite im Browserfenster, interessant für große Bildschirme'>
                 Breite Browserfenster:
               </td>
@@ -500,7 +500,7 @@
               <td>&nbsp;</td>
             </tr>
             <tr>
-              <td style="white-space:nowrap">
+              <td style="white-space:nowrap"  id="lab_tableColor_outside">
                 Tabellenfarbe außen: &nbsp;</td>
               <td>
                 <input id="id_color_table_out" value="#CFD915"
@@ -509,7 +509,7 @@
               </td>
             </tr>
             <tr>
-              <td style="white-space:nowrap">Tabellenfarbe innen: &nbsp;</td>
+              <td style="white-space:nowrap" id="lab_tableColor_inside">Tabellenfarbe innen: &nbsp;</td>
               <td>
                 <input id="id_color_table_in" value="#b3ae00"
                   style="width: 150px; border-radius: 3px; border-width: 1px;"
@@ -547,7 +547,7 @@
     </div>
 
     <div id="footer" class="footer">
-      Querschnittswerte und Spannungen dünnwandiger Querschnitte, 16-Mai-2023,
+      Querschnittswerte und Spannungen dünnwandiger Querschnitte, 17-Mai-2023,
       <a href="https://statikverstehen.de">&#169; statikverstehen.de </a>
     </div>
   </div>

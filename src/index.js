@@ -226,6 +226,18 @@ ttf_logo_3D();
 
         set_text_berechnung_erforderlich('New calculation required')
 
+        document.getElementById("lab_einheiten").innerText = "Units for tables and stresses";
+        document.getElementById("lab_unit_length").innerText = "Unit of length :";
+        document.getElementById("lab_font_size").innerText = "Font size :";
+        document.getElementById("lab_width_browser").innerText = "Width browser window :";
+        document.getElementById("lab_tableColor_outside").innerText = "Table color outside :";
+        document.getElementById("lab_tableColor_inside").innerText = "Table color inside :";
+        document.getElementById("id_cb_saveLocalStorage").innerHTML = "Save selection as default values in browser";
+        document.getElementById("id_cb_deleteLocalStorage").innerHTML = "Delete default values in browser memory";
+
+        document.getElementById("lab_ergebnisse").innerHTML = "Results";
+        document.getElementById("lab_ideelle_Querschnittswerte").innerHTML = "Ideal cross section properties";
+
     }
 }
 /*

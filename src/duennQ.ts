@@ -1168,7 +1168,11 @@ export function duennQ() {
         tag.setAttribute("id", "id_spannung_mxp");
         const text = document.createTextNode("xxx");
         tag.appendChild(text);
-        tag.innerHTML = "Alle Spannungen in " + current_unit_stress + "<br><br>Schubspannungen aus primärer Torsion M<sub>xp</sub>"
+        if (app.browserLanguage == 'de') {
+            tag.innerHTML = "Alle Spannungen in " + current_unit_stress + "<br><br>Schubspannungen aus primärer Torsion M<sub>xp</sub>"
+        } else {
+            tag.innerHTML = "All stresses in " + current_unit_stress + "<br><br>Shear stresses from primary torsion M<sub>xp</sub>"
+        }
         myTableDiv.appendChild(tag);
 
         const table = document.createElement("TABLE") as HTMLTableElement;   //TABLE??
@@ -1230,7 +1234,11 @@ export function duennQ() {
         tag.setAttribute("id", "id_spannung_mxs");
         const text = document.createTextNode("xxx");
         tag.appendChild(text);
-        tag.innerHTML = "Schubspannungen aus Querkraft und sekundärer Torsion M<sub>xs</sub>"
+        if (app.browserLanguage == 'de') {
+            tag.innerHTML = "Schubspannungen aus Querkraft und sekundärer Torsion M<sub>xs</sub>"
+        } else {
+            tag.innerHTML = "Shear stresses from shear force and secondary torsion M<sub>xs</sub>"
+        }
         myTableDiv.appendChild(tag);
 
         const table = document.createElement("TABLE") as HTMLTableElement;   //TABLE??
@@ -1293,7 +1301,12 @@ export function duennQ() {
 
         const tag = document.createElement("p"); // <p></p>
         tag.setAttribute("id", "id_schubspannung");
-        const text = document.createTextNode("Schubspannungen aus Querkraft, primärer und sekundärer Torsion");
+        let text: Text
+        if (app.browserLanguage == 'de') {
+            text = document.createTextNode("Schubspannungen aus Querkraft, primärem und sekundärem Torsionsmoment");
+        } else {
+            text = document.createTextNode("Shear stresses from shear force, primary and secondary torsional moment");
+        }
         tag.appendChild(text);
         myTableDiv.appendChild(tag);
 
@@ -1343,12 +1356,20 @@ export function duennQ() {
         newCell.colSpan = "1"
 
         newCell = newRow.insertCell(1);  // Insert a cell in the row at index 0
-        newText = document.createTextNode("linke Seite");  // Append a text node to the cell
+        if (app.browserLanguage == 'de') {
+            newText = document.createTextNode("linke Seite");  // Append a text node to the cell
+        } else {
+            newText = document.createTextNode("left side");  // Append a text node to the cell
+        }
         newCell.appendChild(newText);
         newCell.setAttribute("class", "table_spannung_cell_center1");
         newCell.colSpan = "3"
         newCell = newRow.insertCell(2);  // Insert a cell in the row at index 0
-        newText = document.createTextNode("rechte Seite");  // Append a text node to the cell
+        if (app.browserLanguage == 'de') {
+            newText = document.createTextNode("rechte Seite");  // Append a text node to the cell
+        } else {
+            newText = document.createTextNode("right side");  // Append a text node to the cell
+        }
         newCell.appendChild(newText);
         newCell.setAttribute("class", "table_spannung_cell_center1");
         newCell.colSpan = "3"
@@ -1398,7 +1419,11 @@ export function duennQ() {
         tag.setAttribute("id", "id_normalspannung");
         const text = document.createTextNode("xxx");
         tag.appendChild(text);
-        tag.innerHTML = "Normalspannungen aus Normalkraft, Biegemoment und Wölbbimoment"
+        if (app.browserLanguage == 'de') {
+            tag.innerHTML = "Normalspannungen aus Normalkraft, Biegemoment und Wölbbimoment"
+        } else {
+            tag.innerHTML = "Normal stresses from normal force, bending moment and warping bimoment"
+        }
         myTableDiv.appendChild(tag);
 
         const table = document.createElement("TABLE") as HTMLTableElement;   //TABLE??
@@ -1453,7 +1478,11 @@ export function duennQ() {
         tag.setAttribute("id", "id_vergleichsspannung");
         const text = document.createTextNode("xxx");
         tag.appendChild(text);
-        tag.innerHTML = "von Mises Vergleichsspannungen"
+        if (app.browserLanguage == 'de') {
+            tag.innerHTML = "von Mises Vergleichsspannungen"
+        } else {
+            tag.innerHTML = "von Mises equivalent stresses"
+        }
         myTableDiv.appendChild(tag);
 
         const table = document.createElement("TABLE") as HTMLTableElement;
