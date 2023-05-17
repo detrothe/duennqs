@@ -194,10 +194,10 @@ async function handleFileSelect_save() {
                         accept: { "text/plain": [".txt"] }
                     }]
                 });
-                console.log("fileHandle",fileHandle)
+                //console.log("fileHandle",fileHandle)
 
                 const fileStream = await fileHandle.createWritable();
-                console.log("fileStream=",fileStream);
+                //console.log("fileStream=",fileStream);
 
                 // (C) WRITE FILE
                 await fileStream.write(myBlob);
