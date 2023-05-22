@@ -1235,9 +1235,9 @@ export function duennQ() {
         const text = document.createTextNode("xxx");
         tag.appendChild(text);
         if (app.browserLanguage == 'de') {
-            tag.innerHTML = "Schubspannungen aus Querkraft und sekundärer Torsion M<sub>xs</sub>"
+            tag.innerHTML = "Schubspannungen aus Querkräften und sekundärer Torsion M<sub>xs</sub>"
         } else {
-            tag.innerHTML = "Shear stresses from shear force and secondary torsion M<sub>xs</sub>"
+            tag.innerHTML = "Shear stresses from shear forces and secondary torsion M<sub>xs</sub>"
         }
         myTableDiv.appendChild(tag);
 
@@ -1303,9 +1303,9 @@ export function duennQ() {
         tag.setAttribute("id", "id_schubspannung");
         let text: Text
         if (app.browserLanguage == 'de') {
-            text = document.createTextNode("Schubspannungen aus Querkraft, primärem und sekundärem Torsionsmoment");
+            text = document.createTextNode("Schubspannungen aus Querkräften, primärem und sekundärem Torsionsmoment");
         } else {
-            text = document.createTextNode("Shear stresses from shear force, primary and secondary torsional moment");
+            text = document.createTextNode("Shear stresses from shear forces, primary and secondary torsional moment");
         }
         tag.appendChild(text);
         myTableDiv.appendChild(tag);
@@ -1420,9 +1420,9 @@ export function duennQ() {
         const text = document.createTextNode("xxx");
         tag.appendChild(text);
         if (app.browserLanguage == 'de') {
-            tag.innerHTML = "Normalspannungen aus Normalkraft, Biegemoment und Wölbbimoment"
+            tag.innerHTML = "Normalspannungen aus Normalkraft, Biegemomenten und Wölbbimoment"
         } else {
-            tag.innerHTML = "Normal stresses from normal force, bending moment and warping bimoment"
+            tag.innerHTML = "Normal stresses from normal force, bending moments and warping bimoment"
         }
         myTableDiv.appendChild(tag);
 

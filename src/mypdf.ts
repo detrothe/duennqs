@@ -255,7 +255,8 @@ export async function my_jspdf() {
   }
   yy = neueZeile(yy, fs, 2)
 
-  doc.text("E-Modul = " + myFormat(bezugswerte.emodul, 1, 1) + " kN/cm²", links, yy)
+  doc.text("E-Modul = " + myFormat(bezugswerte.emodul * unit_stress_factor, 1, 1) + " " + current_unit_stress, links, yy)
+
   if (app.browserLanguage == 'de') {
     doc.text("Querdehnung ν = " + myFormat(bezugswerte.mue, 1, 2), links + 70, yy)
   } else {
@@ -492,16 +493,20 @@ export async function my_jspdf() {
 
 
   {
+    let str: string, texWid: number
+
     const nspalten = 4, nzeilen = nelem
 
     yy = testSeite(yy, fs1, 1, 4 + nzeilen)
     if (app.browserLanguage == 'de') {
-      doc.text("Schubspannungen aus primärer Torsion", links, yy);
+      str ="Schubspannungen aus primärer Torsion ";
     } else {
-      doc.text("Shear stresses from primary torsion", links, yy);
+      str="Shear stresses from primary torsion ";
     }
+    texWid = doc.getTextWidth(str)
+    doc.text(str, links, yy);
+    htmlText("M<sub>xp</sub>" , links + texWid, yy)
 
-    let str: string, texWid: number
 
     doc.setFontSize(fs)
     doc.setFont("freesans_bold");
@@ -543,16 +548,19 @@ export async function my_jspdf() {
 
 
   {
+    let str: string, texWid: number
+
     const nspalten = 4, nzeilen = nelem
 
     yy = testSeite(yy, fs1, 1, 4 + nzeilen)
     if (app.browserLanguage == 'de') {
-      doc.text("Schubspannungen aus Querkraft und sekundärer Torsion", links, yy);
+      str="Schubspannungen aus Querkräften und sekundärer Torsion ";
     } else {
-      doc.text("Shear stresses from shear force and secondary torsion", links, yy);
+      str="Shear stresses from shear forces and secondary torsion ";
     }
-
-    let str: string, texWid: number
+    texWid = doc.getTextWidth(str)
+    doc.text(str, links, yy);
+    htmlText("M<sub>xs</sub>" , links + texWid, yy)
 
     doc.setFontSize(fs)
     doc.setFont("freesans_bold");
@@ -608,7 +616,7 @@ export async function my_jspdf() {
     if (app.browserLanguage == 'de') {
       doc.text("Schubspannungen aus allen Anteilen", links, yy);
     } else {
-      doc.text("Shear stresses from shear force, primary and secondary torsional moment", links, yy);
+      doc.text("Shear stresses from shear forces, primary and secondary torsional moment", links, yy);
     }
 
     let str: string, texWid: number
@@ -679,9 +687,9 @@ export async function my_jspdf() {
 
 
     if (app.browserLanguage == 'de') {
-      doc.text("Normalspannungen aus Normalkraft, Biegemoment und Wölbbimoment", links, yy);
+      doc.text("Normalspannungen aus Normalkraft, Biegemomenten und Wölbbimoment", links, yy);
     } else {
-      doc.text("Normal stresses from normal force, bending moment and warping bimoment", links, yy);
+      doc.text("Normal stresses from normal force, bending moments and warping bimoment", links, yy);
     }
 
     let str: string, texWid: number
@@ -803,7 +811,7 @@ export async function my_jspdf() {
       yy = neueZeile(yy, fs)
     }
     if (app.browserLanguage == 'de') {
-    doc.text('Querschnitt', links, yy)
+      doc.text('Querschnitt', links, yy)
     } else {
       doc.text('Cross section', links, yy)
     }
