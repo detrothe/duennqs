@@ -16,6 +16,7 @@ import { app } from './index.js';
 import { current_unit_stress, unit_stress_factor, unit_length_factor, current_unit_length } from "./einstellungen"
 
 const zeilenAbstand = 1.15
+let Seite = 'Seite'
 
 let doc: jsPDF;
 
@@ -67,7 +68,7 @@ function neueZeile(yy: number, fs: number, anzahl = 1): number {
   let y = yy + anzahl * zeilenAbstand * (fs * 0.352778)
   if (y > 270) {
     Seite_No++
-    doc.text("Seite" + Seite_No, 100, 290);
+    doc.text(Seite + Seite_No, 100, 290);
 
     doc.addPage();
     y = 20
@@ -83,7 +84,7 @@ function testSeite(yy: number, fs: number, anzahl: number, nzeilen: number): num
 
     if (yy + (anzahl + 3) * zeilenAbstand * (fs * 0.352778) > 270) {  // 3 Zeilen sollten mindestens unter Überschrift passen
       Seite_No++
-      doc.text("Seite" + Seite_No, 100, 290);
+      doc.text(Seite + Seite_No, 100, 290);
 
       doc.addPage();
       return 20;
@@ -97,7 +98,7 @@ function testSeite(yy: number, fs: number, anzahl: number, nzeilen: number): num
   console.log("y", y, nzeilen, laenge)
   if (y > 270) {
     Seite_No++
-    doc.text("Seite" + Seite_No, 100, 290);
+    doc.text(Seite + Seite_No, 100, 290);
 
     doc.addPage();
     return 20;
@@ -109,7 +110,7 @@ function testSeite(yy: number, fs: number, anzahl: number, nzeilen: number): num
 function neueSeite(): number {
   //--------------------------------------------------------------------------------------------
   Seite_No++
-  doc.text("Seite" + Seite_No, 100, 290);
+  doc.text(Seite + Seite_No, 100, 290);
 
   doc.addPage();
   return 20;
@@ -119,7 +120,7 @@ function neueSeite(): number {
 function letzteSeite() {
   //--------------------------------------------------------------------------------------------
   Seite_No++
-  doc.text("Seite" + Seite_No, 100, 290);
+  doc.text(Seite + Seite_No, 100, 290);
 }
 
 //----------------------------------------------------------------------------------------------
@@ -133,6 +134,7 @@ export async function my_jspdf() {
 
   const newLine = "\n";
   Seite_No = 0
+  if (app.browserLanguage != 'de') Seite = 'page'
 
   // Default export is a4 paper, portrait, using millimeters for units
   doc = new jsPDF();
@@ -209,7 +211,11 @@ export async function my_jspdf() {
   doc.setFont("freesans_bold");
   doc.setFontSize(fs1)
 
-  doc.text("Dünnwandiger Querschnitt", links, yy);
+  if (app.browserLanguage == 'de') {
+    doc.text("Dünnwandiger Querschnitt", links, yy);
+  } else {
+    doc.text("Properties and stresses of thin-walled cross sections", links, yy);
+  }
 
   doc.setFontSize(fs); // in points
   doc.setFont("freesans_normal");
@@ -218,7 +224,11 @@ export async function my_jspdf() {
 
   yy = neueZeile(yy, fs, 2)
 
-  doc.text("Schnittgrößen", links, yy)
+  if (app.browserLanguage == 'de') {
+    doc.text("Schnittgrößen", links, yy)
+  } else {
+    doc.text("Internal forces", links, yy)
+  }
   yy = neueZeile(yy, fs, 2)
 
   htmlText("V<sub>y</sub> = " + myFormat(schnittgroesse.Vy, 2, 2) + " kN", links, yy)
@@ -238,12 +248,19 @@ export async function my_jspdf() {
 
   yy = neueZeile(yy, fs, 2)
 
-  doc.text("Bezugswerte", links, yy)
-
+  if (app.browserLanguage == 'de') {
+    doc.text("Bezugswerte", links, yy)
+  } else {
+    doc.text("Reference values", links, yy)
+  }
   yy = neueZeile(yy, fs, 2)
 
   doc.text("E-Modul = " + myFormat(bezugswerte.emodul, 1, 1) + " kN/cm²", links, yy)
-  doc.text("Querdehnung ν = " + myFormat(bezugswerte.mue, 1, 2), links + 70, yy)
+  if (app.browserLanguage == 'de') {
+    doc.text("Querdehnung ν = " + myFormat(bezugswerte.mue, 1, 2), links + 70, yy)
+  } else {
+    doc.text("Poisson's ratio ν = " + myFormat(bezugswerte.mue, 1, 2), links + 70, yy)
+  }
   yy = neueZeile(yy, fs, 1)
 
   /*
@@ -265,7 +282,11 @@ export async function my_jspdf() {
     const nspalten = 3, nzeilen = nnodes
 
     yy = testSeite(yy, fs1, 1, 4 + nzeilen)
-    doc.text("Knotenkoordinaten", links, yy)
+    if (app.browserLanguage == 'de') {
+      doc.text("Knotenkoordinaten", links, yy)
+    } else {
+      doc.text("Node coordinates", links, yy)
+    }
 
     doc.setFontSize(fs)
     doc.setFont("freesans_bold");
@@ -306,8 +327,11 @@ export async function my_jspdf() {
     const nspalten = 3, nzeilen = nelem
 
     yy = testSeite(yy, fs1, 1, 4 + nzeilen)
-    doc.text("Elementdaten", links, yy)
-
+    if (app.browserLanguage == 'de') {
+      doc.text("Elementdaten", links, yy)
+    } else {
+      doc.text("Element data", links, yy)
+    }
     let str: string, texWid: number
 
     doc.setFontSize(fs)
@@ -325,7 +349,11 @@ export async function my_jspdf() {
     htmlText("El No", spalte[0], yy)
     htmlText("E-Modul", spalte[1] + 5, yy)
     htmlText("ν", spalte[2] + 15, yy)
-    htmlText("Dicke", spalte[3] + 10, yy)
+    if (app.browserLanguage == 'de') {
+      htmlText("Dicke", spalte[3] + 10, yy)
+    } else {
+      htmlText("Width", spalte[3] + 10, yy)
+    }
     htmlText("nod1", spalte[4] + 10, yy)
     htmlText("nod2", spalte[5] + 10, yy)
 
@@ -371,7 +399,11 @@ export async function my_jspdf() {
 
   doc.setFontSize(fs1)
   doc.setFont("freesans_bold");
-  doc.text("ideelle Querschnittswerte", links, yy);
+  if (app.browserLanguage == 'de') {
+    doc.text("ideelle Querschnittswerte", links, yy);
+  } else {
+    doc.text("Ideal cross section properties", links, yy);
+  }
   doc.setFontSize(fs)
   doc.setFont("freesans_normal");
 
@@ -451,7 +483,11 @@ export async function my_jspdf() {
 
   //-----------------
   yy = neueZeile(yy, fs, 2)
-  doc.text("Alle Spannungen in " + current_unit_stress, links, yy);
+  if (app.browserLanguage == 'de') {
+    doc.text("Alle Spannungen in " + current_unit_stress, links, yy);
+  } else {
+    doc.text("All stresses in " + current_unit_stress, links, yy);
+  }
   yy = neueZeile(yy, fs, 1)
 
 
@@ -459,7 +495,11 @@ export async function my_jspdf() {
     const nspalten = 4, nzeilen = nelem
 
     yy = testSeite(yy, fs1, 1, 4 + nzeilen)
-    doc.text("Schubspannungen aus primärer Torsion", links, yy);
+    if (app.browserLanguage == 'de') {
+      doc.text("Schubspannungen aus primärer Torsion", links, yy);
+    } else {
+      doc.text("Shear stresses from primary torsion", links, yy);
+    }
 
     let str: string, texWid: number
 
@@ -506,8 +546,11 @@ export async function my_jspdf() {
     const nspalten = 4, nzeilen = nelem
 
     yy = testSeite(yy, fs1, 1, 4 + nzeilen)
-
-    doc.text("Schubspannungen aus Querkraft und sekundärer Torsion", links, yy);
+    if (app.browserLanguage == 'de') {
+      doc.text("Schubspannungen aus Querkraft und sekundärer Torsion", links, yy);
+    } else {
+      doc.text("Shear stresses from shear force and secondary torsion", links, yy);
+    }
 
     let str: string, texWid: number
 
@@ -562,7 +605,11 @@ export async function my_jspdf() {
 
     yy = testSeite(yy, fs1, 1, 5 + nzeilen)
 
-    doc.text("Schubspannungen aus allen Anteilen", links, yy);
+    if (app.browserLanguage == 'de') {
+      doc.text("Schubspannungen aus allen Anteilen", links, yy);
+    } else {
+      doc.text("Shear stresses from shear force, primary and secondary torsional moment", links, yy);
+    }
 
     let str: string, texWid: number
     doc.setFontSize(fs)
@@ -590,10 +637,20 @@ export async function my_jspdf() {
     doc.setFont("freesans_normal");
     yy = neueZeile(yy, fs1, 1)
 
-    texWid = doc.getTextWidth("linke Seite")
-    doc.text("linke Seite", spalte[1] + (60 - texWid) / 2, yy)
-    texWid = doc.getTextWidth("rechte Seite")
-    doc.text("rechte Seite", spalte[4] + (60 - texWid) / 2, yy)
+    if (app.browserLanguage == 'de') {
+      texWid = doc.getTextWidth("linke Seite")
+      doc.text("linke Seite", spalte[1] + (60 - texWid) / 2, yy)
+    } else {
+      texWid = doc.getTextWidth("left side")
+      doc.text("left side", spalte[1] + (60 - texWid) / 2, yy)
+    }
+    if (app.browserLanguage == 'de') {
+      texWid = doc.getTextWidth("rechte Seite")
+      doc.text("rechte Seite", spalte[4] + (60 - texWid) / 2, yy)
+    } else {
+      texWid = doc.getTextWidth("right side")
+      doc.text("right side", spalte[4] + (60 - texWid) / 2, yy)
+    }
 
     yy = neueZeile(yy, fs1, 1)
 
@@ -621,7 +678,11 @@ export async function my_jspdf() {
     yy = testSeite(yy, fs1, 1, 4 + nzeilen)
 
 
-    doc.text("Normalspannungen aus Normalkraft, Biegemoment und Wölbbimoment", links, yy);
+    if (app.browserLanguage == 'de') {
+      doc.text("Normalspannungen aus Normalkraft, Biegemoment und Wölbbimoment", links, yy);
+    } else {
+      doc.text("Normal stresses from normal force, bending moment and warping bimoment", links, yy);
+    }
 
     let str: string, texWid: number
 
@@ -675,8 +736,11 @@ export async function my_jspdf() {
     const nspalten = 4, nzeilen = nelem
 
     yy = testSeite(yy, fs1, 1, 4 + nzeilen)
-    doc.text("von Mises Vergleichsspannungen", links, yy);
-
+    if (app.browserLanguage == 'de') {
+      doc.text("von Mises Vergleichsspannungen", links, yy);
+    } else {
+      doc.text("von Mises equivalent stresses", links, yy);
+    }
 
     let str: string, texWid: number
 
@@ -738,8 +802,11 @@ export async function my_jspdf() {
     } else {
       yy = neueZeile(yy, fs)
     }
+    if (app.browserLanguage == 'de') {
     doc.text('Querschnitt', links, yy)
-
+    } else {
+      doc.text('Cross section', links, yy)
+    }
 
     doc.addImage(imgData, "PNG", 0, yy, 200, 200); // * myScreen.clientHeight / myScreen.svgWidth);
 
@@ -747,12 +814,16 @@ export async function my_jspdf() {
 
     let filename: string = 'duennqs.pdf'
 
-    if (app.hasFSAccess) {    // && app.isMac
+    if (app.hasFSAccess && app.isMac) {
 
       filename = window.prompt(
         "Name der Datei mit Extension, z.B. duennqs.pdf\nDie Datei wird im Default Download Ordner gespeichert", 'duennqs.pdf'
       );
 
+    } else if (app.hasFSAccess) {
+      filename = window.prompt(
+        "Name der Datei mit Extension, z.B. duennqs.pdf\nDie Datei wird im Default Download Ordner gespeichert", 'duennqs.pdf'
+      );
     }
 
     try {
