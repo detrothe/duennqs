@@ -120,7 +120,8 @@
 		The node coordinates are entered in a ȳ-z̄ auxiliary coordinate system whose origin can be selected as desired.
 		The elements have a start and end node and can accurately represent quadratic shear stress curves. Therefore, no
 		refinement is required. The direction of the shear stresses is indicated by arrows in the quarter points of the
-		elements on the right and left sides. If you imagine looking from the element start to the element end, the right
+		elements on the right and left sides. If you imagine looking from the element start to the element end, the
+		right
 		side of the element is at the right hand.
 	</p>
 	<p>
@@ -150,7 +151,7 @@
 			</p>
 		<li>
 			<p>
-				The width of the elements is constant element by element
+				The width of the elements is constant within the element
 			</p>
 		<li>
 			<p>
@@ -227,11 +228,12 @@
 	<p>
 	<h2 class="western">Input of the data</h2>
 	</p>
-	<p>The decimal separator is the comma or the point. A thousands separator is not permitted.
-
+	<p>The decimal separator is the comma or the point. A thousands separator is not permitted.</p>
+	<p>
 		In order to speed up the node and element input, individual cell values or rows of the tables can be copied or
 		generated. A block can be selected by pressing the left mouse button. After releasing the mouse button a context
-		menu appears.
+		menu appears. </p>
+	<p>
 		For touch screens: When entering with the finger or pen, the selection mode must first be activated by clicking
 		the checkbox above a table. When crossing over with the finger or the pen, the selected cells are then
 		highlighted in color, as with the mouse. After lifting the finger/pen the context menu appears. No values can be
@@ -261,7 +263,7 @@
 		<li><b>close:</b> The dialog is ended without further explanations.</li>
 	</ul>
 	</p>
-	<p>For iOS, the selection is made in the context menu with a double click. </p>
+	<p>For iOS, the selection in the context menu is made with a double click. </p>
 
 	<p>Note: A Bluetooth mouse and/or keyboard can be connected to any tablet or smartphone.</p>
 
@@ -292,7 +294,8 @@
 		<li><b>display fyRd:</b> Graphical representation of the stress f<sub>y,Rd</sub> across the cross-sectional
 			area</li>
 		<li><b>Omega:</b> Warping ordinate &omega;</li>
-		<li><b>displacement u:</b> The displacement u (warping) of the cross section due to the shear stresses. </li>
+		<li><b>displacement u:</b> The displacement u (warping) of the cross section due to the shear stresses as
+			calculated by the FEM. Node 1 is fixed, so the solution contains a rigid body displacement. </li>
 		<li><b>Scaling:</b> Scaling of the stresses.</li>
 		<li><b>Show sides:</b> When displaying the shear stresses, the side surfaces can be hidden.
 		</li>
@@ -300,7 +303,7 @@
 		<li><b>Scale arrows:</b> Scaling of the direction arrows.</li>
 		<li><b>Sigma area:</b> Wire model representation of normal stresses over the surface of the elements. If this
 			option is selected, then the equivalent stresses are also calculated at the surface edges. Otherwise, the
-			equivalent stress from the normal stress in the center surface is used.
+			the normal stress in the center line is used to calculate the equivalent stress.
 		</li>
 		<li><b>show right/left:</b> Labeling of the element sides and representation of the element start node by
 			an arrow.</li>
@@ -359,7 +362,7 @@
 		'Install App' from the application menu (three-dot menu) at the top right. A dialog appears, which must be
 		confirmed. After that, the browser can be closed. There is now a new icon on the desktop called DuennQs.
 	</p>
-	<p>For installation on iOS, use the Safari browser. Here the command is called 'Go to Home Screen' with an add icon
+	<p>For installation on iOS, use the Safari browser. Here the command is called 'Add to Home Screen' with an '+' icon
 	</p>
 
 	<p>The installation on Microsoft Windows is similar to the installation on Android. In the Edge browser, the

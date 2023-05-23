@@ -18,6 +18,7 @@ import { TextGeometry } from './renderers/TextGeometry.js';
 
 import { berechnung_erfolgreich } from "./globals.js";
 import { current_unit_length, current_unit_stress, unit_length_factor, unit_stress_factor } from "./einstellungen"
+import { app } from './index.js';
 
 let show_webgl_label = false;
 let show_webgl_tau = false;
@@ -429,6 +430,16 @@ export function draw_elements() {
 
     let wert: string;
 
+    let Spannungen = 'Spannungen'
+    let woelbOrdinate = 'Wölbordinate'
+    let Verschiebung = 'Verschiebung'
+
+    if (app.browserLanguage != 'de') {
+        Spannungen = 'Stresses'
+        woelbOrdinate = 'Warping ordinate'
+        Verschiebung = 'Displacement'
+    }
+
     while (scene.children.length > 2) {  // Licht soll bleiben
         removeObject3D(scene.children[scene.children.length - 1])
     }
@@ -514,14 +525,13 @@ export function draw_elements() {
 
         controls.target.set(-dx, -dy, 0);
 
-
         const el_info = document.getElementById("unit_webgl")
         if (show_webgl_tau || show_webgl_sigma || show_webgl_sigmaV) {
-            el_info.innerHTML = "Spannungen in " + current_unit_stress
+            el_info.innerHTML = Spannungen + " in " + current_unit_stress
         } else if (show_webgl_woelb_M) {
-            el_info.innerHTML = "Wölbordinate ω in " + current_unit_length + '²'
+            el_info.innerHTML = woelbOrdinate + " ω in " + current_unit_length + '²'
         } else if (show_webgl_woelb_V) {
-            el_info.innerHTML = "Verschiebung u in " + current_unit_length
+            el_info.innerHTML = Verschiebung + " u in " + current_unit_length
         } else {
             el_info.innerHTML = ""
         }
