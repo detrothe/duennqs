@@ -4,7 +4,7 @@
 <head>
 	<meta charset="UTF-8" />
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5, minimal-ui" />
-	<title>Querschnittswerte und Spannungen dünnwandiger Querschnitte</title>
+	<title>Properties and stresses of thin-walled cross sections</title>
 	<meta name="author" content="Prof. Dr.-Ing. Detlef Rothe" />
 	<meta name="AppVersion" content="15.0000" />
 
@@ -19,8 +19,6 @@
 		p {
 			line-height: 150%;
 			text-align: left;
-			orphans: 2;
-			widows: 2;
 			margin-bottom: 0.6em;
 			direction: ltr;
 			background: transparent
@@ -35,8 +33,6 @@
 			line-height: 115%;
 			text-align: left;
 			page-break-inside: avoid;
-			orphans: 2;
-			widows: 2;
 			margin-top: 2em;
 			margin-bottom: 0;
 			direction: ltr;
@@ -55,8 +51,6 @@
 			line-height: 115%;
 			text-align: left;
 			page-break-inside: avoid;
-			orphans: 2;
-			widows: 2;
 			margin-top: 0.83em;
 			margin-bottom: 0;
 			direction: ltr;
@@ -295,7 +289,9 @@
 			area</li>
 		<li><b>Omega:</b> Warping ordinate &omega;</li>
 		<li><b>displacement u:</b> The displacement u (warping) of the cross section due to the shear stresses as
-			calculated by the FEM. Node 1 is fixed, so the solution contains a rigid body displacement. </li>
+			calculated by the FEM. Node 1 is fixed, so the solution contains a rigid body displacement.
+			This has no influence on the results, since only the derivatives of the displacement u are required for the
+			calculation of the stresses [1-3]. </li>
 		<li><b>Scaling:</b> Scaling of the stresses.</li>
 		<li><b>Show sides:</b> When displaying the shear stresses, the side surfaces can be hidden.
 		</li>

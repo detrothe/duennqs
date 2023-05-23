@@ -19,8 +19,6 @@
 		p {
 			line-height: 150%;
 			text-align: left;
-			orphans: 2;
-			widows: 2;
 			margin-bottom: 0.6em;
 			direction: ltr;
 			background: transparent
@@ -35,8 +33,6 @@
 			line-height: 115%;
 			text-align: left;
 			page-break-inside: avoid;
-			orphans: 2;
-			widows: 2;
 			margin-top: 2em;
 			margin-bottom: 0;
 			direction: ltr;
@@ -55,8 +51,6 @@
 			line-height: 115%;
 			text-align: left;
 			page-break-inside: avoid;
-			orphans: 2;
-			widows: 2;
 			margin-top: 0.83em;
 			margin-bottom: 0;
 			direction: ltr;
@@ -91,7 +85,6 @@
 		a[href^="#"]:before {
 			content: '➡ ';
 		}
-	    
 	</style>
 </head>
 
@@ -190,7 +183,8 @@
 	</h2>
 	<p>
 		<img src="Vorzeichen_Querschnitt.png" name="Vorzeichen"
-			style="max-width:100%; width:480px; height:auto; border:0px; margin: auto; display: block;" /> <!--width:480px; height:433px-->
+			style="max-width:100%; width:480px; height:auto; border:0px; margin: auto; display: block;" />
+		<!--width:480px; height:433px-->
 		Vorzeichen der Schnittgrößen<br>
 		<img src="vorzeichen.png" name="Vorzeichen-Richtung"
 			style="width:351px; height:353px; border:0px; margin: auto; display: block;" />
@@ -206,7 +200,8 @@
 	</p>
 	<p>
 		<img src="beispiel_querschnitt.png" name="Bild3"
-			style="max-width:100%; width:401px; height:auto; border:0px; margin: auto; display: block;" /> <!--width:401px; height:238px-->
+			style="max-width:100%; width:401px; height:auto; border:0px; margin: auto; display: block;" />
+		<!--width:401px; height:238px-->
 		<br />
 		<br />
 	</p>
@@ -290,7 +285,7 @@
 	</p>
 	<P>Die Darstellungsoptionen können beliebig kombiniert werden.</P>
 	<p>
-		<img src="controls.png" name="Controls" style="width:201px; height:369px; margin-left:3em" />
+		<img src="controls.png" name="Controls" style="width:230px; height:453px; margin-left:3em" />
 		Controls
 		<br />
 	</p>
@@ -306,7 +301,11 @@
 		</li>
 		<li><b>fyRd anzeigen:</b> Grafische Darstellung der Spannung f<sub>y,Rd</sub> über die Querschnittsfläche</li>
 		<li><b>Omega:</b> Wölbordinate &omega;</li>
-		<li><b>Verschiebung u:</b> Die Verschiebung u (Verwölbung) des Querschnitts infolge der Schubspannungen. </li>
+		<li><b>Verschiebung u:</b> Die Verschiebung u (Verwölbung) des Querschnitts infolge der Schubspannungen wie in
+			der FEM berechnet. Knoten 1 ist fest gelagert, so dass die Darstellung eine Starrkörperverschiebung enthält.
+			Auf die Ergebnisse hat dies keinen Einfluss, da nur die Ableitungen der Verschiebung u zur Berechnung der
+			Spannungen benötigt werden [1], [2].
+		</li>
 		<li><b>Skalierung:</b> Skalierung der Spannungen.</li>
 		<li><b>Seiten anzeigen:</b> Bei Darstellung der Schubspannungen können die Seitenflächen ausgeblendet werden.
 		</li>
@@ -389,11 +388,13 @@
 	<p>Die Installation unter Microsoft Windows ist ähnlich der Installation unter Android. Im Edge Browser steht
 		folgender Abschnitt im Anwendungsmenü <i> (Drei-Punkte-Menü)</i>
 		<img src="app-install-windows.png" name="Bild4"
-			style="max-width:100%; width:423px; height:auto; border:0px; margin: auto; display: block;" /> <!--width:423px; height:111px-->
+			style="max-width:100%; width:423px; height:auto; border:0px; margin: auto; display: block;" />
+		<!--width:423px; height:111px-->
 		<br>Bei neueren Chrome Versionen werden Sie unter Umständen direkt gefragt, ob eine Installation gewünscht wird,
 		siehe Symbol rechts in der Adressleiste :
 		<img src="chrome_install.png" name="chrome_install"
-			style="max-width:100%; width:436px; height:auto; border:0px; margin: auto; display: block;" />  <!--width:436px; height:155px-->
+			style="max-width:100%; width:436px; height:auto; border:0px; margin: auto; display: block;" />
+		<!--width:436px; height:155px-->
 	</p>
 	<p>Unter macOS ist der Microsoft Edge or Google Chrome Browser zur Installation zu verwenden.</p>
 	<p>Der Firefox Browser unterstützt die Installation zur Zeit noch nicht. <br>
