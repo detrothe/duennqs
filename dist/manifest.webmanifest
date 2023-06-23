@@ -1,5 +1,5 @@
 {
-  "background_color": "darkblue",
+  "background_color": "#00008a",
   "description": "Querschnittswerte und Spannungen dünnwandiger Querschnitte",
   "display": "fullscreen",
   "icons": [
@@ -11,5 +11,16 @@
   ],
   "name": "Querschnittswerte und Spannungen dünnwandiger Querschnitte",
   "short_name": "duennQs",
-  "start_url": "/?utm_source=homescreen"
+  "start_url": "/?utm_source=homescreen",
+  "theme_color": "#000000",
+  "lang": "de",
+  "orientation": "any",
+  "display_override": [
+    "fullscreen",
+    "window-controls-overlay"
+  ],
+  "categories": [
+    "education",
+    "productivity"
+  ]
 }

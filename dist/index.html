@@ -49,6 +49,15 @@
 </head>
 
 <body>
+
+  <script>
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.register(
+        './sw.js'
+      );
+    }
+  </script>
+
   <div class="grid-container">
 
     <div class="header">
@@ -549,7 +558,7 @@
     </div>
 
     <div id="footer" class="footer">
-      Querschnittswerte und Spannungen dünnwandiger Querschnitte, 23-Mai-2023,
+      Querschnittswerte und Spannungen dünnwandiger Querschnitte, 23-Juni-2023,
       <a href="https://statikverstehen.de">&#169; statikverstehen.de </a>
     </div>
   </div>
