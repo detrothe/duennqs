@@ -1,45 +1,56 @@
-const CACHE_NAME = 'duennqs-cache';
+// This is the service worker with the combined offline experience (Offline page + Offline copy of pages)
 
-importScripts(
-    'https://storage.googleapis.com/workbox-cdn/releases/6.5.4/workbox-sw.js'
+const CACHE = "pwabuilder-offline-page";
+
+importScripts('https://storage.googleapis.com/workbox-cdn/releases/5.1.2/workbox-sw.js');
+
+// TODO: replace the following with the correct offline fallback page i.e.: const offlineFallbackPage = "offline.html";
+const offlineFallbackPage = "ToDo-replace-this-name.html";
+
+self.addEventListener("message", (event) => {
+  if (event.data && event.data.type === "SKIP_WAITING") {
+    self.skipWaiting();
+  }
+});
+
+self.addEventListener('install', async (event) => {
+  event.waitUntil(
+    caches.open(CACHE)
+      .then((cache) => cache.add(offlineFallbackPage))
+  );
+});
+
+if (workbox.navigationPreload.isSupported()) {
+  workbox.navigationPreload.enable();
+}
+
+workbox.routing.registerRoute(
+  new RegExp('/*'),
+  new workbox.strategies.StaleWhileRevalidate({
+    cacheName: CACHE
+  })
 );
 
+self.addEventListener('fetch', (event) => {
+  if (event.request.mode === 'navigate') {
+    event.respondWith((async () => {
+      try {
+        const preloadResp = await event.preloadResponse;
 
+        if (preloadResp) {
+          return preloadResp;
+        }
 
-// Add whichever assets you want to precache here:
-const PRECACHE_ASSETS = [
-    '/fonts/',
-    '/icon/'
-]
+        const networkResp = await fetch(event.request);
+        return networkResp;
+      } catch (error) {
 
-// Listener for the install event - precaches our assets list on service worker install.
-self.addEventListener('install', event => {
-    event.waitUntil((async () => {
-        const cache = await caches.open(CACHE_NAME);
-        cache.addAll(PRECACHE_ASSETS);
+        const cache = await caches.open(CACHE);
+        const cachedResp = await cache.match(offlineFallbackPage);
+        return cachedResp;
+      }
     })());
-});
-
-self.addEventListener('activate', event => {
-  event.waitUntil(clients.claim());
-});
-
-self.addEventListener('fetch', event => {
-  event.respondWith(async () => {
-      const cache = await caches.open(CACHE_NAME);
-
-      // match the request to our cache
-      const cachedResponse = await cache.match(event.request);
-
-      // check if we got a valid response
-      if (cachedResponse !== undefined) {
-          // Cache hit, return the resource
-          return cachedResponse;
-      } else {
-        // Otherwise, go to the network
-          return fetch(event.request)
-      };
-  });
+  }
 });
 
 workbox.precaching.precacheAndRoute(self.__WB_MANIFEST || []);
