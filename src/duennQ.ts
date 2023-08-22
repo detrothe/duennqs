@@ -17,6 +17,7 @@ import { current_unit_length, current_unit_stress, unit_length_factor, unit_stre
 
 export let ymin = -50.0, zmin = -50.0, ymax = 50.0, zmax = 50.0, slmax = 0.0;
 export let u0 = 0.0
+export let kappa_1 = 0.0, kappa_2 = 0.0   // Schubkorrekturfaktoren
 
 
 //------------------------------------------------------------------------------------------------
@@ -993,7 +994,14 @@ export function duennQ() {
 
     // Gleichungssystem lösen
 
-    if (gauss(neq, stiff2, R) != 0) {
+    for (i = 0; i < neq; i++) {
+        for (j = 0; j < neq; j++) {
+            stiff[i][j] = stiff2[i][j];
+            //console.log("GlSystem", stiff[i][j]);
+        }
+    }
+
+    if (gauss(neq, stiff, R) != 0) {
         window.alert("Gleichungssystem 2 singulär");
         return 1
     }
@@ -1006,8 +1014,12 @@ export function duennQ() {
 
     u0 = 0.0   // Integration der Verschiebungen u über Querschnittsfläche, wird bei Grafik von den berechneten Verschiebungen u abgezogen
 
+    kappa_1 = 0.0
+    kappa_2 = 0.0
+
     for (k = 0; k < nelem; k++) {
-        for (j = 0; j < 2; j++) {                           // Stabverformungen
+
+        for (j = 0; j < 2; j++) {                           // Elementverformungen
             ieq = truss[k].lm[j]
             if (ieq === -1) {
                 truss[k].u[j] = 0
@@ -1022,9 +1034,7 @@ export function duennQ() {
         tau_xs1 = tau_xs1 + truss[k].ni * truss[k].sl * (8 * truss[k].F[0] + 4 * truss[k].F[1]) / 24
         tau_xsm = tau_xsm + truss[k].ni * truss[k].sl * (-truss[k].F[0] + truss[k].F[1]) / 24
         tau_xs2 = tau_xs2 + truss[k].ni * truss[k].sl * (-4 * truss[k].F[0] - 8 * truss[k].F[1]) / 24
-        //Sheets("Eingabe").Cells(20 + k, 8) = tau_xs1
-        //Sheets("Eingabe").Cells(20 + k, 9) = tau_xsm
-        //Sheets("Eingabe").Cells(20 + k, 10) = tau_xs2
+
         truss[k].tau_s[0] = tau_xs1
         truss[k].tau_s[1] = tau_xsm
         truss[k].tau_s[2] = tau_xs2
@@ -1039,10 +1049,18 @@ export function duennQ() {
         console.log("U", k, truss[k].u[0], truss[k].u[2], truss[k].u[3], truss[k].u[1])
 
         u0 = u0 + truss[k].ni * truss[k].Flaeche * (truss[k].u[0] + 3.0 * truss[k].u[2] + 3.0 * truss[k].u[3] + truss[k].u[1]) / 8.0
+
+        kappa_1 += truss[k].dicke / truss[k].sl * (truss[k].u[0] - truss[k].u[1]) ** 2 + truss[k].dicke * truss[k].sl / 45.0 * (truss[k].sl * V1 / truss[k].GModul / I22) ** 2 * (truss[k].y1 ** 2 + 7.0 / 4.0 * truss[k].y1 * truss[k].y2 + truss[k].y2 ** 2)
+        kappa_2 += truss[k].dicke / truss[k].sl * (truss[k].u[0] - truss[k].u[1]) ** 2 + truss[k].dicke * truss[k].sl / 45.0 * (truss[k].sl * V2 / truss[k].GModul / I11) ** 2 * (truss[k].z1 ** 2 + 7.0 / 4.0 * truss[k].z1 * truss[k].z2 + truss[k].z2 ** 2)
     }
 
     u0 = u0 / Gesamtflaeche
     console.log("###################  U 0 = ", u0)
+
+    kappa_1 = V1 * V1 / Gesamtflaeche / kappa_1 / GModul / GModul
+    console.log("###################  kappa_1 = ", kappa_1, V1, I11)
+    kappa_2 = V2 * V2 / Gesamtflaeche / kappa_2 / GModul / GModul
+    console.log("###################  kappa_2 = ", kappa_2, V2, I22)
 
     //---------------------------------
     // Normalspannungen aus N + My + Mz
@@ -1548,6 +1566,125 @@ export function duennQ() {
 
         }
     }
+
+    // Berechnung der Schubkorrekturfaktoren
+
+    let disp = new Array(4).fill(0.0)
+    kappa_1 = 0.0
+    kappa_2 = 0.0
+
+    for (let loop = 0; loop < 2; loop++) {
+        if (loop === 0) {  // 1-Richtung
+            V1 = 1.0
+            V2 = 0.0
+            Mt2 = 0.0
+        } else {   // 2-Richtung
+            V1 = 0.0
+            V2 = 1.0
+            Mt2 = 0.0
+        }
+
+        //V1 = co0 * Vy + si0 * Vz                     // Querkräfte im Hauptachsensystem
+        //V2 = -si0 * Vy + co0 * Vz
+
+        for (i = 0; i < nelem; i++) {
+            if (I_omega > 0.0000000000001) {
+                truss[i].F[0] = V2 / I11 * truss[i].z1 + V1 / I22 * truss[i].y1 + Mt2 / I_omega * truss[i].omega[0]
+                truss[i].F[1] = V2 / I11 * truss[i].z2 + V1 / I22 * truss[i].y2 + Mt2 / I_omega * truss[i].omega[1]
+            } else {
+                // wölbfreier Querschnitt
+                truss[i].F[0] = V2 / I11 * truss[i].z1 + V1 / I22 * truss[i].y1
+                truss[i].F[1] = V2 / I11 * truss[i].z2 + V1 / I22 * truss[i].y2
+            }
+
+            truss[i].R2[0] = truss[i].ni * truss[i].Flaeche * (truss[i].F[0] + 0.5 * truss[i].F[1]) / 3.0
+            truss[i].R2[1] = truss[i].ni * truss[i].Flaeche * (0.5 * truss[i].F[0] + truss[i].F[1]) / 3.0
+        }
+
+        R.fill(0.0)        // Aufstellen der rechten Seite
+
+        for (k = 0; k < nelem; k++) {
+            for (i = 0; i < 2; i++) {
+                lmi = truss[k].lm[i]
+                if (lmi >= 0) {
+                    R[lmi] = R[lmi] + truss[k].R2[i]
+                }
+            }
+        }
+
+        // Gleichungssystem lösen
+
+        for (i = 0; i < neq; i++) {
+            for (j = 0; j < neq; j++) {
+                stiff[i][j] = stiff2[i][j];
+            }
+        }
+
+        if (gauss(neq, stiff, R) != 0) {
+            window.alert("Gleichungssystem 3 singulär");
+            return 1
+        }
+
+        for (i = 0; i < neq; i++) u[i] = R[i];
+
+
+        for (k = 0; k < nelem; k++) {
+
+            for (j = 0; j < 2; j++) {                           // Elementverformungen
+                ieq = truss[k].lm[j]
+                if (ieq === -1) {
+                    disp[j] = 0.0
+                } else {
+                    disp[j] = u[ieq]
+                }
+            }
+
+            // Verformungen in den Mittelknoten
+
+            disp[2] = (2 * disp[0] + disp[1]) / 3.0 + (5 * truss[k].F[0] + 4 * truss[k].F[1]) * truss[k].sl * truss[k].sl / truss[k].GModul / 81;
+            disp[3] = (disp[0] + 2 * disp[1]) / 3.0 + (4 * truss[k].F[0] + 5 * truss[k].F[1]) * truss[k].sl * truss[k].sl / truss[k].GModul / 81;
+
+            //console.log("U", k, disp[0], disp[2], disp[3], disp[1])
+
+            if (loop === 0) {
+                kappa_1 += truss[k].dicke / truss[k].sl * (disp[0] - disp[1]) ** 2 + truss[k].dicke * truss[k].sl / 45.0 * (truss[k].sl * V1 / truss[k].GModul / I22) ** 2 * (truss[k].y1 ** 2 + 7.0 / 4.0 * truss[k].y1 * truss[k].y2 + truss[k].y2 ** 2)
+            } else {
+                kappa_2 += truss[k].dicke / truss[k].sl * (disp[0] - disp[1]) ** 2 + truss[k].dicke * truss[k].sl / 45.0 * (truss[k].sl * V2 / truss[k].GModul / I11) ** 2 * (truss[k].z1 ** 2 + 7.0 / 4.0 * truss[k].z1 * truss[k].z2 + truss[k].z2 ** 2)
+            }
+        }
+        if (loop === 0) {
+            kappa_1 = V1 * V1 / Gesamtflaeche / kappa_1 / GModul / GModul
+        } else {
+            kappa_2 = V2 * V2 / Gesamtflaeche / kappa_2 / GModul / GModul
+        }
+
+    }
+
+    console.log("Loop 0: V1 = 1, V2 = 0");
+    console.log("###################  kappa_1 = ", kappa_1)
+
+    console.log("Loop 1: V1 = 0, V2 = 1");
+    console.log("###################  kappa_2 = ", kappa_2)
+
+    {
+        const myTableDiv = document.getElementById("schubkorrektur");  //in div
+
+
+        const tag = document.createElement("p"); // <p></p>
+        tag.setAttribute("id", "id_schubkorrektur");
+        const text = document.createTextNode("xxx");
+        tag.appendChild(text);
+        if (app.browserLanguage == 'de') {
+            tag.innerHTML = "<b>Schubkorrekturfaktoren</b><br> für Querkraft V<sub>1</sub> in Hauptrichtung 1: &kappa;<sub>&tau;</sub> = " + myFormat(kappa_1, 3, 3) + '<br>'
+            tag.innerHTML += "für Querkraft V<sub>2</sub> in Hauptrichtung 2: &kappa;<sub>&tau;</sub> = " + myFormat(kappa_2, 3, 3) + '<br>'
+        } else {
+            tag.innerHTML = "<b>Shear correction factors</b><br> for shear force V<sub>1</sub> in principle direction 1: &kappa;<sub>&tau;</sub> = " + myFormat(kappa_1, 3, 3) + '<br>'
+            tag.innerHTML += "for shear force V<sub>2</sub> in principle direction 2: &kappa;<sub>&tau;</sub> = " + myFormat(kappa_2, 3, 3) + '<br>'
+        }
+        myTableDiv.appendChild(tag);
+
+    }
+
     // für die Grafik 
 
     ymin = 1.e30
