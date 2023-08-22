@@ -16,6 +16,8 @@ import { current_unit_length, current_unit_stress, unit_length_factor, unit_stre
 
 
 export let ymin = -50.0, zmin = -50.0, ymax = 50.0, zmax = 50.0, slmax = 0.0;
+export let u0 = 0.0
+
 
 //------------------------------------------------------------------------------------------------
 
@@ -1002,6 +1004,8 @@ export function duennQ() {
     //Sheets("GlSystem").Cells(i + neq + 1, neq + 2) = u(i)
     //Next i
 
+    u0 = 0.0   // Integration der Verschiebungen u über Querschnittsfläche, wird bei Grafik von den berechneten Verschiebungen u abgezogen
+
     for (k = 0; k < nelem; k++) {
         for (j = 0; j < 2; j++) {                           // Stabverformungen
             ieq = truss[k].lm[j]
@@ -1033,7 +1037,12 @@ export function duennQ() {
             + (4 * truss[k].F[0] + 5 * truss[k].F[1]) * truss[k].sl * truss[k].sl / truss[k].GModul / 81;
 
         console.log("U", k, truss[k].u[0], truss[k].u[2], truss[k].u[3], truss[k].u[1])
+
+        u0 = u0 + truss[k].ni * truss[k].Flaeche * (truss[k].u[0] + 3.0 * truss[k].u[2] + 3.0 * truss[k].u[3] + truss[k].u[1]) / 8.0
     }
+
+    u0 = u0 / Gesamtflaeche
+    console.log("###################  U 0 = ", u0)
 
     //---------------------------------
     // Normalspannungen aus N + My + Mz

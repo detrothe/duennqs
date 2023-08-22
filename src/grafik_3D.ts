@@ -6,7 +6,7 @@ import { myPanel, get_scale_factor, get_scale_factor_arrows } from "./mygui.js"
 
 import { OrbitControls } from './OrbitControls.js';
 
-import { node, truss, Gesamt_ys, Gesamt_zs, yM, zM, phi0, bezugswerte } from "./duennQ"
+import { node, truss, Gesamt_ys, Gesamt_zs, yM, zM, phi0, bezugswerte, u0 } from "./duennQ"
 import { nnodes, nelem } from "./duennQ_tabelle.js"
 import { ymin, ymax, zmin, zmax, slmax, Mxp } from "./duennQ";
 import { myScreen } from "./first.js";
@@ -771,6 +771,7 @@ export function draw_elements() {
                     N[3] = -(27 * x_3 - 36 * sl * x_2 + 9 * sl2 * x) / (2 * sl3)
 
                     u = N[0] * truss[i].u[0] + N[1] * truss[i].u[1] + N[2] * truss[i].u[2] + N[3] * truss[i].u[3];
+                    u=u-u0;
 
                     x0 = x * (x2 - x1) / sl + x1
                     y0 = x * (y2 - y1) / sl + y1
