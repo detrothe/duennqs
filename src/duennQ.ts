@@ -1012,14 +1012,14 @@ export function duennQ() {
     //Sheets("GlSystem").Cells(i + neq + 1, neq + 2) = u(i)
     //Next i
 
-    u0 = 0.0   // Integration der Verschiebungen u über Querschnittsfläche, wird bei Grafik von den berechneten Verschiebungen u abgezogen
+    u0 = 0.0   // Integration der Verschiebungen u über Querschnittsfläche, u0 wird bei Grafik von den berechneten Verschiebungen u abgezogen
 
     kappa_1 = 0.0
     kappa_2 = 0.0
 
     for (k = 0; k < nelem; k++) {
 
-        for (j = 0; j < 2; j++) {                           // Elementverformungen
+        for (j = 0; j < 2; j++) {                           // Elementverformungen am Anfang und Ende
             ieq = truss[k].lm[j]
             if (ieq === -1) {
                 truss[k].u[j] = 0
