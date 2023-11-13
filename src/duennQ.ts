@@ -1186,6 +1186,9 @@ export function duennQ() {
     elem = document.getElementById('id_table_vergleichsspannung');
     if (elem !== null) elem.parentNode.removeChild(elem);
 
+    elem = document.getElementById('id_schubkorrektur');
+    if (elem !== null) elem.parentNode.removeChild(elem);
+
     // Spannungen aus primärer Torsion
     {
         const myTableDiv = document.getElementById("spannung_mxp");  //in div
