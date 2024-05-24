@@ -3,7 +3,10 @@
     "module": "es6",
     "target": "es6",
     "moduleResolution": "node",
-    "sourceMap": true
+    "forceConsistentCasingInFileNames": true,
+    "removeComments": true,
+    "sourceMap": false,
+    "strict": true,
   },
   "exclude": [
     "node_modules"
