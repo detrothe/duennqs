@@ -34,11 +34,11 @@ export function double2String(zahl: number, stellen: number = 12): string {
 function setMaterialEqual(ev) {
     //------------------------------------------------------------------------------------------
 
-    const input = document.getElementById('material_equal') as HTMLInputElement | null;
+    const input = document.getElementById('material_equal') as HTMLInputElement;
     console.log("in setMaterialEqual", input.checked);
 
 
-    const tabelle = document.getElementById("elemTable") as HTMLTableElement | null;
+    const tabelle = document.getElementById("elemTable") as HTMLTableElement;
 
     //let nSpalten = tabelle.rows[0].cells.length;
 
@@ -436,8 +436,8 @@ export function duennQ() {
     //let nelem: number = 2
 
     berechnungErfolgreich(false);
-    document.getElementById("info_berechnung").innerText = "Fehler in Eingabe"
-    document.getElementById("rechnen").style.color = "#dd0000"
+    document.getElementById("info_berechnung")!.innerText = "Fehler in Eingabe"
+    document.getElementById("rechnen")!.style.color = "#dd0000"
 
     set_myScreen();
 
@@ -450,25 +450,25 @@ export function duennQ() {
         }
     */
     // Schnittgrößen einlesen
-    let input = document.getElementById('Vy') as HTMLInputElement | null;
+    let input = document.getElementById('Vy') as HTMLInputElement;
     schnittgroesse.Vy = Vy = Number(testeZahl(input.value));
-    input = document.getElementById('Vz') as HTMLInputElement | null;
+    input = document.getElementById('Vz') as HTMLInputElement;
     schnittgroesse.Vz = Vz = Number(testeZahl(input.value));
-    input = document.getElementById('Nx') as HTMLInputElement | null;
+    input = document.getElementById('Nx') as HTMLInputElement;
     schnittgroesse.N = normalkraft = Number(testeZahl(input.value));
-    input = document.getElementById('Mxp') as HTMLInputElement | null;
+    input = document.getElementById('Mxp') as HTMLInputElement;
     schnittgroesse.Mxp = Mxp = Mt1 = Number(testeZahl(input.value)) * 100.0;  // in kNcm
-    input = document.getElementById('Mxs') as HTMLInputElement | null;
+    input = document.getElementById('Mxs') as HTMLInputElement;
     schnittgroesse.Mxs = Mt2 = Number(testeZahl(input.value)) * 100.0;
-    input = document.getElementById('Momega') as HTMLInputElement | null;
+    input = document.getElementById('Momega') as HTMLInputElement;
     schnittgroesse.M_omega = M_omega = Number(testeZahl(input.value)) * 10000.0;  // in kNcm²
-    input = document.getElementById('My') as HTMLInputElement | null;
+    input = document.getElementById('My') as HTMLInputElement;
     schnittgroesse.My = moment_y = Number(testeZahl(input.value)) * 100.0;
-    input = document.getElementById('Mz') as HTMLInputElement | null;
+    input = document.getElementById('Mz') as HTMLInputElement;
     schnittgroesse.Mz = moment_z = Number(testeZahl(input.value)) * 100.0;
 
     //console.log("Mxs", Mt2)
-    input = document.getElementById('fyRd') as HTMLInputElement | null;
+    input = document.getElementById('fyRd') as HTMLInputElement;
     bezugswerte.fyrd = fyRd = Number(testeZahl(input.value) / unit_stress_factor);
     console.log("fyRd", fyRd)
 
@@ -483,7 +483,7 @@ export function duennQ() {
         truss.push(new TElement())
     }
 
-    const material_equal = document.getElementById('material_equal') as HTMLInputElement | null;
+    const material_equal = document.getElementById('material_equal') as HTMLInputElement;
     //console.log("in setMaterialEqual", material_equal.checked);
 
     /*
@@ -491,13 +491,13 @@ export function duennQ() {
             EModul = 21000.0;
             mue = 0.3;
         } else { */
-    input = document.getElementById('EMod_ref') as HTMLInputElement | null;
+    input = document.getElementById('EMod_ref') as HTMLInputElement;
     bezugswerte.emodul = EModul = Number(testeZahl(input.value) / unit_stress_factor);
     if (EModul < 1e-12) {
         alert("Referenz-Emodul muss größer 0 sein")
         return;
     }
-    input = document.getElementById('mue_ref') as HTMLInputElement | null;
+    input = document.getElementById('mue_ref') as HTMLInputElement;
     bezugswerte.mue = mue = Number(testeZahl(input.value));
     if (mue < 0) {
         alert("Referenz-Querdehnung muss größer oder gleich 0 sein")
