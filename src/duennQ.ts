@@ -969,12 +969,20 @@ export function duennQ() {
             //truss[i].F34[1] = V2 / I11 * truss[i].z4 + V1 / I22 * truss[i].y4
         }
 
-        truss[i].R2[0] = truss[i].ni * truss[i].Flaeche * (truss[i].F[0] + 0.5 * truss[i].F[1]) / 3.0
+        truss[i].R2[0] = truss[i].ni * truss[i].Flaeche * (truss[i].F[0] + 0.5 * truss[i].F[1]) / 3.0          // .ni ist korrekt 26.11.2025
         truss[i].R2[1] = truss[i].ni * truss[i].Flaeche * (0.5 * truss[i].F[0] + truss[i].F[1]) / 3.0
 
         // entspricht F1 und F2 nach Krause für 4 Knotenelement
         truss[i].F34[0] = truss[i].ni * truss[i].Flaeche * (13 * truss[i].F[0] + 2 * truss[i].F[1]) / 120.0
         truss[i].F34[1] = truss[i].ni * truss[i].Flaeche * (2 * truss[i].F[0] + 13 * truss[i].F[1]) / 120.0
+
+        
+        // truss[i].R2[0] =  truss[i].Flaeche * (truss[i].F[0] + 0.5 * truss[i].F[1]) / 3.0
+        // truss[i].R2[1] =  truss[i].Flaeche * (0.5 * truss[i].F[0] + truss[i].F[1]) / 3.0
+
+        // // entspricht F1 und F2 nach Krause für 4 Knotenelement
+        // truss[i].F34[0] = truss[i].Flaeche * (13 * truss[i].F[0] + 2 * truss[i].F[1]) / 120.0
+        // truss[i].F34[1] = truss[i].Flaeche * (2 * truss[i].F[0] + 13 * truss[i].F[1]) / 120.0
     }
 
     for (k = 0; k < neq; k++) R[k] = 0.0        // Aufstellen der rechten Seite
