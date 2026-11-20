@@ -1,4 +1,5 @@
 import { msg } from '@lit/localize';
+import { dateiSpeichern, vorschlag } from './dateien';
 import { byId } from './state';
 import { jsPDF, jsPDFAPI } from "jspdf";
 import { Canvg } from "canvg";
@@ -683,27 +684,9 @@ export async function my_jspdf() {
 
     letzteSeite();
 
-    let filename: string = 'duennqs.pdf'
-
-    if (app.hasFSAccess && app.isMac) {
-
-      filename = window.prompt(
-        msg('Name der Datei (wird im Download-Ordner gespeichert):'), 'duennqs.pdf'
-      ) ?? filename;
-
-    } else if (app.hasFSAccess) {
-      filename = window.prompt(
-        msg('Name der Datei (wird im Download-Ordner gespeichert):'), 'duennqs.pdf'
-      ) ?? filename;
-    }
-
-    try {
-      doc.save(filename);
-    } catch (error) {
-      alert((error as Error).message);
-    }
-
-    byId("id_pdf_info").innerText = msg("pdf-Datei gespeichert (Download-Ordner)");
+    const gespeichert = await dateiSpeichern(() => doc.output('blob'), vorschlag('.pdf'),
+      msg('pdf-Datei'), 'application/pdf', '.pdf');
+    byId("id_pdf_info").innerText = gespeichert ? msg('pdf-Datei gespeichert') : '';
 
   }
 }

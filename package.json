@@ -17,7 +17,6 @@
     "@shoelace-style/shoelace": "^2.20.1",
     "canvg": "^4.0.3",
     "detectos.js": "^2.0.1",
-    "file-saver": "^2.0.5",
     "html-to-pdfmake": "^2.4.16",
     "html2canvas": "^1.4.1",
     "jspdf": "^4.2.1",
@@ -28,7 +27,6 @@
   },
   "devDependencies": {
     "@lit/localize-tools": "^0.8.2",
-    "@types/file-saver": "^2.0.7",
     "@types/three": "^0.187.0",
     "typescript": "^7.0.2",
     "vite": "^8.3.8",

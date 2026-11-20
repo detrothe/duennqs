@@ -169,6 +169,7 @@ export class DrHaupt extends LitElement {
 
         <!------------------------------------------------------------------------------------- Eingabe -->
         <sl-tab-panel name="eingabe">
+          <p class="dateiname">${msg('aktueller Dateiname:')} <span id="id_dateiname"></span></p>
           <div class="file_toolbar" id="id_file_toolbar">
             <button type="button" id="neueEingabe" class="btn_file" title="${msg('neue Eingabe beginnen')}" aria-label="${msg('neue Eingabe beginnen')}">${ICON_NEU}</button>
             <button type="button" id="readFile" class="btn_file" title="${msg('Eingabe einlesen')}" aria-label="${msg('Eingabe einlesen')}">${ICON_EINLESEN}</button>

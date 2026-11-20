@@ -10,10 +10,10 @@ import { app, byId, Detect } from './state';
 import { duennQ } from './duennQ';
 import { initTabellen, setzeBeispiel, leereEingabe, spaltenAktualisieren } from './eingabe';
 import { initEinstellungen } from './einstellungen';
-import { initDateien } from './dateien';
+import { initDateien, verwerfenBestaetigt, setzeDateiname, gespeichertenStandInitialisieren } from './dateien';
 import { zeichneQuerschnitt } from './grafik';
 import { my_jspdf } from './mypdf';
-import { alertdialog, confirmdialog } from './components/confirm_dialog';
+import { alertdialog } from './components/confirm_dialog';
 import { setLocale, startSprache } from './localization';
 import { initAutosave } from './autosave';
 
@@ -36,8 +36,10 @@ function geraeteInfo(): void {
 }
 
 async function neueEingabe(): Promise<void> {
-    if (!await confirmdialog(msg('ja'), msg('nein'), msg('Die aktuelle Eingabe verwerfen und neu beginnen?'))) return;
+    // wie d2beam-gui: Rückfrage nur, wenn Änderungen noch nicht in einer Datei gespeichert sind
+    if (!await verwerfenBestaetigt(true)) return;
     leereEingabe();
+    setzeDateiname('');
 }
 
 let dreiDGeladen = false;   // three.js erst laden, wenn der Tab 3D geöffnet wurde
@@ -103,6 +105,7 @@ async function start(): Promise<void> {
     initAutosave(() => {
         if (dreiDGeladen && app.gerechnet) void import('./grafik3d').then(m => m.neuZeichnen());
     });
+    gespeichertenStandInitialisieren();
 }
 
 void start();

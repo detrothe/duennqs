@@ -618,14 +618,6 @@
   <source>nein, Speichern als Download</source>
   <target>no, saving as download</target>
 </trans-unit>
-<trans-unit id="se56b58baa0574673">
-  <source>nein</source>
-  <target>no</target>
-</trans-unit>
-<trans-unit id="sf6ad6dca0b753c17">
-  <source>Die aktuelle Eingabe verwerfen und neu beginnen?</source>
-  <target>Discard the current input and start again?</target>
-</trans-unit>
 <trans-unit id="s67d78db44791b971">
   <source>Es liegt keine fehlerfreie Berechnung vor.</source>
   <target>There is no error-free calculation.</target>
@@ -661,10 +653,6 @@
 <trans-unit id="sfaadd489dfa358bf">
   <source>Querschnitt</source>
   <target>Cross-section</target>
-</trans-unit>
-<trans-unit id="s846e1fc610837baa">
-  <source>pdf-Datei gespeichert (Download-Ordner)</source>
-  <target>pdf file saved (download folder)</target>
 </trans-unit>
 <trans-unit id="s255fc944b18ba548">
   <source>Wert der ersten Zelle kopieren</source>
@@ -711,6 +699,66 @@
 <trans-unit id="s7d573dbd570ddbbb">
   <source>Die zuletzt gespeicherte Eingabe konnte nicht gelesen werden. Es wird mit dem Beispiel gestartet.</source>
   <target>The last saved input could not be read. Starting with the example.</target>
+</trans-unit>
+<trans-unit id="s3b2332f82896832c">
+  <source>aktueller Dateiname:</source>
+  <target>current file name:</target>
+</trans-unit>
+<trans-unit id="s8447d363e2d35512">
+  <source>Trotzdem neu beginnen</source>
+  <target>Start anyway</target>
+</trans-unit>
+<trans-unit id="s5eac1304516362bf">
+  <source>Trotzdem öffnen</source>
+  <target>Open anyway</target>
+</trans-unit>
+<trans-unit id="s8f411426731b6d29">
+  <source>Abbrechen</source>
+  <target>Cancel</target>
+</trans-unit>
+<trans-unit id="s8f7e1d20e64bb022">
+  <source>Die aktuelle Eingabe hat Änderungen, die noch nicht in einer Datei gespeichert sind. Sie gehen bei einer neuen Eingabe verloren.</source>
+  <target>The current input has changes that have not been saved to a file yet. They will be lost with a new input.</target>
+</trans-unit>
+<trans-unit id="scad3deae7a47353c">
+  <source>Die aktuelle Eingabe hat Änderungen, die noch nicht in einer Datei gespeichert sind. Sie gehen beim Öffnen einer anderen Datei verloren.</source>
+  <target>The current input has changes that have not been saved to a file yet. They will be lost when opening another file.</target>
+</trans-unit>
+<trans-unit id="s63c590d099d72b1b">
+  <source>Die Datei konnte nicht gelesen werden.</source>
+  <target>The file could not be read.</target>
+</trans-unit>
+<trans-unit id="s1962daed2c91b5f7">
+  <source>Datei hier ablegen, um sie zu öffnen</source>
+  <target>Drop file here to open it</target>
+</trans-unit>
+<trans-unit id="s9bde3948b3ba38f2">
+  <source>Bitte nur eine Datei ablegen.</source>
+  <target>Please drop only one file.</target>
+</trans-unit>
+<trans-unit id="s6c60e4153d08b777">
+  <source>Ein Ordner kann nicht geöffnet werden. Bitte eine Datei ablegen.</source>
+  <target>A folder cannot be opened. Please drop a file.</target>
+</trans-unit>
+<trans-unit id="s4e05f3df9f35d3ad">
+  <source>Die Datei war schon vorhanden. Android hat deshalb eine neue Datei angelegt:</source>
+  <target>The file already existed. Android has therefore created a new file:</target>
+</trans-unit>
+<trans-unit id="sff2eaf49ed34b97c">
+  <source>Zum Überschreiben im Speichern-Dialog nicht auf „Speichern“ tippen, sondern die vorhandene Datei in der Liste antippen und das Ersetzen bestätigen.</source>
+  <target>To overwrite, do not tap “Save” in the save dialog, but tap the existing file in the list and confirm replacing it.</target>
+</trans-unit>
+<trans-unit id="s162473f4482a310e">
+  <source>SVG-Grafik</source>
+  <target>SVG graphic</target>
+</trans-unit>
+<trans-unit id="sc95889c39c84af4f">
+  <source>pdf-Datei</source>
+  <target>pdf file</target>
+</trans-unit>
+<trans-unit id="s0265436a59d8a588">
+  <source>pdf-Datei gespeichert</source>
+  <target>pdf file saved</target>
 </trans-unit>
 </body>
 </file>

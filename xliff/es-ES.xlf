@@ -618,14 +618,6 @@
   <source>nein, Speichern als Download</source>
   <target>no, se guarda como descarga</target>
 </trans-unit>
-<trans-unit id="se56b58baa0574673">
-  <source>nein</source>
-  <target>no</target>
-</trans-unit>
-<trans-unit id="sf6ad6dca0b753c17">
-  <source>Die aktuelle Eingabe verwerfen und neu beginnen?</source>
-  <target>¿Descartar la entrada actual y empezar de nuevo?</target>
-</trans-unit>
 <trans-unit id="s67d78db44791b971">
   <source>Es liegt keine fehlerfreie Berechnung vor.</source>
   <target>No hay ningún cálculo sin errores.</target>
@@ -661,10 +653,6 @@
 <trans-unit id="sfaadd489dfa358bf">
   <source>Querschnitt</source>
   <target>sección transversal</target>
-</trans-unit>
-<trans-unit id="s846e1fc610837baa">
-  <source>pdf-Datei gespeichert (Download-Ordner)</source>
-  <target>archivo pdf guardado (carpeta de descargas)</target>
 </trans-unit>
 <trans-unit id="s255fc944b18ba548">
   <source>Wert der ersten Zelle kopieren</source>
@@ -711,6 +699,66 @@
 <trans-unit id="s7d573dbd570ddbbb">
   <source>Die zuletzt gespeicherte Eingabe konnte nicht gelesen werden. Es wird mit dem Beispiel gestartet.</source>
   <target>No se pudo leer la última entrada guardada. Se inicia con el ejemplo.</target>
+</trans-unit>
+<trans-unit id="s3b2332f82896832c">
+  <source>aktueller Dateiname:</source>
+  <target>nombre de archivo actual:</target>
+</trans-unit>
+<trans-unit id="s8447d363e2d35512">
+  <source>Trotzdem neu beginnen</source>
+  <target>Empezar de todos modos</target>
+</trans-unit>
+<trans-unit id="s5eac1304516362bf">
+  <source>Trotzdem öffnen</source>
+  <target>Abrir de todos modos</target>
+</trans-unit>
+<trans-unit id="s8f411426731b6d29">
+  <source>Abbrechen</source>
+  <target>Cancelar</target>
+</trans-unit>
+<trans-unit id="s8f7e1d20e64bb022">
+  <source>Die aktuelle Eingabe hat Änderungen, die noch nicht in einer Datei gespeichert sind. Sie gehen bei einer neuen Eingabe verloren.</source>
+  <target>La entrada actual tiene cambios que aún no se han guardado en un archivo. Se perderán con una nueva entrada.</target>
+</trans-unit>
+<trans-unit id="scad3deae7a47353c">
+  <source>Die aktuelle Eingabe hat Änderungen, die noch nicht in einer Datei gespeichert sind. Sie gehen beim Öffnen einer anderen Datei verloren.</source>
+  <target>La entrada actual tiene cambios que aún no se han guardado en un archivo. Se perderán al abrir otro archivo.</target>
+</trans-unit>
+<trans-unit id="s63c590d099d72b1b">
+  <source>Die Datei konnte nicht gelesen werden.</source>
+  <target>No se pudo leer el archivo.</target>
+</trans-unit>
+<trans-unit id="s1962daed2c91b5f7">
+  <source>Datei hier ablegen, um sie zu öffnen</source>
+  <target>Suelte el archivo aquí para abrirlo</target>
+</trans-unit>
+<trans-unit id="s9bde3948b3ba38f2">
+  <source>Bitte nur eine Datei ablegen.</source>
+  <target>Suelte solo un archivo.</target>
+</trans-unit>
+<trans-unit id="s6c60e4153d08b777">
+  <source>Ein Ordner kann nicht geöffnet werden. Bitte eine Datei ablegen.</source>
+  <target>No se puede abrir una carpeta. Suelte un archivo.</target>
+</trans-unit>
+<trans-unit id="s4e05f3df9f35d3ad">
+  <source>Die Datei war schon vorhanden. Android hat deshalb eine neue Datei angelegt:</source>
+  <target>El archivo ya existía. Por eso Android ha creado un archivo nuevo:</target>
+</trans-unit>
+<trans-unit id="sff2eaf49ed34b97c">
+  <source>Zum Überschreiben im Speichern-Dialog nicht auf „Speichern“ tippen, sondern die vorhandene Datei in der Liste antippen und das Ersetzen bestätigen.</source>
+  <target>Para sobrescribir, no pulse «Guardar» en el diálogo, sino el archivo existente de la lista, y confirme la sustitución.</target>
+</trans-unit>
+<trans-unit id="s162473f4482a310e">
+  <source>SVG-Grafik</source>
+  <target>Gráfico SVG</target>
+</trans-unit>
+<trans-unit id="sc95889c39c84af4f">
+  <source>pdf-Datei</source>
+  <target>Archivo pdf</target>
+</trans-unit>
+<trans-unit id="s0265436a59d8a588">
+  <source>pdf-Datei gespeichert</source>
+  <target>archivo pdf guardado</target>
 </trans-unit>
 </body>
 </file>

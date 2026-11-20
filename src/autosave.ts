@@ -1,6 +1,7 @@
 import { msg } from '@lit/localize';
 import { app } from './state';
 import { eingabeAlsJSON, eingabeEinlesen } from './eingabe';
+import { dateiname, setzeDateiname } from './dateien';
 import { duennQ } from './duennQ';
 import { alertdialog } from './components/confirm_dialog';
 
@@ -19,12 +20,13 @@ const SCHLUESSEL_DEFEKT = 'DUENNQS_current_input_defekt';
 interface Sicherung {
     eingabe: string;     // JSON wie in der Datei
     gerechnet: boolean;  // war beim Sichern ein Ergebnis zu sehen?
+    dateiname?: string;  // zuletzt geöffnete/gespeicherte Datei
 }
 
 /** Aktuelle Eingabe sofort sichern (auch vor dem Neuladen nach einem Update). */
 export function sichern(): void {
     try {
-        const daten: Sicherung = { eingabe: eingabeAlsJSON(), gerechnet: app.gerechnet };
+        const daten: Sicherung = { eingabe: eingabeAlsJSON(), gerechnet: app.gerechnet, dateiname: dateiname() };
         window.localStorage.setItem(SCHLUESSEL, JSON.stringify(daten));
     } catch (e) {
         console.error('autosave: Sichern nicht möglich', e);
@@ -44,6 +46,7 @@ function wiederherstellen(): void {
     try {
         const daten = JSON.parse(text) as Sicherung;
         if (!eingabeEinlesen(daten.eingabe)) throw new Error('gespeicherte Eingabe wurde abgelehnt');
+        setzeDateiname(daten.dateiname ?? '');
         // Ergebnis wiederherstellen, aber im Tab Eingabe bleiben
         if (daten.gerechnet) duennQ(false);
     } catch (error) {

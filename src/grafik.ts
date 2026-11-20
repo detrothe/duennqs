@@ -1,6 +1,6 @@
 import Two from 'two.js';
 import type { Path } from 'two.js/src/path';
-import { saveAs } from 'file-saver';
+import { dateiSpeichern, vorschlag } from './dateien';
 import { msg } from '@lit/localize';
 import { byId } from './state';
 import { CTrans } from './trans';
@@ -372,15 +372,5 @@ async function svgSpeichern(): Promise<void> {
     const preface = '<?xml version="1.0" standalone="no"?>\r\n';
     const blob = new Blob([preface, svg.outerHTML], { type: 'image/svg+xml;charset=utf-8' });
 
-    let filename = 'duennqs.svg';
-    if (app.hasFSAccess && app.isMac) {
-        filename = window.prompt(
-            msg('Name der Datei (wird im Download-Ordner gespeichert):'),
-            filename) ?? filename;
-    }
-    try {
-        saveAs(blob, filename);
-    } catch (error) {
-        alert((error as Error).message);
-    }
+    await dateiSpeichern(() => blob, vorschlag('.svg'), msg('SVG-Grafik'), 'image/svg+xml', '.svg');
 }

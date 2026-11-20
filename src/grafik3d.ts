@@ -2,7 +2,7 @@ import * as THREE from 'three';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
 import { CSS2DObject, CSS2DRenderer } from 'three/examples/jsm/renderers/CSS2DRenderer.js';
 import GUI from 'lil-gui';
-import { saveAs } from 'file-saver';
+import { dateiSpeichern, vorschlag } from './dateien';
 import { msg } from '@lit/localize';
 import { byId } from './state';
 import { truss, node, Gesamt_ys, Gesamt_zs, yM, zM, u0, bezugswerte } from './duennQ';
@@ -1042,24 +1042,7 @@ function bildErzeugen(): Promise<Blob> {
 /** PNG speichern: Dateidialog (File System Access), sonst Download. */
 async function bildExportieren(): Promise<void> {
     if (!modell || host.clientWidth === 0) return;
-    const vorschlag = 'duennqs_3d.png';
-    try {
-        if (app.hasFSAccess && window.showSaveFilePicker) {
-            const fileHandle = await window.showSaveFilePicker({
-                suggestedName: vorschlag,
-                types: [{ description: msg('PNG-Bild'), accept: { 'image/png': ['.png'] } }],
-            });
-            const blob = await bildErzeugen();
-            const fileStream = await fileHandle.createWritable();
-            await fileStream.write(blob);
-            await fileStream.close();
-        } else {
-            saveAs(await bildErzeugen(), vorschlag);
-        }
-    } catch (error) {
-        if (error instanceof DOMException && error.name === 'AbortError') return;
-        alert(error instanceof Error ? error.message : String(error));
-    }
+    await dateiSpeichern(bildErzeugen, vorschlag('_3d.png'), msg('PNG-Bild'), 'image/png', '.png');
 }
 
 //----------------------------------------------------------------------------------------------------------------------

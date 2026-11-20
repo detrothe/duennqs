@@ -281,6 +281,16 @@ export function leereEingabe(): void {
     byId<HTMLTextAreaElement>('freetext').value = '';
 }
 
+/** true, wenn Tabellen, Schnittgrößen und freier Text leer sind (dann gibt es nichts zu verlieren). */
+export function eingabeLeer(): boolean {
+    const werte = [
+        ...leseRoh(KNOTEN_TABELLE).flat(), ...leseRoh(ELEMENT_TABELLE).flat(),
+        ...SCHNITTGROESSEN.map(id => byId<HTMLInputElement>(id).value),
+        byId<HTMLTextAreaElement>('freetext').value,
+    ];
+    return werte.every(w => w.trim() === '');
+}
+
 //----------------------------------------------------------------------------------------------------------------------
 // Datei- und Sicherungsformat (kompatibel zu den bisherigen duennqs-Dateien)
 
