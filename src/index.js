@@ -1,3 +1,4 @@
+import 'font-awesome/css/font-awesome.min.css';
 
 import './styles/main.css';
 import './styles/contextMenu.css';

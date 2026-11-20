@@ -1,0 +1,21 @@
+[build]
+  command = "npm run build"
+  publish = "dist"
+
+[build.environment]
+  # Vite 8 braucht Node >= 20.19
+  NODE_VERSION = "22"
+
+# Zwingt Netlify dazu, den Service Worker niemals zwischenzuspeichern (Wichtig für iOS-Updates)
+[[headers]]
+  for = "/sw.js"
+  [headers.values]
+    cache-control = "no-cache, no-store, must-revalidate"
+    expires = "0"
+
+# Zwingt Netlify dazu, das Manifest niemals zwischenzuspeichern
+[[headers]]
+  for = "/manifest.webmanifest"
+  [headers.values]
+    cache-control = "no-cache, no-store, must-revalidate"
+    expires = "0"
