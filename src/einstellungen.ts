@@ -1,379 +1,177 @@
-import { byId } from './state';
-import { set_myScreen, app } from "./index.js";
-console.log("enter einstellungen")
-import { testeZahl } from "./utility.js";
+/*
+ * Tab ꔷꔷꔷ (Einstellungen) wie in d2beam-gui/quer_2: Längeneinheit, Farben der Tabellen und Akzentfarbe.
+ *
+ * Änderungen wirken sofort; dauerhaft (für den nächsten Start) erst nach
+ * „Auswahl als Standardwerte im Browser speichern“ – wie in d2beam-gui.
+ *
+ * Farben wirken über CSS-Variablen am Dokument (werden auch in Shadow-DOMs vererbt):
+ *   --table_bg / --table_fg  → dr-tabelle und Titelleiste des Bedienfelds in 3D
+ *   --user_accent + <html data-accent> → Shoelace-Primärfarbe (aktiver Tab, Rechnen-Button …), siehe main.css
+ *
+ * Intern rechnet duennqs in cm und kN/cm². Die Eingabe und alle Ausgaben stehen in der gewählten
+ * Längeneinheit; die Spannungseinheit gehört dazu (mm → N/mm², cm → kN/cm², m → MN/m²).
+ */
 
-console.log("vor getElementId")
-byId("unitLength").addEventListener('change', einstellungen);
-byId("id_cb_saveLocalStorage").addEventListener('click', saveLocalStorage);
-byId("id_cb_deleteLocalStorage").addEventListener('click', deleteLocalStorage);
+import '@shoelace-style/shoelace/dist/components/color-picker/color-picker.js';
+import { msg } from '@lit/localize';
+import { byId, berechnungErforderlich } from './state';
+import { alertdialog } from './components/confirm_dialog';
+import { einheitenUmrechnen, spaltenAktualisieren } from './eingabe';
 
-byId("id_fontsize").addEventListener('change', set_font_size);
-byId("id_color_table_out").addEventListener('change', set_color_table_out);
-byId("id_color_table_in").addEventListener('change', set_color_table_in);
-byId("id_body_width").addEventListener('change', set_body_width);
+export let current_unit_length = 'cm';
+export let current_unit_stress = 'kN/cm²';
+export let unit_length_factor = 1;   // Multiplikator von cm nach gewählter Einheit
+export let unit_stress_factor = 1;   // Multiplikator von kN/cm² nach gewählter Einheit
 
-export let current_unit_length = 'cm'
-export let current_unit_stress = 'kN/cm²'
-export let unit_length_factor = 1               // Multiplikator von cm nach neuer Einheit
-export let unit_stress_factor = 1               // Multiplikator von kN/cm² nach neuer Einheit
-export let my_fontsize = '1em'
-export let color_table_out = '#CFD915'
-export let color_table_in = '#b3ae00'
-export let body_width = 5000    //document.documentElement.clientWidth
-export let current_body_width = 5000
+const EINHEITEN: Record<string, { laenge: number; spannung: number; name: string }> = {
+    mm: { laenge: 10, spannung: 10, name: 'N/mm²' },
+    cm: { laenge: 1, spannung: 1, name: 'kN/cm²' },
+    m: { laenge: 0.01, spannung: 10, name: 'MN/m²' },
+};
 
-let old_unit_length = 'cm'
-console.log("vor readLocalStorage")
+const STANDARD_TABELLE = '#cfd915';   // wie d2beam-gui
+const STANDARD_AKZENT = '#0284c7';    // Shoelace sky-600
 
-readLocalStorage();
+// eigener Präfix: lokal laufen mehrere Apps auf localhost und teilen sich sonst den Speicher
+const KEY_EINHEIT = 'DUENNQS_unit_length';
+const KEY_TABELLE = 'DUENNQS_color_table_out';
+const KEY_TEXT = 'DUENNQS_color_table_text';
+const KEY_AKZENT = 'DUENNQS_accent_color';
 
-//----------------------------------------------------------------------------------------------
-function set_body_width() {
-    //------------------------------------------------------------------------------------------
-    const el = byId("id_body_width") as HTMLInputElement;
-    let wert = Number(testeZahl(el.value))
-    if (wert > 200) {  // Mindestbreite, sonst kann man nichts mehr eingeben
-        body_width = wert
-        set_myScreen()
-    }
+type Picker = HTMLElement & { value: string };
+
+function picker(id: string): Picker {
+    return byId(id) as Picker;
 }
 
-//----------------------------------------------------------------------------------------------
-function set_font_size() {
-    //------------------------------------------------------------------------------------------
-
-    const el = byId("id_fontsize") as HTMLInputElement;
-    my_fontsize = el.value
-    document.body.style.fontSize = my_fontsize
-
-    let elements: any
-    elements = document.getElementsByClassName("allow-touch-styles");
-    for (let i = 0; i < elements.length; i++) {
-        console.log("allow-touch-styles", i, elements[i])
-    }
-
-    elements = document.getElementsByClassName("lil-gui");
-    for (let i = 0; i < elements.length; i++) {
-        console.log("lil-gui", i, elements[i])
-    }
+/** Einheit setzen, ohne vorhandene Werte umzurechnen (Start, Datei einlesen). */
+export function set_current_unit_length(einheit: string): void {
+    if (!EINHEITEN[einheit]) einheit = 'cm';
+    current_unit_length = einheit;
+    current_unit_stress = EINHEITEN[einheit].name;
+    unit_length_factor = EINHEITEN[einheit].laenge;
+    unit_stress_factor = EINHEITEN[einheit].spannung;
+    byId<HTMLSelectElement>('unitLength').value = einheit;
+    spaltenAktualisieren();
 }
 
-//----------------------------------------------------------------------------------------------
-function set_color_table_out() {
-    //------------------------------------------------------------------------------------------
-
-    const el = byId("id_color_table_out") as HTMLInputElement;
-    color_table_out = el.value
-
-    const ntabelle = byId("nodeTable") as HTMLTableElement;
-    ntabelle.style.backgroundColor = color_table_out
-
-    const etabelle = byId("elemTable") as HTMLTableElement;
-    etabelle.style.backgroundColor = color_table_out
-
+/** Einheit im Tab ꔷꔷꔷ geändert: Eingabewerte umrechnen. */
+function einheitGeaendert(): void {
+    const neu = byId<HTMLSelectElement>('unitLength').value;
+    const alt = EINHEITEN[current_unit_length];
+    einheitenUmrechnen(EINHEITEN[neu].laenge / alt.laenge, EINHEITEN[neu].spannung / alt.spannung);
+    set_current_unit_length(neu);
+    berechnungErforderlich();
+    geaendert(true);
 }
 
-//----------------------------------------------------------------------------------------------
-function set_color_table_in() {
-    //------------------------------------------------------------------------------------------
-
-    const el = byId("id_color_table_in") as HTMLInputElement;
-    color_table_in = el.value
-
-    const ntabelle = byId("nodeTable") as HTMLTableElement;
-    for (let i = 1; i < ntabelle.rows.length; i++) {
-        ntabelle.rows[i].cells[0].style.backgroundColor = color_table_in
-    }
-    const etabelle = byId("elemTable") as HTMLTableElement;
-    for (let i = 1; i < etabelle.rows.length; i++) {
-        etabelle.rows[i].cells[0].style.backgroundColor = color_table_in
-    }
+/** schwarz oder weiß, je nachdem was auf der Hintergrundfarbe besser lesbar ist (WCAG-Luminanz, aus d2beam-gui) */
+function kontrastfarbe(hex: string): string {
+    const m = /^#([0-9a-f]{6})$/i.exec(hex);
+    if (!m) return '#000000';
+    const n = parseInt(m[1], 16);
+    const lin = (c: number) => {
+        c /= 255;
+        return c <= 0.03928 ? c / 12.92 : Math.pow((c + 0.055) / 1.055, 2.4);
+    };
+    const L = 0.2126 * lin((n >> 16) & 255) + 0.7152 * lin((n >> 8) & 255) + 0.0722 * lin(n & 255);
+    return (L + 0.05) / 0.05 >= 1.05 / (L + 0.05) ? '#000000' : '#ffffff';
 }
 
-//----------------------------------------------------------------------------------------------
-export function set_current_unit_length(unitLength: string) {
-    //------------------------------------------------------------------------------------------
-    // wird nur beim Einlesen einer Datei verwendet
-
-    current_unit_length = unitLength;
-    old_unit_length = unitLength;
-
-    const auswahl = byId("unitLength") as HTMLInputElement
-    auswahl.value = unitLength
-
-    set_unit_factors(unitLength)
-    setNewUnits()
-
+function tabellenfarben(hintergrund: string, text: string): void {
+    const root = document.documentElement;
+    root.style.setProperty('--table_bg', hintergrund);
+    root.style.setProperty('--table_fg', text);
 }
 
-//----------------------------------------------------------------------------------------------
-function einstellungen() {
-    //------------------------------------------------------------------------------------------
-    setNewUnits()
-
-    // vorhandene Tabellen neu ausgeben
-
-    let factor_length: number = 1.0    // Multiplikatoren
-    let factor_stress: number = 1.0    // Multiplikatoren
-
-    if (old_unit_length === 'cm' && current_unit_length === 'mm') {
-        factor_length = 10.0
-        factor_stress = 10.0
-    } else if (old_unit_length === 'cm' && current_unit_length === 'm') {
-        factor_length = 0.01
-        factor_stress = 10.0
-    } else if (old_unit_length === 'mm' && current_unit_length === 'cm') {
-        factor_length = 0.1
-        factor_stress = 0.1
-    } else if (old_unit_length === 'mm' && current_unit_length === 'm') {
-        factor_length = 0.001
-        factor_stress = 1.0
-    } else if (old_unit_length === 'm' && current_unit_length === 'mm') {
-        factor_length = 1000.0
-        factor_stress = 1.0
-    } else if (old_unit_length === 'm' && current_unit_length === 'cm') {
-        factor_length = 100.0
-        factor_stress = 0.1
-    }
-
-    let child: HTMLInputElement
-    const ntabelle = byId("nodeTable") as HTMLTableElement;
-    let nSpalten = ntabelle.rows[0].cells.length;
-    for (let i = 1; i < ntabelle.rows.length; i++) {
-        for (let j = 1; j < nSpalten; j++) {
-            child = ntabelle.rows[i].cells[j].firstElementChild as HTMLInputElement
-            let zahl = Number((parseFloat(child.value) * factor_length).toPrecision(12)) * 1  // Rundungsfehler beseitigen
-            child.value = zahl.toString()
-        }
-    }
-
-    const etabelle = byId("elemTable") as HTMLTableElement;
-    nSpalten = etabelle.rows[0].cells.length;
-    for (let i = 1; i < etabelle.rows.length; i++) {
-        child = etabelle.rows[i].cells[1].firstElementChild as HTMLInputElement  // Emodul
-        let zahl = Number((parseFloat(child.value) * factor_stress).toPrecision(12)) * 1  // Rundungsfehler beseitigen
-        child.value = zahl.toString()
-
-        child = etabelle.rows[i].cells[3].firstElementChild as HTMLInputElement   // Dicke
-        zahl = Number((parseFloat(child.value) * factor_length).toPrecision(12)) * 1  // Rundungsfehler beseitigen
-        child.value = zahl.toString()
-    }
-
-    let el = byId("EMod_ref") as HTMLInputElement;
-    el.value = (parseFloat(el.value) * factor_stress).toString()
-
-    el = byId("fyRd") as HTMLInputElement;
-    el.value = (parseFloat(el.value) * factor_stress).toString()
-
-    old_unit_length = current_unit_length
-
-    set_unit_factors(current_unit_length)
-
-    setNewUnits()
-
-}
-
-//----------------------------------------------------------------------------------------------
-export function setNewUnits() {
-    //------------------------------------------------------------------------------------------
-    const auswahl = byId("unitLength") as HTMLInputElement
-    const unit = auswahl.value
-    console.log("in setNewUnits : ", unit)
-
-    const nTabelle = byId("nodeTable") as HTMLTableElement;
-    let objCells: any
-    objCells = nTabelle.rows[0].cells;  // Überschrift Punkt zentrieren
-
-    if (unit === 'mm') {
-        objCells.item(1).innerHTML = 'y&#772; [mm]'
-        objCells.item(2).innerHTML = 'z&#772; [mm]'
-    }
-    else if (unit === 'cm') {
-        objCells.item(1).innerHTML = 'y&#772; [cm]'
-        objCells.item(2).innerHTML = 'z&#772; [cm]'
-    }
-    if (unit === 'm') {
-        objCells.item(1).innerHTML = 'y&#772; [m]'
-        objCells.item(2).innerHTML = 'z&#772; [m]'
-    }
-
-    let dicke: string
-    if (app.browserLanguage == 'de') {
-        dicke = 'Dicke'
+/** null = Shoelace-Standard (Blau) */
+function akzentfarbe(farbe: string | null): void {
+    const root = document.documentElement;
+    if (farbe) {
+        root.style.setProperty('--user_accent', farbe);
+        root.dataset.accent = '1';
     } else {
-        dicke = 'width'
+        root.style.removeProperty('--user_accent');
+        delete root.dataset.accent;
     }
-    const eTabelle = byId("elemTable") as HTMLTableElement;
-    objCells = eTabelle.rows[0].cells;  // Überschrift Punkt zentrieren
-
-    if (unit === 'mm') {
-        objCells.item(1).innerHTML = 'E-Modul [N/mm²]'
-        objCells.item(3).innerHTML = dicke + ' t [mm]'
-    }
-    else if (unit === 'cm') {
-        objCells.item(1).innerHTML = 'E-Modul [kN/cm²]'
-        objCells.item(3).innerHTML = dicke + ' t [cm]'
-    }
-    if (unit === 'm') {
-        objCells.item(1).innerHTML = 'E-Modul [MN/m²]'
-        objCells.item(3).innerHTML = dicke + ' t [m]'
-    }
-
-    const el = document.getElementsByClassName("unit_stress")
-    console.log("el stress", el)
-    for (let i = 0; i < el.length; i++) {
-        console.log("innerhtml", el[i].innerHTML, el[i].textContent);
-        if (unit === 'mm') {
-            el[i].innerHTML = 'N/mm²'
-        } else if (unit === 'cm') {
-            el[i].innerHTML = 'kN/cm²'
-        } else if (unit === 'm') {
-            el[i].innerHTML = 'MN/m²'
-        }
-    }
-
-    current_unit_length = unit
-
-    if (unit === 'mm') {
-        current_unit_stress = 'N/mm²'
-    } else if (unit === 'cm') {
-        current_unit_stress = 'kN/cm²'
-    } else if (unit === 'm') {
-        current_unit_stress = 'MN/m²'
-    }
-
 }
 
-//----------------------------------------------------------------------------------------------
-function saveLocalStorage() {
-    //------------------------------------------------------------------------------------------
-
-    console.log("in saveLocalStorage : ")
-
-    let el = byId("id_fontsize") as HTMLInputElement;
-    my_fontsize = el.value
-
-    el = byId("id_color_table_out") as HTMLInputElement;
-    color_table_out = el.value
-
-    el = byId("id_color_table_in") as HTMLInputElement;
-    color_table_in = el.value
-
-    window.localStorage.setItem('current_unit_length', current_unit_length);
-    window.localStorage.setItem('my_fontsize', my_fontsize);
-    window.localStorage.setItem('color_table_out', color_table_out);
-    window.localStorage.setItem('color_table_in', color_table_in);
-
-    el = byId("id_body_width") as HTMLInputElement;
-    let wert = Number(testeZahl(el.value))
-    if (wert > 200) window.localStorage.setItem('body_width', el.value);  // nur vernünftige werte abspeichern
+function lesen(key: string): string | null {
+    try {
+        return window.localStorage.getItem(key);
+    } catch {
+        return null;
+    }
 }
 
-//----------------------------------------------------------------------------------------------
-export function readLocalStorage() {
-    //------------------------------------------------------------------------------------------
-
-    console.log("enter readLocalStorage")
-    let unitLength = window.localStorage.getItem('current_unit_length');
-
-    if (unitLength) {
-        current_unit_length = unitLength
-        old_unit_length = unitLength
-
-        const auswahl = byId("unitLength") as HTMLInputElement
-        auswahl.value = unitLength
-
-        set_unit_factors(unitLength)
-    } else {
-        console.log("nix gemacht")
-    }
-
-    const default_fontsize = window.localStorage.getItem('my_fontsize');
-    if (default_fontsize) {
-        const el = byId("id_fontsize") as HTMLInputElement
-        if (el.value !== default_fontsize) {
-            el.value = default_fontsize
-            my_fontsize = default_fontsize
-            document.body.style.fontSize = my_fontsize
-        }
-    } else {
-        const width = Math.min(document.documentElement.clientWidth, document.documentElement.clientHeight)
-        const el = byId("id_fontsize") as HTMLInputElement
-        if (width < 380) {
-            let size = '0.625em'    // 10
-            el.value = size
-            my_fontsize = size
-            document.body.style.fontSize = size
-        }
-        else if (width < 420) {
-            let size = '0.7em'    // 11
-            el.value = size
-            my_fontsize = size
-            document.body.style.fontSize = size
-        } else if (width < 450) {
-            let size = '0.75em'    // 12
-            el.value = size
-            my_fontsize = size
-            document.body.style.fontSize = size
-        }
-        else if (width < 535) {
-            let size = '0.875em'  // 14
-            el.value = size
-            my_fontsize = size
-            document.body.style.fontSize = size
-        }
-    }
-
-    let color = window.localStorage.getItem('color_table_out');
-    if (color) {
-        const el = byId("id_color_table_out") as HTMLInputElement
-        el.value = color
-        color_table_out = color
-    }
-
-    color = window.localStorage.getItem('color_table_in');
-    if (color) {
-        const el = byId("id_color_table_in") as HTMLInputElement
-        el.value = color
-        color_table_in = color
-    }
-
-    console.log("vor body_width")
-    const item = window.localStorage.getItem('body_width');
-    if (item) {
-        const el = byId("id_body_width") as HTMLInputElement
-        el.value = item
-        set_body_width()
-    }
-
-    console.log("exit readLocalStorage")
-
+function geaendert(ja: boolean): void {
+    byId('id_cb_saveLocalStorage').classList.toggle('speichern_hinweis', ja);
+    byId('id_speichern_hinweis').hidden = !ja;
 }
 
-//----------------------------------------------------------------------------------------------
-function set_unit_factors(unitLength: string) {
-    //------------------------------------------------------------------------------------------
-
-    // Umrechnung von cm in ... , kN/cm² in ...
-
-    if (unitLength === 'mm') {
-        unit_length_factor = 10.0
-        unit_stress_factor = 10.0   // N/mm²
-    } else if (unitLength === 'cm') {
-        unit_length_factor = 1.0
-        unit_stress_factor = 1.0    // kN/cm²
-    } else if (unitLength === 'm') {
-        unit_length_factor = 0.01
-        unit_stress_factor = 10.0  // MN/m²
+function speichern(): void {
+    try {
+        window.localStorage.setItem(KEY_EINHEIT, current_unit_length);
+        window.localStorage.setItem(KEY_TABELLE, picker('id_color_table_out').value);
+        window.localStorage.setItem(KEY_TEXT, picker('id_color_table_text').value);
+        // Akzentfarbe nur speichern, wenn eine eigene gewählt ist (sonst Standard behalten)
+        if (document.documentElement.dataset.accent) window.localStorage.setItem(KEY_AKZENT, picker('id_accent_color').value);
+        else window.localStorage.removeItem(KEY_AKZENT);
+        geaendert(false);
+    } catch (e) {
+        void alertdialog('ok', msg('Speichern im Browser nicht möglich: ') + (e instanceof Error ? e.message : String(e)));
     }
-
 }
 
-//----------------------------------------------------------------------------------------------
-export function deleteLocalStorage() {
-    //------------------------------------------------------------------------------------------
-    window.localStorage.clear()
+function loeschen(): void {
+    try {
+        for (const key of [KEY_EINHEIT, KEY_TABELLE, KEY_TEXT, KEY_AKZENT]) window.localStorage.removeItem(key);
+    } catch { /* nichts zu tun */ }
+    picker('id_color_table_out').value = STANDARD_TABELLE;
+    picker('id_color_table_text').value = kontrastfarbe(STANDARD_TABELLE);
+    picker('id_accent_color').value = STANDARD_AKZENT;
+    tabellenfarben(STANDARD_TABELLE, kontrastfarbe(STANDARD_TABELLE));
+    akzentfarbe(null);
+    geaendert(false);
 }
 
-console.log("exit einstellungen")
+/** Gespeicherte Einstellungen anwenden und die Bedienelemente im Tab ꔷꔷꔷ verdrahten. */
+export function initEinstellungen(): void {
+    set_current_unit_length(lesen(KEY_EINHEIT) ?? 'cm');
+
+    const tabelle = lesen(KEY_TABELLE) ?? STANDARD_TABELLE;
+    const text = lesen(KEY_TEXT) ?? kontrastfarbe(tabelle);
+    const akzent = lesen(KEY_AKZENT);
+
+    picker('id_color_table_out').value = tabelle;
+    picker('id_color_table_text').value = text;
+    picker('id_accent_color').value = akzent ?? STANDARD_AKZENT;
+    tabellenfarben(tabelle, text);
+    akzentfarbe(akzent);
+    geaendert(false);
+
+    byId('unitLength').addEventListener('change', einheitGeaendert);
+    // neue Hintergrundfarbe → Textfarbe automatisch hell oder dunkel
+    byId('id_color_table_out').addEventListener('sl-input', () => {
+        const bg = picker('id_color_table_out').value;
+        const fg = kontrastfarbe(bg);
+        picker('id_color_table_text').value = fg;
+        tabellenfarben(bg, fg);
+        geaendert(true);
+    });
+    byId('id_color_table_text').addEventListener('sl-input', () => {
+        tabellenfarben(picker('id_color_table_out').value, picker('id_color_table_text').value);
+        geaendert(true);
+    });
+    byId('id_accent_color').addEventListener('sl-input', () => {
+        akzentfarbe(picker('id_accent_color').value);
+        geaendert(true);
+    });
+    byId('id_accent_color_reset').addEventListener('click', () => {
+        akzentfarbe(null);
+        picker('id_accent_color').value = STANDARD_AKZENT;
+        geaendert(true);
+    });
+    byId('id_cb_saveLocalStorage').addEventListener('click', speichern);
+    byId('id_cb_deleteLocalStorage').addEventListener('click', loeschen);
+}

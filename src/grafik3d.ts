@@ -3,12 +3,11 @@ import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
 import { CSS2DObject, CSS2DRenderer } from 'three/examples/jsm/renderers/CSS2DRenderer.js';
 import GUI from 'lil-gui';
 import { saveAs } from 'file-saver';
-import { byId, myScreen } from './state';
+import { byId } from './state';
 import { truss, node, Gesamt_ys, Gesamt_zs, yM, zM, u0, bezugswerte } from './duennQ';
-import { berechnung_erfolgreich } from './globals';
 import { current_unit_length, current_unit_stress, unit_length_factor, unit_stress_factor } from './einstellungen';
 import { myFormat } from './utility';
-import { app } from './index';
+import { app } from './state';
 
 /*
  * 3D-Ansicht der Ergebnisse (wie quer_2, nachgeladen als eigener Chunk)
@@ -1070,15 +1069,9 @@ async function bildExportieren(): Promise<void> {
 
 /**
  * 3D-Ansicht einblenden (Tab 3D) und mit dem Ergebnis der letzten erfolgreichen Berechnung aufbauen.
- * Die Ansicht reicht bis zum unteren Fensterrand.
+ * Die Ansicht füllt den Tab 3D.
  */
 export function zeige3D(): void {
-    // Breite fest vorgeben: die Spalte des Layouts richtet sich nach ihrem Inhalt (wie bisher, bis zum neuen Layout)
-    const container = byId('my-webgl');
-    container.style.width = myScreen.svgWidth + 'px';
-    container.style.height = Math.max(250, document.documentElement.clientHeight
-        - byId('input-container').getBoundingClientRect().height - byId('footer').offsetHeight) + 'px';
-
     if (!renderer) init();
 
     if (modell) {
@@ -1087,7 +1080,7 @@ export function zeige3D(): void {
         modell = null;
     }
 
-    const ok = berechnung_erfolgreich && truss.length > 0;
+    const ok = app.gerechnet && truss.length > 0;
     byId('view3d-hinweis').hidden = ok;
     byId('view3d-info').hidden = !ok;
     if (ok) {

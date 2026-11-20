@@ -1,497 +1,380 @@
-html {
-    font-size: 100%
-}
+/*
+  Stil wie d2beam-gui (global.css / global-css.ts): Shoelace-Theme hell/dunkel nach Systemeinstellung,
+  hellgrauer bzw. dunkelgrauer Hintergrund, Tabs oben.
+*/
 
 * {
     box-sizing: border-box;
 }
 
-:root {
-    --sgroesse: 0.9em;
-    --abst_gl_v: 2px;
-    --width_gl_button: 80px;
-    --sg_normal: 1em;
-    /* normale Schriftgröße */
-}
-
+html,
 body {
-    /* remove margins and scroll bars */
-    display: none;
-    margin: 0px;
-    overflow: auto;
-    overscroll-behavior: none;
-    /* style text */
-    text-align: left;
-    font-size: var(--sg_normal);
-    /*12px;  */
-    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif, Verdana, Arial, Helvetica, sans-serif;
-
-    /* color text */
-    color: #444;
-    background-color: #dddedf;
-
-}
-
-a:link {
-    /*color: black;
-    background-color: transparent; */
-    text-decoration: none;
-}
-
-/* Style the header */
-.header {
-    grid-area: header;
-    background-color: #f1f1f1;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
     padding: 0;
     margin: 0;
-    /*padding: 30px;
-    text-align: center;
-    font-size: 35px; */
+    font-size: 1rem;
+    overscroll-behavior: none;   /* kein Pull-to-Refresh */
 }
 
-/* The grid container */
-.grid-container {
-    display: grid;
-    /*width: min(100%, 2500px);*/
-    margin: 0;
-    margin-left: auto;
-    margin-right: auto;
-    padding: 0;
-    grid-template-areas:
-        'header header'
-        'topLeft topRight'
-        'unten_grafik unten_grafik'
-        'unten_webgl unten_webgl'
-        'footer footer';
-}
+@media (prefers-color-scheme: light) {
+    html,
+    body {
+        background-color: #f5f5f5;
+        color: #333333;
+    }
 
-/* Responsive layout - makes the three columns stack on top of each other instead of next to each other */
-@media (max-width: 770px) {
-    .grid-container {
-        display: grid;
-        margin: 0;
-        padding: 0;
-        grid-template-areas:
-            'header'
-            'topRight'
-            'topLeft'
-            'unten_grafik'
-            'unten_webgl'
-            'footer';
+    button,
+    select,
+    .input_tab {
+        font-size: 0.875rem;
+        border-radius: 4px;
+        border: 1px solid #d4d4d8;
+        background-color: #ffffff;
+        color: #444444;
+        padding: 0.4rem;
     }
 }
 
-
-.topLeft,
-.topRight,
-.left,
-.middle,
-.right {
-    padding: 0px;
-    margin: 0;
-}
-
-/* Style the topLeft column */
-.topLeft {
-    grid-area: topLeft;
-    padding: 0px;
-    margin: 0px;
-    background-color: #D8D8D8;
-    /*background-color: #c42929;*/
-}
-
-/* Style the topRight column */
-.topRight {
-    grid-area: topRight;
-    padding: 0px;
-    /*padding-left: 5px;*/
-    margin: 0px;
-    background-color: #D8D8D8;
-    /*background-color: #83c429;*/
-}
-
-/* Style the left column */
-.left {
-    grid-area: left;
-}
-
-/* Style the middle column */
-.middle {
-    grid-area: middle;
-}
-
-/* Style the right column */
-.right {
-    grid-area: right;
-}
-
-/*
-.rand {
-    grid-area: rand;
-    background-color: #f5f5f5;
-}
-
-.rand1 {
-    grid-area: rand1;
-}
-*/
-.unten_grafik {
-    grid-area: unten_grafik;
-    padding: 0;
-    margin: 0;
-}
-
-.unten_webgl {
-    grid-area: unten_webgl;
-    padding: 0;
-    margin: 0;
-    /*background-color: #d60000;*/
-}
-
-/* Style the footer */
-.footer {
-    grid-area: footer;
-    background-color: #f1f1f1;
-    margin: 0;
-    padding: 0;
-    /*padding: auto;
-    margin: auto;*/
-    text-align: center;
-    font-size: 0.7em;
-    /*0.8rem;*/
-    /*height: 50px;*/
-    /*0.7rem*/
-}
-
-
-/* Responsive layout -  */
-/*
-@media (max-width: 1000px) {
-    .grid-container {
-        grid-template-areas:
-    'rand header header header header header rand'
-    'rand topLeft topLeft topRight topRight topRight rand'
-    'rand left left left middle right rand'
-    'rand footer footer footer footer footer rand';
-
+@media (prefers-color-scheme: dark) {
+    html,
+    body {
+        background-color: rgb(64, 64, 64);
+        color: white;
     }
-}
-*/
-#titel {
-    width: 50%;
-    background-color: #FFFFD0;
-    padding: 8px;
-    border: 4px solid darkred;
-    border-radius: 8px;
-    box-shadow: 0 6px 12px 0 rgba(0, 0, 0, 0.5);
-    text-align: center;
-}
 
-/*
-#satz {
-    color: red;
-}
+    button,
+    select,
+    .input_tab {
+        font-size: 0.875rem;
+        border-radius: 4px;
+        border: 1px solid #43434a;
+        background-color: #1a1a1e;
+        color: #b6b6be;
+        padding: 0.4rem;
+    }
 
-hr {
-    display: block;
-    width: 50%;
-    margin-left: 0;
-    margin-right: 0;
-    border-width: 2px;
-}
-*/
-.topnav {
-    overflow: hidden;
-    background-color: #303030;
-}
-
-.topnav a {
-    float: left;
-    display: block;
-    color: #F8F8F8;
-    text-align: center;
-    padding: 8px;
-    margin: 0;
-    text-decoration: none;
-    font-size: 1.125em;
-
-}
-
-.topnav a:hover {
-    background-color: #D8D8D8;
-    color: darkblue;
-    margin: 0;
-}
-
-.topnav a:focus {
-    background-color: #D8D8D8;
-    color: darkblue;
-    border-style: solid solid none none;
-    border-color: #D8D8D8;
-    border-radius: 0px 10px 0px 0px;
-    margin: 0;
-}
-
-/*
-.topnav a.active {
-     wozu ?
-    background-color: #4CAF50;
-    color: green;
-}
-
-.topnav .info {
-    display: none;
-}
-*/
-td,
-th {
-    padding: 0px;
-    margin: 0px;
-    width: 6em;
-    /*width: 70px;*/
-    /*background-color: orange;*/
-}
-
-
-p {
-    font-size: 1em;
-    line-height: 200%
-}
-
-textarea {
-    font-size: 1em;
-    font-family: FreeSans, Verdana, Arial, Helvetica, sans-serif;
-}
-
-#eingabe {
-    display: none;
-    /*position: absolute;
-    top: 60px;
-    left: 0px;
-    width: 100%;*/
-    background-color: rgb(110, 180, 180);
-}
-
-
-#ergebnisse {
-    display: none;
-    background-color: #D8D8D8;
-    padding: 5px;
-}
-
-#knotentabelle {
-    /*display: none;*/
-    background-color: #D8D8D8;
-    /*z-index: 190;*/
-}
-
-#eingabe_duennQ_top {
-    display: none;
-    background-color: #D8D8D8;
-    padding: 0;
-    padding-left: 5px;
-}
-
-#duennQ_save_daten {
-    display: none;
-    background-color: #D8D8D8;
-    margin: 0;
-    padding: 0;
-    padding-left: 5px;
-}
-
-#elementtabelle {
-    /*display: none;*/
-    background-color: #D8D8D8;
-}
-
-/*
-#querschnittswerte {
-    display: none;
-}
-*/
-button,
-select {
-    font-size: 1em;
-    /*1rem;*/
-    border-radius: 3px;
-    border-width: 1px;
-    border-color: #303030;
-    color: #444;
-    padding: 0.2em;
+    a {
+        color: #8cc8ff;
+    }
 }
 
 button:active {
-    background-color: darkorange;
+    background-color: hsl(198.4 93.2% 59.6%);
 }
 
-.buttonTable {
-    /*font-size: 1rem;*/
-    width: 10em;
+dr-haupt {
+    display: block;
+    height: 100dvh;
 }
 
-.buttonTable:disabled {
-    /*font-size: 1rem;*/
-    color: rgb(199, 199, 199);
-    border-color: rgb(199, 199, 199);
+/*
+  Installierte PWA auf iPhone/iPad (wie d2beam-gui, global.css; @supports -webkit-touch-callout gibt es nur
+  bei WebKit auf iOS/iPadOS): iPadOS 26/27 legt oben einen grauen Schleier über die Seite, der sich von der
+  Seite aus nicht abschalten lässt. Inhalt deshalb etwas nach unten rücken, damit die Tab-Leiste lesbar bleibt.
+*/
+@supports (-webkit-touch-callout: none) {
+    @media (display-mode: standalone) {
+        :root {
+            /* Tab-Beschriftung sitzt 1rem (Innenabstand der Tabs) unter dem Rand. Bei kleiner Schrift
+               rutscht sie höher -> Abstand so wählen, dass Text immer mind. 14px + 16px tief liegt */
+            --pwa-abstand-oben: max(14px, calc(30px - 1rem));
+        }
+
+        body {
+            padding-top: var(--pwa-abstand-oben);
+        }
+
+        dr-haupt {
+            height: calc(100dvh - var(--pwa-abstand-oben));
+        }
+    }
 }
 
-input,
-label {
-    font-size: 1em;
-    /*1rem;*/
+/*----------------------------------------------------------------------------------------- Tabs */
+
+sl-tab-group {
+    height: 100%;
 }
 
-.zelle {
-    width: 3.125em;
+sl-tab-group::part(base) {
+    height: 100%;
 }
 
-.zelle0 {
-    /*width: 4em;*/
+sl-tab-group::part(body) {
+    flex: 1;
+    overflow: auto;
+}
+
+sl-tab-group::part(nav) {
+    overflow: hidden;
+}
+
+@media (prefers-color-scheme: light) {
+    sl-tab::part(base) {
+        color: var(--sl-color-neutral-600);
+        font-size: 1rem;
+        font-weight: 600;
+    }
+
+    sl-tab[active]::part(base) {
+        color: var(--sl-color-primary-600);
+    }
+}
+
+@media (prefers-color-scheme: dark) {
+    sl-tab::part(base) {
+        color: yellow;
+        font-size: 1rem;
+    }
+
+    sl-tab[active]::part(base) {
+        color: var(--user_accent, #4da3ff);   /* Akzentfarbe aus Tab ꔷꔷꔷ */
+    }
+}
+
+sl-tab-panel::part(base) {
+    padding: 0.5rem 0.75rem;
+}
+
+/* 3D-Ansicht füllt den Tab (mit kleinem Rand und runden Ecken wie die 2D-Grafik) */
+sl-tab-panel[name="drei_d"],
+sl-tab-panel[name="drei_d"]::part(base) {
+    height: 100%;
+    box-sizing: border-box;
+}
+
+h3 {
+    margin: 1rem 0 0.5rem 0;
+    font-size: 1.1rem;
+}
+
+h4 {
+    margin: 1rem 0 0.25rem 0;
+}
+
+.hinweis {
+    font-size: 0.875rem;
+    opacity: 0.8;
+    max-width: 40rem;
+}
+
+/*----------------------------------------------------------------------------------------- Eingabe */
+
+.dateiname {
+    margin: 0.25rem 0;
+    font-size: 0.875rem;
+}
+
+.file_toolbar {
+    display: flex;
+    gap: 0.5rem;
+    margin: 0.5rem 0 1rem 0;
+}
+
+.btn_file {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 2.75rem;
+    height: 2.5rem;
+    padding: 0;
+    cursor: pointer;
+}
+
+.btn_file:hover {
+    background-color: RoyalBlue;
+    color: white;
+}
+
+hr {
+    border: none;
+    border-top: 1px solid color-mix(in srgb, currentColor 25%, transparent);
+}
+
+.schnittgroessen td {
+    padding: 0.15rem 0.4rem;
+}
+
+.schnittgroessen .input_tab {
+    width: 7rem;
+    text-align: right;
+}
+
+.input_tab:invalid {
+    color: red;
+}
+
+/* Zahlenfelder (type=number, step=any wie d2beam-gui): ohne Pfeile zum Hoch-/Runterzählen */
+.input_tab[type='number']::-webkit-inner-spin-button,
+.input_tab[type='number']::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+.input_tab[type='number'] {
+    -moz-appearance: textfield;
+    appearance: textfield;
+}
+
+.zeile {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 1rem;
+    margin: 0.5rem 0;
+}
+
+.btn_rechnen {
+    height: 2.5rem;
+    margin-left: 0.5rem;
+    font-size: 1rem;
+    padding: 0 1.5rem;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.warnung {
+    color: var(--sl-color-warning-700);
+    opacity: 1;
+}
+
+/* Berechnung erforderlich (noch nicht gerechnet oder Eingabe geändert): Akzentfarbe wie in d2beam-gui */
+.btn_rechnen.veraltet {
+    background-color: var(--sl-color-primary-600);
+    border-color: var(--sl-color-primary-600);
+    color: var(--sl-color-neutral-0);
+}
+
+@media (prefers-color-scheme: dark) {
+    .btn_rechnen.veraltet {
+        color: #ffffff;
+    }
+}
+
+/*----------------------------------------------------------------------------------------- Ergebnisse */
+
+.ergebnisse {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    align-items: flex-start;
+}
+
+.ergebnis_tabellen {
+    flex: 0 0 auto;
+}
+
+table.werte {
+    border-collapse: collapse;
+}
+
+table.werte td,
+table.werte th {
+    padding: 0.2rem 0.6rem;
+    border-bottom: 1px solid color-mix(in srgb, currentColor 15%, transparent);
+}
+
+table.werte th {
+    text-align: right;
+    font-weight: 600;
+}
+
+table.werte td.zahl,
+#sigma_tbody td {
+    text-align: right;
+}
+
+/* Querschnittswerte und Spannungstabellen (in duennQ.ts erzeugt) */
+#ergebnisse table {
+    border-collapse: collapse;
+    margin-bottom: 0.5rem;
+}
+
+#ergebnisse td,
+#ergebnisse th {
+    padding: 0.2rem 0.6rem;
+    border-bottom: 1px solid color-mix(in srgb, currentColor 15%, transparent);
+    text-align: right;
+    font-variant-numeric: tabular-nums;
+}
+
+#ergebnisse th {
+    font-weight: 600;
+}
+
+#ergebnisse .table_spannung_cell_center {
+    text-align: center;
+}
+
+#ergebnisse .table_spannung_cell_center1 {
+    text-align: center;
+    background-color: color-mix(in srgb, currentColor 12%, transparent);
+}
+
+.schnittgroessen td.name {
     text-align: right;
     white-space: nowrap;
-    /*font-size: 1rem;*/
 }
 
-.input_kdtab {
-    width: 5em;
-    /*80px;*/
+.schnittgroessen td.einheit {
+    padding-right: 1.25rem;
+    white-space: nowrap;
 }
 
-
-#id_einstellungen {
-    padding: 0;
-    margin: 0;
-    padding-left: 5px;
-    background-color: #D8D8D8;
-    /*background-color: darkkhaki;*/
+textarea#freetext {
+    width: min(40rem, 100%);
+    font: inherit;
 }
 
-
-td.selected {
-    background-color: green;
+#id_pdf_info {
+    margin-left: 0.5rem;
+    align-self: center;
 }
 
-.tabelle {
-    background-color: rgb(150, 180, 180);
-}
-
-#my_dataviz {
+#info_berechnung[hidden] {
     display: none;
 }
 
-.table_eng th,
-td {
-    border: none;
-    /*1px solid black*/
-    /*border-collapse: collapse;*/
-    padding: 1px;
-    width: 5.625em;
-}
+/*----------------------------------------------------------------------------------------- System (2D) */
 
-.td_eng {
-    padding: 1px;
-    width: 3em;
-}
-
-.td_eng_right {
-    text-align: right;
-    padding: 1px;
-    width: 3em;
-}
-
-#querschnittwerte_table td {
-    padding-left: 5px;
-    padding-right: 5px;
-    background-color: rgb(200, 200, 200);
-    width: 7.5em;
-}
-
-.querschnittwerte_table_z0 {
-    text-align: right;
-}
-
-
-.table_spannung_cell_center {
-    text-align: center;
-}
-
-.table_spannung_cell_center1 {
-    text-align: center;
-    background-color: lightgrey;
-}
-
+/* 2D-Grafik: füllt den Tab bis zum unteren Fensterrand */
 #my-svg {
     position: relative;
-    display: none;
-    width: inherit;
-    /*1000px;*/
-    height: inherit;
-    padding: 0;
-    margin: 0;
-    /*1000px;*/
+    height: calc(100dvh - 5rem - var(--pwa-abstand-oben, 0px));
+    min-height: 20rem;
+    background-color: #8e9ca7;
+    border-radius: 6px;
     overflow: hidden;
-    background-color: rgb(142, 156, 167);
 }
 
-#cursor_coordy {
-    /*display: inline-block;*/
+#cursor_coord {
     position: absolute;
-    top: 10px;
-    left: 10px;
-    width: 5.5em;
+    top: 0.5rem;
+    left: 0.5rem;
+    padding: 0.15rem 0.5rem;
+    background-color: rgba(230, 230, 230, 0.9);
+    color: #222222;
+    border-radius: 3px;
+    font-size: 0.9rem;
     pointer-events: none;
-    height: 25px;
-    background-color: rgb(220, 220, 220);
-    padding: 3px;
-    margin-top: 0;
-    border-top: 0;
-    border-style: none;
-    font-size: var(--sgroesse);
-    display: flex;
-    align-items: center;
-    z-index: 100;
-    /*justify-content: center;*/
+    z-index: 2;
 }
 
 #cursor_coordz {
-    /*display: inline-block;*/
+    margin-left: 1rem;
+}
+
+.grafik_buttons {
     position: absolute;
-    top: 10px;
-    /*-15*/
-    left: calc(10px + 6em);
-    width: 5.5em;
-    pointer-events: none;
-    height: 25px;
-    background-color: rgb(220, 220, 220);
-    padding: 3px;
-    margin-top: 0;
-    border-style: none;
-    border-top: 0;
-    font-size: var(--sgroesse);
+    top: 0.35rem;
+    right: 0.5rem;
     display: flex;
-    align-items: center;
-    z-index: 100;
-    /*justify-content: center;}*/
-}
-
-#button_label_svg {
-    position: absolute;
-    top: 10px;
-    /*-15*/
-    left: calc(10px + 12.5em);
-}
-
-#button_copy_svg {
-    position: absolute;
-    top: 10px;
-    /*-15*/
-    left: calc(10px + 17.5em);
+    gap: 0.5rem;
+    z-index: 2;
 }
 
 #dataviz_area {
     display: block;
-    background-color: #8e9ca7;
     margin: 0;
     padding: 0;
     width: 100%;
@@ -545,17 +428,174 @@ td {
     z-index: 110;
 }
 
-#my-webgl {
-    position: relative;
-    margin: 0;
-    padding: 0;
+/*----------------------------------------------------------------------------------------- Einstellungen */
+
+/* Akzentfarbe (Tab ꔷꔷꔷ, aus d2beam-gui global.css): ersetzt das Shoelace-Blau, wenn <html data-accent>
+   gesetzt ist; die Stufen werden aus der einen Farbe gemischt. Im dunklen Design kehrt Shoelace sie um. */
+:root[data-accent] {
+    accent-color: var(--user_accent);
+    --sl-color-primary-50: color-mix(in srgb, var(--user_accent) 7%, white);
+    --sl-color-primary-100: color-mix(in srgb, var(--user_accent) 15%, white);
+    --sl-color-primary-200: color-mix(in srgb, var(--user_accent) 30%, white);
+    --sl-color-primary-300: color-mix(in srgb, var(--user_accent) 50%, white);
+    --sl-color-primary-400: color-mix(in srgb, var(--user_accent) 70%, white);
+    --sl-color-primary-500: color-mix(in srgb, var(--user_accent) 85%, white);
+    --sl-color-primary-600: var(--user_accent);
+    --sl-color-primary-700: color-mix(in srgb, var(--user_accent) 85%, black);
+    --sl-color-primary-800: color-mix(in srgb, var(--user_accent) 70%, black);
+    --sl-color-primary-900: color-mix(in srgb, var(--user_accent) 55%, black);
+    --sl-color-primary-950: color-mix(in srgb, var(--user_accent) 40%, black);
+}
+
+@media (prefers-color-scheme: dark) {
+    :root[data-accent] {
+        --sl-color-primary-50: color-mix(in srgb, var(--user_accent) 40%, black);
+        --sl-color-primary-100: color-mix(in srgb, var(--user_accent) 55%, black);
+        --sl-color-primary-200: color-mix(in srgb, var(--user_accent) 70%, black);
+        --sl-color-primary-300: color-mix(in srgb, var(--user_accent) 85%, black);
+        --sl-color-primary-400: color-mix(in srgb, var(--user_accent) 92%, black);
+        --sl-color-primary-500: color-mix(in srgb, var(--user_accent) 96%, black);
+        --sl-color-primary-600: var(--user_accent);
+        --sl-color-primary-700: color-mix(in srgb, var(--user_accent) 85%, white);
+        --sl-color-primary-800: color-mix(in srgb, var(--user_accent) 70%, white);
+        --sl-color-primary-900: color-mix(in srgb, var(--user_accent) 50%, white);
+        --sl-color-primary-950: color-mix(in srgb, var(--user_accent) 15%, white);
+    }
+}
+
+table.einstellungen td {
+    padding: 0.3rem 0.75rem 0.3rem 0;
+    white-space: nowrap;
+}
+
+/* Farbauswahl: Quadrat mit abgerundeten Ecken (wie d2beam-gui) */
+sl-color-picker::part(trigger) {
+    width: 2rem;
+    height: 2rem;
+    border-radius: 0.5rem;
+}
+
+.accent_row {
+    display: flex;
+    gap: 0.5rem;
+    align-items: center;
+}
+
+#id_cb_saveLocalStorage.speichern_hinweis {
+    outline: 3px solid var(--sl-color-primary-600);
+    outline-offset: 2px;
+    font-weight: 700;
+}
+
+/* [hidden] ausdrücklich, sonst überschreibt display: inline-block das hidden-Attribut */
+.speichern_hinweis_text[hidden] {
+    display: none;
+}
+
+.speichern_hinweis_text {
+    display: inline-block;
+    margin-top: 0.4rem;
+    font-size: 0.875rem;
+    color: var(--sl-color-primary-600);
+    font-weight: 600;
+}
+
+/*----------------------------------------------------------------------------------------- Dialoge */
+
+/* Hinweis- und Bestätigungsfenster (components/confirm_dialog.ts), unverändert aus d2beam-gui global.css */
+.confirm-dialog-button {
+    background-color: rgb(234, 231, 231);
+    color: #1a1a1e;
+    border: 1px solid #444;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 1rem;
+    padding: 0.75rem 1rem;
+    min-width: 5rem;
+}
+
+.confirm-dialog {
+    max-width: 25rem;
+    padding: 1rem;
+    width: 60vw;
+    border: 2px solid #444;
+    border-radius: 6px;
+    background: rgba(255, 251, 240);
+    color: #1a1a1e;
+
+    &::backdrop {
+        background-color: rgba(0, 0, 0, 0.3);
+    }
+}
+
+.confirm-dialog-question {
+    font-size: 1rem;
+    font-style: italic;
+    font-weight: 600;
+    color: #1a1a1e;
+}
+
+.confirm-dialog-button-group {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+    margin: 1rem -1rem -1rem;
+
+    > * {
+        margin: 1rem;
+    }
+}
+
+/* Festlegung im Default-Stylesheet der Browser */
+.confirm-dialog:not([open]) {
+    display: none;
+}
+
+/*----------------------------------------------------------------------------------------- Info */
+
+#infoBox {
+    font-size: 0.875rem;
+}
+
+.footer {
+    margin-top: 2rem;
+    font-size: 0.875rem;
+}
+
+/*----------------------------------------------------------------------------------------- Kontextmenü */
+
+.context-menu__icon {
+    width: 1.25em;
+    height: 1.25em;
+    margin-right: 0.5rem;
+    vertical-align: -0.25em;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 2;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    pointer-events: none;
+}
+
+/*----------------------------------------------------------------------------------------- Info: Dokumentation */
+
+#id_doc {
+    display: block;
+    width: 100%;
+    max-width: 800px;
+    height: calc(100dvh - 8rem);
+    border: none;
+    background-color: white;
+    border-radius: 6px;
 }
 
 /*----------------------------------------------------------------- 3D-Ansicht (grafik3d.ts, wie quer_2) */
 
 #view3d {
     position: relative;
-    height: 100%;
+    height: calc(100dvh - 5rem - var(--pwa-abstand-oben, 0px));
+    min-height: 20rem;
+    border-radius: 6px;
     /* Gesten gehören der 3D-Ansicht, auch über Info-Feld und Bedienfeld (sonst zoomt der Browser die Seite) */
     touch-action: none;
     -webkit-user-select: none;
@@ -715,132 +755,5 @@ td {
 #view3d-pan svg {
     width: 1.3rem;
     height: 1.3rem;
-}
-
-.c_hilfe {
-    /*text-align: left;*/
-}
-
-#info_berechnung {
-    text-align: right;
-}
-
-
-#infoBox {
-    padding-left: 5px;
-}
-
-
-
-input[type=number]::-webkit-inner-spin-button,
-input[type=number]::-webkit-outer-spin-button {
-    -webkit-appearance: none;
-    margin: 0;
-}
-
-
-/* Firefox */
-input[type=number] {
-    -moz-appearance: textfield;
-}
-
-#id_myTable,
-#nodeTable,
-#elemTable {
-    border: none;
-    border-spacing: 0px;
-    padding: 5px;
-    margin: 5px;
-    background-color: rgb(207, 217, 21);
-    border-radius: 5px;
-}
-
-#id_myTable td,
-#nodeTable td,
-#elemTable td {
-    /*font-size: 1rem;*/
-    /*touch-action: none;*/
-}
-
-#id_myTable td.selected,
-#nodeTable td.selected,
-#elemTable td.selected {
-    /*background-color: rgb(206, 196, 46);*/
-    color: rgb(13, 13, 13);
-
-}
-
-#id_myTable td.highlight,
-#nodeTable td.highlight,
-#elemTable td.highlight {
-    background-color: orange;
-    color: darkslateblue;
-
-}
-
-.input_select {
-    background-color: orange;
-    color: darkslateblue;
-    /*touch-action: none;*/
-}
-
-.input_normal {
-    background-color: rgb(255, 255, 255);
-    color: rgb(0, 0, 0);
-    /*font-variant-numeric: oldstyle-nums tabular-nums;
-    touch-action: none;*/
-}
-
-#id_display_einstellungen {
-    float: right;
-    color: #cec42e;
-}
-
-#unitLength {
-    width: 50pt;
-}
-
-.unit_stress {
-    /*font-size: var(--sg_normal);*/
-    text-align: left;
-    z-index: 100;
-}
-
-.input_int {
-    width: 3.125em;
-    margin: 0;
-    padding: 1px;
-    border-top: 1px solid #444;
-    border-bottom: 1px solid #444;
-    border-left: 0;
-    border-right: 0;
-    border-radius: 0;
-    text-align: center;
-}
-
-.spinner {
-    border: solid 1px #444;
-    margin: 0;
-    padding: 1px;
-    width: 1em;
-    /*vertical-align: middle;
-    background-color: lightslategrey */
-}
-
-.spinner:hover {
-    background: lightgrey;
-}
-
-.decrement {
-    /*.decrement*/
-    border-radius: 3px 0px 0px 3px;
-    color: #000000;
-}
-
-.increment {
-    /*.increment*/
-    border-radius: 0px 3px 3px 0px;
-    color: #000000;
-
 }
 

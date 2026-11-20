@@ -1,76 +1,17 @@
-import { byId } from './state';
-
-console.log("entering duennQ")
-
-import { berechnungErfolgreich } from "./globals.js";
-import { resizeTable, meinetabelle } from "./base_tabelle.js"
-import './dateien.js';
-import { gauss } from "./gauss.js"
-import { testeZahl, myFormat, testNumber, currentTab, zeige3D } from './utility.js';
-import { remove_selected_Tabelle, clear_Tabelle, setSelectionMode_node, setSelectionMode_element, nelem, nnodes } from "./duennQ_tabelle.js";
-import { set_myScreen, app } from "./index.js"
-import { current_unit_length, current_unit_stress, unit_length_factor, unit_stress_factor } from "./einstellungen"
+import { msg, str } from '@lit/localize';
+import { byId, app, berechnungErforderlich } from './state';
+import { gauss } from "./gauss";
+import { testeZahl, myFormat } from './utility';
+import { current_unit_length, current_unit_stress, unit_length_factor, unit_stress_factor } from "./einstellungen";
+import { leseTabellen, materialGleich } from './eingabe';
+import { alertdialog } from './components/confirm_dialog';
 
 export let ymin = -50.0, zmin = -50.0, ymax = 50.0, zmax = 50.0, slmax = 0.0;
 export let u0 = 0.0
+export let nnodes = 0, nelem = 0                // Anzahl Knoten und Elemente der letzten Berechnung
 export let kappa_1 = 0.0, kappa_2 = 0.0   // Schubkorrekturfaktoren
 
 //------------------------------------------------------------------------------------------------
-
-//----------------------------------------------------------------------------------------------
-export function double2String(zahl: number, stellen: number = 12): string {
-    //------------------------------------------------------------------------------------------
-    let wert = Number(zahl.toPrecision(stellen)) * 1
-    return String(wert);
-}
-
-//----------------------------------------------------------------------------------------------
-function setMaterialEqual() {
-    //------------------------------------------------------------------------------------------
-
-    const input = byId('material_equal') as HTMLInputElement;
-    console.log("in setMaterialEqual", input.checked);
-
-    const tabelle = byId("elemTable") as HTMLTableElement;
-
-    if (input.checked) {  // unsichtbar machen
-
-        for (let i = 0; i < tabelle.rows.length; i++) {
-            for (let j = 1; j < 3; j++) {
-                tabelle.rows[i].cells[j].style.width = '0px'
-
-                if (i === 0) {
-                    tabelle.rows[i].cells[j].innerText = ""  //.style.visibility = 'hidden'
-                    tabelle.rows[i].cells[j].style.padding = '0px'
-                } else {
-                    (tabelle.rows[i].cells[j].firstElementChild as HTMLInputElement).hidden = true
-                    tabelle.rows[i].cells[j].style.padding = '0px'
-                }
-            }
-        }
-    } else {    // sichtbar machen
-
-        for (let i = 0; i < tabelle.rows.length; i++) {
-            for (let j = 1; j < 3; j++) {
-                tabelle.rows[i].cells[j].hidden = false   //.style.visibility = 'visible'
-                tabelle.rows[i].cells[j].style.width = '6em'
-
-                if (i === 0) {
-                    if (j === 1) {
-                        if (current_unit_length === 'mm') tabelle.rows[i].cells[j].innerText = 'E-Modul [N/mm²]';  //.hidden = true
-                        else if (current_unit_length === 'cm') tabelle.rows[i].cells[j].innerText = 'E-Modul [kN/cm²]';  //.hidden = true
-                        else if (current_unit_length === 'm') tabelle.rows[i].cells[j].innerText = 'E-Modul [MN/m²]';  //.hidden = true
-                    }
-                    if (j === 2) tabelle.rows[i].cells[j].innerText = 'ν'  //.hidden = true
-                    tabelle.rows[i].cells[j].style.padding = '5px'
-                } else {
-                    (tabelle.rows[i].cells[j].firstElementChild as HTMLInputElement).hidden = false
-                }
-            }
-        }
-    }
-
-}
 
 class TTabQWerte {  // Tabelle Querschnittswerte für pdf
     zs: string = ''
@@ -189,131 +130,6 @@ class TElement {
     sigma_xe = [0.0, 0.0, 0.0, 0.0]
 }
 
-const elemArray = [];
-const nodeArray = [];
-
-
-for (let i = 1; i <= nnodes; i++) {
-    let punkt = {
-        "1": 1,
-        "2": 2
-    }
-
-    nodeArray.push(punkt);
-}
-
-for (let i = 1; i <= nelem; i++) {
-
-    let punkt = {
-        "1": 1,
-        "2": 2,
-    }
-
-    elemArray.push(punkt);
-}
-
-const xx = [0.0, 30.0, 110.0, 140.0, 85.0, 55.0];
-const yy = [0.0, 0.0, 0.0, 0.0, 60.0, 60.0];
-
-//----------------------------------------------------------------------------------------------
-export function createTables() {
-    //------------------------------------------------------------------------------------------
-
-    meinetabelle("knotentabelle", "nodeTable", nnodes, ['No', 'y&#772; [cm]', 'z&#772; [cm]']);
-    meinetabelle("elementtabelle", "elemTable", nelem, ["El No", 'E-Modul [kN/cm²]', 'ν', 'Dicke t [cm]', 'nod1', 'nod2']);
-
-    let objCells: any, nSpalten: number
-
-    const nTabelle = byId("nodeTable") as HTMLTableElement;
-    console.log("nTabelle", nTabelle)
-
-    objCells = nTabelle.rows[0].cells;  // Überschrift Punkt zentrieren
-
-    if (app.browserLanguage == 'de') {
-        objCells.item(0).setAttribute('title', 'Knotennummer');
-        objCells.item(1).setAttribute('title', 'y-Koordinaten im Hilfskoordinatensystem');
-        objCells.item(2).setAttribute('title', 'z-Koordinaten im Hilfskoordinatensystem');
-    } else {
-        objCells.item(0).setAttribute('title', 'node number');
-        objCells.item(1).setAttribute('title', 'y coordinates in the auxiliary coordinate system');
-        objCells.item(2).setAttribute('title', 'z coordinates in the auxiliary coordinate system');
-    }
-    let el = byId("EMod_ref") as HTMLInputElement;
-    el.value = (parseFloat(el.value) * unit_stress_factor).toString()
-
-    el = byId("fyRd") as HTMLInputElement;
-    el.value = (parseFloat(el.value) * unit_stress_factor).toString()
-
-    nSpalten = nTabelle.rows[0].cells.length - 1;
-
-    nTabelle.rows[0].cells[0].style.width = '3.125em'
-
-    for (let i = 1; i < nTabelle.rows.length; i++) {
-        const objCells = nTabelle.rows[i].cells;
-
-        for (let j = 1; j <= nSpalten; j++) {
-            const str = "nodeTable-" + i + "-" + j;
-            const w = byId(str)
-            if (j === 1) {
-                w.setAttribute("value", double2String(xx[i - 1] * unit_length_factor, 12));  // String(xx[i - 1] * unit_length_factor)
-            } else if (j === 2) {
-                w.setAttribute("value", double2String(yy[i - 1] * unit_length_factor, 12));
-            }
-        }
-    }
-
-    const eTabelle = byId("elemTable") as HTMLTableElement;
-    objCells = eTabelle.rows[0].cells;  // Überschrift Punkt zentrieren
-
-    if (app.browserLanguage == 'de') {
-        objCells.item(0).setAttribute('title', 'Elementnummer');
-        objCells.item(2).setAttribute('title', 'Querdehnzahl');
-        objCells.item(4).setAttribute('title', 'Knoten-Inzidenz Elementanfang');
-        objCells.item(5).setAttribute('title', 'Knoten-Inzidenz Elementende');
-    } else {
-        objCells.item(0).setAttribute('title', 'element number');
-        objCells.item(2).setAttribute('title', "Poisson's ratio");
-        objCells.item(4).setAttribute('title', 'Node incidence element start');
-        objCells.item(5).setAttribute('title', 'Node incidence element end');
-    }
-    nSpalten = eTabelle.rows[0].cells.length - 1;
-
-    eTabelle.rows[0].cells[0].style.width = '3.125em'
-
-    for (let i = 1; i < eTabelle.rows.length; i++) {
-
-        for (let j = 1; j <= nSpalten; j++) {
-            const str = "elemTable-" + i + "-" + j;
-            const w = byId(str)
-
-            if (j === 1) {
-                w.setAttribute("value", double2String(21000 * unit_stress_factor));
-            } else if (j === 2) {
-                w.setAttribute("value", double2String(0.3));
-            } else if (j === 3) {
-                w.setAttribute("value", double2String(1.5 * unit_length_factor));
-            }
-
-        }
-    }
-
-    // Inzidenzen
-    // Hohlquerschnitt mit Flügeln
-    (eTabelle.rows[1].cells[4].firstElementChild as HTMLInputElement).value = "1";
-    (eTabelle.rows[1].cells[5].firstElementChild as HTMLInputElement).value = "2";
-    (eTabelle.rows[2].cells[4].firstElementChild as HTMLInputElement).value = "2";
-    (eTabelle.rows[2].cells[5].firstElementChild as HTMLInputElement).value = "3";
-    (eTabelle.rows[3].cells[4].firstElementChild as HTMLInputElement).value = "3";
-    (eTabelle.rows[3].cells[5].firstElementChild as HTMLInputElement).value = "4";
-    (eTabelle.rows[4].cells[4].firstElementChild as HTMLInputElement).value = "3";
-    (eTabelle.rows[4].cells[5].firstElementChild as HTMLInputElement).value = "5";
-    (eTabelle.rows[5].cells[4].firstElementChild as HTMLInputElement).value = "2";
-    (eTabelle.rows[5].cells[5].firstElementChild as HTMLInputElement).value = "6";
-    (eTabelle.rows[6].cells[4].firstElementChild as HTMLInputElement).value = "5";
-    (eTabelle.rows[6].cells[5].firstElementChild as HTMLInputElement).value = "6";
-
-}
-
 //----------------------------------------------------------------------------------------------
 
 export function duennQ() {
@@ -346,13 +162,15 @@ export function duennQ() {
 
     let EModul: number, mue: number;
 
-    berechnungErfolgreich(false);
-    byId("info_berechnung")!.innerText = "Fehler in Eingabe"
-    byId("rechnen")!.style.color = "#dd0000"
+    app.gerechnet = false;
 
-    set_myScreen();
-
-    remove_selected_Tabelle();  // alte Fehlermarkierungen entfernen
+    // Tabellen lesen (ungültige Zellen werden markiert)
+    const eingabe = leseTabellen();
+    nnodes = eingabe.knoten.y.length;
+    nelem = eingabe.elemente.dicke.length;
+    if (eingabe.fehler > 0) {
+        return fehler(msg('Die Eingabe enthält ungültige Zahlen (rot markiert).'));
+    }
     // Schnittgrößen einlesen
     let input = byId('Vy') as HTMLInputElement;
     schnittgroesse.Vy = Vy = Number(testeZahl(input.value));
@@ -386,97 +204,50 @@ export function duennQ() {
         truss.push(new TElement())
     }
 
-    const material_equal = byId('material_equal') as HTMLInputElement;
-
     input = byId('EMod_ref') as HTMLInputElement;
     bezugswerte.emodul = EModul = Number(testeZahl(input.value)) / unit_stress_factor;
-    if (EModul < 1e-12) {
-        alert("Referenz-Emodul muss größer 0 sein")
-        return;
-    }
+    if (EModul < 1e-12) return fehler(msg('Der E-Modul (Bezugswert) muss größer 0 sein'));
     input = byId('mue_ref') as HTMLInputElement;
     bezugswerte.mue = mue = Number(testeZahl(input.value));
-    if (mue < 0) {
-        alert("Referenz-Querdehnung muss größer oder gleich 0 sein")
-        return;
-    }
+    if (mue < 0) return fehler(msg('Die Querdehnzahl (Bezugswert) muss größer oder gleich 0 sein'));
     const GModul = EModul / 2.0 / (1.0 + mue)
 
-    console.log("orginal", byId("nodeTable"))
-    // Knoten Eingabe einlesen
-
-    const nTabelle = byId("nodeTable") as HTMLTableElement;
-    console.log("NODE", nTabelle.rows.length)
-
+    // Knoten
     for (i = 0; i < nnodes; i++) {
-
-        let child = nTabelle.rows[i + 1].cells[1].firstElementChild as HTMLInputElement
-        wert = child.value
-        node[i].y = Number(testNumber(wert, i + 1, 1, 'nodeTable')) / unit_length_factor;
-        child = nTabelle.rows[i + 1].cells[2].firstElementChild as HTMLInputElement
-        wert = child.value
-        node[i].z = Number(testNumber(wert, i + 1, 2, 'nodeTable')) / unit_length_factor;
+        node[i].y = eingabe.knoten.y[i];
+        node[i].z = eingabe.knoten.z[i];
     }
 
-    // Elemente Eingabe einlesen
-
-    const eTabelle = byId("elemTable") as HTMLTableElement;
-
+    // Elemente
+    const gleich = materialGleich();
     for (i = 0; i < nelem; i++) {
-
-        if (material_equal.checked) {
+        if (gleich) {
             truss[i].EModul = bezugswerte.emodul;
             truss[i].mue = bezugswerte.mue;
         } else {
-            let child = eTabelle.rows[i + 1].cells[1].firstElementChild as HTMLInputElement
-            wert = child.value
-            truss[i].EModul = Number(testNumber(wert, i + 1, 1, 'elemTable')) / unit_stress_factor;
-            if (truss[i].EModul < 1e-12) {
-                alert("Emodul von Element " + String(i + 1) + " muss größer 0 sein")
-                return;
-            }
-            child = eTabelle.rows[i + 1].cells[2].firstElementChild as HTMLInputElement
-            wert = child.value
-            truss[i].mue = Number(testNumber(wert, i + 1, 2, 'elemTable'));
-            if (truss[i].mue < 0) {
-                alert("Querdehnung von Element " + String(i + 1) + " muss größer oder gleich 0 sein")
-                return;
-            }
+            truss[i].EModul = eingabe.elemente.E[i];
+            truss[i].mue = eingabe.elemente.mue[i];
+            if (truss[i].EModul < 1e-12) return fehler(msg(str`E-Modul von Element ${i + 1} muss größer 0 sein`));
+            if (truss[i].mue < 0) return fehler(msg(str`Querdehnzahl von Element ${i + 1} muss größer oder gleich 0 sein`));
         }
-        let child = eTabelle.rows[i + 1].cells[3].firstElementChild as HTMLInputElement
-        wert = child.value
-        truss[i].dicke = Number(testNumber(wert, i + 1, 3, 'elemTable')) / unit_length_factor;
-        if (truss[i].dicke < 1e-12) {
-            alert("Dicke von Element " + String(i + 1) + " muss größer 0 sein")
-            return;
-        }
-        child = eTabelle.rows[i + 1].cells[4].firstElementChild as HTMLInputElement
-        wert = child.value
-        truss[i].nod[0] = Number(testNumber(wert, i + 1, 4, 'elemTable')) - 1;
-        if (truss[i].nod[0] < 0 || truss[i].nod[0] > nnodes - 1) {
-            alert("Knoteninzidenz nod1 von Element " + String(i + 1) + " muss größer 0 und kleiner gleich Anzahl Knoten sein")
-            return;
-        }
-        node[truss[i].nod[0]].nel++;
+        truss[i].dicke = eingabe.elemente.dicke[i];
+        if (truss[i].dicke < 1e-12) return fehler(msg(str`Dicke von Element ${i + 1} muss größer 0 sein`));
 
-        child = eTabelle.rows[i + 1].cells[5].firstElementChild as HTMLInputElement
-        wert = child.value
-        truss[i].nod[1] = Number(testNumber(wert, i + 1, 5, 'elemTable')) - 1;
-        if (truss[i].nod[1] < 0 || truss[i].nod[1] > nnodes - 1) {
-            alert("Knoteninzidenz nod2 von Element " + String(i + 1) + " muss größer 0 und kleiner gleich Anzahl Knoten sein")
-            return;
+        truss[i].nod[0] = eingabe.elemente.nod1[i] - 1;
+        truss[i].nod[1] = eingabe.elemente.nod2[i] - 1;
+        for (const nod of truss[i].nod) {
+            if (nod < 0 || nod > nnodes - 1) {
+                return fehler(msg(str`Knoteninzidenzen von Element ${i + 1} müssen zwischen 1 und der Anzahl der Knoten liegen`));
+            }
+            node[nod].nel++;
         }
-        node[truss[i].nod[1]].nel++;
         truss[i].GModul = truss[i].EModul / 2.0 / (1.0 + truss[i].mue)
         truss[i].ni = truss[i].EModul / EModul
         truss[i].ngi = truss[i].GModul / GModul
     }
 
     for (i = 0; i < nnodes; i++) {
-        if (node[i].nel === 0) {
-            window.alert("An Knoten " + (i + 1) + " hängt kein Element")
-            return;
-        }
+        if (node[i].nel === 0) return fehler(msg(str`An Knoten ${i + 1} hängt kein Element`));
     }
 
     const t0 = performance.now();
@@ -515,10 +286,7 @@ export function duennQ() {
         dz = z2 - z1;
         truss[i].sl = Math.sqrt(dy * dy + dz * dz);      // Stablänge
 
-        if (truss[i].sl < 1e-12) {
-            alert("Länge von Element " + String(i + 1) + " ist null")
-            return;
-        }
+        if (truss[i].sl < 1e-12) return fehler(msg(str`Die Länge von Element ${i + 1} ist null`));
 
         truss[i].alpha = Math.atan2(dz, dy) //*180.0/Math.PI
         console.log("sl=", i, truss[i].sl, truss[i].alpha)
@@ -698,8 +466,7 @@ export function duennQ() {
     // Gleichungssystem lösen
     let error = gauss(neq, stiff, R);
     if (error != 0) {
-        window.alert("Gleichungssystem singulär");
-        return 1;
+        return fehler(msg('Das Gleichungssystem ist singulär.'));
     }
 
     for (i = 0; i < neq; i++) u[i] = R[i];
@@ -866,8 +633,7 @@ export function duennQ() {
     }
 
     if (gauss(neq, stiff, R) != 0) {
-        window.alert("Gleichungssystem 2 singulär");
-        return 1
+        return fehler(msg('Das Gleichungssystem ist singulär.') + ' (2)');
     }
 
     for (i = 0; i < neq; i++) u[i] = R[i];
@@ -1460,8 +1226,7 @@ export function duennQ() {
         }
 
         if (gauss(neq, stiff, R) != 0) {
-            window.alert("Gleichungssystem 3 singulär");
-            return 1
+            return fehler(msg('Das Gleichungssystem ist singulär.') + ' (3)');
         }
 
         for (i = 0; i < neq; i++) u[i] = R[i];
@@ -1546,30 +1311,14 @@ export function duennQ() {
 
     slmax = Math.sqrt((ymax - ymin) ** 2 + (zmax - zmin) ** 2)
 
-    berechnungErfolgreich(true);
-    if (app.browserLanguage == 'de') {
-        byId("info_berechnung").innerText = "Berechnung erfolgreich"
-    } else {
-        byId("info_berechnung").innerText = "Calculation successful"
-    }
-    if (currentTab === 'duenn3D') zeige3D();
-
+    app.gerechnet = true;
+    berechnungErforderlich(false);
+    document.dispatchEvent(new CustomEvent('berechnet'));
 }
 
-//------------------------------------------------------------------------------------------------
+/** Berechnung abbrechen und den Grund anzeigen. */
+function fehler(text: string): void {
+    app.gerechnet = false;
+    void alertdialog('ok', text);
+}
 
-const btn1 = byId("rechnen");
-btn1.addEventListener('click', duennQ);
-
-const btn2 = byId("resize");
-btn2.addEventListener('click', resizeTable);
-
-const btn3 = byId("clearTable");
-btn3.addEventListener('click', clear_Tabelle);
-
-byId("material_equal").addEventListener('change', setMaterialEqual);
-byId("select_mode_node").addEventListener('change', setSelectionMode_node);
-byId("select_mode_element").addEventListener('change', setSelectionMode_element);
-
-
-console.log("exit duennQ")

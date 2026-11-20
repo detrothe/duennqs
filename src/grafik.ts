@@ -1,12 +1,11 @@
 import Two from 'two.js';
 import type { Path } from 'two.js/src/path';
 import { saveAs } from 'file-saver';
-import { byId, myScreen } from './state';
+import { byId } from './state';
 import { CTrans } from './trans';
 import { truss, node, Gesamt_ys, Gesamt_zs, yM, zM, phi0, ymin, ymax, zmin, zmax } from './duennQ';
-import { berechnung_erfolgreich } from './globals';
 import { current_unit_length, unit_length_factor } from './einstellungen';
-import { app } from './index';
+import { app } from './state';
 import { myFormat } from './utility';
 
 /*
@@ -65,7 +64,7 @@ function laenge(wert_cm: number, stellen = 2): string {
 function getTwo(): Two {
     if (!two) {
         const svg = byId('dataviz_area') as unknown as SVGSVGElement;
-        two = new Two({ domElement: svg, width: myScreen.svgWidth, height: myScreen.clientHeight });
+        two = new Two({ domElement: svg, width: 100, height: 100 });
         initAbfrage(svg);
         byId('button_label_svg').addEventListener('click', () => {
             beschriftung = !beschriftung;
@@ -330,10 +329,9 @@ function bestimmeFangpunkte(py: (v: number) => number, pz: (v: number) => number
  */
 export function zeichneQuerschnitt(): void {
     const container = byId('my-svg');
-    const breite = container.clientWidth || myScreen.svgWidth;
-    const hoehe = Math.max(200, document.documentElement.clientHeight
-        - byId('input-container').getBoundingClientRect().height - byId('footer').offsetHeight);
-    container.style.height = hoehe + 'px';
+    const breite = container.clientWidth;
+    const hoehe = container.clientHeight;
+    if (breite === 0 || hoehe === 0) return;   // Tab nicht sichtbar – beim Einblenden wird neu gezeichnet
 
     const t = getTwo();
     t.renderer.setSize(breite, hoehe);
@@ -343,7 +341,7 @@ export function zeichneQuerschnitt(): void {
     fangpunkte = [];
     trans = null;
 
-    if (berechnung_erfolgreich && truss.length > 0) {
+    if (app.gerechnet && truss.length > 0) {
         const tr = new CTrans(ymin, zmin, ymax, zmax, breite, hoehe);
         const z = zeichne(t, tr, 1, beschriftung);
         t.update();

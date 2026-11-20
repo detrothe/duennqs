@@ -11,14 +11,16 @@
   "author": "me",
   "license": "ISC",
   "dependencies": {
+    "@lit/localize": "^0.12.2",
+    "@shoelace-style/shoelace": "^2.20.1",
     "canvg": "^4.0.3",
     "detectos.js": "^2.0.1",
     "file-saver": "^2.0.5",
-    "font-awesome": "^4.7.0",
     "html-to-pdfmake": "^2.4.16",
     "html2canvas": "^1.4.1",
     "jspdf": "^4.2.1",
     "lil-gui": "^0.21.0",
+    "lit": "^3.3.3",
     "three": "^0.187.0",
     "two.js": "^0.8.24"
   },

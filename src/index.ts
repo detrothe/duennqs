@@ -1,218 +1,80 @@
-import { byId } from './state';
-import 'font-awesome/css/font-awesome.min.css';
-
+// Shoelace-Themes wie in d2beam-gui: hell/dunkel folgt der Systemeinstellung
+import '@shoelace-style/shoelace/dist/themes/light.css';
+import '@shoelace-style/shoelace/dist/themes/dark.css';
 import './styles/main.css';
 import './styles/contextMenu.css';
 
-import { myScreen } from './state'
-import './einstellungen'
+import { msg } from '@lit/localize';
+import './components/dr-haupt';
+import { app, byId, Detect } from './state';
+import { duennQ } from './duennQ';
+import { initTabellen, setzeBeispiel, leereEingabe, spaltenAktualisieren } from './eingabe';
+import { initEinstellungen } from './einstellungen';
+import { initDateien } from './dateien';
+import { zeichneQuerschnitt } from './grafik';
+import { my_jspdf } from './mypdf';
+import { alertdialog, confirmdialog } from './components/confirm_dialog';
 
-import "./duenn3D.js";
-import './ergebnisse.js'
-import './base_tabelle.js'
-import './mypdf'
+// dunkles Theme von Shoelace über die Klasse sl-theme-dark (wie d2beam-gui)
+const dunkel = window.matchMedia('(prefers-color-scheme: dark)');
+const themaSetzen = () => document.documentElement.classList.toggle('sl-theme-dark', dunkel.matches);
+themaSetzen();
+dunkel.addEventListener('change', themaSetzen);
 
-import { createTables } from './duennQ'
-
-import { sichtbar, currentTab } from "./utility.js";
-
-import DetectOS from 'detectos.js';
-import { init_contextmenu } from './contextMenu.js';
-
-import { setNewUnits, body_width, current_body_width } from './einstellungen';
-import { berechnungErforderlich, set_text_berechnung_erforderlich } from "./globals.js"
-
-export const infoBox = byId("infoBox");
-
-addEventListener("resize", (event) => {
-    set_myScreen()
-});
-
-//-------------------------------------------------------------------------------
-export function set_myScreen() {
-    //---------------------------------------------------------------------------
-
-    console.log("body_width", body_width)
-
-    if (body_width < document.documentElement.clientWidth) {
-        document.body.style.width = body_width + 'px'
-        document.body.style.position = 'relative'
-        document.body.style.left = (document.documentElement.clientWidth - body_width) / 2 + 'px'
-    } else {
-        document.body.style.width = '100%'   //document.documentElement.clientWidth
-        document.body.style.position = 'relative'
-        document.body.style.left = '0px'
-        document.body.style.right = '0px'
-    }
-
-    myScreen.clientWidth = document.documentElement.clientWidth;
-    myScreen.clientHeight = document.documentElement.clientHeight;
-
-    console.log("myScreen", myScreen.clientWidth, myScreen.clientHeight, myScreen.svgWidth)
-    console.log("devicePixelRatio", window.devicePixelRatio, screen.width, screen.height, screen.orientation)
-
-    if (myScreen.clientWidth > body_width) {
-        myScreen.svgWidth = body_width;  //myScreen.clientWidth - 900;
-    } else {
-        myScreen.svgWidth = myScreen.clientWidth;
-    }
-
+function geraeteInfo(): void {
+    const info = byId('infoBox');
+    const zeilen = [
+        `${msg('Bildschirm')}: ${document.documentElement.clientWidth} × ${document.documentElement.clientHeight} px, ${msg('Pixeldichte')} ${window.devicePixelRatio}`,
+        `Browser: ${Detect.browser} ${Detect.version ?? ''}, ${msg('Sprache')} ${navigator.language}`,
+        `${msg('Betriebssystem')}: ${Detect.OS}${app.isMac ? ' (Mac)' : ''}`,
+        `${msg('Touch-Punkte')}: ${navigator.maxTouchPoints}`,
+        `${msg('Dateidialog (showSaveFilePicker)')}: ${app.hasFSAccess ? msg('ja') : msg('nein, Speichern als Download')}`,
+    ];
+    info.innerHTML = zeilen.join('<br>');
 }
 
-//-------------------------------------------------------------------------------
-
-export const app = {
-    appName: 'duennQs',
-    browserLanguage: 'de',
-    file: {
-        handle: null,
-        name: null,
-        isModified: false,
-    },
-    options: {
-        captureTabs: true,
-        fontSize: 16,
-        monoSpace: false,
-        wordWrap: true,
-    },
-    hasFSAccess: 'chooseFileSystemEntries' in window ||
-        'showOpenFilePicker' in window ||
-        'showSaveFilePicker' in window,
-    isMac: navigator.userAgent.includes('Mac OS X'),
-
-};
-
-const portrait = window.matchMedia("(orientation: portrait)");
-
-portrait.addEventListener("change", function (e) {
-    if (e.matches) {
-        // Portrait mode
-        sichtbar(currentTab)
-    } else {
-        // Landscape
-        sichtbar(currentTab)
-    }
-})
-
-//-------------------------------------------------------------------------------
-//-------------------------------------------------------------------------------
-//-------------------------------------------------------------------------------
-
-set_myScreen();
-
-export const Detect = new DetectOS();
-{
-    let txt = navigator.language
-    let txtArray = txt.split("-")
-
-    app.browserLanguage = txtArray[0]
-    console.log("app.browserLanguage", app.browserLanguage)
-}
-init_contextmenu();
-
-createTables();
-
-setNewUnits();
-
-document.body.style.display = 'block'
-
-{
-    let myInfoDiv = byId("id_hilfe");  //in div
-
-    let tag = document.createElement("p"); // <p></p>
-    tag.setAttribute("id", "id_infoDiv");
-    let text = document.createTextNode("xxx");
-    tag.appendChild(text);
-    tag.innerHTML = "devicePixelRatio " + window.devicePixelRatio;
-    myInfoDiv.appendChild(tag);
-
-    console.log("my locale", navigator.language)
-
-    if (window.devicePixelRatio >= 1.5) {
-        byId<HTMLInputElement>("id_body_width").disabled = true
-    }
+async function neueEingabe(): Promise<void> {
+    if (!await confirmdialog(msg('ja'), msg('nein'), msg('Die aktuelle Eingabe verwerfen und neu beginnen?'))) return;
+    leereEingabe();
 }
 
+async function start(): Promise<void> {
+    const haupt = byId('id_haupt') as HTMLElementTagNameMap['dr-haupt'];
+    await haupt.updateComplete;
 
-window.eingabe1();  // Tabellenblatt eingabe sichtbar schalten
-berechnungErforderlich(true);
+    initEinstellungen();   // Längeneinheit und Farben (vor dem Startbeispiel, das in der Einheit eingetragen wird)
+    setzeBeispiel();
+    spaltenAktualisieren();
+    initTabellen();
+    initDateien();
+    geraeteInfo();
 
+    byId('rechnen').addEventListener('click', duennQ);
+    byId('neueEingabe').addEventListener('click', () => void neueEingabe());
+    byId('id_pdf').addEventListener('click', () => {
+        if (app.gerechnet) void my_jspdf();
+        else void alertdialog('ok', msg('Es liegt keine fehlerfreie Berechnung vor.'));
+    });
 
+    // vor dem ersten Rechnen ist eine Berechnung erforderlich → Rechnen-Button in Akzentfarbe
+    byId('rechnen').classList.add('veraltet');
+    document.addEventListener('berechnung-erforderlich', ev => {
+        byId('rechnen').classList.toggle('veraltet', (ev as CustomEvent).detail?.erforderlich !== false);
+    });
 
-{
+    // nach dem Rechnen auf den Tab Ergebnisse wechseln
+    document.addEventListener('berechnet', () => {
+        byId('id_hinweis_rechnen').hidden = true;
+        haupt.zeigeTab('ergebnisse');
+    });
 
-    infoBox.innerHTML = '<br><b>Einige System-Informationen</b><br>';
-    infoBox.innerHTML += 'ScreenWidth≈' + Math.round(screen.width * window.devicePixelRatio)
-        + " px &nbsp;,&nbsp;&nbsp;    ScreenHeight≈ " + Math.round(screen.height * window.devicePixelRatio) + ' px';
-    infoBox.innerHTML += "<br>Browser: clientwidth=" + myScreen.clientWidth + "&nbsp;,&nbsp;&nbsp;    clientheight=" + myScreen.clientHeight;
-    infoBox.innerHTML += "<br>Browser: " + Detect.browser + " Version " + Detect.version;
-    infoBox.innerHTML += "<br>OS: " + Detect.OS + " , isMac: " + app.isMac;
-
-    const uaData = (navigator as Navigator & { userAgentData?: { mobile: boolean; platform: string } }).userAgentData;
-    if (uaData) {
-        infoBox.innerHTML += "<br>navigator.userAgentData.mobile: " + uaData.mobile;
-        infoBox.innerHTML += "<br>navigator.userAgentData.platform: " + uaData.platform;
-    }
-    infoBox.innerHTML += "<br><br>Browser Language: " + navigator.language;
-    if (app.hasFSAccess) {
-        infoBox.innerHTML += "<br>showSaveFilePicker wird unterstützt";
-    } else {
-        infoBox.innerHTML += "<br>showSaveFilePicker wird NICHT unterstützt";
-    }
-    const div = document.body;
-
-    infoBox.innerHTML += "<br>used font-size: " + css(div, 'font-size')
-    let txt = Intl.NumberFormat().resolvedOptions().locale
-    let txtArray = txt.split("-")
-    infoBox.innerHTML += "<br>OS Language by NumberFormat: " + txtArray[0]
-    infoBox.innerHTML += "<br>URL: " + window.location
-    infoBox.innerHTML += "<br>Hostname: " + window.location.hostname
-}
-{
-
-    if (app.browserLanguage != 'de') {
-
-        byId<HTMLIFrameElement>("id_doc").src = "docu_en.html";
-
-        byId("lab_headline").innerHTML = "<b>Properties and stresses of thin-walled cross sections</b>";
-
-        byId("lab_freier_text").innerText = "free text with HTML formatting for bold :";
-
-        byId("id_eingabe").textContent = "Input";
-        byId("id_results").textContent = "Results";
-        byId("lab_nnodes").innerText = "Number of nodes :";
-        byId("lab_nelem").innerText = "Number of elements :";
-        byId("lab_schnittgroessen").innerHTML = "<b>Internal forces</b>";
-        byId("lab_bezugswerte").innerHTML = "<b>Reference values</b>";
-        byId("lab_material_equal").innerHTML = "all elements have the same material data";
-        byId("lab_vergleichsspannung").innerHTML = "<b>Equivalent stress</b>";
-        byId("lab_knoten").innerHTML = "<b>Nodes</b>";
-        byId("lab_elemente").innerHTML = "<b>Elements</b>";
-
-        byId("readFile").innerHTML = "read input data";
-        byId("saveFile").innerHTML = "save input data";
-
-        byId("resize").innerHTML = "resize table";
-        byId("clearTable").innerHTML = "clear tables";
-        byId("rechnen").innerHTML = "calculate";
-
-        set_text_berechnung_erforderlich('New calculation required')
-
-        byId("lab_einheiten").innerText = "Units for tables and stresses";
-        byId("lab_unit_length").innerText = "Unit of length :";
-        byId("lab_font_size").innerText = "Font size :";
-        byId("lab_width_browser").innerText = "Width browser window :";
-        byId("lab_tableColor_outside").innerText = "Table color outside :";
-        byId("lab_tableColor_inside").innerText = "Table color inside :";
-        byId("id_cb_saveLocalStorage").innerHTML = "Save selection as default values in browser";
-        byId("id_cb_deleteLocalStorage").innerHTML = "Delete default values in browser memory";
-
-        byId("lab_ergebnisse").innerHTML = "Results";
-        byId("lab_ideelle_Querschnittswerte").innerHTML = "Ideal cross section properties";
-
-    }
+    // Grafiken erst zeichnen, wenn ihr Tab sichtbar ist (vorher haben sie keine Größe);
+    // die 3D-Ansicht (three.js) wird beim ersten Öffnen nachgeladen
+    haupt.addEventListener('sl-tab-show', ev => {
+        const name = (ev as CustomEvent).detail?.name;
+        if (name === 'system') requestAnimationFrame(zeichneQuerschnitt);
+        if (name === 'drei_d') requestAnimationFrame(() => void import('./grafik3d').then(m => m.zeige3D()));
+    });
 }
 
-function css(element: Element, property: string) {
-    return window.getComputedStyle(element, null).getPropertyValue(property);
-}
+void start();

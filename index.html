@@ -1,571 +1,99 @@
 <!DOCTYPE html>
-<html lang="de" xmlns="http://www.w3.org/1999/html">
+<html lang="de">
 
 <head>
-  <meta charset="UTF-8" />
-  <title>Querschnittswerte und Spannungen dünnwandiger Querschnitte, Properties and stresses of thin-walled cross sections</title>
-  <meta name="description" content="Finite Element Solution of thin walled cross sections, calculation of stresses and properties">
-  <meta name="author" content="Prof. Dr.-Ing. Detlef Rothe" />
+    <meta charset="UTF-8" />
+    <title>duennQs – Querschnittswerte und Spannungen dünnwandiger Querschnitte</title>
 
-  <!-- Set the viewport. , user-scalable=no -->
-  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5, minimal-ui" />
-  <!-- <meta name="viewport" content="width=device-width, initial-scale=1"> -->
-  <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
-  <meta http-equiv="Accept-CH" content="Sec-CH-UA-Mobile: ?0 Sec-CH-UA-Model Sec-CH-UA-Platform" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5">
+    <meta name="description" content="Querschnittswerte und Spannungen dünnwandiger Querschnitte (Finite Elemente) – Properties and stresses of thin-walled cross sections">
+    <meta name="author" content="Prof. Dr.-Ing. Detlef Rothe">
+    <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#181818">
+    <meta name="theme-color" media="(prefers-color-scheme: light)" content="#f3f3f3">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-title" content="duennQs">
+    <meta name="application-name" content="duennQs">
 
-  <!--
-  <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
--->
-  <link rel="icon" href="./favicon.ico" />
-  <link rel="apple-touch-icon" href="./icon/duennQs.png" />
-  <!--
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
--->
-  <script src="jscolor.min.js"></script>
+    <link rel="icon" href="./favicon.ico">
+    <link rel="apple-touch-icon" href="./icon/duennQs.png">
 
-  <script>
-    // These options apply to all color pickers on the page
-    jscolor.presets.default = {
-      width: 200,
-      height: 200,
-      backgroundColor: '#f3f3f3',
-      borderColor: '#bbbbbb',
-      controlBorderColor: '#bbbbbb',
-      palette: [
-        '#000000', '#7d7d7d', '#870014', '#ec1c23', '#ff7e26',
-        '#fef100', '#22b14b', '#00a1e7', '#3f47cc', '#a349a4',
-        '#ffffff', '#c3c3c3', '#b87957', '#feaec9', '#ffc80d',
-        '#eee3af', '#b5e61d', '#99d9ea', '#7092be', '#c8bfe7',
-      ],
-      paletteCols: 10,
-      hideOnPaletteClick: true,
-    }
-  </script>
-
-  <script type="module" src="./src/index.ts"></script>
+    <script type="module" src="./src/index.ts"></script>
 </head>
 
 <body>
+    <main>
+        <dr-haupt id="id_haupt"></dr-haupt>
+    </main>
 
-  <div class="grid-container">
-
-    <div class="header">
-      <div id="input-container">
-        <!-- <h2>Statik Werkzeugkasten</h2> -->
-        <div class="topnav" id="myTopnav">
-
-          <a id="id_eingabe" href="javascript:eingabe1();">Eingabe</a>
-          <a id="id_results" href="javascript:ergebnisse();">Ergebnisse</a>
-          <a href="javascript:duennQuer();">System</a>
-          <a id='idd' href="javascript:duenn3D();">3D</a>
-          <a href="javascript:mypdf();">pdf</a>
-          <a href="javascript:hilfe();">Info</a>
-
-          <a id="id_display_einstellungen" href="javascript:display_einstellungen();">ꔷꔷꔷ</a>
-          <!--<div><span>Hallo</span><span>Welt</span></div> -->
-        </div>
-      </div>
-    </div>
-
-    <div class="topLeft"> <!-- id="topleft" -->
-      <div id="eingabe_duennQ_top">
-
-        <p id="lab_headline"><b>Querschnittswerte und Spannungen dünnwandiger Querschnitte</b></p>
-
-        <p><span id="lab_freier_text">freier Text mit HTML Formatierung:</span><br>
-          <textarea id="freetext" name="freetext" rows="3" cols="50" placeholder="<b>Hausübung A1, SS 2025</b>
-          Bearbeitet von: Melis Muster
-          Pos. EG-1"></textarea>
-        </p>
-
-        <p>
-          <label id="lab_nnodes">Anzahl Knoten :</label>
-
-          <button id="id_input_node_dec" class="spinner decrement">-</button><input type="number" step="1"
-            id="input_nodes" name="nnodes" class="input_int" value="6" /><button id="id_input_node_incr"
-            class="spinner increment">+</button>
-
-
-          <label id="lab_nelem">&nbsp;&nbsp; Anzahl Elemente :</label>
-
-          <button id="id_input_elem_dec" class="spinner decrement">-</button><input type="number" id="input_nelem"
-            name="nelem" class="input_int" value="6" /><button id="id_input_elem_incr"
-            class="spinner increment">+</button>
-          <br />
-        </p>
-
-        <table>
-          <tbody>
-            <tr>
-              <td>
-                <button type="button" class="buttonTable" id="resize" disabled>
-                  resize Tabellen
-                </button>
-              </td>
-              <td>
-                <button type="button" class="buttonTable" id="clearTable">
-                  clear Tabellen
-                </button>
-              </td>
-              <td>
-                <button type="button" class="buttonTable" id="rechnen">
-                  Rechnen
-                </button>
-              </td>
-            </tr>
-            <tr>
-              <td colspan="3" id="info_berechnung">
-                Berechnung erforderlich
-              </td>
-            </tr>
-          </tbody>
-        </table>
-
-        <p id="lab_schnittgroessen"><b>Schnittgrößen</b></p>
-
-        <table class="table_eng">
-          <tbody>
-            <tr>
-              <td class="td_eng_right" title="shear force in y-direction">V<sub>y</sub>=</td>
-              <td>
-                <input type="number" step="any" id="Vy" name="Vy" class="input_kdtab" pattern="[0-9.,eE+-]*"
-                  onchange="berechnungErforderlich()" title="shear force in y-direction" />
-              </td>
-              <td class="td_eng">kN</td>
-              <td class="td_eng_right" title="St. Venant's torsion, primary torsional moment">M<sub>xp</sub>=</td>
-              <td>
-                <input type="number" step="any" id="Mxp" name="Mxp" class="input_kdtab" pattern="[0-9.,eE+-]*"
-                  onchange="berechnungErforderlich()" title="St. Venant's torsion, primary torsional moment"  />
-              </td>
-              <td class="td_eng">kNm</td>
-              <td class="td_eng_right" title="axial force">N=</td>
-              <td>
-                <input type="number" step="any" id="Nx" name="Nx" class="input_kdtab" pattern="[0-9.,eE+-]*"
-                  onchange="berechnungErforderlich()" title="axial force"/>
-              </td>
-              <td class="td_eng">kN</td>
-            </tr>
-            <tr>
-              <td class="td_eng_right" title="shear force in z-direction">V<sub>z</sub>=</td>
-              <td>
-                <input type="number" step='any' id="Vz" name="Vz" class="input_kdtab" pattern="[0-9.,eE+-]*"
-                  onchange="berechnungErforderlich()"  value="500" title="shear force in z-direction" />
-              </td>
-              <td class="td_eng">kN</td>
-              <td class="td_eng_right" title="secondary torsional moment">M<sub>xs</sub>=</td>
-              <td>
-                <input type="number" step="any" id="Mxs" name="Mxs" class="input_kdtab" pattern="[0-9.,eE+-]*"
-                  onchange="berechnungErforderlich()" title="secondary torsional moment"/>
-              </td>
-              <td class="td_eng">kNm</td>
-              <td class="td_eng_right" title="bendig moment about the y-axis">M<sub>y</sub>=</td>
-              <td>
-                <input type="number" step="any" id="My" name="My" class="input_kdtab" pattern="[0-9.,eE+-]*"
-                  onchange="berechnungErforderlich()"  value="600" title="bendig moment about the y-axis"/>
-              </td>
-              <td class="td_eng">kNm</td>
-            </tr>
-            <tr>
-              <td class="td_eng_right"></td>
-              <td></td>
-              <td class="td_eng"></td>
-              <td class="td_eng_right" title="warping bimoment">M<sub>&omega;</sub>=</td>
-              <td>
-                <input type="number" step="any" id="Momega" name="Momega" class="input_kdtab" pattern="[0-9.,eE+-]*"
-                  onchange="berechnungErforderlich()" title="warping bimoment"/>
-              </td>
-              <td class="td_eng">kNm²</td>
-              <td class="td_eng_right"  title="bending moment about the z-axis">M<sub>z</sub>=</td>
-              <td>
-                <input type="number" step="any" id="Mz" name="Mz" class="input_kdtab" pattern="[0-9.,eE+-]*"
-                  onchange="berechnungErforderlich()" title="bending moment about the z-axis" />
-              </td>
-              <td class="td_eng">kNm</td>
-            </tr>
-          </tbody>
-        </table>
-
-        <p id="lab_bezugswerte"><b>Bezugswerte</b></p>
-
-        <input type="checkbox" id="material_equal" name="material_equal" value="material_is_equal" />
-        <label for="material_equal" id="lab_material_equal"> alle Elemente haben gleiche Materialdaten</label>
-
-
-        <table id="id_bezugswerte" class="table_eng">
-          <tbody>
-
-            <tr>
-              <td class="zelle0">&nbsp;</td>
-            </tr>
-            <tr>
-              <td class="zelle0">E-Modul=</td>
-              <td>
-                <input type="number" step="any" id="EMod_ref" name="EMod_ref" value="21000" class="input_kdtab"
-                  pattern="[0-9.,eE+-]*" onchange="berechnungErforderlich()" />
-              </td>
-              <td class="unit_stress td_eng">kN/cm²</td>
-              <td class="td_eng_right" title="Querdehnzahl">&nu;=</td>
-              <td>
-                <input type="number" step="any" id="mue_ref" name="mue_ref" value="0.3" class="input_kdtab"
-                  pattern="[0-9.,eE+-]*" onchange="berechnungErforderlich()" />
-              </td>
-            </tr>
-          </tbody>
-        </table>
-
-
-
-        <p id="lab_vergleichsspannung"><b>Vergleichsspannung</b></p>
-
-        <table class="table_eng">
-          <tbody>
-            <tr>
-              <td class="zelle0">f<sub>y,Rd</sub> =</td>
-              <td>
-                <input type="number" step="any" id="fyRd" name="fyRd" value="23.5" class="input_kdtab"
-                  pattern="[0-9.,eE+-]*" onchange="berechnungErforderlich()" />
-              </td>
-              <td class="unit_stress">kN/cm²</td>
-            </tr>
-          </tbody>
-        </table>
-
-        <div id="knotentabelle">
-          <div id="matrix_knoten">
-            <p id="lab_knoten"><b>Knoten</b> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-              <input type="checkbox" id="select_mode_node" name="select_mode_node" value="selection_mode_node" />
-              <label for="select_mode_node">
-                select node cells</label>
-            </p>
-          </div>
-        </div>
-
-        <div id="elementtabelle">
-          <div id="matrix_elemente">
-            <p id="lab_elemente"><b>Elemente</b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-              <input type="checkbox" id="select_mode_element" name="select_mode_element"
-                value="selection_mode_element" />
-              <label for="select_mode_element">
-                select element cells</label>
-            </p>
-          </div>
-        </div>
-
-        <p><br><br><br><br><br><br><br><br><br></p>
-
-      </div>
-
-      <!--
-        </div>
-
-
-
-        <div class="left" style="background-color:#aaa;">
-
-        -->
-
-      <div id="ergebnisse">
-        <br>
-        <!-- <div id="my_text"></div> -->
-
-
-        <p id="lab_ergebnisse">Ergebnisse</p>
-
-        <div id="querschnittswerte">
-          <h3 id="lab_ideelle_Querschnittswerte">ideelle Querschnittswerte</h3>
-          <table id="querschnittwerte_table">
-            <tbody>
-              <tr>
-                <td class="querschnittwerte_table_z0">y&#772;<sub>s</sub>=</td>
-                <td class="zelle" id="ys"></td>
-                <td class="zelle unit_laenge">cm</td>
-              </tr>
-              <tr>
-                <td class="querschnittwerte_table_z0">z&#772;<sub>s</sub>=</td>
-                <td class="zelle" id="zs"></td>
-                <td class="zelle  unit_laenge">cm</td>
-              </tr>
-              <tr>
-                <td class="querschnittwerte_table_z0">A=</td>
-                <td class="zelle" id="area"></td>
-                <td class="zelle">cm²</td>
-              </tr>
-              <tr>
-                <td class="querschnittwerte_table_z0">A<sub>geom</sub>=</td>
-                <td class="zelle" id="area_geom"></td>
-                <td class="zelle">cm²</td>
-              </tr>
-              <tr>
-                <td class="querschnittwerte_table_z0">I<sub>y,s</sub>=</td>
-                <td class="zelle" id="Iys"></td>
-                <td class="zelle">cm⁴</td>
-              </tr>
-              <tr>
-                <td class="querschnittwerte_table_z0">I<sub>z,s</sub>=</td>
-                <td class="zelle" id="Izs"></td>
-                <td class="zelle">cm⁴</td>
-              </tr>
-              <tr>
-                <td class="querschnittwerte_table_z0">I<sub>yz,s</sub>=</td>
-                <td class="zelle" id="Iyzs"></td>
-                <td class="zelle">cm⁴</td>
-              </tr>
-              <tr>
-                <td class="querschnittwerte_table_z0">I<sub>11</sub>=</td>
-                <td class="zelle" id="I11"></td>
-                <td class="zelle">cm⁴</td>
-              </tr>
-              <tr>
-                <td class="querschnittwerte_table_z0">I<sub>22</sub>=</td>
-                <td class="zelle" id="I22"></td>
-                <td class="zelle">cm⁴</td>
-              </tr>
-              <tr>
-                <td class="querschnittwerte_table_z0">&phi;<sub>h</sub>=</td>
-                <td class="zelle" id="phi_h"></td>
-                <td class="zelle">°</td>
-              </tr>
-              <tr>
-                <td class="querschnittwerte_table_z0">y<sub>M</sub>=</td>
-                <td class="zelle" id="yM"></td>
-                <td class="zelle unit_laenge">cm</td>
-              </tr>
-              <tr>
-                <td class="querschnittwerte_table_z0">z<sub>M</sub>=</td>
-                <td class="zelle" id="zM"></td>
-                <td class="zelle unit_laenge">cm</td>
-              </tr>
-              <tr>
-                <td class="querschnittwerte_table_z0">I<sub>t</sub>=</td>
-                <td class="zelle" id="I_t"></td>
-                <td class="zelle">cm⁴</td>
-              </tr>
-              <tr>
-                <td class="querschnittwerte_table_z0">
-                  I<sub>&omega;</sub>=
-                </td>
-                <td class="zelle" id="I_omega"></td>
-                <td class="zelle">cm⁶</td>
-              </tr>
-
-              <tr>
-                <td class="querschnittwerte_table_z0">r<sub>1</sub>=</td>
-                <td class="zelle" id="r_1"></td>
-                <td class="zelle">cm</td>
-              </tr>
-              <tr>
-                <td class="querschnittwerte_table_z0">r<sub>2</sub>=</td>
-                <td class="zelle" id="r_2"></td>
-                <td class="zelle">cm</td>
-              </tr>
-              <tr>
-                <td class="querschnittwerte_table_z0">
-                  r<sub>&omega;</sub>=
-                </td>
-                <td class="zelle" id="r_omega"></td>
-                <td class="zelle">-</td>
-              </tr>
-              <tr>
-                <td class="querschnittwerte_table_z0">
-                  i<sub>M</sub><sup>2</sup>=
-                </td>
-                <td class="zelle" id="i_M2"></td>
-                <td class="zelle">cm²</td>
-              </tr>
-              <tr>
-                <td class="querschnittwerte_table_z0">
-                  i<sub>p</sub><sup>2</sup>=
-                </td>
-                <td class="zelle" id="i_p2"></td>
-                <td class="zelle">cm²</td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-
-        <div id="schubkorrektur"></div>
-        <div id="spannung_mxp"></div>
-        <div id="spannung_mxs"></div>
-        <div id="schubspannung"></div>
-        <div id="normalspannung"></div>
-        <div id="vergleichsspannung"></div>
-
-      </div>
-
-
-
-
-      <div id="my-svg" class="unten_grafik">
-        <svg id="dataviz_area"></svg>
-
-        <div id="cursor_coordy">y&#772;:</div>
-        <div id="cursor_coordz">z&#772;:</div>
-        <button id="button_label_svg">Label</button>
-        <button id="button_copy_svg">Save</button>
-      </div>
-
-      <div id="my-webgl" class="unten_webgl">
-        <div id="view3d">
-          <div id="view3d-canvas"></div>
-          <div id="view3d-gui"></div>
-          <div id="view3d-info">
-            <div id="v3d-einheit"></div>
-            <div id="v3d-minmax"></div>
-          </div>
-          <div id="view3d-hinweis">3D-Ansicht: bitte zuerst <i>Rechnen</i> drücken</div>
-        </div>
-      </div>
-
-      <div id="id_hilfe" class="c_hilfe">
-        <div id="id_doc_frame" style="position: relative; width: 100%;">
-          <iframe id="id_doc" src="Kurzdokumentation zu Duenne Querschnitte.html" width="100%" height="1500px"
-            style="border: none; overflow: scroll; background-color: white;">
-          </iframe>
-        </div>
-        <div id="infoBox"></div>
-      </div>
-
-      <div id="id_pdf">
-        <p id="id_pdf_info">pdf</p>
-      </div>
-
-      <div id="id_einstellungen">
-        <br>
-        <p id="lab_einheiten">Einheiten für Tabellen und Spannungen</p>
-        <p>
-          <label for="einheiten" id="lab_unit_length" title="nach Änderung ist eine Neuberechnung erforderlich">Längeneinheit : </label>
-          <select name="einheiten" id="unitLength">
-            <option value="mm">mm</option>
-            <option value="cm" selected>cm</option>
-            <option value="m">m</option>
-          </select>
-        </p>
-        <br>
-        <p>
-          <label for="fontSize" id="lab_font_size">Schriftgröße : </label>
-          <select name="fontSize" id="id_fontsize">
-            <option value="0.5em">8</option>
-            <option value="0.5625em">9</option>
-            <option value="0.625em">10</option>
-            <option value="0.7em">11</option>
-            <option value="0.75em">12</option>
-            <option value="0.8em">13</option>
-            <option value="0.875em">14</option>
-            <option value="0.95em">15</option>
-            <option value="1em" selected>16</option>
-            <option value="1.125em">18</option>
-          </select>
-        </p>
-
-
-        <br>
-        <table>
-          <tbody>
-            <tr>
-              <td style="white-space:nowrap" id="lab_width_browser"
-                title='verwendete Breite im Browserfenster, interessant für große Bildschirme'>
-                Breite Browserfenster:
-              </td>
-              <td style="white-space:nowrap"><input type='number' id="id_body_width" name="body_width" value="5000"
-                  style="width: 150px; border-radius: 3px; border-width: 1px;">&nbsp; px</td>
-            </tr>
-            <tr>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-            </tr>
-            <tr>
-              <td style="white-space:nowrap"  id="lab_tableColor_outside">
-                Tabellenfarbe außen: &nbsp;</td>
-              <td>
-                <input id="id_color_table_out" value="#CFD915"
-                  style="width: 150px; border-radius: 3px; border-width: 1px;"
-                  data-jscolor="{ preset: 'dark', closeButton: true, closeText: 'OK' }">
-              </td>
-            </tr>
-            <tr>
-              <td style="white-space:nowrap" id="lab_tableColor_inside">Tabellenfarbe innen: &nbsp;</td>
-              <td>
-                <input id="id_color_table_in" value="#b3ae00"
-                  style="width: 150px; border-radius: 3px; border-width: 1px;"
-                  data-jscolor="{ preset: 'dark', closeButton: true, closeText: 'OK' }">
-              </td>
-            </tr>
-          </tbody>
-        </table>
-
-        <br><br>
-        <p>
-
-          <button type="button" id="id_cb_saveLocalStorage">Auswahl als Standardwerte im Browser
-            speichern</button>
-        </p>
-        <p>
-          <button type="button" id="id_cb_deleteLocalStorage">Standardwerte im Speicher des Browsers
-            löschen</button>
-
-        </p>
-        <br>
-      </div>
-
-    </div>
-
-    <div class="topRight">
-      <div id="duennQ_save_daten">
-        <p>
-          <button type="button" id="readFile">Daten einlesen</button>
-
-          <button type="button" id="saveFile">Daten speichern</button>
-        </p>
-
-      </div>
-    </div>
-
-    <div id="footer" class="footer">
-      Cross-sectional values and stresses of thin-walled cross-sections, 16-April-2026,
-      <a href="https://fea-apps.de">&#169; FEA-apps.de </a>
-    </div>
-
-    <!-- <div id="footer" class="footer">
-      Querschnittswerte und Spannungen dünnwandiger Querschnitte, 16-April-2026,
-      <a href="https://statikverstehen.de">&#169; statikverstehen.de </a>
-    </div> -->
-  </div>
-
-  <nav id="context-menu" class="context-menu">
-    <ul class="context-menu__items">
-      <li class="context-menu__item">
-        <a href="#" class="context-menu__link" data-action="copyFirst"><i class="fa fa-clone"></i> copy first cell
-          value</a>
-      </li>
-      <li class="context-menu__item">
-        <a href="#" class="context-menu__link" data-action="copyFirstRow"><i class="fa fa-clone"></i> copy first row
-          values</a>
-      </li>
-      <li class="context-menu__item">
-        <a href="#" class="context-menu__link" data-action="increment_1"><i class="fa fa-plus-square-o"></i> increment
-          by 1</a>
-      </li>
-      <li class="context-menu__item">
-        <a href="#" class="context-menu__link" data-action="increment_delta"><i class="fa fa-plus-square-o"></i>
-          increment by delta</a>
-      </li>
-      <li class="context-menu__item">
-        <a href="#" class="context-menu__link" data-action="copy"><i class="fa fa-clipboard"></i> copy to
-          clipboard</a>
-      </li>
-      <li class="context-menu__item">
-        <a href="#" class="context-menu__link" data-action="insert"><i class="fa fa-clipboard"></i> insert from
-          clipboard</a>
-      </li>
-      <li class="context-menu__item">
-        <a href="#" class="context-menu__link" data-action="close"><i class="fa fa-window-close"></i> close</a>
-      </li>
-    </ul>
-  </nav>
-
-  <!-- <div id="divtest">Hallo welt</div>  -->
+    <!-- Kontextmenü der Knoten- und Elementtabelle (gesteuert in dr-tabelle.ts, wie in d2beam-gui) -->
+    <nav id="context-menu" class="context-menu">
+        <ul class="context-menu__items">
+            <li class="context-menu__item">
+                <a href="#" class="context-menu__link" data-action="copyFirst">
+                    <svg class="context-menu__icon" viewBox="0 0 24 24" aria-hidden="true">
+                        <rect x="9" y="9" width="11" height="11" rx="2" />
+                        <path d="M5 15V6a2 2 0 0 1 2-2h9" />
+                    </svg>
+                    Wert der ersten Zelle kopieren
+                </a>
+            </li>
+            <li class="context-menu__item">
+                <a href="#" class="context-menu__link" data-action="copyFirstRow">
+                    <svg class="context-menu__icon" viewBox="0 0 24 24" aria-hidden="true">
+                        <rect x="9" y="9" width="11" height="11" rx="2" />
+                        <path d="M5 15V6a2 2 0 0 1 2-2h9" />
+                    </svg>
+                    Werte der ersten Zeile kopieren
+                </a>
+            </li>
+            <li class="context-menu__item">
+                <a href="#" class="context-menu__link" data-action="increment_1">
+                    <svg class="context-menu__icon" viewBox="0 0 24 24" aria-hidden="true">
+                        <rect x="4" y="4" width="16" height="16" rx="2" />
+                        <path d="M12 8v8M8 12h8" />
+                    </svg>
+                    um 1 hochzählen
+                </a>
+            </li>
+            <li class="context-menu__item">
+                <a href="#" class="context-menu__link" data-action="increment_delta">
+                    <svg class="context-menu__icon" viewBox="0 0 24 24" aria-hidden="true">
+                        <rect x="4" y="4" width="16" height="16" rx="2" />
+                        <path d="M12 8v8M8 12h8" />
+                    </svg>
+                    um Delta hochzählen
+                </a>
+            </li>
+            <li class="context-menu__item">
+                <a href="#" class="context-menu__link" data-action="copy">
+                    <svg class="context-menu__icon" viewBox="0 0 24 24" aria-hidden="true">
+                        <rect x="5" y="4" width="14" height="17" rx="2" />
+                        <rect x="9" y="2" width="6" height="4" rx="1" />
+                    </svg>
+                    in Zwischenablage kopieren
+                </a>
+            </li>
+            <li class="context-menu__item">
+                <a href="#" class="context-menu__link" data-action="insert">
+                    <svg class="context-menu__icon" viewBox="0 0 24 24" aria-hidden="true">
+                        <rect x="5" y="4" width="14" height="17" rx="2" />
+                        <rect x="9" y="2" width="6" height="4" rx="1" />
+                        <path d="M12 10v7M9 14l3 3 3-3" />
+                    </svg>
+                    aus Zwischenablage einfügen
+                </a>
+            </li>
+            <li class="context-menu__item">
+                <a href="#" class="context-menu__link" data-action="close">
+                    <svg class="context-menu__icon" viewBox="0 0 24 24" aria-hidden="true">
+                        <path d="M6 6l12 12M18 6L6 18" />
+                    </svg>
+                    schließen
+                </a>
+            </li>
+        </ul>
+    </nav>
 </body>
 
 </html>
