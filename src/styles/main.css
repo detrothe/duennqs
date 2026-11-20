@@ -439,7 +439,8 @@ td {
     position: absolute;
     top: 10px;
     left: 10px;
-    width: 4em;
+    width: 5.5em;
+    pointer-events: none;
     height: 25px;
     background-color: rgb(220, 220, 220);
     padding: 3px;
@@ -458,8 +459,9 @@ td {
     position: absolute;
     top: 10px;
     /*-15*/
-    left: calc(10px + 4em);
-    width: 4em;
+    left: calc(10px + 6em);
+    width: 5.5em;
+    pointer-events: none;
     height: 25px;
     background-color: rgb(220, 220, 220);
     padding: 3px;
@@ -477,31 +479,70 @@ td {
     position: absolute;
     top: 10px;
     /*-15*/
-    left: calc(10px + 10em);
+    left: calc(10px + 12.5em);
 }
 
 #button_copy_svg {
     position: absolute;
     top: 10px;
     /*-15*/
-    left: calc(10px + 15em);
-}
-
-#circleBasicTooltip,
-#circleTooltip_SM {
-    position: absolute;
-    /*z-index: 110;*/
+    left: calc(10px + 17.5em);
 }
 
 #dataviz_area {
-    /*position: relative;*/
-    /*top: -50px;*/
+    display: block;
     background-color: #8e9ca7;
     margin: 0;
     padding: 0;
-    width: inherit;
-    height: inherit;
+    width: 100%;
+    height: 100%;
     overflow: hidden;
+    /* Fingerbewegungen gehören der Koordinatenanzeige, nicht dem Scrollen */
+    touch-action: none;
+    cursor: crosshair;
+}
+
+/* Fangkreuz und Wertanzeige der 2D-Grafik (grafik.ts, wie quer_2) */
+.grafik-cursor {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+}
+
+.grafik-cursor line {
+    stroke: #000000;
+    stroke-width: 1.5;
+}
+
+.grafik-cursor.gefangen line {
+    stroke: #e08000;
+    stroke-width: 2.5;
+}
+
+/* Maus: nur der Ring um den gefangenen Punkt, kein Kreuz */
+.grafik-cursor.ohne_kreuz line {
+    display: none;
+}
+
+.grafik-cursor .ring {
+    fill: none;
+    stroke: #e08000;
+    stroke-width: 2.5;
+}
+
+.grafik-wert {
+    position: absolute;
+    padding: 3px 6px;
+    background-color: rgba(255, 255, 255, 0.9);
+    color: #222222;
+    border: 1px solid #888888;
+    border-radius: 3px;
+    font-size: 0.9em;
+    white-space: nowrap;
+    pointer-events: none;
+    z-index: 110;
 }
 
 #panel_gui {

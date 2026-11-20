@@ -1,6 +1,7 @@
 import { byId } from './state';
 import { jsPDF, jsPDFAPI } from "jspdf";
 import { Canvg } from "canvg";
+import { querschnittSvg } from "./grafik";
 
 import { font } from "./FreeSans-normal.js";
 import { fontBold } from "./FreeSans-bold.js"
@@ -721,13 +722,9 @@ export async function my_jspdf() {
 
   // -------------------------------------  S  V  G  --------------------------------------
 
-  //Get svg markup as string
-  let svg = byId("my-svg").innerHTML;
+  const svg = querschnittSvg(1500, 1500, 2.0);
 
-  if (svg) {
-    svg = svg.replace(/\r?\n|\r/g, "").trim();
-    svg = svg.substring(0, svg.indexOf("</svg>")) + "</svg>";
-    svg = svg.replaceAll("  ", "");
+  {
 
     var canvas = document.createElement("canvas");
     const context = canvas.getContext("2d")!;

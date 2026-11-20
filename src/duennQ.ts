@@ -8,7 +8,6 @@ import './dateien.js';
 import { gauss } from "./gauss.js"
 import { testeZahl, myFormat, testNumber } from './utility.js';
 import { remove_selected_Tabelle, clear_Tabelle, setSelectionMode_node, setSelectionMode_element, nelem, nnodes } from "./duennQ_tabelle.js";
-import { label_svg, copy_svg } from "./systemlinien";
 import { set_myScreen, app } from "./index.js"
 import { draw_elements } from "./grafik_3D";
 import { current_unit_length, current_unit_stress, unit_length_factor, unit_stress_factor } from "./einstellungen"
@@ -1570,8 +1569,6 @@ const btn3 = byId("clearTable");
 btn3.addEventListener('click', clear_Tabelle);
 
 byId("material_equal").addEventListener('change', setMaterialEqual);
-byId('button_label_svg').addEventListener('click', label_svg, false);
-byId('button_copy_svg').addEventListener('click', copy_svg, false);
 byId("select_mode_node").addEventListener('change', setSelectionMode_node);
 byId("select_mode_element").addEventListener('change', setSelectionMode_element);
 

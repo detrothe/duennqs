@@ -2,7 +2,7 @@ import { byId } from './state';
 import { berechnung_erfolgreich } from "./globals.js";
 import { myScreen } from './state'
 import { set_myScreen } from "./index.js";
-import { systemlinien } from "./systemlinien";
+import { zeichneQuerschnitt } from "./grafik";
 import { draw_elements } from "./grafik_3D.js";
 import { my_jspdf } from "./mypdf.js";
 
@@ -60,7 +60,6 @@ export function sichtbar(displayName: string) {
     }
     if (displayName === 'duennQ') {
         set_myScreen();
-        systemlinien();
         byId("my-svg").style.display = "block";
     } else {
         byId("my-svg").style.display = "none";
@@ -93,7 +92,6 @@ export function sichtbar(displayName: string) {
     if (displayName === 'mypdf') {
         byId("id_pdf").style.display = "block";
         if (berechnung_erfolgreich) {
-            systemlinien(1500, 1500, 2.0);
             my_jspdf();
         } else {
             alert('Es liegt keine fehlerfreie Berechnung vor')
@@ -108,4 +106,7 @@ export function sichtbar(displayName: string) {
         byId("id_einstellungen").style.display = "none";
     }
 
+
+    // erst zeichnen, wenn alle anderen Tabs ausgeblendet sind (sonst stimmt die Breite nicht)
+    if (displayName === 'duennQ') zeichneQuerschnitt();
 }
