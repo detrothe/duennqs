@@ -1,3 +1,4 @@
+// @ts-nocheck – wird beim Umbau (neue Grafik bzw. dr-tabelle) komplett ersetzt
 import GUI from 'lil-gui';
 import { app } from "./index.js";
 

@@ -1,12 +1,16 @@
 
 class CTrans {
+    ymin = 0; ymax = 0; zmin = 0; zmax = 0;
+    dy = 0; dz = 0;
+    width = 0; height = 0;
+
     constructor(ymin = 0.0, zmin = 0.0, ymax = 1.0, zmax = 1.0, clientWidth=100.0, clientHeight=100.0) {
         this.init(ymin, zmin, ymax, zmax, clientWidth, clientHeight)
     }
 
-    init(ymin, zmin, ymax, zmax, clientWidth, clientHeight) {
+    init(ymin: number, zmin: number, ymax: number, zmax: number, clientWidth: number, clientHeight: number) {
 
-        let dy, dz;
+        let dy: number, dz: number;
 
         this.ymin = Number(ymin);
         this.ymax = Number(ymax);
@@ -51,19 +55,19 @@ class CTrans {
         }
     }
 
-    yPix(y) {
+    yPix(y: number) {
         return (this.ymax - y) * this.width / this.dy;
     }
 
-    zPix(z) {
+    zPix(z: number) {
         return (z - this.zmin) * this.height / this.dz;
     }
 
-    yWorld(yPix) {
+    yWorld(yPix: number) {
         return this.ymax - yPix * this.dy / this.width;
     }
 
-    zWorld(zPix) {
+    zWorld(zPix: number) {
         return zPix * this.dz / this.height + this.zmin;
     }
 

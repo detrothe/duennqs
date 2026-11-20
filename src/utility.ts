@@ -1,38 +1,37 @@
+import { byId } from './state';
 import { berechnung_erfolgreich } from "./globals.js";
-import { myScreen } from './first.js'
+import { myScreen } from './state'
 import { set_myScreen } from "./index.js";
 import { systemlinien } from "./systemlinien";
 import { draw_elements } from "./grafik_3D.js";
 import { my_jspdf } from "./mypdf.js";
 
-export let currentTab;
+export let currentTab = '';
 
 //------------------------------------------------------------------------------------------------
-export function testeZahl(wert) {
+export function testeZahl(wert: string): string | number {
     //--------------------------------------------------------------------------------------------
     wert = wert.replace(/,/g, '.');
-    if (isNaN(wert)) {
-
+    if (isNaN(Number(wert))) {
         return 0;
     }
     return wert;
 }
 
 //------------------------------------------------------------------------------------------------
-export function testNumber(wert, zeile, spalte, id) {
+export function testNumber(wert: string, zeile: number, spalte: number, id: string): string | number {
     //--------------------------------------------------------------------------------------------
 
     wert = wert.replace(/,/g, '.');
-    if (isNaN(wert)) {
-
-        document.getElementById(id).rows.item(zeile).cells.item(spalte).classList.add("selected");
+    if (isNaN(Number(wert))) {
+        byId<HTMLTableElement>(id).rows[zeile].cells[spalte].classList.add("selected");
         return 0;
     }
     return wert;
 }
 
 //------------------------------------------------------------------------------------------------
-export function myFormat(wert, minDecimal, maxDecimal) {
+export function myFormat(wert: number, minDecimal: number, maxDecimal: number) {
     //--------------------------------------------------------------------------------------------
 
     return new Intl.NumberFormat(navigator.language, { minimumFractionDigits: minDecimal, maximumFractionDigits: maxDecimal }).format(wert);
@@ -40,59 +39,59 @@ export function myFormat(wert, minDecimal, maxDecimal) {
 
 //------------------------------------------------------------------------------------------------
 
-export function sichtbar(displayName) {
+export function sichtbar(displayName: string) {
 
     currentTab = displayName;
 
     if (displayName === 'eingabe') {
-        document.getElementById("eingabe_duennQ_top").style.display = "block";
-        document.getElementById("duennQ_save_daten").style.display = "block";
+        byId("eingabe_duennQ_top").style.display = "block";
+        byId("duennQ_save_daten").style.display = "block";
     } else {
-        document.getElementById("eingabe_duennQ_top").style.display = "none";
-        document.getElementById("duennQ_save_daten").style.display = "none";
+        byId("eingabe_duennQ_top").style.display = "none";
+        byId("duennQ_save_daten").style.display = "none";
     }
 
     if (displayName === 'ergebnisse') {
-        document.getElementById("ergebnisse").style.display = "block";
+        byId("ergebnisse").style.display = "block";
 
     } else {
-        document.getElementById("ergebnisse").style.display = "none";
+        byId("ergebnisse").style.display = "none";
 
     }
     if (displayName === 'duennQ') {
         set_myScreen();
         systemlinien();
-        document.getElementById("my-svg").style.display = "block";
+        byId("my-svg").style.display = "block";
     } else {
-        document.getElementById("my-svg").style.display = "none";
+        byId("my-svg").style.display = "none";
     }
 
     if (displayName === 'duenn3D') {
         set_myScreen();
         if (berechnung_erfolgreich) draw_elements();
-        document.getElementById("my-webgl").style.display = "block";
+        byId("my-webgl").style.display = "block";
         window.dispatchEvent(new Event("resize"));
     } else {
-        document.getElementById("my-webgl").style.display = "none";
+        byId("my-webgl").style.display = "none";
     }
 
     if (displayName === 'hilfe') {
         set_myScreen();
         let breite = Math.min(myScreen.clientWidth, 760);
-        document.getElementById("id_doc").setAttribute("width", breite + "px");
-        document.getElementById("id_doc").setAttribute("height", myScreen.clientHeight + "px");
+        byId("id_doc").setAttribute("width", breite + "px");
+        byId("id_doc").setAttribute("height", myScreen.clientHeight + "px");
         let left = (myScreen.svgWidth - breite) / 2
         if (left < 0) left = 0
-        document.getElementById("id_doc_frame").style.left = left + 'px';
+        byId("id_doc_frame").style.left = left + 'px';
         console.log("id_doc_frame", (myScreen.clientWidth - breite) / 2)
 
-        document.getElementById("id_hilfe").style.display = "block";
+        byId("id_hilfe").style.display = "block";
     } else {
-        document.getElementById("id_hilfe").style.display = "none";
+        byId("id_hilfe").style.display = "none";
     }
 
     if (displayName === 'mypdf') {
-        document.getElementById("id_pdf").style.display = "block";
+        byId("id_pdf").style.display = "block";
         if (berechnung_erfolgreich) {
             systemlinien(1500, 1500, 2.0);
             my_jspdf();
@@ -100,13 +99,13 @@ export function sichtbar(displayName) {
             alert('Es liegt keine fehlerfreie Berechnung vor')
         }
     } else {
-        document.getElementById("id_pdf").style.display = "none";
+        byId("id_pdf").style.display = "none";
     }
 
     if (displayName === 'einstellungen') {
-        document.getElementById("id_einstellungen").style.display = "block";
+        byId("id_einstellungen").style.display = "block";
     } else {
-        document.getElementById("id_einstellungen").style.display = "none";
+        byId("id_einstellungen").style.display = "none";
     }
 
 }

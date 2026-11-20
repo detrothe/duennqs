@@ -1,3 +1,4 @@
+import { byId } from './state';
 import { jsPDF, jsPDFAPI } from "jspdf";
 import { Canvg } from "canvg";
 
@@ -145,7 +146,7 @@ export async function my_jspdf() {
   doc.setFontSize(fs)
   let yy = 20;
 
-  const txtarea = document.getElementById("freetext") as HTMLTextAreaElement
+  const txtarea = byId("freetext") as HTMLTextAreaElement
   console.log("textarea", txtarea.value)
   const txt = txtarea.value
   if (txt.length > 0) {
@@ -721,16 +722,15 @@ export async function my_jspdf() {
   // -------------------------------------  S  V  G  --------------------------------------
 
   //Get svg markup as string
-  let svg = document.getElementById("my-svg").innerHTML;
+  let svg = byId("my-svg").innerHTML;
 
   if (svg) {
     svg = svg.replace(/\r?\n|\r/g, "").trim();
     svg = svg.substring(0, svg.indexOf("</svg>")) + "</svg>";
-    // @ts-ignore
     svg = svg.replaceAll("  ", "");
 
     var canvas = document.createElement("canvas");
-    var context = canvas.getContext("2d");
+    const context = canvas.getContext("2d")!;
     console.log("canvas", canvas.width, canvas.height);
 
     context.clearRect(0, 0, canvas.width, canvas.height);
@@ -761,21 +761,21 @@ export async function my_jspdf() {
 
       filename = window.prompt(
         "Name der Datei mit Extension, z.B. duennqs.pdf\nDie Datei wird im Default Download Ordner gespeichert", 'duennqs.pdf'
-      );
+      ) ?? filename;
 
     } else if (app.hasFSAccess) {
       filename = window.prompt(
         "Name der Datei mit Extension, z.B. duennqs.pdf\nDie Datei wird im Default Download Ordner gespeichert", 'duennqs.pdf'
-      );
+      ) ?? filename;
     }
 
     try {
       doc.save(filename);
     } catch (error) {
-      alert(error.message);
+      alert((error as Error).message);
     }
 
-    document.getElementById("id_pdf_info").innerText = "pdf-file saved in your Download folder";
+    byId("id_pdf_info").innerText = "pdf-file saved in your Download folder";
 
   }
 }

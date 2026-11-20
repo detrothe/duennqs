@@ -1,3 +1,4 @@
+// @ts-nocheck – wird beim Umbau (neue Grafik bzw. dr-tabelle) komplett ersetzt
 // Option 1: Import the entire three.js core library.
 import * as THREE from 'three';
 import { MeshLine, MeshLineMaterial } from './renderers/THREE_MeshLine.js';
@@ -9,7 +10,7 @@ import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
 import { node, truss, Gesamt_ys, Gesamt_zs, yM, zM, phi0, bezugswerte, u0 } from "./duennQ"
 import { nnodes, nelem } from "./duennQ_tabelle.js"
 import { ymin, ymax, zmin, zmax, slmax, Mxp } from "./duennQ";
-import { myScreen } from "./first.js";
+import { myScreen } from './state';
 import { CSS2DObject, CSS2DRenderer } from 'three/examples/jsm/renderers/CSS2DRenderer.js';
 
 import { FontLoader, Font } from 'three/examples/jsm/loaders/FontLoader.js';

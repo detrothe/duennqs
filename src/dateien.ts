@@ -1,3 +1,5 @@
+// @ts-nocheck – wird durch Speichern/Öffnen wie in d2beam-gui ersetzt (neues Dateiformat)
+import { byId } from './state';
 
 import { app } from "./index";
 import { resizeTable } from "./base_tabelle.js";
@@ -42,25 +44,25 @@ function handleFileSelect_read() {
                     }
 
                     // in Tabelle schreiben
-                    document.getElementById("input_nodes").value = jobj.nnodes;
-                    document.getElementById("input_nelem").value = jobj.nelem;
+                    byId("input_nodes").value = jobj.nnodes;
+                    byId("input_nelem").value = jobj.nelem;
 
-                    document.getElementById("Vy").value = jobj.Vy;
-                    document.getElementById("Vz").value = jobj.Vz;
-                    document.getElementById("Nx").value = jobj.Nx
-                    document.getElementById("Mxp").value = jobj.Mxp;
-                    document.getElementById("Mxs").value = jobj.Mxs;
-                    document.getElementById("Momega").value = jobj.Momega;
-                    document.getElementById("My").value = jobj.My;
-                    document.getElementById("Mz").value = jobj.Mz;
+                    byId("Vy").value = jobj.Vy;
+                    byId("Vz").value = jobj.Vz;
+                    byId("Nx").value = jobj.Nx
+                    byId("Mxp").value = jobj.Mxp;
+                    byId("Mxs").value = jobj.Mxs;
+                    byId("Momega").value = jobj.Momega;
+                    byId("My").value = jobj.My;
+                    byId("Mz").value = jobj.Mz;
 
-                    document.getElementById("fyRd").value = jobj.fyRd;
-                    document.getElementById("EMod_ref").value = jobj.EMod_ref;
-                    document.getElementById("mue_ref").value = jobj.mue_ref;
+                    byId("fyRd").value = jobj.fyRd;
+                    byId("EMod_ref").value = jobj.EMod_ref;
+                    byId("mue_ref").value = jobj.mue_ref;
 
                     resizeTable();
 
-                    const tabelle = document.getElementById("nodeTable");
+                    const tabelle = byId("nodeTable");
                     let nSpalten = tabelle.rows[0].cells.length;
                     let i, j;
                     for (i = 1; i < tabelle.rows.length; i++) {
@@ -70,7 +72,7 @@ function handleFileSelect_read() {
                         }
                     }
 
-                    const etabelle = document.getElementById("elemTable");
+                    const etabelle = byId("elemTable");
                     nSpalten = etabelle.rows[0].cells.length;
 
                     for (i = 1; i < etabelle.rows.length; i++) {
@@ -98,13 +100,13 @@ async function handleFileSelect_save() {
 
     console.log("in select save");
 
-    const elem = document.getElementById("input_nodes");
+    const elem = byId("input_nodes");
 
     if (elem) {
 
         let i, j;
 
-        let tabelle = document.getElementById('nodeTable');
+        let tabelle = byId('nodeTable');
         let n_nodes = tabelle.rows.length - 1;
         let nSpalten = tabelle.rows[0].cells.length - 1;
 
@@ -116,7 +118,7 @@ async function handleFileSelect_save() {
             }
         }
 
-        tabelle = document.getElementById('elemTable');
+        tabelle = byId('elemTable');
         let n_elem = tabelle.rows.length - 1;
         nSpalten = tabelle.rows[0].cells.length - 1;
 
@@ -132,18 +134,18 @@ async function handleFileSelect_save() {
             'unit_length': current_unit_length,
             'nnodes': n_nodes,
             'nelem': n_elem,
-            'Vy': document.getElementById('Vy').value,
-            'Vz': document.getElementById('Vz').value,
-            'Nx': document.getElementById('Nx').value,
-            'Mxp': document.getElementById('Mxp').value,
-            'Mxs': document.getElementById('Mxs').value,
-            'Momega': document.getElementById('Momega').value,
-            'My': document.getElementById('My').value,
-            'Mz': document.getElementById('Mz').value,
+            'Vy': byId('Vy').value,
+            'Vz': byId('Vz').value,
+            'Nx': byId('Nx').value,
+            'Mxp': byId('Mxp').value,
+            'Mxs': byId('Mxs').value,
+            'Momega': byId('Momega').value,
+            'My': byId('My').value,
+            'Mz': byId('Mz').value,
 
-            'fyRd': document.getElementById('fyRd').value,
-            'EMod_ref': document.getElementById('EMod_ref').value,
-            'mue_ref': document.getElementById('mue_ref').value,
+            'fyRd': byId('fyRd').value,
+            'EMod_ref': byId('EMod_ref').value,
+            'mue_ref': byId('mue_ref').value,
 
             'elem': elem,
             'node': node
@@ -196,8 +198,8 @@ async function handleFileSelect_save() {
 
 }
 
-document.getElementById('readFile').addEventListener('click', handleFileSelect_read, false);
-document.getElementById('saveFile').addEventListener('click', handleFileSelect_save, false);
+byId('readFile').addEventListener('click', handleFileSelect_read, false);
+byId('saveFile').addEventListener('click', handleFileSelect_save, false);
 
 //------------------------------------------------------------------------------------------------
 function download(filename, text) {

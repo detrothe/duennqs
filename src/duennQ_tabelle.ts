@@ -1,3 +1,4 @@
+// @ts-nocheck – wird beim Umbau (neue Grafik bzw. dr-tabelle) komplett ersetzt
 "use strict";
 
 import { berechnungErforderlich } from "./globals.js"

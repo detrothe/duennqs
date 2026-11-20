@@ -1,3 +1,4 @@
+// @ts-nocheck – wird beim Umbau (neue Grafik bzw. dr-tabelle) komplett ersetzt
 //import * as d3 from "d3";
 import { set_nelem, set_nnodes, table_index, remove_selected_Tabelle } from "./duennQ_tabelle.js";
 import { berechnungErforderlich } from "./globals.js"

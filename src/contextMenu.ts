@@ -1,3 +1,4 @@
+// @ts-nocheck – wird beim Umbau (neue Grafik bzw. dr-tabelle) komplett ersetzt
 import { Detect } from './index';
 import { selectedCellPoly } from './base_tabelle.js';
 import { remove_selected_Tabelle } from "./duennQ_tabelle.js";

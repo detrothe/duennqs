@@ -8,7 +8,6 @@ export function duenn3D() {
 }
 
 
-// @ts-ignore
 window.duenn3D = duenn3D;   // jetzt auch in html sichtbar
 
 console.log("exit duenn3D.js");
@@ -19,7 +18,6 @@ export function duennQuer() {
     sichtbar('duennQ')
 }
 
-// @ts-ignore
 window.duennQuer = duennQuer;   // jetzt auch in html sichtbar
 
 //------------------------------------------------------------------------------------------------
@@ -29,7 +27,6 @@ export function mypdf() {
     sichtbar('mypdf')
 }
 
-// @ts-ignore
 window.mypdf = mypdf;   // jetzt auch in html sichtbar
 
 console.log("exit duenn3D")

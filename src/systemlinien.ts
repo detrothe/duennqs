@@ -1,3 +1,4 @@
+// @ts-nocheck – wird beim Umbau (neue Grafik bzw. dr-tabelle) komplett ersetzt
 
 
 import * as d3 from "d3";
@@ -6,7 +7,7 @@ import { CTrans } from './trans.js';
 import { truss, node, Gesamt_ys, Gesamt_zs, yM, zM, phi0 } from "./duennQ"
 import { ymin, ymax, zmin, zmax, slmax } from "./duennQ";
 
-import { myScreen } from "./first.js";
+import { myScreen } from './state';
 import { nnodes, nelem } from "./duennQ_tabelle.js"
 import { saveAs } from 'file-saver';
 import { app } from './index.js';

@@ -1,9 +1,10 @@
+import { byId } from './state';
 import 'font-awesome/css/font-awesome.min.css';
 
 import './styles/main.css';
 import './styles/contextMenu.css';
 
-import { myScreen } from './first.js'
+import { myScreen } from './state'
 import './einstellungen'
 
 import "./duenn3D.js";
@@ -22,7 +23,7 @@ import { logo_3D, main_3D, ttf_logo_3D } from "./grafik_3D";
 import { setNewUnits, body_width, current_body_width } from './einstellungen';
 import { berechnungErforderlich, set_text_berechnung_erforderlich } from "./globals.js"
 
-export const infoBox = document.getElementById("infoBox");
+export const infoBox = byId("infoBox");
 
 addEventListener("resize", (event) => {
     set_myScreen()
@@ -117,7 +118,7 @@ setNewUnits();
 document.body.style.display = 'block'
 
 {
-    let myInfoDiv = document.getElementById("id_hilfe");  //in div
+    let myInfoDiv = byId("id_hilfe");  //in div
 
     let tag = document.createElement("p"); // <p></p>
     tag.setAttribute("id", "id_infoDiv");
@@ -129,13 +130,13 @@ document.body.style.display = 'block'
     console.log("my locale", navigator.language)
 
     if (window.devicePixelRatio >= 1.5) {
-        const el = document.getElementById("id_body_width").setAttribute('disabled', true)
+        byId<HTMLInputElement>("id_body_width").disabled = true
     }
 }
 
 main_3D();
 
-eingabe1();  // Tabellenblatt eingabe sichtbar schalten
+window.eingabe1();  // Tabellenblatt eingabe sichtbar schalten
 berechnungErforderlich(true);
 
 logo_3D();
@@ -151,9 +152,10 @@ ttf_logo_3D();
     infoBox.innerHTML += "<br>Browser: " + Detect.browser + " Version " + Detect.version;
     infoBox.innerHTML += "<br>OS: " + Detect.OS + " , isMac: " + app.isMac;
 
-    if (navigator.userAgentData) {
-        infoBox.innerHTML += "<br>navigator.userAgentData.mobile: " + navigator.userAgentData.mobile;
-        infoBox.innerHTML += "<br>navigator.userAgentData.platform: " + navigator.userAgentData.platform;
+    const uaData = (navigator as Navigator & { userAgentData?: { mobile: boolean; platform: string } }).userAgentData;
+    if (uaData) {
+        infoBox.innerHTML += "<br>navigator.userAgentData.mobile: " + uaData.mobile;
+        infoBox.innerHTML += "<br>navigator.userAgentData.platform: " + uaData.platform;
     }
     infoBox.innerHTML += "<br><br>Browser Language: " + navigator.language;
     if (app.hasFSAccess) {
@@ -161,7 +163,7 @@ ttf_logo_3D();
     } else {
         infoBox.innerHTML += "<br>showSaveFilePicker wird NICHT unterstützt";
     }
-    const div = document.querySelector('body') //document.getElementById('eingabe_duennQ_top');
+    const div = document.body;
 
     infoBox.innerHTML += "<br>used font-size: " + css(div, 'font-size')
     let txt = Intl.NumberFormat().resolvedOptions().locale
@@ -174,47 +176,47 @@ ttf_logo_3D();
 
     if (app.browserLanguage != 'de') {
 
-        document.getElementById("id_doc").src = "docu_en.html";
+        byId<HTMLIFrameElement>("id_doc").src = "docu_en.html";
 
-        document.getElementById("lab_headline").innerHTML = "<b>Properties and stresses of thin-walled cross sections</b>";
+        byId("lab_headline").innerHTML = "<b>Properties and stresses of thin-walled cross sections</b>";
 
-        document.getElementById("lab_freier_text").innerText = "free text with HTML formatting for bold :";
+        byId("lab_freier_text").innerText = "free text with HTML formatting for bold :";
 
-        document.getElementById("id_eingabe").text = "Input";
-        document.getElementById("id_results").text = "Results";
-        document.getElementById("lab_nnodes").innerText = "Number of nodes :";
-        document.getElementById("lab_nelem").innerText = "Number of elements :";
-        document.getElementById("lab_schnittgroessen").innerHTML = "<b>Internal forces</b>";
-        document.getElementById("lab_bezugswerte").innerHTML = "<b>Reference values</b>";
-        document.getElementById("lab_material_equal").innerHTML = "all elements have the same material data";
-        document.getElementById("lab_vergleichsspannung").innerHTML = "<b>Equivalent stress</b>";
-        document.getElementById("lab_knoten").innerHTML = "<b>Nodes</b>";
-        document.getElementById("lab_elemente").innerHTML = "<b>Elements</b>";
+        byId("id_eingabe").textContent = "Input";
+        byId("id_results").textContent = "Results";
+        byId("lab_nnodes").innerText = "Number of nodes :";
+        byId("lab_nelem").innerText = "Number of elements :";
+        byId("lab_schnittgroessen").innerHTML = "<b>Internal forces</b>";
+        byId("lab_bezugswerte").innerHTML = "<b>Reference values</b>";
+        byId("lab_material_equal").innerHTML = "all elements have the same material data";
+        byId("lab_vergleichsspannung").innerHTML = "<b>Equivalent stress</b>";
+        byId("lab_knoten").innerHTML = "<b>Nodes</b>";
+        byId("lab_elemente").innerHTML = "<b>Elements</b>";
 
-        document.getElementById("readFile").innerHTML = "read input data";
-        document.getElementById("saveFile").innerHTML = "save input data";
+        byId("readFile").innerHTML = "read input data";
+        byId("saveFile").innerHTML = "save input data";
 
-        document.getElementById("resize").innerHTML = "resize table";
-        document.getElementById("clearTable").innerHTML = "clear tables";
-        document.getElementById("rechnen").innerHTML = "calculate";
+        byId("resize").innerHTML = "resize table";
+        byId("clearTable").innerHTML = "clear tables";
+        byId("rechnen").innerHTML = "calculate";
 
         set_text_berechnung_erforderlich('New calculation required')
 
-        document.getElementById("lab_einheiten").innerText = "Units for tables and stresses";
-        document.getElementById("lab_unit_length").innerText = "Unit of length :";
-        document.getElementById("lab_font_size").innerText = "Font size :";
-        document.getElementById("lab_width_browser").innerText = "Width browser window :";
-        document.getElementById("lab_tableColor_outside").innerText = "Table color outside :";
-        document.getElementById("lab_tableColor_inside").innerText = "Table color inside :";
-        document.getElementById("id_cb_saveLocalStorage").innerHTML = "Save selection as default values in browser";
-        document.getElementById("id_cb_deleteLocalStorage").innerHTML = "Delete default values in browser memory";
+        byId("lab_einheiten").innerText = "Units for tables and stresses";
+        byId("lab_unit_length").innerText = "Unit of length :";
+        byId("lab_font_size").innerText = "Font size :";
+        byId("lab_width_browser").innerText = "Width browser window :";
+        byId("lab_tableColor_outside").innerText = "Table color outside :";
+        byId("lab_tableColor_inside").innerText = "Table color inside :";
+        byId("id_cb_saveLocalStorage").innerHTML = "Save selection as default values in browser";
+        byId("id_cb_deleteLocalStorage").innerHTML = "Delete default values in browser memory";
 
-        document.getElementById("lab_ergebnisse").innerHTML = "Results";
-        document.getElementById("lab_ideelle_Querschnittswerte").innerHTML = "Ideal cross section properties";
+        byId("lab_ergebnisse").innerHTML = "Results";
+        byId("lab_ideelle_Querschnittswerte").innerHTML = "Ideal cross section properties";
 
     }
 }
 
-function css(element, property) {
+function css(element: Element, property: string) {
     return window.getComputedStyle(element, null).getPropertyValue(property);
 }

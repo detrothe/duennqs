@@ -4,8 +4,9 @@
   "description": "Querschnittswerte und Spannungen duennwandiger Querschnitte",
   "scripts": {
     "dev": "vite --open",
-    "build": "vite build",
-    "preview": "npm run build && vite preview --open"
+    "build": "tsc && vite build",
+    "preview": "npm run build && vite preview --open",
+    "typecheck": "tsc"
   },
   "author": "me",
   "license": "ISC",
@@ -25,6 +26,7 @@
     "@types/d3": "^7.4.3",
     "@types/file-saver": "^2.0.7",
     "@types/three": "^0.150.1",
+    "typescript": "^7.0.2",
     "vite": "^8.3.8",
     "vite-plugin-pwa": "^2.0.0"
   },

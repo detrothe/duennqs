@@ -1,16 +1,17 @@
+import { byId } from './state';
 import { set_myScreen, app } from "./index.js";
 console.log("enter einstellungen")
 import { testeZahl } from "./utility.js";
 
 console.log("vor getElementId")
-document.getElementById("unitLength").addEventListener('change', einstellungen);
-document.getElementById("id_cb_saveLocalStorage").addEventListener('click', saveLocalStorage);
-document.getElementById("id_cb_deleteLocalStorage").addEventListener('click', deleteLocalStorage);
+byId("unitLength").addEventListener('change', einstellungen);
+byId("id_cb_saveLocalStorage").addEventListener('click', saveLocalStorage);
+byId("id_cb_deleteLocalStorage").addEventListener('click', deleteLocalStorage);
 
-document.getElementById("id_fontsize").addEventListener('change', set_font_size);
-document.getElementById("id_color_table_out").addEventListener('change', set_color_table_out);
-document.getElementById("id_color_table_in").addEventListener('change', set_color_table_in);
-document.getElementById("id_body_width").addEventListener('change', set_body_width);
+byId("id_fontsize").addEventListener('change', set_font_size);
+byId("id_color_table_out").addEventListener('change', set_color_table_out);
+byId("id_color_table_in").addEventListener('change', set_color_table_in);
+byId("id_body_width").addEventListener('change', set_body_width);
 
 export let current_unit_length = 'cm'
 export let current_unit_stress = 'kN/cm²'
@@ -30,7 +31,7 @@ readLocalStorage();
 //----------------------------------------------------------------------------------------------
 function set_body_width() {
     //------------------------------------------------------------------------------------------
-    const el = document.getElementById("id_body_width") as HTMLInputElement;
+    const el = byId("id_body_width") as HTMLInputElement;
     let wert = Number(testeZahl(el.value))
     if (wert > 200) {  // Mindestbreite, sonst kann man nichts mehr eingeben
         body_width = wert
@@ -42,7 +43,7 @@ function set_body_width() {
 function set_font_size() {
     //------------------------------------------------------------------------------------------
 
-    const el = document.getElementById("id_fontsize") as HTMLInputElement;
+    const el = byId("id_fontsize") as HTMLInputElement;
     my_fontsize = el.value
     document.body.style.fontSize = my_fontsize
 
@@ -62,13 +63,13 @@ function set_font_size() {
 function set_color_table_out() {
     //------------------------------------------------------------------------------------------
 
-    const el = document.getElementById("id_color_table_out") as HTMLInputElement;
+    const el = byId("id_color_table_out") as HTMLInputElement;
     color_table_out = el.value
 
-    const ntabelle = document.getElementById("nodeTable") as HTMLTableElement;
+    const ntabelle = byId("nodeTable") as HTMLTableElement;
     ntabelle.style.backgroundColor = color_table_out
 
-    const etabelle = document.getElementById("elemTable") as HTMLTableElement;
+    const etabelle = byId("elemTable") as HTMLTableElement;
     etabelle.style.backgroundColor = color_table_out
 
 }
@@ -77,14 +78,14 @@ function set_color_table_out() {
 function set_color_table_in() {
     //------------------------------------------------------------------------------------------
 
-    const el = document.getElementById("id_color_table_in") as HTMLInputElement;
+    const el = byId("id_color_table_in") as HTMLInputElement;
     color_table_in = el.value
 
-    const ntabelle = document.getElementById("nodeTable") as HTMLTableElement;
+    const ntabelle = byId("nodeTable") as HTMLTableElement;
     for (let i = 1; i < ntabelle.rows.length; i++) {
         ntabelle.rows[i].cells[0].style.backgroundColor = color_table_in
     }
-    const etabelle = document.getElementById("elemTable") as HTMLTableElement;
+    const etabelle = byId("elemTable") as HTMLTableElement;
     for (let i = 1; i < etabelle.rows.length; i++) {
         etabelle.rows[i].cells[0].style.backgroundColor = color_table_in
     }
@@ -98,7 +99,7 @@ export function set_current_unit_length(unitLength: string) {
     current_unit_length = unitLength;
     old_unit_length = unitLength;
 
-    const auswahl = document.getElementById("unitLength") as HTMLInputElement
+    const auswahl = byId("unitLength") as HTMLInputElement
     auswahl.value = unitLength
 
     set_unit_factors(unitLength)
@@ -137,7 +138,7 @@ function einstellungen() {
     }
 
     let child: HTMLInputElement
-    const ntabelle = document.getElementById("nodeTable") as HTMLTableElement;
+    const ntabelle = byId("nodeTable") as HTMLTableElement;
     let nSpalten = ntabelle.rows[0].cells.length;
     for (let i = 1; i < ntabelle.rows.length; i++) {
         for (let j = 1; j < nSpalten; j++) {
@@ -147,7 +148,7 @@ function einstellungen() {
         }
     }
 
-    const etabelle = document.getElementById("elemTable") as HTMLTableElement;
+    const etabelle = byId("elemTable") as HTMLTableElement;
     nSpalten = etabelle.rows[0].cells.length;
     for (let i = 1; i < etabelle.rows.length; i++) {
         child = etabelle.rows[i].cells[1].firstElementChild as HTMLInputElement  // Emodul
@@ -159,10 +160,10 @@ function einstellungen() {
         child.value = zahl.toString()
     }
 
-    let el = document.getElementById("EMod_ref") as HTMLInputElement;
+    let el = byId("EMod_ref") as HTMLInputElement;
     el.value = (parseFloat(el.value) * factor_stress).toString()
 
-    el = document.getElementById("fyRd") as HTMLInputElement;
+    el = byId("fyRd") as HTMLInputElement;
     el.value = (parseFloat(el.value) * factor_stress).toString()
 
     old_unit_length = current_unit_length
@@ -176,13 +177,13 @@ function einstellungen() {
 //----------------------------------------------------------------------------------------------
 export function setNewUnits() {
     //------------------------------------------------------------------------------------------
-    const auswahl = document.getElementById("unitLength") as HTMLInputElement
+    const auswahl = byId("unitLength") as HTMLInputElement
     const unit = auswahl.value
     console.log("in setNewUnits : ", unit)
 
-    const nTabelle = document.getElementById("nodeTable") as HTMLTableElement;
+    const nTabelle = byId("nodeTable") as HTMLTableElement;
     let objCells: any
-    objCells = nTabelle.rows.item(0).cells;  // Überschrift Punkt zentrieren
+    objCells = nTabelle.rows[0].cells;  // Überschrift Punkt zentrieren
 
     if (unit === 'mm') {
         objCells.item(1).innerHTML = 'y&#772; [mm]'
@@ -203,8 +204,8 @@ export function setNewUnits() {
     } else {
         dicke = 'width'
     }
-    const eTabelle = document.getElementById("elemTable") as HTMLTableElement;
-    objCells = eTabelle.rows.item(0).cells;  // Überschrift Punkt zentrieren
+    const eTabelle = byId("elemTable") as HTMLTableElement;
+    objCells = eTabelle.rows[0].cells;  // Überschrift Punkt zentrieren
 
     if (unit === 'mm') {
         objCells.item(1).innerHTML = 'E-Modul [N/mm²]'
@@ -250,13 +251,13 @@ function saveLocalStorage() {
 
     console.log("in saveLocalStorage : ")
 
-    let el = document.getElementById("id_fontsize") as HTMLInputElement;
+    let el = byId("id_fontsize") as HTMLInputElement;
     my_fontsize = el.value
 
-    el = document.getElementById("id_color_table_out") as HTMLInputElement;
+    el = byId("id_color_table_out") as HTMLInputElement;
     color_table_out = el.value
 
-    el = document.getElementById("id_color_table_in") as HTMLInputElement;
+    el = byId("id_color_table_in") as HTMLInputElement;
     color_table_in = el.value
 
     window.localStorage.setItem('current_unit_length', current_unit_length);
@@ -264,7 +265,7 @@ function saveLocalStorage() {
     window.localStorage.setItem('color_table_out', color_table_out);
     window.localStorage.setItem('color_table_in', color_table_in);
 
-    el = document.getElementById("id_body_width") as HTMLInputElement;
+    el = byId("id_body_width") as HTMLInputElement;
     let wert = Number(testeZahl(el.value))
     if (wert > 200) window.localStorage.setItem('body_width', el.value);  // nur vernünftige werte abspeichern
 }
@@ -280,7 +281,7 @@ export function readLocalStorage() {
         current_unit_length = unitLength
         old_unit_length = unitLength
 
-        const auswahl = document.getElementById("unitLength") as HTMLInputElement
+        const auswahl = byId("unitLength") as HTMLInputElement
         auswahl.value = unitLength
 
         set_unit_factors(unitLength)
@@ -290,7 +291,7 @@ export function readLocalStorage() {
 
     const default_fontsize = window.localStorage.getItem('my_fontsize');
     if (default_fontsize) {
-        const el = document.getElementById("id_fontsize") as HTMLInputElement
+        const el = byId("id_fontsize") as HTMLInputElement
         if (el.value !== default_fontsize) {
             el.value = default_fontsize
             my_fontsize = default_fontsize
@@ -298,7 +299,7 @@ export function readLocalStorage() {
         }
     } else {
         const width = Math.min(document.documentElement.clientWidth, document.documentElement.clientHeight)
-        const el = document.getElementById("id_fontsize") as HTMLInputElement
+        const el = byId("id_fontsize") as HTMLInputElement
         if (width < 380) {
             let size = '0.625em'    // 10
             el.value = size
@@ -326,14 +327,14 @@ export function readLocalStorage() {
 
     let color = window.localStorage.getItem('color_table_out');
     if (color) {
-        const el = document.getElementById("id_color_table_out") as HTMLInputElement
+        const el = byId("id_color_table_out") as HTMLInputElement
         el.value = color
         color_table_out = color
     }
 
     color = window.localStorage.getItem('color_table_in');
     if (color) {
-        const el = document.getElementById("id_color_table_in") as HTMLInputElement
+        const el = byId("id_color_table_in") as HTMLInputElement
         el.value = color
         color_table_in = color
     }
@@ -341,7 +342,7 @@ export function readLocalStorage() {
     console.log("vor body_width")
     const item = window.localStorage.getItem('body_width');
     if (item) {
-        const el = document.getElementById("id_body_width") as HTMLInputElement
+        const el = byId("id_body_width") as HTMLInputElement
         el.value = item
         set_body_width()
     }

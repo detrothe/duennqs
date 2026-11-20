@@ -1,4 +1,4 @@
-export function gauss(n, a, b) {
+export function gauss(n: number, a: number[][], b: number[] | Float64Array): number {
 
 //***********************************************************************
 //                                                                      *
@@ -6,8 +6,8 @@ export function gauss(n, a, b) {
 //                                                                      *
 //***********************************************************************
 
-    let i, mem, iz, k, j;
-    let c, aji;
+    let i: number, mem: number, iz: number, k: number, j: number;
+    let c: number, aji: number;
 
 //                   calculate solution vector b
 

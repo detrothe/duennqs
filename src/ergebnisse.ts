@@ -1,4 +1,5 @@
-import { testeZahl, sichtbar } from './utility.js';
+import { byId } from './state';
+import { sichtbar } from './utility.js';
 
 export function ergebnisse() {
     console.log("in ergebnisse");
@@ -10,12 +11,7 @@ export function eingabe1() {
     console.log("in eingabe");
     sichtbar('eingabe')
 
-    let element = document.getElementById("id_eingabe");  // id_eingabe
-    /*
-        const evt = new Event("click");  // { "bubbles": true, "cancelable": false }
-        evt.button = 0;     // linke Maustaste
-        element.dispatchEvent(evt);
-    */
+    const element = byId("id_eingabe");
     element.focus({ focusVisible: false });
 }
 
