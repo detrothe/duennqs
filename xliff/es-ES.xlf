@@ -760,6 +760,18 @@
   <source>pdf-Datei gespeichert</source>
   <target>archivo pdf guardado</target>
 </trans-unit>
+<trans-unit id="s6e92250ee8d02278">
+  <source>Jetzt neu laden</source>
+  <target>Recargar ahora</target>
+</trans-unit>
+<trans-unit id="se9da8cc1cf1518b1">
+  <source>Später</source>
+  <target>Más tarde</target>
+</trans-unit>
+<trans-unit id="sb29df2a56f19c0f6">
+  <source>Es gibt eine neue Version. Jetzt neu laden? Die aktuelle Eingabe bleibt erhalten.</source>
+  <target>Hay una nueva versión. ¿Recargar ahora? La entrada actual se conserva.</target>
+</trans-unit>
 </body>
 </file>
 </xliff>

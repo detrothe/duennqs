@@ -16,9 +16,10 @@ export default defineConfig({
     },
     plugins: [
         VitePWA({
-            // vorerst automatische Aktualisierung; Rückfrage wie d2beam-gui folgt später (sw_update.ts)
-            registerType: 'autoUpdate',
-            injectRegister: 'auto',
+            // wie d2beam-gui: neue Version im Hintergrund laden, übernehmen erst nach Rückfrage
+            // (Registrierung und Prüfung in src/sw_update.ts)
+            registerType: 'prompt',
+            injectRegister: false,
             includeAssets: ['favicon.ico', 'icon/duennQs.png'],
             manifest: {
                 name: 'Querschnittswerte und Spannungen dünnwandiger Querschnitte',
@@ -44,7 +45,6 @@ export default defineConfig({
                 maximumFileSizeToCacheInBytes: 6 * 1024 * 1024,
                 cleanupOutdatedCaches: true,
                 clientsClaim: true,
-                skipWaiting: true,
             },
         }),
     ],

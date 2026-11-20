@@ -16,6 +16,7 @@ import { my_jspdf } from './mypdf';
 import { alertdialog } from './components/confirm_dialog';
 import { setLocale, startSprache } from './localization';
 import { initAutosave } from './autosave';
+import { starteVersionspruefung } from './sw_update';
 import { enableTouchHints } from './components/touch_hint';
 
 // dunkles Theme von Shoelace über die Klasse sl-theme-dark (wie d2beam-gui)
@@ -115,6 +116,9 @@ async function start(): Promise<void> {
         if (dreiDGeladen && app.gerechnet) void import('./grafik3d').then(m => m.neuZeichnen());
     });
     gespeichertenStandInitialisieren();
+
+    // Service Worker registrieren und auf neue Versionen prüfen (auch beim Zurückkehren aus dem Hintergrund)
+    starteVersionspruefung();
 }
 
 void start();

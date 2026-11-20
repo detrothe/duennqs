@@ -760,6 +760,18 @@
   <source>pdf-Datei gespeichert</source>
   <target>fichier pdf enregistré</target>
 </trans-unit>
+<trans-unit id="s6e92250ee8d02278">
+  <source>Jetzt neu laden</source>
+  <target>Recharger maintenant</target>
+</trans-unit>
+<trans-unit id="se9da8cc1cf1518b1">
+  <source>Später</source>
+  <target>Plus tard</target>
+</trans-unit>
+<trans-unit id="sb29df2a56f19c0f6">
+  <source>Es gibt eine neue Version. Jetzt neu laden? Die aktuelle Eingabe bleibt erhalten.</source>
+  <target>Une nouvelle version est disponible. Recharger maintenant ? La saisie actuelle est conservée.</target>
+</trans-unit>
 </body>
 </file>
 </xliff>
