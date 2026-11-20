@@ -4,8 +4,8 @@ import { VitePWA } from 'vite-plugin-pwa';
 export default defineConfig({
     // relative Pfade, damit die App auch in einem Unterverzeichnis läuft
     base: './',
-    // jspdf, three.js und d3 machen das Bundle bewusst groß (wird in späteren Schritten aufgeteilt)
-    build: {chunkSizeWarningLimit: 4000},
+    // jspdf mit eingebetteter Schrift macht das Haupt-Bundle groß; three.js ist ein eigener, nachgeladener Chunk
+    build: {chunkSizeWarningLimit: 2500},
     plugins: [
         VitePWA({
             // vorerst automatische Aktualisierung; Rückfrage wie d2beam-gui folgt später (sw_update.ts)
@@ -30,11 +30,9 @@ export default defineConfig({
                 ],
             },
             workbox: {
-                // Doku-Seiten, Bilder und die Schrift für die 3D-Beschriftung offline verfügbar
-                globPatterns: ['**/*.{js,css,html,png,ico,woff2,ttf,json}'],
-                // Font-Awesome-Schrift nur als woff2 vorab laden
-                globIgnores: ['**/fontawesome-webfont-*.ttf'],
-                // das Haupt-Bundle ist derzeit gut 3 MB groß
+                // Doku-Seiten und Bilder offline verfügbar
+                globPatterns: ['**/*.{js,css,html,png,ico,woff2}'],
+                // das Haupt-Bundle ist derzeit gut 2 MB groß (jspdf mit eingebetteter Schrift)
                 maximumFileSizeToCacheInBytes: 6 * 1024 * 1024,
                 cleanupOutdatedCaches: true,
                 clientsClaim: true,

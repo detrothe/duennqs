@@ -332,7 +332,7 @@ export function zeichneQuerschnitt(): void {
     const container = byId('my-svg');
     const breite = container.clientWidth || myScreen.svgWidth;
     const hoehe = Math.max(200, document.documentElement.clientHeight
-        - byId('input-container').getBoundingClientRect().height);
+        - byId('input-container').getBoundingClientRect().height - byId('footer').offsetHeight);
     container.style.height = hoehe + 'px';
 
     const t = getTwo();

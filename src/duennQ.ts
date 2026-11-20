@@ -6,10 +6,9 @@ import { berechnungErfolgreich } from "./globals.js";
 import { resizeTable, meinetabelle } from "./base_tabelle.js"
 import './dateien.js';
 import { gauss } from "./gauss.js"
-import { testeZahl, myFormat, testNumber } from './utility.js';
+import { testeZahl, myFormat, testNumber, currentTab, zeige3D } from './utility.js';
 import { remove_selected_Tabelle, clear_Tabelle, setSelectionMode_node, setSelectionMode_element, nelem, nnodes } from "./duennQ_tabelle.js";
 import { set_myScreen, app } from "./index.js"
-import { draw_elements } from "./grafik_3D";
 import { current_unit_length, current_unit_stress, unit_length_factor, unit_stress_factor } from "./einstellungen"
 
 export let ymin = -50.0, zmin = -50.0, ymax = 50.0, zmax = 50.0, slmax = 0.0;
@@ -1553,7 +1552,7 @@ export function duennQ() {
     } else {
         byId("info_berechnung").innerText = "Calculation successful"
     }
-    draw_elements();
+    if (currentTab === 'duenn3D') zeige3D();
 
 }
 

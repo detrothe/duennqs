@@ -3,7 +3,6 @@ import { berechnung_erfolgreich } from "./globals.js";
 import { myScreen } from './state'
 import { set_myScreen } from "./index.js";
 import { zeichneQuerschnitt } from "./grafik";
-import { draw_elements } from "./grafik_3D.js";
 import { my_jspdf } from "./mypdf.js";
 
 export let currentTab = '';
@@ -67,9 +66,7 @@ export function sichtbar(displayName: string) {
 
     if (displayName === 'duenn3D') {
         set_myScreen();
-        if (berechnung_erfolgreich) draw_elements();
         byId("my-webgl").style.display = "block";
-        window.dispatchEvent(new Event("resize"));
     } else {
         byId("my-webgl").style.display = "none";
     }
@@ -109,4 +106,10 @@ export function sichtbar(displayName: string) {
 
     // erst zeichnen, wenn alle anderen Tabs ausgeblendet sind (sonst stimmt die Breite nicht)
     if (displayName === 'duennQ') zeichneQuerschnitt();
+    if (displayName === 'duenn3D') zeige3D();
+}
+
+/** 3D-Ansicht (eigener Chunk, wird erst beim ersten Öffnen geladen) einblenden bzw. neu aufbauen. */
+export function zeige3D(): void {
+    import('./grafik3d').then(m => m.zeige3D());
 }

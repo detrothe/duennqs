@@ -19,7 +19,6 @@ import { sichtbar, currentTab } from "./utility.js";
 import DetectOS from 'detectos.js';
 import { init_contextmenu } from './contextMenu.js';
 
-import { logo_3D, main_3D, ttf_logo_3D } from "./grafik_3D";
 import { setNewUnits, body_width, current_body_width } from './einstellungen';
 import { berechnungErforderlich, set_text_berechnung_erforderlich } from "./globals.js"
 
@@ -134,14 +133,11 @@ document.body.style.display = 'block'
     }
 }
 
-main_3D();
 
 window.eingabe1();  // Tabellenblatt eingabe sichtbar schalten
 berechnungErforderlich(true);
 
-logo_3D();
 
-ttf_logo_3D();
 
 {
 
