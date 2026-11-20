@@ -17,6 +17,7 @@ import { msg } from '@lit/localize';
 import { byId, berechnungErforderlich } from './state';
 import { alertdialog } from './components/confirm_dialog';
 import { einheitenUmrechnen, spaltenAktualisieren } from './eingabe';
+import { setLocale, KEY_LOCALE } from './localization';
 
 export let current_unit_length = 'cm';
 export let current_unit_stress = 'kN/cm²';
@@ -112,6 +113,7 @@ function geaendert(ja: boolean): void {
 function speichern(): void {
     try {
         window.localStorage.setItem(KEY_EINHEIT, current_unit_length);
+        window.localStorage.setItem(KEY_LOCALE, byId<HTMLSelectElement>('id_locale').value);
         window.localStorage.setItem(KEY_TABELLE, picker('id_color_table_out').value);
         window.localStorage.setItem(KEY_TEXT, picker('id_color_table_text').value);
         // Akzentfarbe nur speichern, wenn eine eigene gewählt ist (sonst Standard behalten)
@@ -125,7 +127,7 @@ function speichern(): void {
 
 function loeschen(): void {
     try {
-        for (const key of [KEY_EINHEIT, KEY_TABELLE, KEY_TEXT, KEY_AKZENT]) window.localStorage.removeItem(key);
+        for (const key of [KEY_EINHEIT, KEY_LOCALE, KEY_TABELLE, KEY_TEXT, KEY_AKZENT]) window.localStorage.removeItem(key);
     } catch { /* nichts zu tun */ }
     picker('id_color_table_out').value = STANDARD_TABELLE;
     picker('id_color_table_text').value = kontrastfarbe(STANDARD_TABELLE);
@@ -151,6 +153,10 @@ export function initEinstellungen(): void {
     geaendert(false);
 
     byId('unitLength').addEventListener('change', einheitGeaendert);
+    byId('id_locale').addEventListener('change', () => {
+        void setLocale(byId<HTMLSelectElement>('id_locale').value);
+        geaendert(true);
+    });
     // neue Hintergrundfarbe → Textfarbe automatisch hell oder dunkel
     byId('id_color_table_out').addEventListener('sl-input', () => {
         const bg = picker('id_color_table_out').value;

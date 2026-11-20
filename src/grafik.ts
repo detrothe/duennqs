@@ -1,6 +1,7 @@
 import Two from 'two.js';
 import type { Path } from 'two.js/src/path';
 import { saveAs } from 'file-saver';
+import { msg } from '@lit/localize';
 import { byId } from './state';
 import { CTrans } from './trans';
 import { truss, node, Gesamt_ys, Gesamt_zs, yM, zM, phi0, ymin, ymax, zmin, zmax } from './duennQ';
@@ -291,7 +292,6 @@ function zeichne(t: Two, tr: CTrans, faktor: number, mitNummern: boolean) {
 function bestimmeFangpunkte(py: (v: number) => number, pz: (v: number) => number,
                             sKreis: SVGElement | null, mKreis: SVGElement | null,
                             yMg: number, zMg: number): Fangpunkt[] {
-    const de = app.browserLanguage === 'de';
     const e = current_unit_length;
     const punkte: Fangpunkt[] = [];
 
@@ -302,8 +302,7 @@ function bestimmeFangpunkte(py: (v: number) => number, pz: (v: number) => number
     });
     for (const nr of nummern.values()) {
         const k = node[nr[0]];
-        const titel = (de ? (nr.length > 1 ? 'Knoten ' : 'Knoten ') : (nr.length > 1 ? 'Nodes ' : 'Node '))
-            + nr.map(i => i + 1).join(', ');
+        const titel = msg('Knoten', { id: 'knoten_nummer', desc: 'ein Knoten mit Nummer, z.B. Knoten 3' }) + ' ' + nr.map(i => i + 1).join(', ');
         punkte.push({
             px: py(k.y), pz: pz(k.z), y: k.y, z: k.z, kreis: null,
             html: `<b>${titel}</b><br>y&#772; = ${laenge(k.y)}&nbsp; z&#772; = ${laenge(k.z)} ${e}`
@@ -312,13 +311,13 @@ function bestimmeFangpunkte(py: (v: number) => number, pz: (v: number) => number
     }
     punkte.push({
         px: py(yMg), pz: pz(zMg), y: yMg, z: zMg, kreis: mKreis,
-        html: `<b>${de ? 'Schubmittelpunkt' : 'Shear center'}</b><br>y<sub>M</sub> = ${laenge(yM)}&nbsp; z<sub>M</sub> = ${laenge(zM)} ${e}`
+        html: `<b>${msg('Schubmittelpunkt')}</b><br>y<sub>M</sub> = ${laenge(yM)}&nbsp; z<sub>M</sub> = ${laenge(zM)} ${e}`
             + `<br>y&#772; = ${laenge(yMg)}&nbsp; z&#772; = ${laenge(zMg)} ${e}`,
     });
     // Schwerpunkt zuletzt: bei gleichem Abstand gewinnt er (doppelt symmetrische Querschnitte)
     punkte.push({
         px: py(Gesamt_ys), pz: pz(Gesamt_zs), y: Gesamt_ys, z: Gesamt_zs, kreis: sKreis,
-        html: `<b>${de ? 'Schwerpunkt' : 'Centroid'}</b><br>y&#772;<sub>s</sub> = ${laenge(Gesamt_ys)}&nbsp; z&#772;<sub>s</sub> = ${laenge(Gesamt_zs)} ${e}`,
+        html: `<b>${msg('Schwerpunkt')}</b><br>y&#772;<sub>s</sub> = ${laenge(Gesamt_ys)}&nbsp; z&#772;<sub>s</sub> = ${laenge(Gesamt_zs)} ${e}`,
     });
     return punkte;
 }
@@ -376,7 +375,7 @@ async function svgSpeichern(): Promise<void> {
     let filename = 'duennqs.svg';
     if (app.hasFSAccess && app.isMac) {
         filename = window.prompt(
-            'Name der Datei mit Extension, z.B. duennqs.svg\nDie Datei wird im Default Download Ordner gespeichert',
+            msg('Name der Datei (wird im Download-Ordner gespeichert):'),
             filename) ?? filename;
     }
     try {

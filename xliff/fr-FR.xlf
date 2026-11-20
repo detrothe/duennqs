@@ -1,0 +1,713 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
+<file target-language="fr-FR" source-language="de" original="lit-localize-inputs" datatype="plaintext">
+<body>
+<trans-unit id="s21ed3cf1e232460a">
+  <source>Eingabe</source>
+  <target>Saisie</target>
+</trans-unit>
+<trans-unit id="s7129495aed9d8046">
+  <source>Ergebnisse</source>
+  <target>Résultats</target>
+</trans-unit>
+<trans-unit id="sa81e2cdaf6921adc">
+  <source>System</source>
+  <target>Système</target>
+</trans-unit>
+<trans-unit id="s784d82bd15c49b4a">
+  <source>Einstellungen</source>
+  <target>Paramètres</target>
+</trans-unit>
+<trans-unit id="s9234cde5c4c75943">
+  <source>neue Eingabe beginnen</source>
+  <target>Commencer une nouvelle saisie</target>
+</trans-unit>
+<trans-unit id="s740a754fe7906289">
+  <source>Eingabe einlesen</source>
+  <target>Ouvrir la saisie</target>
+</trans-unit>
+<trans-unit id="s54fade01578df84b">
+  <source>Eingabe speichern</source>
+  <target>Enregistrer la saisie</target>
+</trans-unit>
+<trans-unit id="s133c5df8502c944c">
+  <source>Querschnittswerte und Spannungen berechnen (farbig hinterlegt, wenn die Eingabe geändert wurde)</source>
+  <target>Calculer les caractéristiques et les contraintes (en couleur si la saisie a changé)</target>
+</trans-unit>
+<trans-unit id="se9f528070d8cf418">
+  <source>Rechnen</source>
+  <target>Calculer</target>
+</trans-unit>
+<trans-unit id="s5747c1377ce8b0a5">
+  <source>Querschnittswerte und Spannungen dünnwandiger Querschnitte</source>
+  <target>Caractéristiques et contraintes des sections à parois minces</target>
+</trans-unit>
+<trans-unit id="s907c9609efe8407e">
+  <source>freier Text mit HTML-Formatierung (für die pdf-Ausgabe):</source>
+  <target>texte libre avec mise en forme HTML (pour la sortie pdf) :</target>
+</trans-unit>
+<trans-unit id="sc1444b7e8677ce3b">
+  <source>Hausübung A1, SS 2025</source>
+  <target>Exercice A1, semestre d'été 2025</target>
+</trans-unit>
+<trans-unit id="s1b02d3b69f49c253">
+  <source>Bearbeitet von: Melis Muster</source>
+  <target>Réalisé par : Melis Muster</target>
+</trans-unit>
+<trans-unit id="sb87a78ebbd243d2d">
+  <source>Schnittgrößen</source>
+  <target>Efforts internes</target>
+</trans-unit>
+<trans-unit id="sd7bf60912e234837">
+  <source>Querkraft in y-Richtung</source>
+  <target>effort tranchant selon y</target>
+</trans-unit>
+<trans-unit id="scad8928ce04fd1ba">
+  <source>primäres Torsionsmoment (St. Venant)</source>
+  <target>moment de torsion primaire (Saint-Venant)</target>
+</trans-unit>
+<trans-unit id="s3d1362f3061410b4">
+  <source>Normalkraft</source>
+  <target>Effort normal</target>
+</trans-unit>
+<trans-unit id="s46e22db4f9caa220">
+  <source>Querkraft in z-Richtung</source>
+  <target>effort tranchant selon z</target>
+</trans-unit>
+<trans-unit id="s974b45223e6dc3d2">
+  <source>sekundäres Torsionsmoment</source>
+  <target>moment de torsion secondaire</target>
+</trans-unit>
+<trans-unit id="se15bf80772ac4f33">
+  <source>Biegemoment um die y-Achse</source>
+  <target>moment fléchissant autour de l'axe y</target>
+</trans-unit>
+<trans-unit id="s0689587db167433b">
+  <source>Wölbbimoment</source>
+  <target>bimoment de gauchissement</target>
+</trans-unit>
+<trans-unit id="s713c457387fecdde">
+  <source>Biegemoment um die z-Achse</source>
+  <target>moment fléchissant autour de l'axe z</target>
+</trans-unit>
+<trans-unit id="s6de8b79afb816b88">
+  <source>Bezugswerte</source>
+  <target>Valeurs de référence</target>
+</trans-unit>
+<trans-unit id="sd1d0a5c6c4c77462">
+  <source>alle Elemente haben gleiche Materialdaten</source>
+  <target>tous les éléments ont les mêmes données de matériau</target>
+</trans-unit>
+<trans-unit id="s65592582fac0eeab">
+  <source>E-Modul (Bezugswert)</source>
+  <target>module d'Young (valeur de référence)</target>
+</trans-unit>
+<trans-unit id="s78cbcf4d18d679ef">
+  <source>Querdehnzahl (Bezugswert)</source>
+  <target>coefficient de Poisson (valeur de référence)</target>
+</trans-unit>
+<trans-unit id="s3757d4bdb31ca0da">
+  <source>Bemessungswert der Streckgrenze (für die Vergleichsspannung)</source>
+  <target>valeur de calcul de la limite d'élasticité (pour la contrainte équivalente)</target>
+</trans-unit>
+<trans-unit id="s1bd581ec11590306">
+  <source>Anzahl Knoten: </source>
+  <target>Nombre de nœuds : </target>
+</trans-unit>
+<trans-unit id="s5d987dc0dd03d316">
+  <source>Elemente</source>
+  <target>Éléments</target>
+</trans-unit>
+<trans-unit id="sdd00e76e03cded1d">
+  <source>nod1 und nod2 sind die Nummern des Anfangs- und Endknotens. Die rechte Seite eines Elements liegt in Richtung von nod1 nach nod2 gesehen rechts (siehe 3D-Ansicht, „rechts/links anzeigen“).</source>
+  <target>nod1 et nod2 sont les numéros des nœuds de début et de fin. Le côté droit d'un élément se trouve à droite en regardant de nod1 vers nod2 (voir vue 3D, « afficher droite/gauche »).</target>
+</trans-unit>
+<trans-unit id="s5917f7a203fcbf98">
+  <source>Anzahl Elemente: </source>
+  <target>Nombre d'éléments : </target>
+</trans-unit>
+<trans-unit id="s7d3b74e529b06937">
+  <source>Rechte Maustaste bzw. langes Drücken auf markierte Zellen öffnet das Kontextmenü. In der Spalte No fügt + oberhalb eine Zeile ein, der Papierkorb löscht die Zeile (beides mit Rückgängig/Wiederherstellen).</source>
+  <target>Le bouton droit de la souris ou un appui long sur les cellules sélectionnées ouvre le menu contextuel. Dans la colonne No, + insère une ligne au-dessus, la corbeille supprime la ligne (les deux avec annuler/rétablir).</target>
+</trans-unit>
+<trans-unit id="sa30d77be7c7c7d59">
+  <source>Ergebnisse als pdf-Datei speichern</source>
+  <target>Enregistrer les résultats en fichier pdf</target>
+</trans-unit>
+<trans-unit id="s7528207a1d339605">
+  <source>Noch nicht gerechnet – im Tab Eingabe auf Rechnen drücken.</source>
+  <target>Pas encore calculé – appuyez sur Calculer dans l'onglet Saisie.</target>
+</trans-unit>
+<trans-unit id="s242244c7d728763b">
+  <source>ideelle Querschnittswerte</source>
+  <target>Caractéristiques idéales de la section</target>
+</trans-unit>
+<trans-unit id="s016e2695d43c6359">
+  <source>Knoten- und Elementnummern ein-/ausblenden</source>
+  <target>Afficher/masquer les numéros des nœuds et éléments</target>
+</trans-unit>
+<trans-unit id="s7e3191a92cb77b99">
+  <source>Nummern</source>
+  <target>Numéros</target>
+</trans-unit>
+<trans-unit id="s8f61ad6669fb2d2c">
+  <source>Grafik als SVG-Datei speichern</source>
+  <target>Enregistrer le graphique comme fichier SVG</target>
+</trans-unit>
+<trans-unit id="s5689dde358e20548">
+  <source>3D-Ansicht: bitte zuerst Rechnen drücken</source>
+  <target>Vue 3D : appuyez d'abord sur Calculer</target>
+</trans-unit>
+<trans-unit id="s2a26513593107f4d">
+  <source>Kurzdokumentation zu Duenne Querschnitte.html</source>
+  <target>docu_en.html</target>
+</trans-unit>
+<trans-unit id="sa1781a00a872bf21">
+  <source>Gerät</source>
+  <target>Appareil</target>
+</trans-unit>
+<trans-unit id="s8954946e6c414e39">
+  <source>Längeneinheit:</source>
+  <target>Unité de longueur :</target>
+</trans-unit>
+<trans-unit id="sbfb8176091a3242c">
+  <source>Einheit für Eingabe und Ergebnisse; vorhandene Werte werden umgerechnet</source>
+  <target>Unité pour la saisie et les résultats ; les valeurs existantes sont converties</target>
+</trans-unit>
+<trans-unit id="s980285ed945f4920">
+  <source>Hintergrundfarbe Tabellen:</source>
+  <target>Couleur de fond des tableaux :</target>
+</trans-unit>
+<trans-unit id="s67df30eee417c25a">
+  <source>Hintergrundfarbe Tabellen</source>
+  <target>Couleur de fond des tableaux</target>
+</trans-unit>
+<trans-unit id="s4b8b3b2c5928212b">
+  <source>Textfarbe Tabellen:</source>
+  <target>Couleur du texte des tableaux :</target>
+</trans-unit>
+<trans-unit id="s63190f0c75e7f693">
+  <source>Textfarbe Tabellen</source>
+  <target>Couleur du texte des tableaux</target>
+</trans-unit>
+<trans-unit id="s4da64b8d0fc6bc9c">
+  <source>Wird beim Ändern der Hintergrundfarbe automatisch hell oder dunkel gesetzt</source>
+  <target>Réglée automatiquement en clair ou foncé lors du changement de la couleur de fond</target>
+</trans-unit>
+<trans-unit id="s4c948185a2c3dc94">
+  <source>Akzentfarbe:</source>
+  <target>Couleur d'accent :</target>
+</trans-unit>
+<trans-unit id="se7a1853c55b51f26">
+  <source>Akzentfarbe</source>
+  <target>Couleur d'accentuation</target>
+</trans-unit>
+<trans-unit id="s92ed5bb5583899e3">
+  <source>Farbe für den aktiven Tab und den Rechnen-Button, wenn neu gerechnet werden muss</source>
+  <target>Couleur de l'onglet actif et du bouton Calculer lorsqu'un nouveau calcul est nécessaire</target>
+</trans-unit>
+<trans-unit id="sf767b754aa59716a">
+  <source>Akzentfarbe auf das Standard-Blau zurücksetzen</source>
+  <target>Rétablir le bleu standard comme couleur d'accentuation</target>
+</trans-unit>
+<trans-unit id="s53a526d5c80c3e28">
+  <source>Standard</source>
+  <target>Par défaut</target>
+</trans-unit>
+<trans-unit id="s41e5704dbb12ac2c">
+  <source>Die Tabellenfarbe gilt auch für die Titelleiste des Bedienfelds in der 3D-Ansicht.</source>
+  <target>La couleur des tableaux s'applique aussi à la barre de titre du panneau de commande de la vue 3D.</target>
+</trans-unit>
+<trans-unit id="s854627b29e5663d3">
+  <source>Die gewählten Einstellungen bleiben auch nach einem Neustart der App erhalten</source>
+  <target>Les réglages choisis sont conservés après un redémarrage de l'application</target>
+</trans-unit>
+<trans-unit id="s062463b6cb2ba47f">
+  <source>Auswahl als Standardwerte im Browser speichern</source>
+  <target>Enregistrer la sélection comme valeurs par défaut dans le navigateur</target>
+</trans-unit>
+<trans-unit id="s2a527d2aa4924cec">
+  <source>Es gibt Änderungen, die noch nicht gespeichert sind.</source>
+  <target>Certaines modifications ne sont pas encore enregistrées.</target>
+</trans-unit>
+<trans-unit id="sf7d1b364b3c47a7a">
+  <source>Gespeicherte Einstellungen löschen und die Standardwerte wiederherstellen</source>
+  <target>Supprimer les réglages enregistrés et rétablir les valeurs par défaut</target>
+</trans-unit>
+<trans-unit id="sdb44853a9a24fec0">
+  <source>Standardwerte im Speicher des Browsers löschen</source>
+  <target>Supprimer les valeurs par défaut de la mémoire du navigateur</target>
+</trans-unit>
+<trans-unit id="sc1a732f8b025abbd">
+  <source>Zeile oberhalb einfügen</source>
+  <target>Insérer une ligne au-dessus</target>
+</trans-unit>
+<trans-unit id="s1ec6656427d93e0f">
+  <source>Zeile löschen</source>
+  <target>Supprimer la ligne</target>
+</trans-unit>
+<trans-unit id="s34e3267de95173eb">
+  <source>Zeile <x id="0" equiv-text="${iZeile}"/> wirklich löschen?</source>
+  <target>Supprimer vraiment la ligne <x id="0" equiv-text="${iZeile}"/> ?</target>
+</trans-unit>
+<trans-unit id="s062a673dafbdd5dd">
+  <source>Rückgängig</source>
+  <target>Annuler</target>
+</trans-unit>
+<trans-unit id="s923e8c23e10ef290">
+  <source>Löschen rückgängig</source>
+  <target>Annuler la suppression</target>
+</trans-unit>
+<trans-unit id="s650d622acd1fe2a3">
+  <source>Wiederherstellen</source>
+  <target>Rétablir</target>
+</trans-unit>
+<trans-unit id="scdbeef85e98901d2">
+  <source>Löschen wiederherstellen</source>
+  <target>Rétablir la suppression</target>
+</trans-unit>
+<trans-unit id="s0c2fabc1c3fe5a99">
+  <source>duennqs-Eingabe</source>
+  <target>saisie duennqs</target>
+</trans-unit>
+<trans-unit id="s6b73c59b276b77e1">
+  <source>Die Datei enthält keine gültige duennqs-Eingabe.</source>
+  <target>Le fichier ne contient pas de saisie duennqs valide.</target>
+</trans-unit>
+<trans-unit id="sf3b8dd74d2f76589">
+  <source>Name der Datei (wird im Download-Ordner gespeichert):</source>
+  <target>Nom du fichier (enregistré dans le dossier de téléchargement) :</target>
+</trans-unit>
+<trans-unit id="sd81b33dfcbc03795">
+  <source>Die Eingabe enthält ungültige Zahlen (rot markiert).</source>
+  <target>La saisie contient des nombres non valides (marqués en rouge).</target>
+</trans-unit>
+<trans-unit id="se348225ed91b8e5a">
+  <source>Der E-Modul (Bezugswert) muss größer 0 sein</source>
+  <target>Le module d'Young (valeur de référence) doit être supérieur à 0</target>
+</trans-unit>
+<trans-unit id="s9fb8f1fac842e481">
+  <source>Die Querdehnzahl (Bezugswert) muss größer oder gleich 0 sein</source>
+  <target>Le coefficient de Poisson (valeur de référence) doit être supérieur ou égal à 0</target>
+</trans-unit>
+<trans-unit id="s77d9046f166a8c1f">
+  <source>E-Modul von Element <x id="0" equiv-text="${i + 1}"/> muss größer 0 sein</source>
+  <target>Le module d'Young de l'élément <x id="0" equiv-text="${i + 1}"/> doit être supérieur à 0</target>
+</trans-unit>
+<trans-unit id="sadf755d641ccf479">
+  <source>Querdehnzahl von Element <x id="0" equiv-text="${i + 1}"/> muss größer oder gleich 0 sein</source>
+  <target>Le coefficient de Poisson de l'élément <x id="0" equiv-text="${i + 1}"/> doit être supérieur ou égal à 0</target>
+</trans-unit>
+<trans-unit id="s48243d2e2b746bb6">
+  <source>Dicke von Element <x id="0" equiv-text="${i + 1}"/> muss größer 0 sein</source>
+  <target>L'épaisseur de l'élément <x id="0" equiv-text="${i + 1}"/> doit être supérieure à 0</target>
+</trans-unit>
+<trans-unit id="sd2f0c08c7cb4ed35">
+  <source>Knoteninzidenzen von Element <x id="0" equiv-text="${i + 1}"/> müssen zwischen 1 und der Anzahl der Knoten liegen</source>
+  <target>Les nœuds de l'élément <x id="0" equiv-text="${i + 1}"/> doivent être compris entre 1 et le nombre de nœuds</target>
+</trans-unit>
+<trans-unit id="sa082226798a6a7eb">
+  <source>An Knoten <x id="0" equiv-text="${i + 1}"/> hängt kein Element</source>
+  <target>Aucun élément n'est relié au nœud <x id="0" equiv-text="${i + 1}"/></target>
+</trans-unit>
+<trans-unit id="se08538ce6eb81be3">
+  <source>Die Länge von Element <x id="0" equiv-text="${i + 1}"/> ist null</source>
+  <target>La longueur de l'élément <x id="0" equiv-text="${i + 1}"/> est nulle</target>
+</trans-unit>
+<trans-unit id="s6bf117f912b77341">
+  <source>Das Gleichungssystem ist singulär.</source>
+  <target>Le système d'équations est singulier.</target>
+</trans-unit>
+<trans-unit id="sfaba033c9713b1db">
+  <source>Alle Spannungen in</source>
+  <target>Toutes les contraintes en</target>
+</trans-unit>
+<trans-unit id="s4b690af41ff9e07b">
+  <source>Schubspannungen aus primärer Torsion M&lt;sub&gt;xp&lt;/sub&gt;</source>
+  <target>Contraintes de cisaillement dues à la torsion primaire M&lt;sub&gt;xp&lt;/sub&gt;</target>
+</trans-unit>
+<trans-unit id="s3e32ef1dbdd05d8f">
+  <source>Elementnummer</source>
+  <target>numéro d'élément</target>
+</trans-unit>
+<trans-unit id="s34f2404e58176644">
+  <source>Schubspannung linke Seite aus Anteil offener Querschnitt</source>
+  <target>contrainte de cisaillement côté gauche due à la part de section ouverte</target>
+</trans-unit>
+<trans-unit id="s99f5b18e86de4b6e">
+  <source>Schubspannung rechte Seite aus Anteil offener Querschnitt</source>
+  <target>contrainte de cisaillement côté droit due à la part de section ouverte</target>
+</trans-unit>
+<trans-unit id="sae0571cba5069665">
+  <source>Schubspannung aus Anteil geschlossener Querschnitt</source>
+  <target>contrainte de cisaillement due à la part de section fermée</target>
+</trans-unit>
+<trans-unit id="s91faa5b4c818b35c">
+  <source>Schubspannungen aus Querkräften und sekundärer Torsion M&lt;sub&gt;xs&lt;/sub&gt;</source>
+  <target>Contraintes de cisaillement dues aux efforts tranchants et à la torsion secondaire M&lt;sub&gt;xs&lt;/sub&gt;</target>
+</trans-unit>
+<trans-unit id="s339f3d0b2d0733df">
+  <source>Schubspannung am Elementanfang, Elementknoten 1</source>
+  <target>contrainte de cisaillement au début de l'élément, nœud 1</target>
+</trans-unit>
+<trans-unit id="s7a0e15a7cc7a9450">
+  <source>Schubspannung in Elementmitte</source>
+  <target>contrainte de cisaillement au milieu de l'élément</target>
+</trans-unit>
+<trans-unit id="s629d6adf44139801">
+  <source>Schubspannung am Elementende, Elementknoten 2</source>
+  <target>contrainte de cisaillement à la fin de l'élément, nœud 2</target>
+</trans-unit>
+<trans-unit id="sb832ea16a48e996f">
+  <source>Schubspannungen aus Querkräften, primärem und sekundärem Torsionsmoment</source>
+  <target>Contraintes de cisaillement dues aux efforts tranchants et aux moments de torsion primaire et secondaire</target>
+</trans-unit>
+<trans-unit id="s99d7d0c9ee6ffe56">
+  <source>Schubspannung am Elementanfang, Elementknoten 1, linke Seite</source>
+  <target>contrainte de cisaillement au début de l'élément, nœud 1, côté gauche</target>
+</trans-unit>
+<trans-unit id="s7d68654a4a8d6aab">
+  <source>Schubspannung in Elementmitte, linke Seite</source>
+  <target>contrainte de cisaillement au milieu de l'élément, côté gauche</target>
+</trans-unit>
+<trans-unit id="s2202f9c5118ff020">
+  <source>Schubspannung am Elementende, Elementknoten 2, linke Seite</source>
+  <target>contrainte de cisaillement à la fin de l'élément, nœud 2, côté gauche</target>
+</trans-unit>
+<trans-unit id="s441cf1c3e27a04ae">
+  <source>Schubspannung am Elementanfang, Elementknoten 1, rechte Seite</source>
+  <target>contrainte de cisaillement au début de l'élément, nœud 1, côté droit</target>
+</trans-unit>
+<trans-unit id="s75342fab9f38ad0d">
+  <source>Schubspannung in Elementmitte, rechte Seite</source>
+  <target>contrainte de cisaillement au milieu de l'élément, côté droit</target>
+</trans-unit>
+<trans-unit id="s4e5e9408299b36c4">
+  <source>Schubspannung am Elementende, Elementknoten 2, rechte Seite</source>
+  <target>contrainte de cisaillement à la fin de l'élément, nœud 2, côté droit</target>
+</trans-unit>
+<trans-unit id="s17d62424ec414450">
+  <source>linke Seite</source>
+  <target>côté gauche</target>
+</trans-unit>
+<trans-unit id="sb199340d56c521d4">
+  <source>rechte Seite</source>
+  <target>côté droit</target>
+</trans-unit>
+<trans-unit id="s327d27aa06ad3aeb">
+  <source>Normalspannungen aus Normalkraft, Biegemomenten und Wölbbimoment</source>
+  <target>Contraintes normales dues à l'effort normal, aux moments fléchissants et au bimoment</target>
+</trans-unit>
+<trans-unit id="sf4ade6fe48e4f354">
+  <source>Normalspannung in Mittellinie, Elementanfang</source>
+  <target>contrainte normale sur la ligne moyenne, début de l'élément</target>
+</trans-unit>
+<trans-unit id="sf49e51cc828d1b91">
+  <source>Normalspannung in Mittellinie, Elementende</source>
+  <target>contrainte normale sur la ligne moyenne, fin de l'élément</target>
+</trans-unit>
+<trans-unit id="sd359e7e0061f1ab0">
+  <source>von Mises Vergleichsspannungen</source>
+  <target>Contraintes équivalentes de von Mises</target>
+</trans-unit>
+<trans-unit id="s675a69bfe0064bcb">
+  <source>Größtwert der Vergleichsspannung, Elementanfang</source>
+  <target>contrainte équivalente maximale, début de l'élément</target>
+</trans-unit>
+<trans-unit id="s581a0d6275ee0177">
+  <source>Größtwert der Vergleichsspannung, Elementmitte</source>
+  <target>contrainte équivalente maximale, milieu de l'élément</target>
+</trans-unit>
+<trans-unit id="s578e865ad974986a">
+  <source>Größtwert der Vergleichsspannung, Elementende</source>
+  <target>contrainte équivalente maximale, fin de l'élément</target>
+</trans-unit>
+<trans-unit id="sfd5fcce6cfac4e3b">
+  <source>Schubkorrekturfaktoren</source>
+  <target>Facteurs de correction de cisaillement</target>
+</trans-unit>
+<trans-unit id="s4f378bbd6523250a">
+  <source>für Querkraft V&lt;sub&gt;1&lt;/sub&gt; in Hauptrichtung 1</source>
+  <target>pour l'effort tranchant V&lt;sub&gt;1&lt;/sub&gt; dans la direction principale 1</target>
+</trans-unit>
+<trans-unit id="sff18e4caaf74b058">
+  <source>für Querkraft V&lt;sub&gt;2&lt;/sub&gt; in Hauptrichtung 2</source>
+  <target>pour l'effort tranchant V&lt;sub&gt;2&lt;/sub&gt; dans la direction principale 2</target>
+</trans-unit>
+<trans-unit id="sfd8f31c0b05514e4">
+  <source>E-Modul</source>
+  <target>Module E</target>
+</trans-unit>
+<trans-unit id="s75a100ffeb0b8943">
+  <source>Dicke</source>
+  <target>Épaisseur</target>
+</trans-unit>
+<trans-unit id="sef38a920ec0dfe74">
+  <source>Speichern im Browser nicht möglich: </source>
+  <target>Enregistrement dans le navigateur impossible : </target>
+</trans-unit>
+<trans-unit id="s6ba8ff3a3676ea08">
+  <source>Knoten</source>
+  <target>Nœuds</target>
+</trans-unit>
+<trans-unit id="s2c9a2353836e3a4f">
+  <source>Schubmittelpunkt</source>
+  <target>Centre de cisaillement</target>
+</trans-unit>
+<trans-unit id="sef7575badcd4aeef">
+  <source>Schwerpunkt</source>
+  <target>Centre de gravité</target>
+</trans-unit>
+<trans-unit id="s442aa7de41fece0d">
+  <source>Bedienfeld</source>
+  <target>Panneau de commande</target>
+</trans-unit>
+<trans-unit id="s7403178e54879d16">
+  <source>nur Querschnitt</source>
+  <target>Section seule</target>
+</trans-unit>
+<trans-unit id="s094dec24e1c9ded9">
+  <source>Normalspannung σ</source>
+  <target>Contrainte normale σ</target>
+</trans-unit>
+<trans-unit id="s4f13ef11fd7a59a4">
+  <source>Schubspannung τ</source>
+  <target>Contrainte de cisaillement τ</target>
+</trans-unit>
+<trans-unit id="se07e5940e09f070c">
+  <source>Vergleichsspannung σv</source>
+  <target>Contrainte équivalente σv</target>
+</trans-unit>
+<trans-unit id="s6759d39f8e7b30e1">
+  <source>Wölbordinate ω</source>
+  <target>Ordonnée de gauchissement ω</target>
+</trans-unit>
+<trans-unit id="sa21f15a168d7a600">
+  <source>Verwölbung u</source>
+  <target>Gauchissement u</target>
+</trans-unit>
+<trans-unit id="sa17afac9667bd99a">
+  <source>Anzeige</source>
+  <target>Affichage</target>
+</trans-unit>
+<trans-unit id="s4fc96f99f0a6656f">
+  <source>fyRd anzeigen</source>
+  <target>Afficher fyRd</target>
+</trans-unit>
+<trans-unit id="s2b41d1fba90e38cb">
+  <source>Beschriftung</source>
+  <target>Étiquettes</target>
+</trans-unit>
+<trans-unit id="s8d3551f00a88687e">
+  <source>Skalierung</source>
+  <target>Échelle</target>
+</trans-unit>
+<trans-unit id="s581b43714b756199">
+  <source>σ über die Dicke</source>
+  <target>Σ sur l'épaisseur</target>
+</trans-unit>
+<trans-unit id="sa3b23dcc287a0498">
+  <source>Seiten anzeigen</source>
+  <target>Afficher les côtés</target>
+</trans-unit>
+<trans-unit id="sd5f52b6e496371c7">
+  <source>Pfeile anzeigen</source>
+  <target>Afficher les flèches</target>
+</trans-unit>
+<trans-unit id="s72c84ea4ac50b385">
+  <source>Skalierung Pfeile</source>
+  <target>Échelle des flèches</target>
+</trans-unit>
+<trans-unit id="s42f298cbba2e7b65">
+  <source>rechts/links anzeigen</source>
+  <target>Afficher droite/gauche</target>
+</trans-unit>
+<trans-unit id="sc60893f8b1d00b8c">
+  <source>Achsen anzeigen</source>
+  <target>Afficher les axes</target>
+</trans-unit>
+<trans-unit id="s4a03a64d096d0cd3">
+  <source>Fangweite [px]</source>
+  <target>Rayon d'accrochage [px]</target>
+</trans-unit>
+<trans-unit id="s8469617a8c3f2f8d">
+  <source>Bild speichern</source>
+  <target>Enregistrer l'image</target>
+</trans-unit>
+<trans-unit id="s0c0fd4aed60ab7f2">
+  <source>Auflösung</source>
+  <target>Résolution</target>
+</trans-unit>
+<trans-unit id="sc33278e2d99a1fee">
+  <source>weißer Hintergrund</source>
+  <target>Fond blanc</target>
+</trans-unit>
+<trans-unit id="s05aaf8f7c4ec6579">
+  <source>Zurücksetzen</source>
+  <target>Réinitialiser</target>
+</trans-unit>
+<trans-unit id="s1c603e2de4aa9c8d">
+  <source>Spannungen in </source>
+  <target>Contraintes en </target>
+</trans-unit>
+<trans-unit id="s190747c04bd639f7">
+  <source>Element</source>
+  <target>Élément</target>
+</trans-unit>
+<trans-unit id="s5a92006c27771749">
+  <source>Ecke</source>
+  <target>coin</target>
+</trans-unit>
+<trans-unit id="s83977996c90f160f">
+  <source>Seite</source>
+  <target>Page</target>
+</trans-unit>
+<trans-unit id="s9c96a6ea6515ff20">
+  <source>Wölbordinate ω in </source>
+  <target>Ordonnée de gauchissement ω en </target>
+</trans-unit>
+<trans-unit id="saea1cfdd397f8a4d">
+  <source>Verwölbung u in </source>
+  <target>Gauchissement u en </target>
+</trans-unit>
+<trans-unit id="s0066c7378d25f93a">
+  <source>Ein Finger verschiebt – tippen für Werteanzeige</source>
+  <target>Un doigt déplace – touchez pour afficher les valeurs</target>
+</trans-unit>
+<trans-unit id="saaeb23a1421871d1">
+  <source>Ein Finger zeigt Werte – tippen zum Verschieben</source>
+  <target>Un doigt affiche les valeurs – touchez pour déplacer</target>
+</trans-unit>
+<trans-unit id="s60db9e62aea93c25">
+  <source>PNG speichern</source>
+  <target>Enregistrer PNG</target>
+</trans-unit>
+<trans-unit id="s564e9125da82e366">
+  <source>PNG-Bild</source>
+  <target>Image PNG</target>
+</trans-unit>
+<trans-unit id="s49f4189fd3716e48">
+  <source>Bildschirm</source>
+  <target>Écran</target>
+</trans-unit>
+<trans-unit id="s30f92eca8dec2cb0">
+  <source>Pixeldichte</source>
+  <target>densité de pixels</target>
+</trans-unit>
+<trans-unit id="sb3803e9cc79575bb">
+  <source>Sprache</source>
+  <target>langue</target>
+</trans-unit>
+<trans-unit id="s15f128f7c0b0134a">
+  <source>Betriebssystem</source>
+  <target>Système d'exploitation</target>
+</trans-unit>
+<trans-unit id="s0808f67328008e28">
+  <source>Touch-Punkte</source>
+  <target>Points tactiles</target>
+</trans-unit>
+<trans-unit id="s0e5bfc5f2640d7eb">
+  <source>Dateidialog (showSaveFilePicker)</source>
+  <target>Boîte de dialogue de fichiers (showSaveFilePicker)</target>
+</trans-unit>
+<trans-unit id="s08c16307b564e954">
+  <source>ja</source>
+  <target>oui</target>
+</trans-unit>
+<trans-unit id="s9db17b30c9e3a5b6">
+  <source>nein, Speichern als Download</source>
+  <target>non, enregistrement par téléchargement</target>
+</trans-unit>
+<trans-unit id="se56b58baa0574673">
+  <source>nein</source>
+  <target>non</target>
+</trans-unit>
+<trans-unit id="sf6ad6dca0b753c17">
+  <source>Die aktuelle Eingabe verwerfen und neu beginnen?</source>
+  <target>Abandonner la saisie actuelle et recommencer ?</target>
+</trans-unit>
+<trans-unit id="s67d78db44791b971">
+  <source>Es liegt keine fehlerfreie Berechnung vor.</source>
+  <target>Aucun calcul sans erreur n'est disponible.</target>
+</trans-unit>
+<trans-unit id="s1144953fd3f289b0">
+  <source>Dünnwandiger Querschnitt</source>
+  <target>Section à parois minces</target>
+</trans-unit>
+<trans-unit id="sf379ebba22363ed5">
+  <source>Querdehnung ν = </source>
+  <target>Coefficient de Poisson ν = </target>
+</trans-unit>
+<trans-unit id="s2b7c0ebed1d5f1a8">
+  <source>Knotenkoordinaten</source>
+  <target>Coordonnées des nœuds</target>
+</trans-unit>
+<trans-unit id="sdee1d2056321d187">
+  <source>Elementdaten</source>
+  <target>Données des éléments</target>
+</trans-unit>
+<trans-unit id="s06bab6c5048fcd87">
+  <source>Schubspannungen aus primärer Torsion </source>
+  <target>Contraintes de cisaillement dues à la torsion primaire </target>
+</trans-unit>
+<trans-unit id="s96669ec941a9e1c5">
+  <source>Schubspannungen aus Querkräften und sekundärer Torsion </source>
+  <target>Contraintes de cisaillement dues aux efforts tranchants et à la torsion secondaire </target>
+</trans-unit>
+<trans-unit id="s209f42173afed09e">
+  <source>Schubspannungen aus allen Anteilen</source>
+  <target>Contraintes de cisaillement de toutes les parts</target>
+</trans-unit>
+<trans-unit id="sfaadd489dfa358bf">
+  <source>Querschnitt</source>
+  <target>Section</target>
+</trans-unit>
+<trans-unit id="s846e1fc610837baa">
+  <source>pdf-Datei gespeichert (Download-Ordner)</source>
+  <target>fichier pdf enregistré (dossier de téléchargement)</target>
+</trans-unit>
+<trans-unit id="s255fc944b18ba548">
+  <source>Wert der ersten Zelle kopieren</source>
+  <target>copier la valeur de la première cellule</target>
+</trans-unit>
+<trans-unit id="s56938782dadc04e4">
+  <source>Werte der ersten Zeile kopieren</source>
+  <target>copier les valeurs de la première ligne</target>
+</trans-unit>
+<trans-unit id="s9b84d553c22dca33">
+  <source>um 1 hochzählen</source>
+  <target>incrémenter de 1</target>
+</trans-unit>
+<trans-unit id="s3965ed73b2864f94">
+  <source>um Delta hochzählen</source>
+  <target>incrémenter de delta</target>
+</trans-unit>
+<trans-unit id="s7e5c28821db89eb6">
+  <source>in Zwischenablage kopieren</source>
+  <target>copier dans le presse-papiers</target>
+</trans-unit>
+<trans-unit id="sdbd9ec67ac08902d">
+  <source>aus Zwischenablage einfügen</source>
+  <target>insérer depuis le presse-papiers</target>
+</trans-unit>
+<trans-unit id="s3736b35d76c86de5">
+  <source>schließen</source>
+  <target>fermer</target>
+</trans-unit>
+<trans-unit id="s985fe56722f6aa33">
+  <source>Sprache:</source>
+  <target>Langue :</target>
+</trans-unit>
+<trans-unit id="knoten_nummer">
+  <source>Knoten</source>
+  <target>Nœud</target>
+  <note from="lit-localize">ein Knoten mit Nummer, z.B. Knoten 3</note>
+</trans-unit>
+<trans-unit id="element_seite">
+  <source>Seite</source>
+  <target>côté</target>
+  <note from="lit-localize">rechte oder linke Seite eines Elements (R/L)</note>
+</trans-unit>
+</body>
+</file>
+</xliff>

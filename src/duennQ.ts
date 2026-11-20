@@ -132,7 +132,8 @@ class TElement {
 
 //----------------------------------------------------------------------------------------------
 
-export function duennQ() {
+/** Berechnung; zeigeErgebnisse: danach auf den Tab Ergebnisse wechseln (nicht beim Sprachwechsel). */
+export function duennQ(zeigeErgebnisse = true) {
     //----------------------------------------------------------------------------------------------
 
     let i: number, neq: number,
@@ -807,11 +808,7 @@ export function duennQ() {
         tag.setAttribute("id", "id_spannung_mxp");
         const text = document.createTextNode("xxx");
         tag.appendChild(text);
-        if (app.browserLanguage == 'de') {
-            tag.innerHTML = "Alle Spannungen in " + current_unit_stress + "<br><br>Schubspannungen aus primärer Torsion M<sub>xp</sub>"
-        } else {
-            tag.innerHTML = "All stresses in " + current_unit_stress + "<br><br>Shear stresses from primary torsion M<sub>xp</sub>"
-        }
+        tag.innerHTML = msg('Alle Spannungen in') + ' ' + current_unit_stress + '<br><br>' + msg('Schubspannungen aus primärer Torsion M<sub>xp</sub>')
         myTableDiv.appendChild(tag);
 
         const table = document.createElement("TABLE") as HTMLTableElement;   //TABLE??
@@ -824,20 +821,20 @@ export function duennQ() {
 
         const th0 = thead.appendChild(document.createElement("th"));
         th0.innerHTML = "El No";
-        th0.title = "Elementnummer"
+        th0.title = msg('Elementnummer')
         th0.setAttribute("class", "table_spannung_cell_center");
         row.appendChild(th0);
         const th1 = thead.appendChild(document.createElement("th"));
         th1.innerHTML = "&tau;<sub>xs0,L</sub>";
-        th1.title = "Schubspannung linke Seite aus Anteil offener Querschnitt"
+        th1.title = msg('Schubspannung linke Seite aus Anteil offener Querschnitt')
         row.appendChild(th1);
         const th2 = thead.appendChild(document.createElement("th"));
         th2.innerHTML = "&tau;<sub>xs0,R</sub>";
-        th2.title = "Schubspannung rechte Seite aus Anteil offener Querschnitt"
+        th2.title = msg('Schubspannung rechte Seite aus Anteil offener Querschnitt')
         row.appendChild(th2);
         const th3 = thead.appendChild(document.createElement("th"));
         th3.innerHTML = "&tau;<sub>xs1</sub>";
-        th3.title = "Schubspannung aus Anteil geschlossener Querschnitt"
+        th3.title = msg('Schubspannung aus Anteil geschlossener Querschnitt')
         row.appendChild(th3);
 
         for (i = 0; i < nelem; i++) {
@@ -872,11 +869,7 @@ export function duennQ() {
         tag.setAttribute("id", "id_spannung_mxs");
         const text = document.createTextNode("xxx");
         tag.appendChild(text);
-        if (app.browserLanguage == 'de') {
-            tag.innerHTML = "Schubspannungen aus Querkräften und sekundärer Torsion M<sub>xs</sub>"
-        } else {
-            tag.innerHTML = "Shear stresses from shear forces and secondary torsion M<sub>xs</sub>"
-        }
+        tag.innerHTML = msg('Schubspannungen aus Querkräften und sekundärer Torsion M<sub>xs</sub>')
         myTableDiv.appendChild(tag);
 
         const table = document.createElement("TABLE") as HTMLTableElement;   //TABLE??
@@ -889,20 +882,20 @@ export function duennQ() {
 
         const th0 = thead.appendChild(document.createElement("th"));
         th0.innerHTML = "El No";
-        th0.title = "Elementnummer"
+        th0.title = msg('Elementnummer')
         row.appendChild(th0);
         th0.setAttribute("class", "table_spannung_cell_center");
         const th1 = thead.appendChild(document.createElement("th"));
         th1.innerHTML = "&tau;<sub>xsa</sub>";
-        th1.title = "Schubspannung am Elementanfang, Elementknoten 1"
+        th1.title = msg('Schubspannung am Elementanfang, Elementknoten 1')
         row.appendChild(th1);
         const th2 = thead.appendChild(document.createElement("th"));
         th2.innerHTML = "&tau;<sub>xsm</sub>";
-        th2.title = "Schubspannung in Elementmitte"
+        th2.title = msg('Schubspannung in Elementmitte')
         row.appendChild(th2);
         const th3 = thead.appendChild(document.createElement("th"));
         th3.innerHTML = "&tau;<sub>xse</sub>";
-        th3.title = "Schubspannung am Elementende, Elementknoten 2"
+        th3.title = msg('Schubspannung am Elementende, Elementknoten 2')
         row.appendChild(th3);
 
         let tbody = table.createTBody();
@@ -938,11 +931,7 @@ export function duennQ() {
         const tag = document.createElement("p"); // <p></p>
         tag.setAttribute("id", "id_schubspannung");
         let text: Text
-        if (app.browserLanguage == 'de') {
-            text = document.createTextNode("Schubspannungen aus Querkräften, primärem und sekundärem Torsionsmoment");
-        } else {
-            text = document.createTextNode("Shear stresses from shear forces, primary and secondary torsional moment");
-        }
+        text = document.createTextNode(msg('Schubspannungen aus Querkräften, primärem und sekundärem Torsionsmoment'));
         tag.appendChild(text);
         myTableDiv.appendChild(tag);
 
@@ -956,32 +945,32 @@ export function duennQ() {
 
         const th0 = thead.appendChild(document.createElement("th"));
         th0.innerHTML = "El No";
-        th0.title = "Elementnummer"
+        th0.title = msg('Elementnummer')
         th0.setAttribute("class", "table_spannung_cell_center");
         row.appendChild(th0);
         const th1 = thead.appendChild(document.createElement("th"));
         th1.innerHTML = "&tau;<sub>a,L</sub>";
-        th1.title = "Schubspannung am Elementanfang, Elementknoten 1, linke Seite"
+        th1.title = msg('Schubspannung am Elementanfang, Elementknoten 1, linke Seite')
         row.appendChild(th1);
         const th2 = thead.appendChild(document.createElement("th"));
         th2.innerHTML = "&tau;<sub>m,L</sub>";
-        th2.title = "Schubspannung in Elementmitte, linke Seite"
+        th2.title = msg('Schubspannung in Elementmitte, linke Seite')
         row.appendChild(th2);
         const th3 = thead.appendChild(document.createElement("th"));
         th3.innerHTML = "&tau;<sub>e,L</sub>";
-        th3.title = "Schubspannung am Elementende, Elementknoten 2, linke Seite"
+        th3.title = msg('Schubspannung am Elementende, Elementknoten 2, linke Seite')
         row.appendChild(th3);
         const th4 = thead.appendChild(document.createElement("th"));
         th4.innerHTML = "&tau;<sub>a,R</sub>";
-        th4.title = "Schubspannung am Elementanfang, Elementknoten 1, rechte Seite"
+        th4.title = msg('Schubspannung am Elementanfang, Elementknoten 1, rechte Seite')
         row.appendChild(th4);
         const th5 = thead.appendChild(document.createElement("th"));
         th5.innerHTML = "&tau;<sub>m,R</sub>";
-        th5.title = "Schubspannung in Elementmitte, rechte Seite"
+        th5.title = msg('Schubspannung in Elementmitte, rechte Seite')
         row.appendChild(th5);
         const th6 = thead.appendChild(document.createElement("th"));
         th6.innerHTML = "&tau;<sub>e,R</sub>";
-        th6.title = "Schubspannung am Elementende, Elementknoten 2, rechte Seite"
+        th6.title = msg('Schubspannung am Elementende, Elementknoten 2, rechte Seite')
         row.appendChild(th6);
 
         let newRow = table.insertRow(-1);
@@ -992,20 +981,12 @@ export function duennQ() {
         newCell.colSpan = 1
 
         newCell = newRow.insertCell(1);  // Insert a cell in the row at index 0
-        if (app.browserLanguage == 'de') {
-            newText = document.createTextNode("linke Seite");  // Append a text node to the cell
-        } else {
-            newText = document.createTextNode("left side");  // Append a text node to the cell
-        }
+        newText = document.createTextNode(msg('linke Seite'));
         newCell.appendChild(newText);
         newCell.setAttribute("class", "table_spannung_cell_center1");
         newCell.colSpan = 3
         newCell = newRow.insertCell(2);  // Insert a cell in the row at index 0
-        if (app.browserLanguage == 'de') {
-            newText = document.createTextNode("rechte Seite");  // Append a text node to the cell
-        } else {
-            newText = document.createTextNode("right side");  // Append a text node to the cell
-        }
+        newText = document.createTextNode(msg('rechte Seite'));
         newCell.appendChild(newText);
         newCell.setAttribute("class", "table_spannung_cell_center1");
         newCell.colSpan = 3
@@ -1054,11 +1035,7 @@ export function duennQ() {
         tag.setAttribute("id", "id_normalspannung");
         const text = document.createTextNode("xxx");
         tag.appendChild(text);
-        if (app.browserLanguage == 'de') {
-            tag.innerHTML = "Normalspannungen aus Normalkraft, Biegemomenten und Wölbbimoment"
-        } else {
-            tag.innerHTML = "Normal stresses from normal force, bending moments and warping bimoment"
-        }
+        tag.innerHTML = msg('Normalspannungen aus Normalkraft, Biegemomenten und Wölbbimoment')
         myTableDiv.appendChild(tag);
 
         const table = document.createElement("TABLE") as HTMLTableElement;   //TABLE??
@@ -1071,16 +1048,16 @@ export function duennQ() {
 
         const th0 = thead.appendChild(document.createElement("th"));
         th0.innerHTML = "El No";
-        th0.title = "Elementnummer"
+        th0.title = msg('Elementnummer')
         th0.setAttribute("class", "table_spannung_cell_center");
         row.appendChild(th0);
         const th1 = thead.appendChild(document.createElement("th"));
         th1.innerHTML = "&sigma;<sub>xa</sub>";
-        th1.title = "Normalspannung in Mittellinie, Elementanfang"
+        th1.title = msg('Normalspannung in Mittellinie, Elementanfang')
         row.appendChild(th1);
         const th2 = thead.appendChild(document.createElement("th"));
         th2.innerHTML = "&sigma;<sub>xe</sub>";
-        th2.title = "Normalspannung in Mittellinie, Elementende"
+        th2.title = msg('Normalspannung in Mittellinie, Elementende')
         row.appendChild(th2);
 
         for (i = 0; i < nelem; i++) {
@@ -1111,11 +1088,7 @@ export function duennQ() {
         tag.setAttribute("id", "id_vergleichsspannung");
         const text = document.createTextNode("xxx");
         tag.appendChild(text);
-        if (app.browserLanguage == 'de') {
-            tag.innerHTML = "von Mises Vergleichsspannungen"
-        } else {
-            tag.innerHTML = "von Mises equivalent stresses"
-        }
+        tag.innerHTML = msg('von Mises Vergleichsspannungen')
         myTableDiv.appendChild(tag);
 
         const table = document.createElement("TABLE") as HTMLTableElement;
@@ -1128,20 +1101,20 @@ export function duennQ() {
 
         const th0 = thead.appendChild(document.createElement("th"));
         th0.innerHTML = "El No";
-        th0.title = "Elementnummer"
+        th0.title = msg('Elementnummer')
         th0.setAttribute("class", "table_spannung_cell_center");
         row.appendChild(th0);
         const th1 = thead.appendChild(document.createElement("th"));
         th1.innerHTML = "&sigma;<sub>va</sub>";
-        th1.title = "Größtwert der Vergleichsspannung, Elementanfang"
+        th1.title = msg('Größtwert der Vergleichsspannung, Elementanfang')
         row.appendChild(th1);
         const th2 = thead.appendChild(document.createElement("th"));
         th2.innerHTML = "&sigma;<sub>vm</sub>";
-        th2.title = "Größtwert der Vergleichsspannung, Elementmitte"
+        th2.title = msg('Größtwert der Vergleichsspannung, Elementmitte')
         row.appendChild(th2);
         const th3 = thead.appendChild(document.createElement("th"));
         th3.innerHTML = "&sigma;<sub>ve</sub>";
-        th3.title = "Größtwert der Vergleichsspannung, Elementende"
+        th3.title = msg('Größtwert der Vergleichsspannung, Elementende')
         row.appendChild(th3);
 
         for (i = 0; i < nelem; i++) {
@@ -1274,13 +1247,9 @@ export function duennQ() {
         tag.setAttribute("id", "id_schubkorrektur");
         const text = document.createTextNode("xxx");
         tag.appendChild(text);
-        if (app.browserLanguage == 'de') {
-            tag.innerHTML = "<b>Schubkorrekturfaktoren</b><br> für Querkraft V<sub>1</sub> in Hauptrichtung 1: &kappa;<sub>&tau;</sub> = " + myFormat(kappa_1, 3, 3) + '<br>'
-            tag.innerHTML += "für Querkraft V<sub>2</sub> in Hauptrichtung 2: &kappa;<sub>&tau;</sub> = " + myFormat(kappa_2, 3, 3) + '<br>'
-        } else {
-            tag.innerHTML = "<b>Shear correction factors</b><br> for shear force V<sub>1</sub> in principle direction 1: &kappa;<sub>&tau;</sub> = " + myFormat(kappa_1, 3, 3) + '<br>'
-            tag.innerHTML += "for shear force V<sub>2</sub> in principle direction 2: &kappa;<sub>&tau;</sub> = " + myFormat(kappa_2, 3, 3) + '<br>'
-        }
+        tag.innerHTML = '<b>' + msg('Schubkorrekturfaktoren') + '</b><br>'
+            + msg('für Querkraft V<sub>1</sub> in Hauptrichtung 1') + ': &kappa;<sub>&tau;</sub> = ' + myFormat(kappa_1, 3, 3) + '<br>'
+            + msg('für Querkraft V<sub>2</sub> in Hauptrichtung 2') + ': &kappa;<sub>&tau;</sub> = ' + myFormat(kappa_2, 3, 3) + '<br>'
         myTableDiv.appendChild(tag);
 
     }
@@ -1313,7 +1282,7 @@ export function duennQ() {
 
     app.gerechnet = true;
     berechnungErforderlich(false);
-    document.dispatchEvent(new CustomEvent('berechnet'));
+    document.dispatchEvent(new CustomEvent('berechnet', { detail: { zeigeErgebnisse } }));
 }
 
 /** Berechnung abbrechen und den Grund anzeigen. */

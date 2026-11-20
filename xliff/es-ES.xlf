@@ -1,0 +1,713 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
+<file target-language="es-ES" source-language="de" original="lit-localize-inputs" datatype="plaintext">
+<body>
+<trans-unit id="s21ed3cf1e232460a">
+  <source>Eingabe</source>
+  <target>Entrada</target>
+</trans-unit>
+<trans-unit id="s7129495aed9d8046">
+  <source>Ergebnisse</source>
+  <target>Resultados</target>
+</trans-unit>
+<trans-unit id="sa81e2cdaf6921adc">
+  <source>System</source>
+  <target>Sistema</target>
+</trans-unit>
+<trans-unit id="s784d82bd15c49b4a">
+  <source>Einstellungen</source>
+  <target>Configuración</target>
+</trans-unit>
+<trans-unit id="s9234cde5c4c75943">
+  <source>neue Eingabe beginnen</source>
+  <target>Iniciar nueva entrada</target>
+</trans-unit>
+<trans-unit id="s740a754fe7906289">
+  <source>Eingabe einlesen</source>
+  <target>Leer entrada</target>
+</trans-unit>
+<trans-unit id="s54fade01578df84b">
+  <source>Eingabe speichern</source>
+  <target>Guardar entrada</target>
+</trans-unit>
+<trans-unit id="s133c5df8502c944c">
+  <source>Querschnittswerte und Spannungen berechnen (farbig hinterlegt, wenn die Eingabe geändert wurde)</source>
+  <target>Calcular propiedades de la sección y tensiones (resaltado si la entrada ha cambiado)</target>
+</trans-unit>
+<trans-unit id="se9f528070d8cf418">
+  <source>Rechnen</source>
+  <target>Calcular</target>
+</trans-unit>
+<trans-unit id="s5747c1377ce8b0a5">
+  <source>Querschnittswerte und Spannungen dünnwandiger Querschnitte</source>
+  <target>Propiedades y tensiones de secciones de pared delgada</target>
+</trans-unit>
+<trans-unit id="s907c9609efe8407e">
+  <source>freier Text mit HTML-Formatierung (für die pdf-Ausgabe):</source>
+  <target>texto libre con formato HTML (para la salida pdf):</target>
+</trans-unit>
+<trans-unit id="sc1444b7e8677ce3b">
+  <source>Hausübung A1, SS 2025</source>
+  <target>Ejercicio A1, semestre de verano 2025</target>
+</trans-unit>
+<trans-unit id="s1b02d3b69f49c253">
+  <source>Bearbeitet von: Melis Muster</source>
+  <target>Elaborado por: Melis Muster</target>
+</trans-unit>
+<trans-unit id="sb87a78ebbd243d2d">
+  <source>Schnittgrößen</source>
+  <target>Esfuerzos internos</target>
+</trans-unit>
+<trans-unit id="sd7bf60912e234837">
+  <source>Querkraft in y-Richtung</source>
+  <target>esfuerzo cortante en dirección y</target>
+</trans-unit>
+<trans-unit id="scad8928ce04fd1ba">
+  <source>primäres Torsionsmoment (St. Venant)</source>
+  <target>momento torsor primario (Saint-Venant)</target>
+</trans-unit>
+<trans-unit id="s3d1362f3061410b4">
+  <source>Normalkraft</source>
+  <target>fuerza axial</target>
+</trans-unit>
+<trans-unit id="s46e22db4f9caa220">
+  <source>Querkraft in z-Richtung</source>
+  <target>esfuerzo cortante en dirección z</target>
+</trans-unit>
+<trans-unit id="s974b45223e6dc3d2">
+  <source>sekundäres Torsionsmoment</source>
+  <target>momento torsor secundario</target>
+</trans-unit>
+<trans-unit id="se15bf80772ac4f33">
+  <source>Biegemoment um die y-Achse</source>
+  <target>momento flector respecto al eje y</target>
+</trans-unit>
+<trans-unit id="s0689587db167433b">
+  <source>Wölbbimoment</source>
+  <target>bimomento de alabeo</target>
+</trans-unit>
+<trans-unit id="s713c457387fecdde">
+  <source>Biegemoment um die z-Achse</source>
+  <target>momento flector respecto al eje z</target>
+</trans-unit>
+<trans-unit id="s6de8b79afb816b88">
+  <source>Bezugswerte</source>
+  <target>Valores de referencia</target>
+</trans-unit>
+<trans-unit id="sd1d0a5c6c4c77462">
+  <source>alle Elemente haben gleiche Materialdaten</source>
+  <target>todos los elementos tienen el mismo material</target>
+</trans-unit>
+<trans-unit id="s65592582fac0eeab">
+  <source>E-Modul (Bezugswert)</source>
+  <target>módulo de elasticidad (valor de referencia)</target>
+</trans-unit>
+<trans-unit id="s78cbcf4d18d679ef">
+  <source>Querdehnzahl (Bezugswert)</source>
+  <target>coeficiente de Poisson (valor de referencia)</target>
+</trans-unit>
+<trans-unit id="s3757d4bdb31ca0da">
+  <source>Bemessungswert der Streckgrenze (für die Vergleichsspannung)</source>
+  <target>valor de cálculo del límite elástico (para la tensión equivalente)</target>
+</trans-unit>
+<trans-unit id="s1bd581ec11590306">
+  <source>Anzahl Knoten: </source>
+  <target>Número de nudos: </target>
+</trans-unit>
+<trans-unit id="s5d987dc0dd03d316">
+  <source>Elemente</source>
+  <target>Elementos</target>
+</trans-unit>
+<trans-unit id="sdd00e76e03cded1d">
+  <source>nod1 und nod2 sind die Nummern des Anfangs- und Endknotens. Die rechte Seite eines Elements liegt in Richtung von nod1 nach nod2 gesehen rechts (siehe 3D-Ansicht, „rechts/links anzeigen“).</source>
+  <target>nod1 y nod2 son los números del nudo inicial y final. El lado derecho de un elemento queda a la derecha mirando de nod1 a nod2 (véase la vista 3D, «mostrar derecha/izquierda»).</target>
+</trans-unit>
+<trans-unit id="s5917f7a203fcbf98">
+  <source>Anzahl Elemente: </source>
+  <target>Número de elementos: </target>
+</trans-unit>
+<trans-unit id="s7d3b74e529b06937">
+  <source>Rechte Maustaste bzw. langes Drücken auf markierte Zellen öffnet das Kontextmenü. In der Spalte No fügt + oberhalb eine Zeile ein, der Papierkorb löscht die Zeile (beides mit Rückgängig/Wiederherstellen).</source>
+  <target>El botón derecho del ratón o una pulsación larga sobre las celdas seleccionadas abre el menú contextual. En la columna No, + inserta una fila encima y la papelera borra la fila (ambos con deshacer/rehacer).</target>
+</trans-unit>
+<trans-unit id="sa30d77be7c7c7d59">
+  <source>Ergebnisse als pdf-Datei speichern</source>
+  <target>Guardar resultados como archivo pdf</target>
+</trans-unit>
+<trans-unit id="s7528207a1d339605">
+  <source>Noch nicht gerechnet – im Tab Eingabe auf Rechnen drücken.</source>
+  <target>Aún no calculado: pulse Calcular en la pestaña Entrada.</target>
+</trans-unit>
+<trans-unit id="s242244c7d728763b">
+  <source>ideelle Querschnittswerte</source>
+  <target>Propiedades ideales de la sección</target>
+</trans-unit>
+<trans-unit id="s016e2695d43c6359">
+  <source>Knoten- und Elementnummern ein-/ausblenden</source>
+  <target>Mostrar/ocultar números de nudos y elementos</target>
+</trans-unit>
+<trans-unit id="s7e3191a92cb77b99">
+  <source>Nummern</source>
+  <target>Números</target>
+</trans-unit>
+<trans-unit id="s8f61ad6669fb2d2c">
+  <source>Grafik als SVG-Datei speichern</source>
+  <target>Guardar el gráfico como archivo SVG</target>
+</trans-unit>
+<trans-unit id="s5689dde358e20548">
+  <source>3D-Ansicht: bitte zuerst Rechnen drücken</source>
+  <target>Vista 3D: pulse primero Calcular</target>
+</trans-unit>
+<trans-unit id="s2a26513593107f4d">
+  <source>Kurzdokumentation zu Duenne Querschnitte.html</source>
+  <target>docu_en.html</target>
+</trans-unit>
+<trans-unit id="sa1781a00a872bf21">
+  <source>Gerät</source>
+  <target>Dispositivo</target>
+</trans-unit>
+<trans-unit id="s8954946e6c414e39">
+  <source>Längeneinheit:</source>
+  <target>Unidad de longitud:</target>
+</trans-unit>
+<trans-unit id="sbfb8176091a3242c">
+  <source>Einheit für Eingabe und Ergebnisse; vorhandene Werte werden umgerechnet</source>
+  <target>Unidad para entrada y resultados; los valores existentes se convierten</target>
+</trans-unit>
+<trans-unit id="s980285ed945f4920">
+  <source>Hintergrundfarbe Tabellen:</source>
+  <target>Color de fondo de las tablas:</target>
+</trans-unit>
+<trans-unit id="s67df30eee417c25a">
+  <source>Hintergrundfarbe Tabellen</source>
+  <target>Color de fondo de las tablas</target>
+</trans-unit>
+<trans-unit id="s4b8b3b2c5928212b">
+  <source>Textfarbe Tabellen:</source>
+  <target>Color del texto de las tablas:</target>
+</trans-unit>
+<trans-unit id="s63190f0c75e7f693">
+  <source>Textfarbe Tabellen</source>
+  <target>Color del texto de las tablas</target>
+</trans-unit>
+<trans-unit id="s4da64b8d0fc6bc9c">
+  <source>Wird beim Ändern der Hintergrundfarbe automatisch hell oder dunkel gesetzt</source>
+  <target>Se ajusta automáticamente a claro u oscuro al cambiar el color de fondo</target>
+</trans-unit>
+<trans-unit id="s4c948185a2c3dc94">
+  <source>Akzentfarbe:</source>
+  <target>Color de acento:</target>
+</trans-unit>
+<trans-unit id="se7a1853c55b51f26">
+  <source>Akzentfarbe</source>
+  <target>Color de acento</target>
+</trans-unit>
+<trans-unit id="s92ed5bb5583899e3">
+  <source>Farbe für den aktiven Tab und den Rechnen-Button, wenn neu gerechnet werden muss</source>
+  <target>Color de la pestaña activa y del botón Calcular cuando hay que volver a calcular</target>
+</trans-unit>
+<trans-unit id="sf767b754aa59716a">
+  <source>Akzentfarbe auf das Standard-Blau zurücksetzen</source>
+  <target>Restablecer el color de acento al azul estándar</target>
+</trans-unit>
+<trans-unit id="s53a526d5c80c3e28">
+  <source>Standard</source>
+  <target>Predeterminado</target>
+</trans-unit>
+<trans-unit id="s41e5704dbb12ac2c">
+  <source>Die Tabellenfarbe gilt auch für die Titelleiste des Bedienfelds in der 3D-Ansicht.</source>
+  <target>El color de las tablas también se aplica a la barra de título del panel de control en la vista 3D.</target>
+</trans-unit>
+<trans-unit id="s854627b29e5663d3">
+  <source>Die gewählten Einstellungen bleiben auch nach einem Neustart der App erhalten</source>
+  <target>Los ajustes seleccionados se conservan tras reiniciar la aplicación</target>
+</trans-unit>
+<trans-unit id="s062463b6cb2ba47f">
+  <source>Auswahl als Standardwerte im Browser speichern</source>
+  <target>Guardar la selección como valores predeterminados en el navegador</target>
+</trans-unit>
+<trans-unit id="s2a527d2aa4924cec">
+  <source>Es gibt Änderungen, die noch nicht gespeichert sind.</source>
+  <target>Hay cambios que aún no se han guardado.</target>
+</trans-unit>
+<trans-unit id="sf7d1b364b3c47a7a">
+  <source>Gespeicherte Einstellungen löschen und die Standardwerte wiederherstellen</source>
+  <target>Borrar los ajustes guardados y restaurar los valores estándar</target>
+</trans-unit>
+<trans-unit id="sdb44853a9a24fec0">
+  <source>Standardwerte im Speicher des Browsers löschen</source>
+  <target>Borrar los valores predeterminados de la memoria del navegador</target>
+</trans-unit>
+<trans-unit id="sc1a732f8b025abbd">
+  <source>Zeile oberhalb einfügen</source>
+  <target>Insertar fila encima</target>
+</trans-unit>
+<trans-unit id="s1ec6656427d93e0f">
+  <source>Zeile löschen</source>
+  <target>Eliminar fila</target>
+</trans-unit>
+<trans-unit id="s34e3267de95173eb">
+  <source>Zeile <x id="0" equiv-text="${iZeile}"/> wirklich löschen?</source>
+  <target>¿Eliminar realmente la fila <x id="0" equiv-text="${iZeile}"/>?</target>
+</trans-unit>
+<trans-unit id="s062a673dafbdd5dd">
+  <source>Rückgängig</source>
+  <target>Deshacer</target>
+</trans-unit>
+<trans-unit id="s923e8c23e10ef290">
+  <source>Löschen rückgängig</source>
+  <target>Deshacer eliminación</target>
+</trans-unit>
+<trans-unit id="s650d622acd1fe2a3">
+  <source>Wiederherstellen</source>
+  <target>Rehacer</target>
+</trans-unit>
+<trans-unit id="scdbeef85e98901d2">
+  <source>Löschen wiederherstellen</source>
+  <target>Rehacer eliminación</target>
+</trans-unit>
+<trans-unit id="s0c2fabc1c3fe5a99">
+  <source>duennqs-Eingabe</source>
+  <target>entrada de duennqs</target>
+</trans-unit>
+<trans-unit id="s6b73c59b276b77e1">
+  <source>Die Datei enthält keine gültige duennqs-Eingabe.</source>
+  <target>El archivo no contiene una entrada válida de duennqs.</target>
+</trans-unit>
+<trans-unit id="sf3b8dd74d2f76589">
+  <source>Name der Datei (wird im Download-Ordner gespeichert):</source>
+  <target>Nombre del archivo (se guarda en la carpeta de descargas):</target>
+</trans-unit>
+<trans-unit id="sd81b33dfcbc03795">
+  <source>Die Eingabe enthält ungültige Zahlen (rot markiert).</source>
+  <target>La entrada contiene números no válidos (marcados en rojo).</target>
+</trans-unit>
+<trans-unit id="se348225ed91b8e5a">
+  <source>Der E-Modul (Bezugswert) muss größer 0 sein</source>
+  <target>El módulo de elasticidad (valor de referencia) debe ser mayor que 0</target>
+</trans-unit>
+<trans-unit id="s9fb8f1fac842e481">
+  <source>Die Querdehnzahl (Bezugswert) muss größer oder gleich 0 sein</source>
+  <target>El coeficiente de Poisson (valor de referencia) debe ser mayor o igual que 0</target>
+</trans-unit>
+<trans-unit id="s77d9046f166a8c1f">
+  <source>E-Modul von Element <x id="0" equiv-text="${i + 1}"/> muss größer 0 sein</source>
+  <target>El módulo de elasticidad del elemento <x id="0" equiv-text="${i + 1}"/> debe ser mayor que 0</target>
+</trans-unit>
+<trans-unit id="sadf755d641ccf479">
+  <source>Querdehnzahl von Element <x id="0" equiv-text="${i + 1}"/> muss größer oder gleich 0 sein</source>
+  <target>El coeficiente de Poisson del elemento <x id="0" equiv-text="${i + 1}"/> debe ser mayor o igual que 0</target>
+</trans-unit>
+<trans-unit id="s48243d2e2b746bb6">
+  <source>Dicke von Element <x id="0" equiv-text="${i + 1}"/> muss größer 0 sein</source>
+  <target>El espesor del elemento <x id="0" equiv-text="${i + 1}"/> debe ser mayor que 0</target>
+</trans-unit>
+<trans-unit id="sd2f0c08c7cb4ed35">
+  <source>Knoteninzidenzen von Element <x id="0" equiv-text="${i + 1}"/> müssen zwischen 1 und der Anzahl der Knoten liegen</source>
+  <target>Los nudos del elemento <x id="0" equiv-text="${i + 1}"/> deben estar entre 1 y el número de nudos</target>
+</trans-unit>
+<trans-unit id="sa082226798a6a7eb">
+  <source>An Knoten <x id="0" equiv-text="${i + 1}"/> hängt kein Element</source>
+  <target>Ningún elemento está unido al nudo <x id="0" equiv-text="${i + 1}"/></target>
+</trans-unit>
+<trans-unit id="se08538ce6eb81be3">
+  <source>Die Länge von Element <x id="0" equiv-text="${i + 1}"/> ist null</source>
+  <target>La longitud del elemento <x id="0" equiv-text="${i + 1}"/> es cero</target>
+</trans-unit>
+<trans-unit id="s6bf117f912b77341">
+  <source>Das Gleichungssystem ist singulär.</source>
+  <target>El sistema de ecuaciones es singular.</target>
+</trans-unit>
+<trans-unit id="sfaba033c9713b1db">
+  <source>Alle Spannungen in</source>
+  <target>Todas las tensiones en</target>
+</trans-unit>
+<trans-unit id="s4b690af41ff9e07b">
+  <source>Schubspannungen aus primärer Torsion M&lt;sub&gt;xp&lt;/sub&gt;</source>
+  <target>Tensiones tangenciales por torsión primaria M&lt;sub&gt;xp&lt;/sub&gt;</target>
+</trans-unit>
+<trans-unit id="s3e32ef1dbdd05d8f">
+  <source>Elementnummer</source>
+  <target>número de elemento</target>
+</trans-unit>
+<trans-unit id="s34f2404e58176644">
+  <source>Schubspannung linke Seite aus Anteil offener Querschnitt</source>
+  <target>tensión tangencial en el lado izquierdo por la parte de sección abierta</target>
+</trans-unit>
+<trans-unit id="s99f5b18e86de4b6e">
+  <source>Schubspannung rechte Seite aus Anteil offener Querschnitt</source>
+  <target>tensión tangencial en el lado derecho por la parte de sección abierta</target>
+</trans-unit>
+<trans-unit id="sae0571cba5069665">
+  <source>Schubspannung aus Anteil geschlossener Querschnitt</source>
+  <target>tensión tangencial por la parte de sección cerrada</target>
+</trans-unit>
+<trans-unit id="s91faa5b4c818b35c">
+  <source>Schubspannungen aus Querkräften und sekundärer Torsion M&lt;sub&gt;xs&lt;/sub&gt;</source>
+  <target>Tensiones tangenciales por esfuerzos cortantes y torsión secundaria M&lt;sub&gt;xs&lt;/sub&gt;</target>
+</trans-unit>
+<trans-unit id="s339f3d0b2d0733df">
+  <source>Schubspannung am Elementanfang, Elementknoten 1</source>
+  <target>tensión tangencial al inicio del elemento, nudo 1</target>
+</trans-unit>
+<trans-unit id="s7a0e15a7cc7a9450">
+  <source>Schubspannung in Elementmitte</source>
+  <target>tensión tangencial en el centro del elemento</target>
+</trans-unit>
+<trans-unit id="s629d6adf44139801">
+  <source>Schubspannung am Elementende, Elementknoten 2</source>
+  <target>tensión tangencial al final del elemento, nudo 2</target>
+</trans-unit>
+<trans-unit id="sb832ea16a48e996f">
+  <source>Schubspannungen aus Querkräften, primärem und sekundärem Torsionsmoment</source>
+  <target>Tensiones tangenciales por esfuerzos cortantes y momentos torsores primario y secundario</target>
+</trans-unit>
+<trans-unit id="s99d7d0c9ee6ffe56">
+  <source>Schubspannung am Elementanfang, Elementknoten 1, linke Seite</source>
+  <target>tensión tangencial al inicio del elemento, nudo 1, lado izquierdo</target>
+</trans-unit>
+<trans-unit id="s7d68654a4a8d6aab">
+  <source>Schubspannung in Elementmitte, linke Seite</source>
+  <target>tensión tangencial en el centro del elemento, lado izquierdo</target>
+</trans-unit>
+<trans-unit id="s2202f9c5118ff020">
+  <source>Schubspannung am Elementende, Elementknoten 2, linke Seite</source>
+  <target>tensión tangencial al final del elemento, nudo 2, lado izquierdo</target>
+</trans-unit>
+<trans-unit id="s441cf1c3e27a04ae">
+  <source>Schubspannung am Elementanfang, Elementknoten 1, rechte Seite</source>
+  <target>tensión tangencial al inicio del elemento, nudo 1, lado derecho</target>
+</trans-unit>
+<trans-unit id="s75342fab9f38ad0d">
+  <source>Schubspannung in Elementmitte, rechte Seite</source>
+  <target>tensión tangencial en el centro del elemento, lado derecho</target>
+</trans-unit>
+<trans-unit id="s4e5e9408299b36c4">
+  <source>Schubspannung am Elementende, Elementknoten 2, rechte Seite</source>
+  <target>tensión tangencial al final del elemento, nudo 2, lado derecho</target>
+</trans-unit>
+<trans-unit id="s17d62424ec414450">
+  <source>linke Seite</source>
+  <target>lado izquierdo</target>
+</trans-unit>
+<trans-unit id="sb199340d56c521d4">
+  <source>rechte Seite</source>
+  <target>lado derecho</target>
+</trans-unit>
+<trans-unit id="s327d27aa06ad3aeb">
+  <source>Normalspannungen aus Normalkraft, Biegemomenten und Wölbbimoment</source>
+  <target>Tensiones normales por esfuerzo axil, momentos flectores y bimomento de alabeo</target>
+</trans-unit>
+<trans-unit id="sf4ade6fe48e4f354">
+  <source>Normalspannung in Mittellinie, Elementanfang</source>
+  <target>tensión normal en la línea media, inicio del elemento</target>
+</trans-unit>
+<trans-unit id="sf49e51cc828d1b91">
+  <source>Normalspannung in Mittellinie, Elementende</source>
+  <target>tensión normal en la línea media, final del elemento</target>
+</trans-unit>
+<trans-unit id="sd359e7e0061f1ab0">
+  <source>von Mises Vergleichsspannungen</source>
+  <target>Tensiones equivalentes de von Mises</target>
+</trans-unit>
+<trans-unit id="s675a69bfe0064bcb">
+  <source>Größtwert der Vergleichsspannung, Elementanfang</source>
+  <target>tensión equivalente máxima, inicio del elemento</target>
+</trans-unit>
+<trans-unit id="s581a0d6275ee0177">
+  <source>Größtwert der Vergleichsspannung, Elementmitte</source>
+  <target>tensión equivalente máxima, centro del elemento</target>
+</trans-unit>
+<trans-unit id="s578e865ad974986a">
+  <source>Größtwert der Vergleichsspannung, Elementende</source>
+  <target>tensión equivalente máxima, final del elemento</target>
+</trans-unit>
+<trans-unit id="sfd5fcce6cfac4e3b">
+  <source>Schubkorrekturfaktoren</source>
+  <target>Factores de corrección por cortante</target>
+</trans-unit>
+<trans-unit id="s4f378bbd6523250a">
+  <source>für Querkraft V&lt;sub&gt;1&lt;/sub&gt; in Hauptrichtung 1</source>
+  <target>para el esfuerzo cortante V&lt;sub&gt;1&lt;/sub&gt; en la dirección principal 1</target>
+</trans-unit>
+<trans-unit id="sff18e4caaf74b058">
+  <source>für Querkraft V&lt;sub&gt;2&lt;/sub&gt; in Hauptrichtung 2</source>
+  <target>para el esfuerzo cortante V&lt;sub&gt;2&lt;/sub&gt; en la dirección principal 2</target>
+</trans-unit>
+<trans-unit id="sfd8f31c0b05514e4">
+  <source>E-Modul</source>
+  <target>Módulo E</target>
+</trans-unit>
+<trans-unit id="s75a100ffeb0b8943">
+  <source>Dicke</source>
+  <target>Espesor</target>
+</trans-unit>
+<trans-unit id="sef38a920ec0dfe74">
+  <source>Speichern im Browser nicht möglich: </source>
+  <target>No es posible guardar en el navegador: </target>
+</trans-unit>
+<trans-unit id="s6ba8ff3a3676ea08">
+  <source>Knoten</source>
+  <target>Nudo</target>
+</trans-unit>
+<trans-unit id="s2c9a2353836e3a4f">
+  <source>Schubmittelpunkt</source>
+  <target>Centro de cortante</target>
+</trans-unit>
+<trans-unit id="sef7575badcd4aeef">
+  <source>Schwerpunkt</source>
+  <target>Centro de gravedad</target>
+</trans-unit>
+<trans-unit id="s442aa7de41fece0d">
+  <source>Bedienfeld</source>
+  <target>Panel de control</target>
+</trans-unit>
+<trans-unit id="s7403178e54879d16">
+  <source>nur Querschnitt</source>
+  <target>Solo sección</target>
+</trans-unit>
+<trans-unit id="s094dec24e1c9ded9">
+  <source>Normalspannung σ</source>
+  <target>Tensión normal σ</target>
+</trans-unit>
+<trans-unit id="s4f13ef11fd7a59a4">
+  <source>Schubspannung τ</source>
+  <target>Tensión tangencial τ</target>
+</trans-unit>
+<trans-unit id="se07e5940e09f070c">
+  <source>Vergleichsspannung σv</source>
+  <target>Tensión equivalente σv</target>
+</trans-unit>
+<trans-unit id="s6759d39f8e7b30e1">
+  <source>Wölbordinate ω</source>
+  <target>Ordenada de alabeo ω</target>
+</trans-unit>
+<trans-unit id="sa21f15a168d7a600">
+  <source>Verwölbung u</source>
+  <target>Alabeo u</target>
+</trans-unit>
+<trans-unit id="sa17afac9667bd99a">
+  <source>Anzeige</source>
+  <target>Mostrar</target>
+</trans-unit>
+<trans-unit id="s4fc96f99f0a6656f">
+  <source>fyRd anzeigen</source>
+  <target>Mostrar fyRd</target>
+</trans-unit>
+<trans-unit id="s2b41d1fba90e38cb">
+  <source>Beschriftung</source>
+  <target>Rótulos</target>
+</trans-unit>
+<trans-unit id="s8d3551f00a88687e">
+  <source>Skalierung</source>
+  <target>Escala</target>
+</trans-unit>
+<trans-unit id="s581b43714b756199">
+  <source>σ über die Dicke</source>
+  <target>Σ en el espesor</target>
+</trans-unit>
+<trans-unit id="sa3b23dcc287a0498">
+  <source>Seiten anzeigen</source>
+  <target>Mostrar lados</target>
+</trans-unit>
+<trans-unit id="sd5f52b6e496371c7">
+  <source>Pfeile anzeigen</source>
+  <target>Mostrar flechas</target>
+</trans-unit>
+<trans-unit id="s72c84ea4ac50b385">
+  <source>Skalierung Pfeile</source>
+  <target>Escala de flechas</target>
+</trans-unit>
+<trans-unit id="s42f298cbba2e7b65">
+  <source>rechts/links anzeigen</source>
+  <target>Mostrar derecha/izquierda</target>
+</trans-unit>
+<trans-unit id="sc60893f8b1d00b8c">
+  <source>Achsen anzeigen</source>
+  <target>Mostrar ejes</target>
+</trans-unit>
+<trans-unit id="s4a03a64d096d0cd3">
+  <source>Fangweite [px]</source>
+  <target>Radio de captura [px]</target>
+</trans-unit>
+<trans-unit id="s8469617a8c3f2f8d">
+  <source>Bild speichern</source>
+  <target>Guardar imagen</target>
+</trans-unit>
+<trans-unit id="s0c0fd4aed60ab7f2">
+  <source>Auflösung</source>
+  <target>Resolución</target>
+</trans-unit>
+<trans-unit id="sc33278e2d99a1fee">
+  <source>weißer Hintergrund</source>
+  <target>Fondo blanco</target>
+</trans-unit>
+<trans-unit id="s05aaf8f7c4ec6579">
+  <source>Zurücksetzen</source>
+  <target>Restablecer</target>
+</trans-unit>
+<trans-unit id="s1c603e2de4aa9c8d">
+  <source>Spannungen in </source>
+  <target>Tensiones en </target>
+</trans-unit>
+<trans-unit id="s190747c04bd639f7">
+  <source>Element</source>
+  <target>Elemento</target>
+</trans-unit>
+<trans-unit id="s5a92006c27771749">
+  <source>Ecke</source>
+  <target>esquina</target>
+</trans-unit>
+<trans-unit id="s83977996c90f160f">
+  <source>Seite</source>
+  <target>Página</target>
+</trans-unit>
+<trans-unit id="s9c96a6ea6515ff20">
+  <source>Wölbordinate ω in </source>
+  <target>Ordenada de alabeo ω en </target>
+</trans-unit>
+<trans-unit id="saea1cfdd397f8a4d">
+  <source>Verwölbung u in </source>
+  <target>Alabeo u en </target>
+</trans-unit>
+<trans-unit id="s0066c7378d25f93a">
+  <source>Ein Finger verschiebt – tippen für Werteanzeige</source>
+  <target>Un dedo desplaza: toque para mostrar valores</target>
+</trans-unit>
+<trans-unit id="saaeb23a1421871d1">
+  <source>Ein Finger zeigt Werte – tippen zum Verschieben</source>
+  <target>Un dedo muestra valores: toque para desplazar</target>
+</trans-unit>
+<trans-unit id="s60db9e62aea93c25">
+  <source>PNG speichern</source>
+  <target>Guardar PNG</target>
+</trans-unit>
+<trans-unit id="s564e9125da82e366">
+  <source>PNG-Bild</source>
+  <target>Imagen PNG</target>
+</trans-unit>
+<trans-unit id="s49f4189fd3716e48">
+  <source>Bildschirm</source>
+  <target>Pantalla</target>
+</trans-unit>
+<trans-unit id="s30f92eca8dec2cb0">
+  <source>Pixeldichte</source>
+  <target>densidad de píxeles</target>
+</trans-unit>
+<trans-unit id="sb3803e9cc79575bb">
+  <source>Sprache</source>
+  <target>idioma</target>
+</trans-unit>
+<trans-unit id="s15f128f7c0b0134a">
+  <source>Betriebssystem</source>
+  <target>Sistema operativo</target>
+</trans-unit>
+<trans-unit id="s0808f67328008e28">
+  <source>Touch-Punkte</source>
+  <target>Puntos táctiles</target>
+</trans-unit>
+<trans-unit id="s0e5bfc5f2640d7eb">
+  <source>Dateidialog (showSaveFilePicker)</source>
+  <target>Diálogo de archivos (showSaveFilePicker)</target>
+</trans-unit>
+<trans-unit id="s08c16307b564e954">
+  <source>ja</source>
+  <target>sí</target>
+</trans-unit>
+<trans-unit id="s9db17b30c9e3a5b6">
+  <source>nein, Speichern als Download</source>
+  <target>no, se guarda como descarga</target>
+</trans-unit>
+<trans-unit id="se56b58baa0574673">
+  <source>nein</source>
+  <target>no</target>
+</trans-unit>
+<trans-unit id="sf6ad6dca0b753c17">
+  <source>Die aktuelle Eingabe verwerfen und neu beginnen?</source>
+  <target>¿Descartar la entrada actual y empezar de nuevo?</target>
+</trans-unit>
+<trans-unit id="s67d78db44791b971">
+  <source>Es liegt keine fehlerfreie Berechnung vor.</source>
+  <target>No hay ningún cálculo sin errores.</target>
+</trans-unit>
+<trans-unit id="s1144953fd3f289b0">
+  <source>Dünnwandiger Querschnitt</source>
+  <target>Sección de pared delgada</target>
+</trans-unit>
+<trans-unit id="sf379ebba22363ed5">
+  <source>Querdehnung ν = </source>
+  <target>Coeficiente de Poisson ν = </target>
+</trans-unit>
+<trans-unit id="s2b7c0ebed1d5f1a8">
+  <source>Knotenkoordinaten</source>
+  <target>Coordenadas del nodo</target>
+</trans-unit>
+<trans-unit id="sdee1d2056321d187">
+  <source>Elementdaten</source>
+  <target>Datos de elementos</target>
+</trans-unit>
+<trans-unit id="s06bab6c5048fcd87">
+  <source>Schubspannungen aus primärer Torsion </source>
+  <target>Tensiones tangenciales por torsión primaria </target>
+</trans-unit>
+<trans-unit id="s96669ec941a9e1c5">
+  <source>Schubspannungen aus Querkräften und sekundärer Torsion </source>
+  <target>Tensiones tangenciales por esfuerzos cortantes y torsión secundaria </target>
+</trans-unit>
+<trans-unit id="s209f42173afed09e">
+  <source>Schubspannungen aus allen Anteilen</source>
+  <target>Tensiones tangenciales de todas las partes</target>
+</trans-unit>
+<trans-unit id="sfaadd489dfa358bf">
+  <source>Querschnitt</source>
+  <target>sección transversal</target>
+</trans-unit>
+<trans-unit id="s846e1fc610837baa">
+  <source>pdf-Datei gespeichert (Download-Ordner)</source>
+  <target>archivo pdf guardado (carpeta de descargas)</target>
+</trans-unit>
+<trans-unit id="s255fc944b18ba548">
+  <source>Wert der ersten Zelle kopieren</source>
+  <target>copiar el valor de la primera celda</target>
+</trans-unit>
+<trans-unit id="s56938782dadc04e4">
+  <source>Werte der ersten Zeile kopieren</source>
+  <target>copiar los valores de la primera fila</target>
+</trans-unit>
+<trans-unit id="s9b84d553c22dca33">
+  <source>um 1 hochzählen</source>
+  <target>incrementar en 1</target>
+</trans-unit>
+<trans-unit id="s3965ed73b2864f94">
+  <source>um Delta hochzählen</source>
+  <target>incrementar en delta</target>
+</trans-unit>
+<trans-unit id="s7e5c28821db89eb6">
+  <source>in Zwischenablage kopieren</source>
+  <target>copiar al portapapeles</target>
+</trans-unit>
+<trans-unit id="sdbd9ec67ac08902d">
+  <source>aus Zwischenablage einfügen</source>
+  <target>pegar desde el portapapeles</target>
+</trans-unit>
+<trans-unit id="s3736b35d76c86de5">
+  <source>schließen</source>
+  <target>cerrar</target>
+</trans-unit>
+<trans-unit id="s985fe56722f6aa33">
+  <source>Sprache:</source>
+  <target>Idioma:</target>
+</trans-unit>
+<trans-unit id="knoten_nummer">
+  <source>Knoten</source>
+  <target>Nudo</target>
+  <note from="lit-localize">ein Knoten mit Nummer, z.B. Knoten 3</note>
+</trans-unit>
+<trans-unit id="element_seite">
+  <source>Seite</source>
+  <target>lado</target>
+  <note from="lit-localize">rechte oder linke Seite eines Elements (R/L)</note>
+</trans-unit>
+</body>
+</file>
+</xliff>

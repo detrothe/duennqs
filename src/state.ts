@@ -15,7 +15,6 @@ export const myScreen = {
 
 export const app = {
     appName: 'duennQs',
-    browserLanguage: navigator.language.split('-')[0],
     hasFSAccess: 'showSaveFilePicker' in window,
     isMac: navigator.userAgent.includes('Mac OS X'),
     gerechnet: false,                // liegt ein Ergebnis der aktuellen oder einer früheren Eingabe vor?

@@ -1,3 +1,4 @@
+import { msg } from '@lit/localize';
 import { byId } from './state';
 import { jsPDF, jsPDFAPI } from "jspdf";
 import { Canvg } from "canvg";
@@ -131,7 +132,7 @@ export async function my_jspdf() {
 
   const newLine = "\n";
   Seite_No = 0
-  if (app.browserLanguage != 'de') Seite = 'page'
+  Seite = msg('Seite')
 
   // Default export is a4 paper, portrait, using millimeters for units
   doc = new jsPDF();
@@ -205,11 +206,7 @@ export async function my_jspdf() {
   doc.setFont("freesans_bold");
   doc.setFontSize(fs1)
 
-  if (app.browserLanguage == 'de') {
-    doc.text("Dünnwandiger Querschnitt", links, yy);
-  } else {
-    doc.text("Properties and stresses of thin-walled cross sections", links, yy);
-  }
+  doc.text(msg('Dünnwandiger Querschnitt'), links, yy);
 
   doc.setFontSize(fs); // in points
   doc.setFont("freesans_normal");
@@ -218,55 +215,40 @@ export async function my_jspdf() {
 
   yy = neueZeile(yy, fs, 2)
 
-  if (app.browserLanguage == 'de') {
-    doc.text("Schnittgrößen", links, yy)
-  } else {
-    doc.text("Internal forces", links, yy)
-  }
+  doc.text(msg('Schnittgrößen'), links, yy)
   yy = neueZeile(yy, fs, 2)
 
+  // Momente sind intern in kNcm bzw. kNcm² gespeichert (duennQ.ts), Ausgabe in kNm bzw. kNm²
   htmlText("V<sub>y</sub> = " + myFormat(schnittgroesse.Vy, 2, 2) + " kN", links, yy)
-  htmlText("M<sub>xp</sub> = " + myFormat(schnittgroesse.Mxp, 2, 2) + " kNm", links + 40, yy)
+  htmlText("M<sub>xp</sub> = " + myFormat(schnittgroesse.Mxp / 100, 2, 2) + " kNm", links + 40, yy)
   htmlText("N = " + myFormat(schnittgroesse.N, 2, 2) + " kN", links + 90, yy)
 
   yy = neueZeile(yy, fs1, 1)
 
   htmlText("V<sub>z</sub> = " + myFormat(schnittgroesse.Vz, 2, 2) + " kN", links, yy)
-  htmlText("M<sub>xs</sub> = " + myFormat(schnittgroesse.Mxs, 2, 2) + " kNm", links + 40, yy)
-  htmlText("M<sub>y</sub> = " + myFormat(schnittgroesse.My, 2, 2) + " kNm", links + 90, yy)
+  htmlText("M<sub>xs</sub> = " + myFormat(schnittgroesse.Mxs / 100, 2, 2) + " kNm", links + 40, yy)
+  htmlText("M<sub>y</sub> = " + myFormat(schnittgroesse.My / 100, 2, 2) + " kNm", links + 90, yy)
 
   yy = neueZeile(yy, fs1, 1)
 
-  htmlText("M<sub>ω</sub> = " + myFormat(schnittgroesse.M_omega, 2, 2) + " kNm²", links + 40, yy)
-  htmlText("M<sub>z</sub> = " + myFormat(schnittgroesse.Mz, 2, 2) + " kNm", links + 90, yy)
+  htmlText("M<sub>ω</sub> = " + myFormat(schnittgroesse.M_omega / 10000, 2, 2) + " kNm²", links + 40, yy)
+  htmlText("M<sub>z</sub> = " + myFormat(schnittgroesse.Mz / 100, 2, 2) + " kNm", links + 90, yy)
 
   yy = neueZeile(yy, fs, 2)
 
-  if (app.browserLanguage == 'de') {
-    doc.text("Bezugswerte", links, yy)
-  } else {
-    doc.text("Reference values", links, yy)
-  }
+  doc.text(msg('Bezugswerte'), links, yy)
   yy = neueZeile(yy, fs, 2)
 
-  doc.text("E-Modul = " + myFormat(bezugswerte.emodul * unit_stress_factor, 1, 1) + " " + current_unit_stress, links, yy)
+  doc.text(msg("E-Modul") + " = " + myFormat(bezugswerte.emodul * unit_stress_factor, 1, 1) + " " + current_unit_stress, links, yy)
 
-  if (app.browserLanguage == 'de') {
-    doc.text("Querdehnung ν = " + myFormat(bezugswerte.mue, 1, 2), links + 70, yy)
-  } else {
-    doc.text("Poisson's ratio ν = " + myFormat(bezugswerte.mue, 1, 2), links + 70, yy)
-  }
+  doc.text(msg('Querdehnung ν = ') + myFormat(bezugswerte.mue, 1, 2), links + 70, yy)
   yy = neueZeile(yy, fs, 1)
 
   {
     const nspalten = 3, nzeilen = nnodes
 
     yy = testSeite(yy, fs1, 1, 4 + nzeilen)
-    if (app.browserLanguage == 'de') {
-      doc.text("Knotenkoordinaten", links, yy)
-    } else {
-      doc.text("Node coordinates", links, yy)
-    }
+    doc.text(msg('Knotenkoordinaten'), links, yy)
 
     doc.setFontSize(fs)
     doc.setFont("freesans_bold");
@@ -306,11 +288,7 @@ export async function my_jspdf() {
     const nspalten = 3, nzeilen = nelem
 
     yy = testSeite(yy, fs1, 1, 4 + nzeilen)
-    if (app.browserLanguage == 'de') {
-      doc.text("Elementdaten", links, yy)
-    } else {
-      doc.text("Element data", links, yy)
-    }
+    doc.text(msg('Elementdaten'), links, yy)
     let str: string, texWid: number
 
     doc.setFontSize(fs)
@@ -326,13 +304,9 @@ export async function my_jspdf() {
     spalte[5] = spalte[4] + 20
 
     htmlText("El No", spalte[0], yy)
-    htmlText("E-Modul", spalte[1] + 5, yy)
+    htmlText(msg("E-Modul"), spalte[1] + 5, yy)
     htmlText("ν", spalte[2] + 15, yy)
-    if (app.browserLanguage == 'de') {
-      htmlText("Dicke", spalte[3] + 10, yy)
-    } else {
-      htmlText("Width", spalte[3] + 10, yy)
-    }
+    htmlText(msg('Dicke'), spalte[3] + 10, yy)
     htmlText("nod1", spalte[4] + 10, yy)
     htmlText("nod2", spalte[5] + 10, yy)
 
@@ -376,11 +350,7 @@ export async function my_jspdf() {
 
   doc.setFontSize(fs1)
   doc.setFont("freesans_bold");
-  if (app.browserLanguage == 'de') {
-    doc.text("ideelle Querschnittswerte", links, yy);
-  } else {
-    doc.text("Ideal cross section properties", links, yy);
-  }
+  doc.text(msg('ideelle Querschnittswerte'), links, yy);
   doc.setFontSize(fs)
   doc.setFont("freesans_normal");
 
@@ -459,11 +429,7 @@ export async function my_jspdf() {
 
   //-----------------
   yy = neueZeile(yy, fs, 2)
-  if (app.browserLanguage == 'de') {
-    doc.text("Alle Spannungen in " + current_unit_stress, links, yy);
-  } else {
-    doc.text("All stresses in " + current_unit_stress, links, yy);
-  }
+  doc.text(msg('Alle Spannungen in') + ' ' + current_unit_stress, links, yy);
   yy = neueZeile(yy, fs, 1)
 
   {
@@ -472,11 +438,7 @@ export async function my_jspdf() {
     const nspalten = 4, nzeilen = nelem
 
     yy = testSeite(yy, fs1, 1, 4 + nzeilen)
-    if (app.browserLanguage == 'de') {
-      str ="Schubspannungen aus primärer Torsion ";
-    } else {
-      str="Shear stresses from primary torsion ";
-    }
+    str =msg('Schubspannungen aus primärer Torsion ');
     texWid = doc.getTextWidth(str)
     doc.text(str, links, yy);
     htmlText("M<sub>xp</sub>" , links + texWid, yy)
@@ -525,11 +487,7 @@ export async function my_jspdf() {
     const nspalten = 4, nzeilen = nelem
 
     yy = testSeite(yy, fs1, 1, 4 + nzeilen)
-    if (app.browserLanguage == 'de') {
-      str="Schubspannungen aus Querkräften und sekundärer Torsion ";
-    } else {
-      str="Shear stresses from shear forces and secondary torsion ";
-    }
+    str=msg('Schubspannungen aus Querkräften und sekundärer Torsion ');
     texWid = doc.getTextWidth(str)
     doc.text(str, links, yy);
     htmlText("M<sub>xs</sub>" , links + texWid, yy)
@@ -569,11 +527,7 @@ export async function my_jspdf() {
 
     yy = testSeite(yy, fs1, 1, 5 + nzeilen)
 
-    if (app.browserLanguage == 'de') {
-      doc.text("Schubspannungen aus allen Anteilen", links, yy);
-    } else {
-      doc.text("Shear stresses from shear forces, primary and secondary torsional moment", links, yy);
-    }
+    doc.text(msg('Schubspannungen aus allen Anteilen'), links, yy);
 
     let str: string, texWid: number
     doc.setFontSize(fs)
@@ -601,20 +555,10 @@ export async function my_jspdf() {
     doc.setFont("freesans_normal");
     yy = neueZeile(yy, fs1, 1)
 
-    if (app.browserLanguage == 'de') {
-      texWid = doc.getTextWidth("linke Seite")
-      doc.text("linke Seite", spalte[1] + (60 - texWid) / 2, yy)
-    } else {
-      texWid = doc.getTextWidth("left side")
-      doc.text("left side", spalte[1] + (60 - texWid) / 2, yy)
-    }
-    if (app.browserLanguage == 'de') {
-      texWid = doc.getTextWidth("rechte Seite")
-      doc.text("rechte Seite", spalte[4] + (60 - texWid) / 2, yy)
-    } else {
-      texWid = doc.getTextWidth("right side")
-      doc.text("right side", spalte[4] + (60 - texWid) / 2, yy)
-    }
+    texWid = doc.getTextWidth(msg('linke Seite'))
+    doc.text(msg('linke Seite'), spalte[1] + (60 - texWid) / 2, yy)
+    texWid = doc.getTextWidth(msg('rechte Seite'))
+    doc.text(msg('rechte Seite'), spalte[4] + (60 - texWid) / 2, yy)
 
     yy = neueZeile(yy, fs1, 1)
 
@@ -639,11 +583,7 @@ export async function my_jspdf() {
 
     yy = testSeite(yy, fs1, 1, 4 + nzeilen)
 
-    if (app.browserLanguage == 'de') {
-      doc.text("Normalspannungen aus Normalkraft, Biegemomenten und Wölbbimoment", links, yy);
-    } else {
-      doc.text("Normal stresses from normal force, bending moments and warping bimoment", links, yy);
-    }
+    doc.text(msg('Normalspannungen aus Normalkraft, Biegemomenten und Wölbbimoment'), links, yy);
 
     let str: string, texWid: number
 
@@ -681,11 +621,7 @@ export async function my_jspdf() {
     const nspalten = 4, nzeilen = nelem
 
     yy = testSeite(yy, fs1, 1, 4 + nzeilen)
-    if (app.browserLanguage == 'de') {
-      doc.text("von Mises Vergleichsspannungen", links, yy);
-    } else {
-      doc.text("von Mises equivalent stresses", links, yy);
-    }
+    doc.text(msg('von Mises Vergleichsspannungen'), links, yy);
 
     let str: string, texWid: number
 
@@ -741,11 +677,7 @@ export async function my_jspdf() {
     } else {
       yy = neueZeile(yy, fs)
     }
-    if (app.browserLanguage == 'de') {
-      doc.text('Querschnitt', links, yy)
-    } else {
-      doc.text('Cross section', links, yy)
-    }
+    doc.text(msg('Querschnitt'), links, yy)
 
     doc.addImage(imgData, "PNG", 0, yy, 200, 200); // * myScreen.clientHeight / myScreen.svgWidth);
 
@@ -756,12 +688,12 @@ export async function my_jspdf() {
     if (app.hasFSAccess && app.isMac) {
 
       filename = window.prompt(
-        "Name der Datei mit Extension, z.B. duennqs.pdf\nDie Datei wird im Default Download Ordner gespeichert", 'duennqs.pdf'
+        msg('Name der Datei (wird im Download-Ordner gespeichert):'), 'duennqs.pdf'
       ) ?? filename;
 
     } else if (app.hasFSAccess) {
       filename = window.prompt(
-        "Name der Datei mit Extension, z.B. duennqs.pdf\nDie Datei wird im Default Download Ordner gespeichert", 'duennqs.pdf'
+        msg('Name der Datei (wird im Download-Ordner gespeichert):'), 'duennqs.pdf'
       ) ?? filename;
     }
 
@@ -771,7 +703,7 @@ export async function my_jspdf() {
       alert((error as Error).message);
     }
 
-    byId("id_pdf_info").innerText = "pdf-file saved in your Download folder";
+    byId("id_pdf_info").innerText = msg("pdf-Datei gespeichert (Download-Ordner)");
 
   }
 }

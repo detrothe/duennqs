@@ -1,6 +1,7 @@
 import { LitElement, html } from 'lit';
 import { customElement } from 'lit/decorators.js';
-import { localized, msg } from '@lit/localize';
+import { msg, updateWhenLocaleChanges } from '@lit/localize';
+import { allLocales, getLocale, sprachNamen } from '../localization';
 
 import '@shoelace-style/shoelace/dist/components/tab-group/tab-group.js';
 import '@shoelace-style/shoelace/dist/components/tab/tab.js';
@@ -59,9 +60,15 @@ const WERTE: [string, unknown, unknown][] = [
 
 const FARBEN = '#cfd915;#b3ae00;#ffffff;#f5f5f5;#d8d8d8;#828282;#404040;#000000;#0284c7;#2e7d32;#c62828;#ef6c00';
 
-@localized()
 @customElement('dr-haupt')
 export class DrHaupt extends LitElement {
+
+    constructor() {
+        super();
+        // bei Sprachwechsel neu zeichnen (statt @localized: <dr-haupt> steht schon in index.html und wird
+        // beim Registrieren aufgewertet, bevor ein Klassen-Decorator nach @customElement wirken könnte)
+        updateWhenLocaleChanges(this);
+    }
 
     // kein Shadow DOM (siehe oben)
     protected override createRenderRoot() {
@@ -83,6 +90,75 @@ export class DrHaupt extends LitElement {
 
     override render() {
         return html`
+      <!-- Kontextmenü der Knoten- und Elementtabelle (gesteuert in dr-tabelle.ts, wie in d2beam-gui) -->
+      <nav id="context-menu" class="context-menu">
+          <ul class="context-menu__items">
+              <li class="context-menu__item">
+                  <a href="#" class="context-menu__link" data-action="copyFirst">
+                      <svg class="context-menu__icon" viewBox="0 0 24 24" aria-hidden="true">
+                          <rect x="9" y="9" width="11" height="11" rx="2" />
+                          <path d="M5 15V6a2 2 0 0 1 2-2h9" />
+                      </svg>
+                      ${msg('Wert der ersten Zelle kopieren')}
+                  </a>
+              </li>
+              <li class="context-menu__item">
+                  <a href="#" class="context-menu__link" data-action="copyFirstRow">
+                      <svg class="context-menu__icon" viewBox="0 0 24 24" aria-hidden="true">
+                          <rect x="9" y="9" width="11" height="11" rx="2" />
+                          <path d="M5 15V6a2 2 0 0 1 2-2h9" />
+                      </svg>
+                      ${msg('Werte der ersten Zeile kopieren')}
+                  </a>
+              </li>
+              <li class="context-menu__item">
+                  <a href="#" class="context-menu__link" data-action="increment_1">
+                      <svg class="context-menu__icon" viewBox="0 0 24 24" aria-hidden="true">
+                          <rect x="4" y="4" width="16" height="16" rx="2" />
+                          <path d="M12 8v8M8 12h8" />
+                      </svg>
+                      ${msg('um 1 hochzählen')}
+                  </a>
+              </li>
+              <li class="context-menu__item">
+                  <a href="#" class="context-menu__link" data-action="increment_delta">
+                      <svg class="context-menu__icon" viewBox="0 0 24 24" aria-hidden="true">
+                          <rect x="4" y="4" width="16" height="16" rx="2" />
+                          <path d="M12 8v8M8 12h8" />
+                      </svg>
+                      ${msg('um Delta hochzählen')}
+                  </a>
+              </li>
+              <li class="context-menu__item">
+                  <a href="#" class="context-menu__link" data-action="copy">
+                      <svg class="context-menu__icon" viewBox="0 0 24 24" aria-hidden="true">
+                          <rect x="5" y="4" width="14" height="17" rx="2" />
+                          <rect x="9" y="2" width="6" height="4" rx="1" />
+                      </svg>
+                      ${msg('in Zwischenablage kopieren')}
+                  </a>
+              </li>
+              <li class="context-menu__item">
+                  <a href="#" class="context-menu__link" data-action="insert">
+                      <svg class="context-menu__icon" viewBox="0 0 24 24" aria-hidden="true">
+                          <rect x="5" y="4" width="14" height="17" rx="2" />
+                          <rect x="9" y="2" width="6" height="4" rx="1" />
+                          <path d="M12 10v7M9 14l3 3 3-3" />
+                      </svg>
+                      ${msg('aus Zwischenablage einfügen')}
+                  </a>
+              </li>
+              <li class="context-menu__item">
+                  <a href="#" class="context-menu__link" data-action="close">
+                      <svg class="context-menu__icon" viewBox="0 0 24 24" aria-hidden="true">
+                          <path d="M6 6l12 12M18 6L6 18" />
+                      </svg>
+                      ${msg('schließen')}
+                  </a>
+              </li>
+          </ul>
+      </nav>
+
       <sl-tab-group id="id_tabs">
         <sl-tab slot="nav" panel="eingabe">${msg('Eingabe')}</sl-tab>
         <sl-tab slot="nav" panel="ergebnisse">${msg('Ergebnisse')}</sl-tab>
@@ -246,6 +322,14 @@ ${msg('Bearbeitet von: Melis Muster')}"></textarea>
                   <option value="mm">mm (N/mm²)</option>
                   <option value="cm" selected>cm (kN/cm²)</option>
                   <option value="m">m (MN/m²)</option>
+                </select>
+              </td>
+            </tr>
+            <tr>
+              <td><label for="id_locale">${msg('Sprache:')}</label></td>
+              <td>
+                <select id="id_locale">
+                  ${allLocales.map(l => html`<option value="${l}" ?selected=${l === getLocale()}>${sprachNamen[l]}</option>`)}
                 </select>
               </td>
             </tr>

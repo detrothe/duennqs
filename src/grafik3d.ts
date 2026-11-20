@@ -3,6 +3,7 @@ import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
 import { CSS2DObject, CSS2DRenderer } from 'three/examples/jsm/renderers/CSS2DRenderer.js';
 import GUI from 'lil-gui';
 import { saveAs } from 'file-saver';
+import { msg } from '@lit/localize';
 import { byId } from './state';
 import { truss, node, Gesamt_ys, Gesamt_zs, yM, zM, u0, bezugswerte } from './duennQ';
 import { current_unit_length, current_unit_stress, unit_length_factor, unit_stress_factor } from './einstellungen';
@@ -78,6 +79,8 @@ let controls: OrbitControls;
 let host: HTMLElement;
 let groessenBeobachter: ResizeObserver | null = null;
 let bildButtonName: ((name: string) => void) | null = null;
+let gui: GUI | null = null;
+let panAktualisieren: (() => void) | null = null;
 
 // aktuelles Modell
 let modell: THREE.Group | null = null;
@@ -109,14 +112,6 @@ let letzterZeiger: { x: number; y: number; springen: boolean } | null = null;
 
 //----------------------------------------------------------------------------------------------------------------------
 // Texte und Zahlen
-
-function de(): boolean {
-    return app.browserLanguage === 'de';
-}
-
-function tx(deutsch: string, englisch: string): string {
-    return de() ? deutsch : englisch;
-}
 
 /** Zahl im Format der Ergebnistabellen (Dezimalkomma je nach Sprache), ohne „-0,00“. */
 function zahl(wert: number, stellen: number): string {
@@ -252,69 +247,71 @@ function initBedienfeld(): void {
         baueDiagramm();
         render();
     };
-    const gui = new GUI({ container: byId('view3d-gui'), title: tx('Bedienfeld', 'Controls') });
+    gui?.destroy();
+    gui = new GUI({ container: byId('view3d-gui'), title: msg('Bedienfeld') });
+    const g = gui;
 
     const auswahl: Record<string, Anzeige> = {};
-    auswahl[tx('nur Querschnitt', 'cross section only')] = 'keine';
-    auswahl[tx('Normalspannung σ', 'normal stress σ')] = 'sigma';
-    auswahl[tx('Schubspannung τ', 'shear stress τ')] = 'tau';
-    auswahl[tx('Vergleichsspannung σv', 'equivalent stress σv')] = 'sigmaV';
-    auswahl[tx('Wölbordinate ω', 'warping ordinate ω')] = 'omega';
-    auswahl[tx('Verwölbung u', 'warping displacement u')] = 'u';
+    auswahl[msg('nur Querschnitt')] = 'keine';
+    auswahl[msg('Normalspannung σ')] = 'sigma';
+    auswahl[msg('Schubspannung τ')] = 'tau';
+    auswahl[msg('Vergleichsspannung σv')] = 'sigmaV';
+    auswahl[msg('Wölbordinate ω')] = 'omega';
+    auswahl[msg('Verwölbung u')] = 'u';
     // Optionen, die nur zu bestimmten Darstellungen passen, werden nur dort gezeigt
     const nurBei: [ReturnType<GUI['add']>, () => boolean][] = [];
     const optionenZeigen = () => nurBei.forEach(([regler, passt]) => regler.show(passt()));
     const a = () => optionen.anzeige;
 
-    gui.add(optionen, 'anzeige', auswahl).name(tx('Anzeige', 'Display')).onChange(() => {
+    g.add(optionen, 'anzeige', auswahl).name(msg('Anzeige')).onChange(() => {
         optionenZeigen();
         neuAufbauen();
     });
     // fyRd gehört zur Vergleichsspannung und steht direkt unter der Auswahl
-    nurBei.push([gui.add(optionen, 'fyrd').name(tx('fyRd anzeigen', 'show fyRd')).onChange(neuAufbauen),
+    nurBei.push([g.add(optionen, 'fyrd').name(msg('fyRd anzeigen')).onChange(neuAufbauen),
         () => a() === 'sigmaV']);
 
-    gui.add(optionen, 'beschriftung').name(tx('Beschriftung', 'Labels')).onChange(sichtbarkeit);
-    gui.add(optionen, 'skalierung', 0.1, 5, 0.1).name(tx('Skalierung', 'Scaling')).onChange(neuAufbauen);
-    nurBei.push([gui.add(optionen, 'sigmaDicke').name(tx('σ über die Dicke', 'σ across thickness')).onChange(() => {
+    g.add(optionen, 'beschriftung').name(msg('Beschriftung')).onChange(sichtbarkeit);
+    g.add(optionen, 'skalierung', 0.1, 5, 0.1).name(msg('Skalierung')).onChange(neuAufbauen);
+    nurBei.push([g.add(optionen, 'sigmaDicke').name(msg('σ über die Dicke')).onChange(() => {
         optionenZeigen();
         neuAufbauen();
     }), () => a() === 'sigma' || a() === 'sigmaV']);
     // Seitenflächen gibt es bei σ nur über die Dicke (über der Mittellinie ist die Wand selbst das Diagramm)
-    nurBei.push([gui.add(optionen, 'seiten').name(tx('Seiten anzeigen', 'Show sides')).onChange(sichtbarkeit),
+    nurBei.push([g.add(optionen, 'seiten').name(msg('Seiten anzeigen')).onChange(sichtbarkeit),
         () => (a() === 'sigma' && optionen.sigmaDicke) || a() === 'tau' || a() === 'sigmaV']);
-    nurBei.push([gui.add(optionen, 'pfeile').name(tx('Pfeile anzeigen', 'Show arrows')).onChange(sichtbarkeit),
+    nurBei.push([g.add(optionen, 'pfeile').name(msg('Pfeile anzeigen')).onChange(sichtbarkeit),
         () => a() === 'sigma' || a() === 'tau']);
-    nurBei.push([gui.add(optionen, 'skalierungPfeile', 0.2, 3, 0.1).name(tx('Skalierung Pfeile', 'Scale arrows')).onChange(neuAufbauen),
+    nurBei.push([g.add(optionen, 'skalierungPfeile', 0.2, 3, 0.1).name(msg('Skalierung Pfeile')).onChange(neuAufbauen),
         () => a() === 'sigma' || a() === 'tau']);
     optionenZeigen();
-    gui.add(optionen, 'seitenLR').name(tx('rechts/links anzeigen', 'show right/left')).onChange(neuAufbauen);
-    gui.add(optionen, 'achsen').name(tx('Achsen anzeigen', 'Show axes')).onChange(sichtbarkeit);
-    gui.add(optionen, 'fangweite', 5, 60, 1).name(tx('Fangweite [px]', 'Snap radius [px]')).onChange(() => {
+    g.add(optionen, 'seitenLR').name(msg('rechts/links anzeigen')).onChange(neuAufbauen);
+    g.add(optionen, 'achsen').name(msg('Achsen anzeigen')).onChange(sichtbarkeit);
+    g.add(optionen, 'fangweite', 5, 60, 1).name(msg('Fangweite [px]')).onChange(() => {
         if (letzterZeiger) fangen(letzterZeiger.x, letzterZeiger.y, letzterZeiger.springen);
     });
 
-    const bild = gui.addFolder(tx('Bild speichern', 'Save image'));
+    const bild = g.addFolder(msg('Bild speichern'));
     bild.add(optionen, 'bildFaktor', { '1×': 1, '2×': 2, '3×': 3, '4×': 4, '6×': 6, '8×': 8 })
-        .name(tx('Auflösung', 'Resolution')).onChange(bildNameAktualisieren);
-    bild.add(optionen, 'bildWeiss').name(tx('weißer Hintergrund', 'white background'));
+        .name(msg('Auflösung')).onChange(bildNameAktualisieren);
+    bild.add(optionen, 'bildWeiss').name(msg('weißer Hintergrund'));
     const knopf = bild.add({ speichern: () => void bildExportieren() }, 'speichern');
     bildButtonName = name => knopf.name(name);
     bildNameAktualisieren();
     bild.close();
 
-    gui.add({
+    g.add({
         reset() {
             optionen.skalierung = 1;
             optionen.skalierungPfeile = 1;
-            gui.controllersRecursive().forEach(c => c.updateDisplay());
+            g.controllersRecursive().forEach(c => c.updateDisplay());
             baueDiagramm();
             kameraZuruecksetzen();
             render();
         },
-    }, 'reset').name(tx('Zurücksetzen', 'Reset'));
+    }, 'reset').name(msg('Zurücksetzen'));
 
-    gui.close();
+    g.close();
 }
 
 //----------------------------------------------------------------------------------------------------------------------
@@ -615,15 +612,15 @@ function baueDiagramm(): void {
     // Knoten, Schwerpunkt und Schubmittelpunkt fangen immer
     node.forEach((k, i) => fangpunkte.push({
         pos: toV(k.y, k.z),
-        html: `<b>${tx('Knoten', 'Node')} ${i + 1}</b><br>${koordinaten(k.y, k.z)}`,
+        html: `<b>${msg('Knoten', { id: 'knoten_nummer', desc: 'ein Knoten mit Nummer, z.B. Knoten 3' })} ${i + 1}</b><br>${koordinaten(k.y, k.z)}`,
     }));
     fangpunkte.push({
         pos: toV(yM + Gesamt_ys, zM + Gesamt_zs),
-        html: `<b>${tx('Schubmittelpunkt', 'Shear center')}</b><br>${koordinaten(yM + Gesamt_ys, zM + Gesamt_zs)}`,
+        html: `<b>${msg('Schubmittelpunkt')}</b><br>${koordinaten(yM + Gesamt_ys, zM + Gesamt_zs)}`,
     });
     fangpunkte.push({
         pos: toV(Gesamt_ys, Gesamt_zs),
-        html: `<b>${tx('Schwerpunkt', 'Centroid')}</b><br>${koordinaten(Gesamt_ys, Gesamt_zs)}`,
+        html: `<b>${msg('Schwerpunkt')}</b><br>${koordinaten(Gesamt_ys, Gesamt_zs)}`,
     });
 
     const anzeige = optionen.anzeige;
@@ -637,7 +634,7 @@ function baueDiagramm(): void {
         });
 
     } else if (anzeige === 'sigma') {
-        einheit = tx('Spannungen in ', 'Stresses in ') + current_unit_stress;
+        einheit = msg('Spannungen in ') + current_unit_stress;
         const werte = truss.flatMap(el => optionen.sigmaDicke ? el.sigma_xe : [el.sigma_x[0], el.sigma_x[2]]);
         const maxAbs = Math.max(...werte.map(Math.abs));
         const f = hoehe(maxAbs);
@@ -645,7 +642,7 @@ function baueDiagramm(): void {
         const pfeilPunkte: Punkt[] = [];
 
         truss.forEach((el, i) => {
-            const titel = `${tx('Element', 'Element')} ${i + 1}`;
+            const titel = `${msg('Element')} ${i + 1}`;
             if (optionen.sigmaDicke) {
                 // Spannungskörper über der Elementfläche (Eckwerte, linear)
                 const poly: Punkt[] = el.pts_y.map((y, j) => ({ y, z: el.pts_z[j], w: el.sigma_xe[j] }));
@@ -669,7 +666,7 @@ function baueDiagramm(): void {
                     const pos = toV(p.y, p.z, p.w * f);
                     beschrifte(spannung(p.w), pos);
                     fangpunkte.push({
-                        pos, html: `<b>σ = ${spannung(p.w)}</b> ${current_unit_stress}<br>${titel}, ${tx('Ecke', 'corner')} ${j + 1}<br>${koordinaten(p.y, p.z)}`,
+                        pos, html: `<b>σ = ${spannung(p.w)}</b> ${current_unit_stress}<br>${titel}, ${msg('Ecke')} ${j + 1}<br>${koordinaten(p.y, p.z)}`,
                     });
                 });
                 for (const seite of ['R', 'L'] as const) {
@@ -677,7 +674,7 @@ function baueDiagramm(): void {
                         const t = k / TEILUNG, p = seitenPunkt(i, seite, t), w = sigmaSeite(i, seite, t);
                         fangpunkte.push({
                             pos: toV(p.y, p.z, w * f),
-                            html: `<b>σ = ${spannung(w)}</b> ${current_unit_stress}<br>${titel}, ${tx('Seite', 'side')} ${seite}<br>${koordinaten(p.y, p.z)}`,
+                            html: `<b>σ = ${spannung(w)}</b> ${current_unit_stress}<br>${titel}, ${msg('Seite', { id: 'element_seite', desc: 'rechte oder linke Seite eines Elements (R/L)' })} ${seite}<br>${koordinaten(p.y, p.z)}`,
                         });
                     }
                 }
@@ -706,7 +703,7 @@ function baueDiagramm(): void {
         minmax = `min/max σ : ${zahl(Math.min(...werte) * unit_stress_factor, 2)} / ${zahl(Math.max(...werte) * unit_stress_factor, 2)}`;
 
     } else if (anzeige === 'tau' || anzeige === 'sigmaV') {
-        einheit = tx('Spannungen in ', 'Stresses in ') + current_unit_stress;
+        einheit = msg('Spannungen in ') + current_unit_stress;
         const istTau = anzeige === 'tau';
         const farbe = istTau ? FARBE_TAU : FARBE_SIGMAV;
         const name = istTau ? 'τ' : 'σ<sub>v</sub>';
@@ -735,7 +732,7 @@ function baueDiagramm(): void {
 
         kurven.forEach((k, i) => {
             const el = truss[i];
-            const titel = `${tx('Element', 'Element')} ${i + 1}`;
+            const titel = `${msg('Element')} ${i + 1}`;
             const top = (p: Punkt) => toV(p.y, p.z, p.w * f);
 
             // Deckfläche zwischen rechter und linker Kurve
@@ -753,7 +750,7 @@ function baueDiagramm(): void {
                 diagramm!.add(linie([toV(kurve[0].y, kurve[0].z), ...kurve.map(top), toV(kurve[TEILUNG].y, kurve[TEILUNG].z)], 0x385d8a));
                 kurve.forEach(p => fangpunkte.push({
                     pos: top(p),
-                    html: `<b>${name} = ${spannung(p.w)}</b> ${current_unit_stress}<br>${titel}, ${tx('Seite', 'side')} ${seite}<br>${koordinaten(p.y, p.z)}`,
+                    html: `<b>${name} = ${spannung(p.w)}</b> ${current_unit_stress}<br>${titel}, ${msg('Seite', { id: 'element_seite', desc: 'rechte oder linke Seite eines Elements (R/L)' })} ${seite}<br>${koordinaten(p.y, p.z)}`,
                 }));
                 // Beschriftung: Enden und betragsgrößter Wert
                 beschrifte(spannung(kurve[0].w), top(kurve[0]));
@@ -801,8 +798,8 @@ function baueDiagramm(): void {
         const istOmega = anzeige === 'omega';
         const lf = istOmega ? unit_length_factor ** 2 : unit_length_factor;
         const einheitWert = current_unit_length + (istOmega ? '²' : '');
-        einheit = istOmega ? tx('Wölbordinate ω in ', 'Warping ordinate ω in ') + einheitWert
-            : tx('Verwölbung u in ', 'Warping displacement u in ') + einheitWert;
+        einheit = istOmega ? msg('Wölbordinate ω in ') + einheitWert
+            : msg('Verwölbung u in ') + einheitWert;
         const name = istOmega ? 'ω' : 'u';
         const kurven = truss.map((el, i) => {
             const p: Punkt[] = [];
@@ -828,7 +825,7 @@ function baueDiagramm(): void {
             diagramm!.add(linie(kurve.map(top), 0x333333));
             kurve.forEach(p => fangpunkte.push({
                 pos: top(p),
-                html: `<b>${name} = ${text(p.w)}</b> ${einheitWert}<br>${tx('Element', 'Element')} ${i + 1}<br>${koordinaten(p.y, p.z)}`,
+                html: `<b>${name} = ${text(p.w)}</b> ${einheitWert}<br>${msg('Element')} ${i + 1}<br>${koordinaten(p.y, p.z)}`,
             }));
             beschrifte(text(kurve[0].w), top(kurve[0]));
             beschrifte(text(kurve[TEILUNG].w), top(kurve[TEILUNG]));
@@ -876,11 +873,11 @@ function initPanButton(): void {
     const btn = document.createElement('button');
     btn.type = 'button';
     btn.id = 'view3d-pan';
-    const aktualisieren = () => {
+    const aktualisieren = panAktualisieren = () => {
         btn.innerHTML = panModus ? ICON_PAN : ICON_WERTE;
         btn.title = panModus
-            ? tx('Ein Finger verschiebt – tippen für Werteanzeige', 'One finger pans – tap to show values')
-            : tx('Ein Finger zeigt Werte – tippen zum Verschieben', 'One finger shows values – tap to pan');
+            ? msg('Ein Finger verschiebt – tippen für Werteanzeige')
+            : msg('Ein Finger zeigt Werte – tippen zum Verschieben');
         controls.touches.ONE = panModus ? THREE.TOUCH.PAN : null;
         if (panModus) cursorAusblenden();
     };
@@ -980,7 +977,7 @@ function bildNameAktualisieren(): void {
     if (!bildButtonName || !host) return;
     const f = bildFaktor();
     const w = Math.round(host.clientWidth * f), h = Math.round(host.clientHeight * f);
-    const name = tx('PNG speichern', 'Save PNG');
+    const name = msg('PNG speichern');
     bildButtonName(w > 0 ? `${name} (${w} × ${h} px)` : name);
 }
 
@@ -1050,7 +1047,7 @@ async function bildExportieren(): Promise<void> {
         if (app.hasFSAccess && window.showSaveFilePicker) {
             const fileHandle = await window.showSaveFilePicker({
                 suggestedName: vorschlag,
-                types: [{ description: tx('PNG-Bild', 'PNG image'), accept: { 'image/png': ['.png'] } }],
+                types: [{ description: msg('PNG-Bild'), accept: { 'image/png': ['.png'] } }],
             });
             const blob = await bildErzeugen();
             const fileStream = await fileHandle.createWritable();
@@ -1066,6 +1063,22 @@ async function bildExportieren(): Promise<void> {
 }
 
 //----------------------------------------------------------------------------------------------------------------------
+
+/** Sprache geändert: Bedienfeld, Texte der Wertanzeige und Beschriftung neu aufbauen. */
+export function spracheGeaendert(): void {
+    if (!renderer) return;
+    initBedienfeld();
+    panAktualisieren?.();
+    if (modell) baueDiagramm();
+    render();
+}
+
+/** Nach Rückkehr aus dem Hintergrund neu zeichnen (Größe und WebGL-Kontext können sich geändert haben). */
+export function neuZeichnen(): void {
+    if (!renderer) return;
+    resize();
+    render();
+}
 
 /**
  * 3D-Ansicht einblenden (Tab 3D) und mit dem Ergebnis der letzten erfolgreichen Berechnung aufbauen.

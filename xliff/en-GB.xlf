@@ -1,0 +1,713 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
+<file target-language="en-GB" source-language="de" original="lit-localize-inputs" datatype="plaintext">
+<body>
+<trans-unit id="s21ed3cf1e232460a">
+  <source>Eingabe</source>
+  <target>Input</target>
+</trans-unit>
+<trans-unit id="s7129495aed9d8046">
+  <source>Ergebnisse</source>
+  <target>Results</target>
+</trans-unit>
+<trans-unit id="sa81e2cdaf6921adc">
+  <source>System</source>
+  <target>System</target>
+</trans-unit>
+<trans-unit id="s784d82bd15c49b4a">
+  <source>Einstellungen</source>
+  <target>Settings</target>
+</trans-unit>
+<trans-unit id="s9234cde5c4c75943">
+  <source>neue Eingabe beginnen</source>
+  <target>Start new input</target>
+</trans-unit>
+<trans-unit id="s740a754fe7906289">
+  <source>Eingabe einlesen</source>
+  <target>Read input</target>
+</trans-unit>
+<trans-unit id="s54fade01578df84b">
+  <source>Eingabe speichern</source>
+  <target>Save input</target>
+</trans-unit>
+<trans-unit id="s133c5df8502c944c">
+  <source>Querschnittswerte und Spannungen berechnen (farbig hinterlegt, wenn die Eingabe geändert wurde)</source>
+  <target>Calculate cross-section properties and stresses (highlighted when the input has changed)</target>
+</trans-unit>
+<trans-unit id="se9f528070d8cf418">
+  <source>Rechnen</source>
+  <target>Calculate</target>
+</trans-unit>
+<trans-unit id="s5747c1377ce8b0a5">
+  <source>Querschnittswerte und Spannungen dünnwandiger Querschnitte</source>
+  <target>Properties and stresses of thin-walled cross sections</target>
+</trans-unit>
+<trans-unit id="s907c9609efe8407e">
+  <source>freier Text mit HTML-Formatierung (für die pdf-Ausgabe):</source>
+  <target>free text with HTML formatting (for the pdf output):</target>
+</trans-unit>
+<trans-unit id="sc1444b7e8677ce3b">
+  <source>Hausübung A1, SS 2025</source>
+  <target>Homework A1, summer term 2025</target>
+</trans-unit>
+<trans-unit id="s1b02d3b69f49c253">
+  <source>Bearbeitet von: Melis Muster</source>
+  <target>Prepared by: Melis Muster</target>
+</trans-unit>
+<trans-unit id="sb87a78ebbd243d2d">
+  <source>Schnittgrößen</source>
+  <target>Internal forces</target>
+</trans-unit>
+<trans-unit id="sd7bf60912e234837">
+  <source>Querkraft in y-Richtung</source>
+  <target>shear force in y-direction</target>
+</trans-unit>
+<trans-unit id="scad8928ce04fd1ba">
+  <source>primäres Torsionsmoment (St. Venant)</source>
+  <target>primary torsional moment (St. Venant)</target>
+</trans-unit>
+<trans-unit id="s3d1362f3061410b4">
+  <source>Normalkraft</source>
+  <target>normal force</target>
+</trans-unit>
+<trans-unit id="s46e22db4f9caa220">
+  <source>Querkraft in z-Richtung</source>
+  <target>shear force in z-direction</target>
+</trans-unit>
+<trans-unit id="s974b45223e6dc3d2">
+  <source>sekundäres Torsionsmoment</source>
+  <target>secondary torsional moment</target>
+</trans-unit>
+<trans-unit id="se15bf80772ac4f33">
+  <source>Biegemoment um die y-Achse</source>
+  <target>bending moment about the y-axis</target>
+</trans-unit>
+<trans-unit id="s0689587db167433b">
+  <source>Wölbbimoment</source>
+  <target>warping bimoment</target>
+</trans-unit>
+<trans-unit id="s713c457387fecdde">
+  <source>Biegemoment um die z-Achse</source>
+  <target>bending moment about the z-axis</target>
+</trans-unit>
+<trans-unit id="s6de8b79afb816b88">
+  <source>Bezugswerte</source>
+  <target>Reference values</target>
+</trans-unit>
+<trans-unit id="sd1d0a5c6c4c77462">
+  <source>alle Elemente haben gleiche Materialdaten</source>
+  <target>all elements have the same material data</target>
+</trans-unit>
+<trans-unit id="s65592582fac0eeab">
+  <source>E-Modul (Bezugswert)</source>
+  <target>Young's modulus (reference value)</target>
+</trans-unit>
+<trans-unit id="s78cbcf4d18d679ef">
+  <source>Querdehnzahl (Bezugswert)</source>
+  <target>Poisson's ratio (reference value)</target>
+</trans-unit>
+<trans-unit id="s3757d4bdb31ca0da">
+  <source>Bemessungswert der Streckgrenze (für die Vergleichsspannung)</source>
+  <target>design value of the yield strength (for the equivalent stress)</target>
+</trans-unit>
+<trans-unit id="s1bd581ec11590306">
+  <source>Anzahl Knoten: </source>
+  <target>Number of nodes: </target>
+</trans-unit>
+<trans-unit id="s5d987dc0dd03d316">
+  <source>Elemente</source>
+  <target>Elements</target>
+</trans-unit>
+<trans-unit id="sdd00e76e03cded1d">
+  <source>nod1 und nod2 sind die Nummern des Anfangs- und Endknotens. Die rechte Seite eines Elements liegt in Richtung von nod1 nach nod2 gesehen rechts (siehe 3D-Ansicht, „rechts/links anzeigen“).</source>
+  <target>nod1 and nod2 are the numbers of the start and end node. The right side of an element is on the right when looking from nod1 to nod2 (see 3D view, “show right/left”).</target>
+</trans-unit>
+<trans-unit id="s5917f7a203fcbf98">
+  <source>Anzahl Elemente: </source>
+  <target>Number of elements: </target>
+</trans-unit>
+<trans-unit id="s7d3b74e529b06937">
+  <source>Rechte Maustaste bzw. langes Drücken auf markierte Zellen öffnet das Kontextmenü. In der Spalte No fügt + oberhalb eine Zeile ein, der Papierkorb löscht die Zeile (beides mit Rückgängig/Wiederherstellen).</source>
+  <target>Right mouse button or long press on selected cells opens the context menu. In the No column, + inserts a row above, the bin deletes the row (both with undo/redo).</target>
+</trans-unit>
+<trans-unit id="sa30d77be7c7c7d59">
+  <source>Ergebnisse als pdf-Datei speichern</source>
+  <target>Save results as pdf file</target>
+</trans-unit>
+<trans-unit id="s7528207a1d339605">
+  <source>Noch nicht gerechnet – im Tab Eingabe auf Rechnen drücken.</source>
+  <target>Not yet calculated – press Calculate in the Input tab.</target>
+</trans-unit>
+<trans-unit id="s242244c7d728763b">
+  <source>ideelle Querschnittswerte</source>
+  <target>Ideal cross-section properties</target>
+</trans-unit>
+<trans-unit id="s016e2695d43c6359">
+  <source>Knoten- und Elementnummern ein-/ausblenden</source>
+  <target>Show/hide node and element numbers</target>
+</trans-unit>
+<trans-unit id="s7e3191a92cb77b99">
+  <source>Nummern</source>
+  <target>Numbers</target>
+</trans-unit>
+<trans-unit id="s8f61ad6669fb2d2c">
+  <source>Grafik als SVG-Datei speichern</source>
+  <target>Save graphic as SVG file</target>
+</trans-unit>
+<trans-unit id="s5689dde358e20548">
+  <source>3D-Ansicht: bitte zuerst Rechnen drücken</source>
+  <target>3D view: please press Calculate first</target>
+</trans-unit>
+<trans-unit id="s2a26513593107f4d">
+  <source>Kurzdokumentation zu Duenne Querschnitte.html</source>
+  <target>docu_en.html</target>
+</trans-unit>
+<trans-unit id="sa1781a00a872bf21">
+  <source>Gerät</source>
+  <target>Device</target>
+</trans-unit>
+<trans-unit id="s8954946e6c414e39">
+  <source>Längeneinheit:</source>
+  <target>Unit of length:</target>
+</trans-unit>
+<trans-unit id="sbfb8176091a3242c">
+  <source>Einheit für Eingabe und Ergebnisse; vorhandene Werte werden umgerechnet</source>
+  <target>Unit for input and results; existing values are converted</target>
+</trans-unit>
+<trans-unit id="s980285ed945f4920">
+  <source>Hintergrundfarbe Tabellen:</source>
+  <target>Table background colour:</target>
+</trans-unit>
+<trans-unit id="s67df30eee417c25a">
+  <source>Hintergrundfarbe Tabellen</source>
+  <target>Table background colour</target>
+</trans-unit>
+<trans-unit id="s4b8b3b2c5928212b">
+  <source>Textfarbe Tabellen:</source>
+  <target>Table text colour:</target>
+</trans-unit>
+<trans-unit id="s63190f0c75e7f693">
+  <source>Textfarbe Tabellen</source>
+  <target>Table text colour</target>
+</trans-unit>
+<trans-unit id="s4da64b8d0fc6bc9c">
+  <source>Wird beim Ändern der Hintergrundfarbe automatisch hell oder dunkel gesetzt</source>
+  <target>Set automatically to light or dark when the background colour is changed</target>
+</trans-unit>
+<trans-unit id="s4c948185a2c3dc94">
+  <source>Akzentfarbe:</source>
+  <target>Accent colour:</target>
+</trans-unit>
+<trans-unit id="se7a1853c55b51f26">
+  <source>Akzentfarbe</source>
+  <target>Accent colour</target>
+</trans-unit>
+<trans-unit id="s92ed5bb5583899e3">
+  <source>Farbe für den aktiven Tab und den Rechnen-Button, wenn neu gerechnet werden muss</source>
+  <target>Colour for the active tab and the Calculate button when a new calculation is required</target>
+</trans-unit>
+<trans-unit id="sf767b754aa59716a">
+  <source>Akzentfarbe auf das Standard-Blau zurücksetzen</source>
+  <target>Reset accent colour to the default blue</target>
+</trans-unit>
+<trans-unit id="s53a526d5c80c3e28">
+  <source>Standard</source>
+  <target>Default</target>
+</trans-unit>
+<trans-unit id="s41e5704dbb12ac2c">
+  <source>Die Tabellenfarbe gilt auch für die Titelleiste des Bedienfelds in der 3D-Ansicht.</source>
+  <target>The table colour also applies to the title bar of the control panel in the 3D view.</target>
+</trans-unit>
+<trans-unit id="s854627b29e5663d3">
+  <source>Die gewählten Einstellungen bleiben auch nach einem Neustart der App erhalten</source>
+  <target>The selected settings are kept after restarting the app</target>
+</trans-unit>
+<trans-unit id="s062463b6cb2ba47f">
+  <source>Auswahl als Standardwerte im Browser speichern</source>
+  <target>Save selection as default values in browser</target>
+</trans-unit>
+<trans-unit id="s2a527d2aa4924cec">
+  <source>Es gibt Änderungen, die noch nicht gespeichert sind.</source>
+  <target>There are changes that have not been saved yet.</target>
+</trans-unit>
+<trans-unit id="sf7d1b364b3c47a7a">
+  <source>Gespeicherte Einstellungen löschen und die Standardwerte wiederherstellen</source>
+  <target>Delete saved settings and restore the defaults</target>
+</trans-unit>
+<trans-unit id="sdb44853a9a24fec0">
+  <source>Standardwerte im Speicher des Browsers löschen</source>
+  <target>Delete default values in the browser's memory</target>
+</trans-unit>
+<trans-unit id="sc1a732f8b025abbd">
+  <source>Zeile oberhalb einfügen</source>
+  <target>Insert row above</target>
+</trans-unit>
+<trans-unit id="s1ec6656427d93e0f">
+  <source>Zeile löschen</source>
+  <target>Delete row</target>
+</trans-unit>
+<trans-unit id="s34e3267de95173eb">
+  <source>Zeile <x id="0" equiv-text="${iZeile}"/> wirklich löschen?</source>
+  <target>Really delete row <x id="0" equiv-text="${iZeile}"/>?</target>
+</trans-unit>
+<trans-unit id="s062a673dafbdd5dd">
+  <source>Rückgängig</source>
+  <target>Undo</target>
+</trans-unit>
+<trans-unit id="s923e8c23e10ef290">
+  <source>Löschen rückgängig</source>
+  <target>Undo delete</target>
+</trans-unit>
+<trans-unit id="s650d622acd1fe2a3">
+  <source>Wiederherstellen</source>
+  <target>Redo</target>
+</trans-unit>
+<trans-unit id="scdbeef85e98901d2">
+  <source>Löschen wiederherstellen</source>
+  <target>Redo delete</target>
+</trans-unit>
+<trans-unit id="s0c2fabc1c3fe5a99">
+  <source>duennqs-Eingabe</source>
+  <target>duennqs input</target>
+</trans-unit>
+<trans-unit id="s6b73c59b276b77e1">
+  <source>Die Datei enthält keine gültige duennqs-Eingabe.</source>
+  <target>The file does not contain a valid duennqs input.</target>
+</trans-unit>
+<trans-unit id="sf3b8dd74d2f76589">
+  <source>Name der Datei (wird im Download-Ordner gespeichert):</source>
+  <target>File name (saved in the download folder):</target>
+</trans-unit>
+<trans-unit id="sd81b33dfcbc03795">
+  <source>Die Eingabe enthält ungültige Zahlen (rot markiert).</source>
+  <target>The input contains invalid numbers (marked red).</target>
+</trans-unit>
+<trans-unit id="se348225ed91b8e5a">
+  <source>Der E-Modul (Bezugswert) muss größer 0 sein</source>
+  <target>Young's modulus (reference value) must be greater than 0</target>
+</trans-unit>
+<trans-unit id="s9fb8f1fac842e481">
+  <source>Die Querdehnzahl (Bezugswert) muss größer oder gleich 0 sein</source>
+  <target>Poisson's ratio (reference value) must be greater than or equal to 0</target>
+</trans-unit>
+<trans-unit id="s77d9046f166a8c1f">
+  <source>E-Modul von Element <x id="0" equiv-text="${i + 1}"/> muss größer 0 sein</source>
+  <target>Young's modulus of element <x id="0" equiv-text="${i + 1}"/> must be greater than 0</target>
+</trans-unit>
+<trans-unit id="sadf755d641ccf479">
+  <source>Querdehnzahl von Element <x id="0" equiv-text="${i + 1}"/> muss größer oder gleich 0 sein</source>
+  <target>Poisson's ratio of element <x id="0" equiv-text="${i + 1}"/> must be greater than or equal to 0</target>
+</trans-unit>
+<trans-unit id="s48243d2e2b746bb6">
+  <source>Dicke von Element <x id="0" equiv-text="${i + 1}"/> muss größer 0 sein</source>
+  <target>Thickness of element <x id="0" equiv-text="${i + 1}"/> must be greater than 0</target>
+</trans-unit>
+<trans-unit id="sd2f0c08c7cb4ed35">
+  <source>Knoteninzidenzen von Element <x id="0" equiv-text="${i + 1}"/> müssen zwischen 1 und der Anzahl der Knoten liegen</source>
+  <target>Node incidences of element <x id="0" equiv-text="${i + 1}"/> must be between 1 and the number of nodes</target>
+</trans-unit>
+<trans-unit id="sa082226798a6a7eb">
+  <source>An Knoten <x id="0" equiv-text="${i + 1}"/> hängt kein Element</source>
+  <target>No element is connected to node <x id="0" equiv-text="${i + 1}"/></target>
+</trans-unit>
+<trans-unit id="se08538ce6eb81be3">
+  <source>Die Länge von Element <x id="0" equiv-text="${i + 1}"/> ist null</source>
+  <target>The length of element <x id="0" equiv-text="${i + 1}"/> is zero</target>
+</trans-unit>
+<trans-unit id="s6bf117f912b77341">
+  <source>Das Gleichungssystem ist singulär.</source>
+  <target>The system of equations is singular.</target>
+</trans-unit>
+<trans-unit id="sfaba033c9713b1db">
+  <source>Alle Spannungen in</source>
+  <target>All stresses in</target>
+</trans-unit>
+<trans-unit id="s4b690af41ff9e07b">
+  <source>Schubspannungen aus primärer Torsion M&lt;sub&gt;xp&lt;/sub&gt;</source>
+  <target>Shear stresses from primary torsion M&lt;sub&gt;xp&lt;/sub&gt;</target>
+</trans-unit>
+<trans-unit id="s3e32ef1dbdd05d8f">
+  <source>Elementnummer</source>
+  <target>element number</target>
+</trans-unit>
+<trans-unit id="s34f2404e58176644">
+  <source>Schubspannung linke Seite aus Anteil offener Querschnitt</source>
+  <target>shear stress on the left side from the open cross-section part</target>
+</trans-unit>
+<trans-unit id="s99f5b18e86de4b6e">
+  <source>Schubspannung rechte Seite aus Anteil offener Querschnitt</source>
+  <target>shear stress on the right side from the open cross-section part</target>
+</trans-unit>
+<trans-unit id="sae0571cba5069665">
+  <source>Schubspannung aus Anteil geschlossener Querschnitt</source>
+  <target>shear stress from the closed cross-section part</target>
+</trans-unit>
+<trans-unit id="s91faa5b4c818b35c">
+  <source>Schubspannungen aus Querkräften und sekundärer Torsion M&lt;sub&gt;xs&lt;/sub&gt;</source>
+  <target>Shear stresses from shear forces and secondary torsion M&lt;sub&gt;xs&lt;/sub&gt;</target>
+</trans-unit>
+<trans-unit id="s339f3d0b2d0733df">
+  <source>Schubspannung am Elementanfang, Elementknoten 1</source>
+  <target>shear stress at the start of the element, element node 1</target>
+</trans-unit>
+<trans-unit id="s7a0e15a7cc7a9450">
+  <source>Schubspannung in Elementmitte</source>
+  <target>shear stress at the middle of the element</target>
+</trans-unit>
+<trans-unit id="s629d6adf44139801">
+  <source>Schubspannung am Elementende, Elementknoten 2</source>
+  <target>shear stress at the end of the element, element node 2</target>
+</trans-unit>
+<trans-unit id="sb832ea16a48e996f">
+  <source>Schubspannungen aus Querkräften, primärem und sekundärem Torsionsmoment</source>
+  <target>Shear stresses from shear forces, primary and secondary torsional moment</target>
+</trans-unit>
+<trans-unit id="s99d7d0c9ee6ffe56">
+  <source>Schubspannung am Elementanfang, Elementknoten 1, linke Seite</source>
+  <target>shear stress at the start of the element, element node 1, left side</target>
+</trans-unit>
+<trans-unit id="s7d68654a4a8d6aab">
+  <source>Schubspannung in Elementmitte, linke Seite</source>
+  <target>shear stress at the middle of the element, left side</target>
+</trans-unit>
+<trans-unit id="s2202f9c5118ff020">
+  <source>Schubspannung am Elementende, Elementknoten 2, linke Seite</source>
+  <target>shear stress at the end of the element, element node 2, left side</target>
+</trans-unit>
+<trans-unit id="s441cf1c3e27a04ae">
+  <source>Schubspannung am Elementanfang, Elementknoten 1, rechte Seite</source>
+  <target>shear stress at the start of the element, element node 1, right side</target>
+</trans-unit>
+<trans-unit id="s75342fab9f38ad0d">
+  <source>Schubspannung in Elementmitte, rechte Seite</source>
+  <target>shear stress at the middle of the element, right side</target>
+</trans-unit>
+<trans-unit id="s4e5e9408299b36c4">
+  <source>Schubspannung am Elementende, Elementknoten 2, rechte Seite</source>
+  <target>shear stress at the end of the element, element node 2, right side</target>
+</trans-unit>
+<trans-unit id="s17d62424ec414450">
+  <source>linke Seite</source>
+  <target>left side</target>
+</trans-unit>
+<trans-unit id="sb199340d56c521d4">
+  <source>rechte Seite</source>
+  <target>right side</target>
+</trans-unit>
+<trans-unit id="s327d27aa06ad3aeb">
+  <source>Normalspannungen aus Normalkraft, Biegemomenten und Wölbbimoment</source>
+  <target>Normal stresses from normal force, bending moments and warping bimoment</target>
+</trans-unit>
+<trans-unit id="sf4ade6fe48e4f354">
+  <source>Normalspannung in Mittellinie, Elementanfang</source>
+  <target>normal stress at the centre line, start of the element</target>
+</trans-unit>
+<trans-unit id="sf49e51cc828d1b91">
+  <source>Normalspannung in Mittellinie, Elementende</source>
+  <target>normal stress at the centre line, end of the element</target>
+</trans-unit>
+<trans-unit id="sd359e7e0061f1ab0">
+  <source>von Mises Vergleichsspannungen</source>
+  <target>von Mises equivalent stresses</target>
+</trans-unit>
+<trans-unit id="s675a69bfe0064bcb">
+  <source>Größtwert der Vergleichsspannung, Elementanfang</source>
+  <target>maximum equivalent stress, start of the element</target>
+</trans-unit>
+<trans-unit id="s581a0d6275ee0177">
+  <source>Größtwert der Vergleichsspannung, Elementmitte</source>
+  <target>maximum equivalent stress, middle of the element</target>
+</trans-unit>
+<trans-unit id="s578e865ad974986a">
+  <source>Größtwert der Vergleichsspannung, Elementende</source>
+  <target>maximum equivalent stress, end of the element</target>
+</trans-unit>
+<trans-unit id="sfd5fcce6cfac4e3b">
+  <source>Schubkorrekturfaktoren</source>
+  <target>Shear correction factors</target>
+</trans-unit>
+<trans-unit id="s4f378bbd6523250a">
+  <source>für Querkraft V&lt;sub&gt;1&lt;/sub&gt; in Hauptrichtung 1</source>
+  <target>for shear force V&lt;sub&gt;1&lt;/sub&gt; in principal direction 1</target>
+</trans-unit>
+<trans-unit id="sff18e4caaf74b058">
+  <source>für Querkraft V&lt;sub&gt;2&lt;/sub&gt; in Hauptrichtung 2</source>
+  <target>for shear force V&lt;sub&gt;2&lt;/sub&gt; in principal direction 2</target>
+</trans-unit>
+<trans-unit id="sfd8f31c0b05514e4">
+  <source>E-Modul</source>
+  <target>Young's modulus</target>
+</trans-unit>
+<trans-unit id="s75a100ffeb0b8943">
+  <source>Dicke</source>
+  <target>Thickness</target>
+</trans-unit>
+<trans-unit id="sef38a920ec0dfe74">
+  <source>Speichern im Browser nicht möglich: </source>
+  <target>Saving in the browser is not possible: </target>
+</trans-unit>
+<trans-unit id="s6ba8ff3a3676ea08">
+  <source>Knoten</source>
+  <target>Nodes</target>
+</trans-unit>
+<trans-unit id="s2c9a2353836e3a4f">
+  <source>Schubmittelpunkt</source>
+  <target>Shear centre</target>
+</trans-unit>
+<trans-unit id="sef7575badcd4aeef">
+  <source>Schwerpunkt</source>
+  <target>Centroid</target>
+</trans-unit>
+<trans-unit id="s442aa7de41fece0d">
+  <source>Bedienfeld</source>
+  <target>Control panel</target>
+</trans-unit>
+<trans-unit id="s7403178e54879d16">
+  <source>nur Querschnitt</source>
+  <target>Cross section only</target>
+</trans-unit>
+<trans-unit id="s094dec24e1c9ded9">
+  <source>Normalspannung σ</source>
+  <target>Normal stress σ</target>
+</trans-unit>
+<trans-unit id="s4f13ef11fd7a59a4">
+  <source>Schubspannung τ</source>
+  <target>Shear stress τ</target>
+</trans-unit>
+<trans-unit id="se07e5940e09f070c">
+  <source>Vergleichsspannung σv</source>
+  <target>Equivalent stress σv</target>
+</trans-unit>
+<trans-unit id="s6759d39f8e7b30e1">
+  <source>Wölbordinate ω</source>
+  <target>Warping ordinate ω</target>
+</trans-unit>
+<trans-unit id="sa21f15a168d7a600">
+  <source>Verwölbung u</source>
+  <target>Warping displacement u</target>
+</trans-unit>
+<trans-unit id="sa17afac9667bd99a">
+  <source>Anzeige</source>
+  <target>Display</target>
+</trans-unit>
+<trans-unit id="s4fc96f99f0a6656f">
+  <source>fyRd anzeigen</source>
+  <target>Show fyRd</target>
+</trans-unit>
+<trans-unit id="s2b41d1fba90e38cb">
+  <source>Beschriftung</source>
+  <target>Labels</target>
+</trans-unit>
+<trans-unit id="s8d3551f00a88687e">
+  <source>Skalierung</source>
+  <target>Scaling</target>
+</trans-unit>
+<trans-unit id="s581b43714b756199">
+  <source>σ über die Dicke</source>
+  <target>Σ across thickness</target>
+</trans-unit>
+<trans-unit id="sa3b23dcc287a0498">
+  <source>Seiten anzeigen</source>
+  <target>Show sides</target>
+</trans-unit>
+<trans-unit id="sd5f52b6e496371c7">
+  <source>Pfeile anzeigen</source>
+  <target>Show arrows</target>
+</trans-unit>
+<trans-unit id="s72c84ea4ac50b385">
+  <source>Skalierung Pfeile</source>
+  <target>Scale arrows</target>
+</trans-unit>
+<trans-unit id="s42f298cbba2e7b65">
+  <source>rechts/links anzeigen</source>
+  <target>Show right/left</target>
+</trans-unit>
+<trans-unit id="sc60893f8b1d00b8c">
+  <source>Achsen anzeigen</source>
+  <target>Show axes</target>
+</trans-unit>
+<trans-unit id="s4a03a64d096d0cd3">
+  <source>Fangweite [px]</source>
+  <target>Snap radius [px]</target>
+</trans-unit>
+<trans-unit id="s8469617a8c3f2f8d">
+  <source>Bild speichern</source>
+  <target>Save image</target>
+</trans-unit>
+<trans-unit id="s0c0fd4aed60ab7f2">
+  <source>Auflösung</source>
+  <target>Resolution</target>
+</trans-unit>
+<trans-unit id="sc33278e2d99a1fee">
+  <source>weißer Hintergrund</source>
+  <target>White background</target>
+</trans-unit>
+<trans-unit id="s05aaf8f7c4ec6579">
+  <source>Zurücksetzen</source>
+  <target>Reset</target>
+</trans-unit>
+<trans-unit id="s1c603e2de4aa9c8d">
+  <source>Spannungen in </source>
+  <target>Stresses in </target>
+</trans-unit>
+<trans-unit id="s190747c04bd639f7">
+  <source>Element</source>
+  <target>Element</target>
+</trans-unit>
+<trans-unit id="s5a92006c27771749">
+  <source>Ecke</source>
+  <target>corner</target>
+</trans-unit>
+<trans-unit id="s83977996c90f160f">
+  <source>Seite</source>
+  <target>Page</target>
+</trans-unit>
+<trans-unit id="s9c96a6ea6515ff20">
+  <source>Wölbordinate ω in </source>
+  <target>Warping ordinate ω in </target>
+</trans-unit>
+<trans-unit id="saea1cfdd397f8a4d">
+  <source>Verwölbung u in </source>
+  <target>Warping displacement u in </target>
+</trans-unit>
+<trans-unit id="s0066c7378d25f93a">
+  <source>Ein Finger verschiebt – tippen für Werteanzeige</source>
+  <target>One finger pans – tap to show values</target>
+</trans-unit>
+<trans-unit id="saaeb23a1421871d1">
+  <source>Ein Finger zeigt Werte – tippen zum Verschieben</source>
+  <target>One finger shows values – tap to pan</target>
+</trans-unit>
+<trans-unit id="s60db9e62aea93c25">
+  <source>PNG speichern</source>
+  <target>Save PNG</target>
+</trans-unit>
+<trans-unit id="s564e9125da82e366">
+  <source>PNG-Bild</source>
+  <target>PNG image</target>
+</trans-unit>
+<trans-unit id="s49f4189fd3716e48">
+  <source>Bildschirm</source>
+  <target>Screen</target>
+</trans-unit>
+<trans-unit id="s30f92eca8dec2cb0">
+  <source>Pixeldichte</source>
+  <target>pixel ratio</target>
+</trans-unit>
+<trans-unit id="sb3803e9cc79575bb">
+  <source>Sprache</source>
+  <target>language</target>
+</trans-unit>
+<trans-unit id="s15f128f7c0b0134a">
+  <source>Betriebssystem</source>
+  <target>Operating system</target>
+</trans-unit>
+<trans-unit id="s0808f67328008e28">
+  <source>Touch-Punkte</source>
+  <target>Touch points</target>
+</trans-unit>
+<trans-unit id="s0e5bfc5f2640d7eb">
+  <source>Dateidialog (showSaveFilePicker)</source>
+  <target>File dialog (showSaveFilePicker)</target>
+</trans-unit>
+<trans-unit id="s08c16307b564e954">
+  <source>ja</source>
+  <target>yes</target>
+</trans-unit>
+<trans-unit id="s9db17b30c9e3a5b6">
+  <source>nein, Speichern als Download</source>
+  <target>no, saving as download</target>
+</trans-unit>
+<trans-unit id="se56b58baa0574673">
+  <source>nein</source>
+  <target>no</target>
+</trans-unit>
+<trans-unit id="sf6ad6dca0b753c17">
+  <source>Die aktuelle Eingabe verwerfen und neu beginnen?</source>
+  <target>Discard the current input and start again?</target>
+</trans-unit>
+<trans-unit id="s67d78db44791b971">
+  <source>Es liegt keine fehlerfreie Berechnung vor.</source>
+  <target>There is no error-free calculation.</target>
+</trans-unit>
+<trans-unit id="s1144953fd3f289b0">
+  <source>Dünnwandiger Querschnitt</source>
+  <target>Thin-walled cross section</target>
+</trans-unit>
+<trans-unit id="sf379ebba22363ed5">
+  <source>Querdehnung ν = </source>
+  <target>Poisson's ratio ν = </target>
+</trans-unit>
+<trans-unit id="s2b7c0ebed1d5f1a8">
+  <source>Knotenkoordinaten</source>
+  <target>Node coordinates</target>
+</trans-unit>
+<trans-unit id="sdee1d2056321d187">
+  <source>Elementdaten</source>
+  <target>Element data</target>
+</trans-unit>
+<trans-unit id="s06bab6c5048fcd87">
+  <source>Schubspannungen aus primärer Torsion </source>
+  <target>Shear stresses from primary torsion </target>
+</trans-unit>
+<trans-unit id="s96669ec941a9e1c5">
+  <source>Schubspannungen aus Querkräften und sekundärer Torsion </source>
+  <target>Shear stresses from shear forces and secondary torsion </target>
+</trans-unit>
+<trans-unit id="s209f42173afed09e">
+  <source>Schubspannungen aus allen Anteilen</source>
+  <target>Shear stresses from all parts</target>
+</trans-unit>
+<trans-unit id="sfaadd489dfa358bf">
+  <source>Querschnitt</source>
+  <target>Cross-section</target>
+</trans-unit>
+<trans-unit id="s846e1fc610837baa">
+  <source>pdf-Datei gespeichert (Download-Ordner)</source>
+  <target>pdf file saved (download folder)</target>
+</trans-unit>
+<trans-unit id="s255fc944b18ba548">
+  <source>Wert der ersten Zelle kopieren</source>
+  <target>copy value of first cell</target>
+</trans-unit>
+<trans-unit id="s56938782dadc04e4">
+  <source>Werte der ersten Zeile kopieren</source>
+  <target>copy values of first row</target>
+</trans-unit>
+<trans-unit id="s9b84d553c22dca33">
+  <source>um 1 hochzählen</source>
+  <target>increment by 1</target>
+</trans-unit>
+<trans-unit id="s3965ed73b2864f94">
+  <source>um Delta hochzählen</source>
+  <target>increment by delta</target>
+</trans-unit>
+<trans-unit id="s7e5c28821db89eb6">
+  <source>in Zwischenablage kopieren</source>
+  <target>copy to clipboard</target>
+</trans-unit>
+<trans-unit id="sdbd9ec67ac08902d">
+  <source>aus Zwischenablage einfügen</source>
+  <target>insert from clipboard</target>
+</trans-unit>
+<trans-unit id="s3736b35d76c86de5">
+  <source>schließen</source>
+  <target>close</target>
+</trans-unit>
+<trans-unit id="s985fe56722f6aa33">
+  <source>Sprache:</source>
+  <target>Language:</target>
+</trans-unit>
+<trans-unit id="knoten_nummer">
+  <source>Knoten</source>
+  <target>Node</target>
+  <note from="lit-localize">ein Knoten mit Nummer, z.B. Knoten 3</note>
+</trans-unit>
+<trans-unit id="element_seite">
+  <source>Seite</source>
+  <target>side</target>
+  <note from="lit-localize">rechte oder linke Seite eines Elements (R/L)</note>
+</trans-unit>
+</body>
+</file>
+</xliff>

@@ -14,6 +14,7 @@ import { initDateien } from './dateien';
 import { zeichneQuerschnitt } from './grafik';
 import { my_jspdf } from './mypdf';
 import { alertdialog, confirmdialog } from './components/confirm_dialog';
+import { setLocale, startSprache } from './localization';
 
 // dunkles Theme von Shoelace über die Klasse sl-theme-dark (wie d2beam-gui)
 const dunkel = window.matchMedia('(prefers-color-scheme: dark)');
@@ -38,8 +39,21 @@ async function neueEingabe(): Promise<void> {
     leereEingabe();
 }
 
+let dreiDGeladen = false;   // three.js erst laden, wenn der Tab 3D geöffnet wurde
+
+/** Sprache geändert: alles, was nicht von Lit gezeichnet wird, neu aufbauen. */
+function spracheAktualisieren(haupt: HTMLElementTagNameMap['dr-haupt']): void {
+    spaltenAktualisieren();
+    geraeteInfo();
+    if (app.gerechnet) duennQ(false);   // Ergebnistabellen in der neuen Sprache
+    const aktiv = haupt.querySelector('sl-tab[active]')?.getAttribute('panel');
+    if (aktiv === 'system') zeichneQuerschnitt();
+    if (dreiDGeladen) void import('./grafik3d').then(m => m.spracheGeaendert());
+}
+
 async function start(): Promise<void> {
     const haupt = byId('id_haupt') as HTMLElementTagNameMap['dr-haupt'];
+    await setLocale(startSprache());
     await haupt.updateComplete;
 
     initEinstellungen();   // Längeneinheit und Farben (vor dem Startbeispiel, das in der Einheit eingetragen wird)
@@ -49,7 +63,7 @@ async function start(): Promise<void> {
     initDateien();
     geraeteInfo();
 
-    byId('rechnen').addEventListener('click', duennQ);
+    byId('rechnen').addEventListener('click', () => duennQ());
     byId('neueEingabe').addEventListener('click', () => void neueEingabe());
     byId('id_pdf').addEventListener('click', () => {
         if (app.gerechnet) void my_jspdf();
@@ -63,9 +77,15 @@ async function start(): Promise<void> {
     });
 
     // nach dem Rechnen auf den Tab Ergebnisse wechseln
-    document.addEventListener('berechnet', () => {
+    document.addEventListener('berechnet', ev => {
         byId('id_hinweis_rechnen').hidden = true;
-        haupt.zeigeTab('ergebnisse');
+        if ((ev as CustomEvent).detail?.zeigeErgebnisse !== false) haupt.zeigeTab('ergebnisse');
+    });
+
+    // Sprachwechsel im Tab ꔷꔷꔷ (lit-localize meldet, wenn die Übersetzung geladen ist)
+    window.addEventListener('lit-localize-status', ev => {
+        if ((ev as CustomEvent).detail.status !== 'ready') return;
+        void haupt.updateComplete.then(() => spracheAktualisieren(haupt));
     });
 
     // Grafiken erst zeichnen, wenn ihr Tab sichtbar ist (vorher haben sie keine Größe);
@@ -73,6 +93,7 @@ async function start(): Promise<void> {
     haupt.addEventListener('sl-tab-show', ev => {
         const name = (ev as CustomEvent).detail?.name;
         if (name === 'system') requestAnimationFrame(zeichneQuerschnitt);
+        if (name === 'drei_d') dreiDGeladen = true;
         if (name === 'drei_d') requestAnimationFrame(() => void import('./grafik3d').then(m => m.zeige3D()));
     });
 }

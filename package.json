@@ -6,7 +6,9 @@
     "dev": "vite --open",
     "build": "tsc && vite build",
     "preview": "npm run build && vite preview --open",
-    "typecheck": "tsc"
+    "typecheck": "tsc",
+    "localize:extract": "lit-localize extract",
+    "localize:build": "lit-localize build"
   },
   "author": "me",
   "license": "ISC",
@@ -25,6 +27,7 @@
     "two.js": "^0.8.24"
   },
   "devDependencies": {
+    "@lit/localize-tools": "^0.8.2",
     "@types/file-saver": "^2.0.7",
     "@types/three": "^0.187.0",
     "typescript": "^7.0.2",

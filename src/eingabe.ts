@@ -39,6 +39,7 @@ type DrTabelle = HTMLElement & {
     hide_column(i: number): void;
     show_column(i: number): void;
     columns_languageChanged(spalten: string): void;
+    lf_languageChanged(text: string): void;
 };
 
 function tabelle(id: string): DrTabelle {
@@ -137,6 +138,8 @@ export function elementSpalten(): string {
 export function spaltenAktualisieren(): void {
     tabelle(KNOTEN_TABELLE).columns_languageChanged(knotenSpalten());
     tabelle(ELEMENT_TABELLE).columns_languageChanged(elementSpalten());
+    // Tooltips und Undo/Redo-Texte der Tabellen in der aktuellen Sprache (wie d2beam-gui)
+    for (const id of [KNOTEN_TABELLE, ELEMENT_TABELLE]) tabelle(id).lf_languageChanged('');
     for (const el of document.querySelectorAll('.unit_stress')) el.textContent = current_unit_stress;
 }
 
