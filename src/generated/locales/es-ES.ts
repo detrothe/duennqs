@@ -107,6 +107,7 @@
 's78cbcf4d18d679ef': `coeficiente de Poisson (valor de referencia)`,
 's7a0e15a7cc7a9450': `tensión tangencial en el centro del elemento`,
 's7d3b74e529b06937': `El botón derecho del ratón o una pulsación larga sobre las celdas seleccionadas abre el menú contextual. En la columna No, + inserta una fila encima y la papelera borra la fila (ambos con deshacer/rehacer).`,
+'s7d573dbd570ddbbb': `No se pudo leer la última entrada guardada. Se inicia con el ejemplo.`,
 's7d68654a4a8d6aab': `tensión tangencial en el centro del elemento, lado izquierdo`,
 's7e3191a92cb77b99': `Números`,
 's7e5c28821db89eb6': `copiar al portapapeles`,

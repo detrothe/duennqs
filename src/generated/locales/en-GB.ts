@@ -107,6 +107,7 @@
 's78cbcf4d18d679ef': `Poisson's ratio (reference value)`,
 's7a0e15a7cc7a9450': `shear stress at the middle of the element`,
 's7d3b74e529b06937': `Right mouse button or long press on selected cells opens the context menu. In the No column, + inserts a row above, the bin deletes the row (both with undo/redo).`,
+'s7d573dbd570ddbbb': `The last saved input could not be read. Starting with the example.`,
 's7d68654a4a8d6aab': `shear stress at the middle of the element, left side`,
 's7e3191a92cb77b99': `Numbers`,
 's7e5c28821db89eb6': `copy to clipboard`,

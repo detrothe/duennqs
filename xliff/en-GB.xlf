@@ -708,6 +708,10 @@
   <target>side</target>
   <note from="lit-localize">rechte oder linke Seite eines Elements (R/L)</note>
 </trans-unit>
+<trans-unit id="s7d573dbd570ddbbb">
+  <source>Die zuletzt gespeicherte Eingabe konnte nicht gelesen werden. Es wird mit dem Beispiel gestartet.</source>
+  <target>The last saved input could not be read. Starting with the example.</target>
+</trans-unit>
 </body>
 </file>
 </xliff>

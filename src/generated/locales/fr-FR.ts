@@ -107,6 +107,7 @@
 's78cbcf4d18d679ef': `coefficient de Poisson (valeur de référence)`,
 's7a0e15a7cc7a9450': `contrainte de cisaillement au milieu de l'élément`,
 's7d3b74e529b06937': `Le bouton droit de la souris ou un appui long sur les cellules sélectionnées ouvre le menu contextuel. Dans la colonne No, + insère une ligne au-dessus, la corbeille supprime la ligne (les deux avec annuler/rétablir).`,
+'s7d573dbd570ddbbb': `La dernière saisie enregistrée n'a pas pu être lue. Démarrage avec l'exemple.`,
 's7d68654a4a8d6aab': `contrainte de cisaillement au milieu de l'élément, côté gauche`,
 's7e3191a92cb77b99': `Numéros`,
 's7e5c28821db89eb6': `copier dans le presse-papiers`,

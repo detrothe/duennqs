@@ -708,6 +708,10 @@
   <target>lato</target>
   <note from="lit-localize">rechte oder linke Seite eines Elements (R/L)</note>
 </trans-unit>
+<trans-unit id="s7d573dbd570ddbbb">
+  <source>Die zuletzt gespeicherte Eingabe konnte nicht gelesen werden. Es wird mit dem Beispiel gestartet.</source>
+  <target>Non è stato possibile leggere l'ultimo input salvato. Si parte con l'esempio.</target>
+</trans-unit>
 </body>
 </file>
 </xliff>

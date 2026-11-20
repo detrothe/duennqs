@@ -15,6 +15,7 @@ import { zeichneQuerschnitt } from './grafik';
 import { my_jspdf } from './mypdf';
 import { alertdialog, confirmdialog } from './components/confirm_dialog';
 import { setLocale, startSprache } from './localization';
+import { initAutosave } from './autosave';
 
 // dunkles Theme von Shoelace über die Klasse sl-theme-dark (wie d2beam-gui)
 const dunkel = window.matchMedia('(prefers-color-scheme: dark)');
@@ -95,6 +96,12 @@ async function start(): Promise<void> {
         if (name === 'system') requestAnimationFrame(zeichneQuerschnitt);
         if (name === 'drei_d') dreiDGeladen = true;
         if (name === 'drei_d') requestAnimationFrame(() => void import('./grafik3d').then(m => m.zeige3D()));
+    });
+
+    // letzte Eingabe wiederherstellen und künftig automatisch sichern; zurück aus dem Hintergrund:
+    // WebGL-Kontext kann verloren gegangen sein → 3D neu zeichnen
+    initAutosave(() => {
+        if (dreiDGeladen && app.gerechnet) void import('./grafik3d').then(m => m.neuZeichnen());
     });
 }
 

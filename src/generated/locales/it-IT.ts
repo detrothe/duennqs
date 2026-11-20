@@ -107,6 +107,7 @@
 's78cbcf4d18d679ef': `coefficiente di Poisson (valore di riferimento)`,
 's7a0e15a7cc7a9450': `tensione tangenziale a metà elemento`,
 's7d3b74e529b06937': `Il tasto destro del mouse o una pressione prolungata sulle celle selezionate apre il menu contestuale. Nella colonna No, + inserisce una riga sopra, il cestino elimina la riga (entrambi con annulla/ripeti).`,
+'s7d573dbd570ddbbb': `Non è stato possibile leggere l'ultimo input salvato. Si parte con l'esempio.`,
 's7d68654a4a8d6aab': `tensione tangenziale a metà elemento, lato sinistro`,
 's7e3191a92cb77b99': `Numeri`,
 's7e5c28821db89eb6': `copia negli appunti`,
