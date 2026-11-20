@@ -255,7 +255,7 @@ ${msg('Bearbeitet von: Melis Muster')}"></textarea>
 
         <!---------------------------------------------------------------------------------- Ergebnisse -->
         <sl-tab-panel name="ergebnisse">
-          <div class="file_toolbar">
+          <div class="file_toolbar" id="id_ergebnis_toolbar">
             <button type="button" id="id_pdf" class="btn_file" title="${msg('Ergebnisse als pdf-Datei speichern')}" aria-label="${msg('Ergebnisse als pdf-Datei speichern')}">${ICON_PDF}</button>
             <span id="id_pdf_info" class="hinweis"></span>
           </div>
@@ -281,7 +281,7 @@ ${msg('Bearbeitet von: Melis Muster')}"></textarea>
         <sl-tab-panel name="system">
           <div id="my-svg">
             <div id="cursor_coord"><span id="cursor_coordy">y&#772;:</span> <span id="cursor_coordz">z&#772;:</span></div>
-            <div class="grafik_buttons">
+            <div class="grafik_buttons" id="id_grafik_buttons">
               <button type="button" id="button_label_svg" title="${msg('Knoten- und Elementnummern ein-/ausblenden')}">${msg('Nummern')}</button>
               <button type="button" id="button_copy_svg" title="${msg('Grafik als SVG-Datei speichern')}">SVG</button>
             </div>

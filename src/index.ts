@@ -16,6 +16,7 @@ import { my_jspdf } from './mypdf';
 import { alertdialog } from './components/confirm_dialog';
 import { setLocale, startSprache } from './localization';
 import { initAutosave } from './autosave';
+import { enableTouchHints } from './components/touch_hint';
 
 // dunkles Theme von Shoelace über die Klasse sl-theme-dark (wie d2beam-gui)
 const dunkel = window.matchMedia('(prefers-color-scheme: dark)');
@@ -65,6 +66,14 @@ async function start(): Promise<void> {
     initTabellen();
     initDateien();
     geraeteInfo();
+
+    // Hilfetext bei langem Drücken (Finger/Stift) bzw. Überfahren (Maus) wie in d2beam-gui.
+    // Nicht auf Bereiche mit Eingabefeldern anwenden (user-select: none stört dort unter iOS),
+    // deshalb bei den Schnittgrößen nur die Namenszellen.
+    for (const id of ['id_file_toolbar', 'id_ergebnis_toolbar', 'id_grafik_buttons', 'id_panel_einstellungen']) {
+        enableTouchHints(byId(id));
+    }
+    for (const zelle of haupt.querySelectorAll<HTMLElement>('.schnittgroessen td.name')) enableTouchHints(zelle);
 
     byId('rechnen').addEventListener('click', () => duennQ());
     byId('neueEingabe').addEventListener('click', () => void neueEingabe());

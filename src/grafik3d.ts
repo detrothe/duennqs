@@ -3,6 +3,7 @@ import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
 import { CSS2DObject, CSS2DRenderer } from 'three/examples/jsm/renderers/CSS2DRenderer.js';
 import GUI from 'lil-gui';
 import { dateiSpeichern, vorschlag } from './dateien';
+import { enableTouchHints } from './components/touch_hint';
 import { msg } from '@lit/localize';
 import { byId } from './state';
 import { truss, node, Gesamt_ys, Gesamt_zs, yM, zM, u0, bezugswerte } from './duennQ';
@@ -887,6 +888,7 @@ function initPanButton(): void {
     });
     aktualisieren();
     byId('view3d').appendChild(btn);
+    enableTouchHints(btn);   // Hilfetext bei langem Drücken wie in d2beam-gui
 }
 
 function zeigerBewegt(ev: PointerEvent): void {
