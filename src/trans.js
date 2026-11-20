@@ -1,6 +1,3 @@
-//import {myScreen} from "./index";
-//import * as THREE from "three";
-//import {OrbitControls} from "./OrbitControls";
 
 class CTrans {
     constructor(ymin = 0.0, zmin = 0.0, ymax = 1.0, zmax = 1.0, clientWidth=100.0, clientHeight=100.0) {
@@ -29,15 +26,10 @@ class CTrans {
 
         console.log("Grenzen", this.ymin, this.ymax, this.zmin, this.zmax);
 
-        //this.ratio_world = this.dy / this.dz;
-
         console.log("dy,dz", this.dy, this.dz);
 
         this.height = clientHeight - 1; //  .getElementById("my-svg").clientHeight - 1;
-        //this.width = document.getElementById("dataviz_area").clientWidth - 1;
         this.width = clientWidth - 1;
-
-        //this.ratio = this.width / this.height;
 
         dz = this.dy * this.height / this.width;
         console.log("dz", dz, this.dz);
@@ -76,40 +68,5 @@ class CTrans {
     }
 
 }
-
-/*
-export class C_3D {
-
-    //canvas = null;
-    //renderer = null;
-    //scene = null;
-    //controls = null;
-    //camera = null;
-
-    constructor() {
-        this.canvas1 = document.querySelector('#c3')
-        let canvas = this.canvas1
-        console.log("can",canvas)
-        this.renderer = new THREE.WebGLRenderer({canvas, antialias: true})
-
-        this.fov = 75;
-        this.aspect = 2;  // the canvas default
-        this.near = 0.1;
-        this.far = 5;
-
-        this.camera = new THREE.PerspectiveCamera(this.fov, this.aspect, this.near, this.far);
-        this.camera.position.z = 3;
-
-        this.controls = new OrbitControls(this.camera, canvas);
-        this.controls.enableDamping = true;
-        this.controls.target.set(0, 0, 0);
-        this.controls.update();
-
-         this.scene = new THREE.Scene();
-
-
-    }
-}
-*/
 
 export {CTrans};

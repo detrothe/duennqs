@@ -12,13 +12,9 @@ import { set_myScreen, app } from "./index.js"
 import { draw_elements } from "./grafik_3D";
 import { current_unit_length, current_unit_stress, unit_length_factor, unit_stress_factor } from "./einstellungen"
 
-//import {set_nnodes, set_nelem} from "./duennQ_tabelle.js"
-
-
 export let ymin = -50.0, zmin = -50.0, ymax = 50.0, zmax = 50.0, slmax = 0.0;
 export let u0 = 0.0
 export let kappa_1 = 0.0, kappa_2 = 0.0   // Schubkorrekturfaktoren
-
 
 //------------------------------------------------------------------------------------------------
 
@@ -29,7 +25,6 @@ export function double2String(zahl: number, stellen: number = 12): string {
     return String(wert);
 }
 
-
 //----------------------------------------------------------------------------------------------
 function setMaterialEqual(ev) {
     //------------------------------------------------------------------------------------------
@@ -37,19 +32,12 @@ function setMaterialEqual(ev) {
     const input = document.getElementById('material_equal') as HTMLInputElement;
     console.log("in setMaterialEqual", input.checked);
 
-
     const tabelle = document.getElementById("elemTable") as HTMLTableElement;
 
-    //let nSpalten = tabelle.rows[0].cells.length;
-
     if (ev.target.checked) {  // unsichtbar machen
-        //document.getElementById("id_bezugswerte").style.visibility = 'hidden'
 
         for (let i = 0; i < tabelle.rows.length; i++) {
             for (let j = 1; j < 3; j++) {
-                //tabelle.rows[i].cells[j].innerText = 'NO';
-                //tabelle.rows[i].cells[j].contentEditable = 'false';
-                //tabelle.rows[i].cells[j].classList.add('unsichtbar');
                 tabelle.rows[i].cells[j].style.width = '0px'
 
                 if (i === 0) {
@@ -63,12 +51,9 @@ function setMaterialEqual(ev) {
             }
         }
     } else {    // sichtbar machen
-        //document.getElementById("id_bezugswerte").style.visibility = 'visible'
-
 
         for (let i = 0; i < tabelle.rows.length; i++) {
             for (let j = 1; j < 3; j++) {
-                //tabelle.rows[i].cells[j].innerText = 'edit';
                 tabelle.rows[i].cells[j].hidden = false   //.style.visibility = 'visible'
                 tabelle.rows[i].cells[j].style.width = '6em'
 
@@ -89,8 +74,6 @@ function setMaterialEqual(ev) {
     }
 
 }
-
-
 
 class TTabQWerte {  // Tabelle Querschnittswerte für pdf
     zs: string
@@ -209,16 +192,11 @@ class TElement {
     sigma_xe = [0.0, 0.0, 0.0, 0.0]
 }
 
-
-//const elemObj = {};
-//const nodeObj = {};
 const elemArray = [];
 const nodeArray = [];
 
 // @ts-ignore
-//elemObj.elemArray = elemArray;
 // @ts-ignore
-//nodeObj.nodeArray = nodeArray;
 
 for (let i = 1; i <= nnodes; i++) {
     let punkt = {
@@ -227,13 +205,10 @@ for (let i = 1; i <= nnodes; i++) {
     }
 
     // @ts-ignore
-    //    nodeObj.nodeArray.push(punkt);
     nodeArray.push(punkt);
 }
 
 for (let i = 1; i <= nelem; i++) {
-    //selectedCellPoly.selColY.push(false);
-    //selectedCellPoly.selColZ.push(false);
 
     let punkt = {
         "1": 1,
@@ -241,15 +216,9 @@ for (let i = 1; i <= nelem; i++) {
     }
 
     // @ts-ignore
-    //    elemObj.elemArray.push(punkt);
     elemArray.push(punkt);
 }
 
-//const xx = [-10.0, 20.0, 50.0, 20.0, 40.0, 0.0];
-//const yy = [0.0, 0.0, 0.0, 40.0, 40.0, 40.0];
-
-//const xx = [0.0, 20.0, 20.0, 0.0];
-//const yy = [0.0, 0.0, 30.0, 30.0];
 const xx = [0.0, 30.0, 110.0, 140.0, 85.0, 55.0];
 const yy = [0.0, 0.0, 0.0, 0.0, 60.0, 60.0];
 
@@ -257,17 +226,10 @@ const yy = [0.0, 0.0, 0.0, 0.0, 60.0, 60.0];
 export function createTables() {
     //------------------------------------------------------------------------------------------
 
-    //tabulate('#knotentabelle', 'nodeTable', nodeArray, ['No', 'y [cm]', 'z [cm]']);  // nodeObj.
     meinetabelle("knotentabelle", "nodeTable", nnodes, ['No', 'y&#772; [cm]', 'z&#772; [cm]']);
-    //if (app.browserLanguage == 'de') {
     meinetabelle("elementtabelle", "elemTable", nelem, ["El No", 'E-Modul [kN/cm²]', 'ν', 'Dicke t [cm]', 'nod1', 'nod2']);
-    //} else {
-    //    meinetabelle("elementtabelle", "elemTable", nelem, ["El No", 'E-Modul [kN/cm²]', 'ν', 'width t [cm]', 'nod1', 'nod2']);
-    //}
-    //tabulate('#elementtabelle', 'elemTable', elemArray, ["El No", 'E-Modul [kN/cm²]', 'ν', 'Dicke t [cm]', 'nod1', 'nod2']);  // elemObj.
 
     let objCells: any, nSpalten: number
-
 
     const nTabelle = document.getElementById("nodeTable") as HTMLTableElement;
     console.log("nTabelle", nTabelle)
@@ -289,7 +251,6 @@ export function createTables() {
     el = document.getElementById("fyRd") as HTMLInputElement;
     el.value = (parseFloat(el.value) * unit_stress_factor).toString()
 
-
     nSpalten = nTabelle.rows[0].cells.length - 1;
 
     nTabelle.rows.item(0).cells.item(0).style.width = '3.125em'
@@ -300,8 +261,6 @@ export function createTables() {
         for (let j = 1; j <= nSpalten; j++) {
             const str = "nodeTable-" + i + "-" + j;
             const w = document.getElementById(str)
-            //        console.log("child", objCells.item(j).firstChild.parentElement.id)  // abfrage der id
-            //console.log("child", objCells.item(j).firstChild.parentElement)  // abfrage der id
             if (j === 1) {
                 w.setAttribute("value", double2String(xx[i - 1] * unit_length_factor, 12));  // String(xx[i - 1] * unit_length_factor)
             } else if (j === 2) {
@@ -310,11 +269,8 @@ export function createTables() {
         }
     }
 
-
-
     const eTabelle = document.getElementById("elemTable") as HTMLTableElement;
     objCells = eTabelle.rows.item(0).cells;  // Überschrift Punkt zentrieren
-    //objCells.item(0).style.textAlign = "center";
 
     if (app.browserLanguage == 'de') {
         objCells.item(0).setAttribute('title', 'Elementnummer');
@@ -332,13 +288,11 @@ export function createTables() {
     eTabelle.rows.item(0).cells.item(0).style.width = '3.125em'
 
     for (let i = 1; i < eTabelle.rows.length; i++) {
-        //const objCells = eTabelle.rows.item(i).cells;
 
         for (let j = 1; j <= nSpalten; j++) {
             const str = "elemTable-" + i + "-" + j;
             const w = document.getElementById(str)
 
-            //objCells.item(j).id = "elemTable-" + i + "-" + j;
             if (j === 1) {
                 w.setAttribute("value", double2String(21000 * unit_stress_factor));
             } else if (j === 2) {
@@ -351,28 +305,6 @@ export function createTables() {
     }
 
     // Inzidenzen
-    /* I-Querschnitt
-    eTabelle.rows[1].cells[4].innerText = "1";
-    eTabelle.rows[1].cells[5].innerText = "2";
-    eTabelle.rows[2].cells[4].innerText = "2";
-    eTabelle.rows[2].cells[5].innerText = "3";
-    eTabelle.rows[3].cells[4].innerText = "2";
-    eTabelle.rows[3].cells[5].innerText = "4";
-    eTabelle.rows[4].cells[4].innerText = "5";
-    eTabelle.rows[4].cells[5].innerText = "4";
-    eTabelle.rows[5].cells[4].innerText = "4";
-    eTabelle.rows[5].cells[5].innerText = "6";
-    
-    // Quadratischer Hohlquerschnitt
-    eTabelle.rows[1].cells[4].innerText = "1";
-    eTabelle.rows[1].cells[5].innerText = "2";
-    eTabelle.rows[2].cells[4].innerText = "2";
-    eTabelle.rows[2].cells[5].innerText = "3";
-    eTabelle.rows[3].cells[4].innerText = "3";
-    eTabelle.rows[3].cells[5].innerText = "4";
-    eTabelle.rows[4].cells[4].innerText = "4";
-    eTabelle.rows[4].cells[5].innerText = "1";
-    */
     // Hohlquerschnitt mit Flügeln
     // @ts-ignore
     eTabelle.rows[1].cells[4].firstElementChild.value = "1";
@@ -406,7 +338,6 @@ export function createTables() {
 export function duennQ() {
     //----------------------------------------------------------------------------------------------
 
-
     let i: number, neq: number,
         j: number, k: number, nod1: number, nod2: number, lmi: number, lmj: number, kn: number, ieq: number,
         y1: number, y2: number, z1: number, z2: number, ys: number, zs: number, dy: number, dz: number, t: number,
@@ -433,7 +364,6 @@ export function duennQ() {
     let wert: any
 
     let EModul: number, mue: number;
-    //let nelem: number = 2
 
     berechnungErfolgreich(false);
     document.getElementById("info_berechnung")!.innerText = "Fehler in Eingabe"
@@ -442,13 +372,6 @@ export function duennQ() {
     set_myScreen();
 
     remove_selected_Tabelle();  // alte Fehlermarkierungen entfernen
-    /*
-        {
-            const eTabelle = document.getElementById("elemTable") as HTMLTableElement;
-            console.log("Tabellenbreite = ",eTabelle.getBoundingClientRect().width);
-            infoBox.innerHTML += "<br>Tabellenbreite: " + eTabelle.getBoundingClientRect().width;
-        }
-    */
     // Schnittgrößen einlesen
     let input = document.getElementById('Vy') as HTMLInputElement;
     schnittgroesse.Vy = Vy = Number(testeZahl(input.value));
@@ -467,7 +390,6 @@ export function duennQ() {
     input = document.getElementById('Mz') as HTMLInputElement;
     schnittgroesse.Mz = moment_z = Number(testeZahl(input.value)) * 100.0;
 
-    //console.log("Mxs", Mt2)
     input = document.getElementById('fyRd') as HTMLInputElement;
     bezugswerte.fyrd = fyRd = Number(testeZahl(input.value) / unit_stress_factor);
     console.log("fyRd", fyRd)
@@ -484,13 +406,7 @@ export function duennQ() {
     }
 
     const material_equal = document.getElementById('material_equal') as HTMLInputElement;
-    //console.log("in setMaterialEqual", material_equal.checked);
 
-    /*
-        if (material_equal.checked) {
-            EModul = 21000.0;
-            mue = 0.3;
-        } else { */
     input = document.getElementById('EMod_ref') as HTMLInputElement;
     bezugswerte.emodul = EModul = Number(testeZahl(input.value) / unit_stress_factor);
     if (EModul < 1e-12) {
@@ -503,24 +419,10 @@ export function duennQ() {
         alert("Referenz-Querdehnung muss größer oder gleich 0 sein")
         return;
     }
-    /*}*/
     const GModul = EModul / 2.0 / (1.0 + mue)
-    //console.log("Bezugswerte", EModul, mue, GModul)
 
     console.log("orginal", document.getElementById("nodeTable"))
     // Knoten Eingabe einlesen
-    /*
-        const nTabelle = document.getElementById("nodeTable") as HTMLTableElement;
-    
-        for (i = 0; i < nnodes; i++) {
-    
-            wert = nTabelle.rows[i + 1].cells[1].innerText
-            node[i].y = Number(testNumber(wert, i + 1, 1, 'nodeTable'));
-            wert = nTabelle.rows[i + 1].cells[2].innerText
-            node[i].z = Number(testNumber(wert, i + 1, 2, 'nodeTable'));
-            //console.log("node,y,z", i, node[i].y, node[i].z)
-        }
-    */
 
     const nTabelle = document.getElementById("nodeTable") as HTMLTableElement;
     console.log("NODE", nTabelle.rows.length)
@@ -528,15 +430,12 @@ export function duennQ() {
     for (i = 0; i < nnodes; i++) {
 
         let child = nTabelle.rows[i + 1].cells[1].firstElementChild as HTMLInputElement
-        //console.log("NODE i", i, child.value)
         wert = child.value
         node[i].y = Number(testNumber(wert, i + 1, 1, 'nodeTable') / unit_length_factor);
         child = nTabelle.rows[i + 1].cells[2].firstElementChild as HTMLInputElement
         wert = child.value
         node[i].z = Number(testNumber(wert, i + 1, 2, 'nodeTable') / unit_length_factor);
-        //console.log("node,y,z", i, node[i].y, node[i].z)
     }
-
 
     // Elemente Eingabe einlesen
 
@@ -587,7 +486,6 @@ export function duennQ() {
             return;
         }
         node[truss[i].nod[1]].nel++;
-        //console.log("truss", i, truss[i].EModul, truss[i].mue, truss[i].dicke, truss[i].nod[0], truss[i].nod[1])
         truss[i].GModul = truss[i].EModul / 2.0 / (1.0 + truss[i].mue)
         truss[i].ni = truss[i].EModul / EModul
         truss[i].ngi = truss[i].GModul / GModul
@@ -733,13 +631,11 @@ export function duennQ() {
         node[i].zh = -si0 * ys + co0 * zs;
     }
 
-
     V1 = co0 * Vy + si0 * Vz                     // Querkräfte im Hauptachsensystem
     V2 = -si0 * Vy + co0 * Vz
 
     moment_1 = co0 * moment_y + si0 * moment_z   // Biegemomente im Hauptachsensystem
     moment_2 = -si0 * moment_y + co0 * moment_z
-
 
     for (i = 0; i < nelem; i++) {
         nod1 = truss[i].nod[0];
@@ -760,7 +656,6 @@ export function duennQ() {
         truss[i].z3 = z1 + dz;
         truss[i].z4 = z1 + 2 * dz;
 
-
         fact = truss[i].GModul * truss[i].dicke / truss[i].sl;
 
         truss[i].estiff[0][0] = fact;
@@ -776,9 +671,6 @@ export function duennQ() {
 
     // Aufstellen der Steifigkeitsmatrix
 
-    //    ReDim stiff(neq, neq), R(neq), u(neq), stiff2(neq, neq)
-    //    TFMatrix2D<double> stiff(neq, neq), stiff2(neq, neq);
-    //    TFVector<double>   R(neq), u(neq);
 
     const stiff = Array.from(Array(neq), () => new Array(neq).fill(0.0));
     const stiff2 = Array.from(Array(neq), () => new Array(neq).fill(0.0));
@@ -803,7 +695,6 @@ export function duennQ() {
     for (i = 0; i < neq; i++) {
         for (j = 0; j < neq; j++) {
             stiff2[i][j] = stiff[i][j];
-            //console.log("GlSystem", stiff[i][j]);
         }
     }
 
@@ -832,17 +723,11 @@ export function duennQ() {
 
     for (i = 0; i < neq; i++) u[i] = R[i];
 
-    //for (i = 0; i < neq; i++) {       // Ausgabe der Verformungen mit interner Nummerierung
-    //    console.log("u", i, u[i])
-    //}
-
     for (i = 0; i < nnodes; i++) {     // Ausgabe der Verschiebungen der einzelnen Knoten
         ieq = node[i].Lx;
         if (ieq === -1) {
-            //Sheets("Knoten").Cells(5 + i, 7) = 0
             node[i].omega = 0.0;
         } else {
-            //Sheets("Knoten").Cells(5 + i, 7) = u(ieq)
             node[i].omega = u[ieq];
         }
     }
@@ -885,7 +770,6 @@ export function duennQ() {
 
     for (i = 0; i < nnodes; i++) {     // Berechnung der normierten Wölbordinaten
         node[i].omega = node[i].omega - A_omegaQ - node[i].zh * yMh + node[i].yh * zMh;
-        //Sheets("Knoten").Cells(5 + i, 8) = node[i].omega;
     }
 
     I_omega = 0.0;
@@ -907,7 +791,6 @@ export function duennQ() {
     Gesamt_It = It_offen + It_geschlossen;
     console.log("I_omega", I_omega);
     console.log("It_gesamt", Gesamt_It);
-
 
     ry = 0;
     rz = 0;
@@ -940,10 +823,7 @@ export function duennQ() {
 
     for (k = 0; k < nelem; k++) {
         tau_xs_1 = ((truss[k].omega[0] - truss[k].omega[1]) / truss[k].sl + truss[k].rt) * truss[k].ngi * Mt1 / Gesamt_It
-        //Sheets("Eingabe").Cells(20 + k, 13) = tau_xs_1
         tau_xs_0 = truss[k].ngi * Mt1 / Gesamt_It * truss[k].dicke
-        //Sheets("Eingabe").Cells(20 + k, 11) = tau_xs_0
-        //((Sheets("Eingabe").Cells(20 + k, 12) = -tau_xs_0
         for (i = 0; i < 3; i++) {
             truss[k].tau_p0R[i] = tau_xs_0
             truss[k].tau_p0L[i] = -tau_xs_0
@@ -976,7 +856,6 @@ export function duennQ() {
         truss[i].F34[0] = truss[i].ni * truss[i].Flaeche * (13 * truss[i].F[0] + 2 * truss[i].F[1]) / 120.0
         truss[i].F34[1] = truss[i].ni * truss[i].Flaeche * (2 * truss[i].F[0] + 13 * truss[i].F[1]) / 120.0
 
-        
         // truss[i].R2[0] =  truss[i].Flaeche * (truss[i].F[0] + 0.5 * truss[i].F[1]) / 3.0
         // truss[i].R2[1] =  truss[i].Flaeche * (0.5 * truss[i].F[0] + truss[i].F[1]) / 3.0
 
@@ -996,16 +875,12 @@ export function duennQ() {
         }
     }
 
-    //For i = 1 To neq
-    //Sheets("GlSystem").Cells(i + neq + 1, neq + 4) = R(i)
-    //Next i
 
     // Gleichungssystem lösen
 
     for (i = 0; i < neq; i++) {
         for (j = 0; j < neq; j++) {
             stiff[i][j] = stiff2[i][j];
-            //console.log("GlSystem", stiff[i][j]);
         }
     }
 
@@ -1016,9 +891,6 @@ export function duennQ() {
 
     for (i = 0; i < neq; i++) u[i] = R[i];
 
-    //For i = 1 To neq                             ' Ausgabe der Verformungen mit interner Nummerierung
-    //Sheets("GlSystem").Cells(i + neq + 1, neq + 2) = u(i)
-    //Next i
 
     u0 = 0.0   // Integration der Verschiebungen u über Querschnittsfläche, u0 wird bei Grafik von den berechneten Verschiebungen u abgezogen
 
@@ -1083,7 +955,6 @@ export function duennQ() {
             } else {
                 sigma = truss[i].ni * (normalkraft / Gesamtflaeche + moment_1 / I11 * zj - moment_2 / I22 * yj)
             }
-            //Sheets("Eingabe").Cells(20 + i, 21 + j) = sigma
             if (j === 0) {
                 truss[i].sigma_x[0] = sigma
             } else {
@@ -1133,10 +1004,6 @@ export function duennQ() {
     const t1 = performance.now();
     console.log(`FEM Berechnung took ${t1 - t0} milliseconds`)
 
-    //const txtarea = document.getElementById("freetext") as HTMLTextAreaElement
-    //console.log("textarea", txtarea.value)
-    //document.getElementById("my_text").innerHTML = txtarea.value
-
     tabQWerte.ys = document.getElementById("ys").innerText = myFormat(Gesamt_ys * unit_length_factor, 2, 2)   // Gesamt_ys.toFixed(2);
     tabQWerte.zs = document.getElementById("zs").innerText = myFormat(Gesamt_zs * unit_length_factor, 2, 2);
     tabQWerte.area = document.getElementById("area").innerText = myFormat(Gesamtflaeche, 2, 2);
@@ -1162,7 +1029,6 @@ export function duennQ() {
     }
     tabQWerte.i_M2 = document.getElementById("i_M2").innerText = myFormat(iM2, 2, 2);
     tabQWerte.i_p2 = document.getElementById("i_p2").innerText = myFormat(iP2, 2, 2);
-
 
     const collection = document.getElementsByClassName('unit_laenge');
 
@@ -1200,7 +1066,6 @@ export function duennQ() {
     // Spannungen aus primärer Torsion
     {
         const myTableDiv = document.getElementById("spannung_mxp");  //in div
-
 
         const tag = document.createElement("p"); // <p></p>
         tag.setAttribute("id", "id_spannung_mxp");
@@ -1267,7 +1132,6 @@ export function duennQ() {
     {
         const myTableDiv = document.getElementById("spannung_mxs");  //in div
 
-
         const tag = document.createElement("p"); // <p></p>
         tag.setAttribute("id", "id_spannung_mxs");
         const text = document.createTextNode("xxx");
@@ -1283,7 +1147,6 @@ export function duennQ() {
         table.setAttribute("id", "id_table_spannung_mxs");
         table.style.border = 'none';
         myTableDiv.appendChild(table);  //appendChild() insert it in the document (table --> myTableDiv)
-
 
         let thead = table.createTHead();
         let row = thead.insertRow();
@@ -1335,7 +1198,6 @@ export function duennQ() {
     // Schubspannungen aus allen Anteilen
     {
         const myTableDiv = document.getElementById("schubspannung");  //in div
-
 
         const tag = document.createElement("p"); // <p></p>
         tag.setAttribute("id", "id_schubspannung");
@@ -1452,7 +1314,6 @@ export function duennQ() {
     {
         const myTableDiv = document.getElementById("normalspannung");  //in div
 
-
         const tag = document.createElement("p"); // <p></p>
         tag.setAttribute("id", "id_normalspannung");
         const text = document.createTextNode("xxx");
@@ -1468,7 +1329,6 @@ export function duennQ() {
         table.setAttribute("id", "id_table_normalspannung");
         table.style.border = 'none';
         myTableDiv.appendChild(table);  //appendChild() insert it in the document (table --> myTableDiv)
-
 
         const thead = table.createTHead();
         const row = thead.insertRow();
@@ -1511,7 +1371,6 @@ export function duennQ() {
     {
         const myTableDiv = document.getElementById("vergleichsspannung");  //in div
 
-
         const tag = document.createElement("p"); // <p></p>
         tag.setAttribute("id", "id_vergleichsspannung");
         const text = document.createTextNode("xxx");
@@ -1527,7 +1386,6 @@ export function duennQ() {
         table.setAttribute("id", "id_table_vergleichsspannung");
         table.style.border = 'none';
         myTableDiv.appendChild(table);  //appendChild() insert it in the document (table --> myTableDiv)
-
 
         const thead = table.createTHead();
         const row = thead.insertRow();
@@ -1638,7 +1496,6 @@ export function duennQ() {
 
         for (i = 0; i < neq; i++) u[i] = R[i];
 
-
         for (k = 0; k < nelem; k++) {
 
             for (j = 0; j < 2; j++) {                           // Elementverformungen
@@ -1654,8 +1511,6 @@ export function duennQ() {
 
             disp[2] = (2 * disp[0] + disp[1]) / 3.0 + (5 * truss[k].F[0] + 4 * truss[k].F[1]) * truss[k].sl * truss[k].sl / truss[k].GModul / 81;
             disp[3] = (disp[0] + 2 * disp[1]) / 3.0 + (4 * truss[k].F[0] + 5 * truss[k].F[1]) * truss[k].sl * truss[k].sl / truss[k].GModul / 81;
-
-            //console.log("U", k, disp[0], disp[2], disp[3], disp[1])
 
             if (loop === 0) {
                 kappa_1 += truss[k].dicke / truss[k].sl * (disp[0] - disp[1]) ** 2 + truss[k].dicke * truss[k].sl / 45.0 * (truss[k].sl * V1 / truss[k].GModul / I22) ** 2 * (truss[k].y1 ** 2 + 7.0 / 4.0 * truss[k].y1 * truss[k].y2 + truss[k].y2 ** 2)
@@ -1680,7 +1535,6 @@ export function duennQ() {
     {
         const myTableDiv = document.getElementById("schubkorrektur");  //in div
 
-
         const tag = document.createElement("p"); // <p></p>
         tag.setAttribute("id", "id_schubkorrektur");
         const text = document.createTextNode("xxx");
@@ -1704,7 +1558,6 @@ export function duennQ() {
     zmax = -1.e30
 
     for (i = 0; i < nnodes; i++) {
-        //console.log(i, y[i], z[i]);
         if (node[i].y < ymin) ymin = node[i].y;
         if (node[i].z < zmin) zmin = node[i].z;
         if (node[i].y > ymax) ymax = node[i].y;
@@ -1723,7 +1576,6 @@ export function duennQ() {
 
     slmax = Math.sqrt((ymax - ymin) ** 2 + (zmax - zmin) ** 2)
 
-    //systemlinien();
     berechnungErfolgreich(true);
     if (app.browserLanguage == 'de') {
         document.getElementById("info_berechnung").innerText = "Berechnung erfolgreich"
@@ -1750,8 +1602,6 @@ document.getElementById('button_label_svg').addEventListener('click', label_svg,
 document.getElementById('button_copy_svg').addEventListener('click', copy_svg, false);
 document.getElementById("select_mode_node").addEventListener('change', setSelectionMode_node);
 document.getElementById("select_mode_element").addEventListener('change', setSelectionMode_element);
-
-//document.getElementById("input_nodes").addEventListener('change', setMaterialEqual);
 
 // @ts-ignore
 window.setMaterialEqual = setMaterialEqual;   // jetzt auch in html sichtbar

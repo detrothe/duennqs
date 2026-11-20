@@ -2,10 +2,8 @@ import { berechnung_erfolgreich } from "./globals.js";
 import { myScreen } from './first.js'
 import { set_myScreen } from "./index.js";
 import { systemlinien } from "./systemlinien";
-//import { duennQ } from "./duennQ";
 import { draw_elements } from "./grafik_3D.js";
 import { my_jspdf } from "./mypdf.js";
-//import { einstellungen } from "./einstellungen";
 
 export let currentTab;
 
@@ -13,9 +11,7 @@ export let currentTab;
 export function testeZahl(wert) {
     //--------------------------------------------------------------------------------------------
     wert = wert.replace(/,/g, '.');
-    //console.log('Komma entfernt',wert);
     if (isNaN(wert)) {
-        //window.alert("Das ist keine Zahl ");
 
         return 0;
     }
@@ -27,10 +23,7 @@ export function testNumber(wert, zeile, spalte, id) {
     //--------------------------------------------------------------------------------------------
 
     wert = wert.replace(/,/g, '.');
-    //console.log('Komma entfernt',wert);
     if (isNaN(wert)) {
-        //window.alert("Das ist keine Zahl ");
-
 
         document.getElementById(id).rows.item(zeile).cells.item(spalte).classList.add("selected");
         return 0;
@@ -45,34 +38,22 @@ export function myFormat(wert, minDecimal, maxDecimal) {
     return new Intl.NumberFormat(navigator.language, { minimumFractionDigits: minDecimal, maximumFractionDigits: maxDecimal }).format(wert);
 }
 
-
 //------------------------------------------------------------------------------------------------
 
 export function sichtbar(displayName) {
 
-    //console.log("sichtbar", displayName)
-
     currentTab = displayName;
 
     if (displayName === 'eingabe') {
-        //document.getElementById("eingabe").style.display = "block";
-        //document.getElementById("knotentabelle").style.display = "block";
-        //document.getElementById("elementtabelle").style.display = "block";
         document.getElementById("eingabe_duennQ_top").style.display = "block";
         document.getElementById("duennQ_save_daten").style.display = "block";
     } else {
-        //document.getElementById("eingabe").style.display = "none";
-        //document.getElementById("knotentabelle").style.display = "none";
-        //document.getElementById("elementtabelle").style.display = "none";
         document.getElementById("eingabe_duennQ_top").style.display = "none";
         document.getElementById("duennQ_save_daten").style.display = "none";
     }
 
     if (displayName === 'ergebnisse') {
         document.getElementById("ergebnisse").style.display = "block";
-        //document.getElementById("ergebnisse").setAttribute("width", myScreen.clientWidth / 2 + 'px');
-        //document.getElementById("id_topRight").setAttribute("width", '0px');
-        // document.getElementById("id_topRight").style.width = 0;
 
     } else {
         document.getElementById("ergebnisse").style.display = "none";
@@ -91,7 +72,6 @@ export function sichtbar(displayName) {
         if (berechnung_erfolgreich) draw_elements();
         document.getElementById("my-webgl").style.display = "block";
         window.dispatchEvent(new Event("resize"));
-        //window.dispatchEvent(new Event("forceRender"));
     } else {
         document.getElementById("my-webgl").style.display = "none";
     }
@@ -125,7 +105,6 @@ export function sichtbar(displayName) {
 
     if (displayName === 'einstellungen') {
         document.getElementById("id_einstellungen").style.display = "block";
-        //einstellungen();
     } else {
         document.getElementById("id_einstellungen").style.display = "none";
     }

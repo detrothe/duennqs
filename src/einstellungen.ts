@@ -27,13 +27,11 @@ console.log("vor readLocalStorage")
 
 readLocalStorage();
 
-
 //----------------------------------------------------------------------------------------------
 function set_body_width() {
     //------------------------------------------------------------------------------------------
     const el = document.getElementById("id_body_width") as HTMLInputElement;
     let wert = Number(testeZahl(el.value))
-    //if (wert > document.documentElement.clientWidth) wert = document.documentElement.clientWidth
     if (wert > 200) {  // Mindestbreite, sonst kann man nichts mehr eingeben
         body_width = wert
         set_myScreen()
@@ -46,7 +44,6 @@ function set_font_size() {
 
     const el = document.getElementById("id_fontsize") as HTMLInputElement;
     my_fontsize = el.value
-    //console.log("my_fontsize", my_fontsize)
     document.body.style.fontSize = my_fontsize
 
     let elements: any
@@ -59,10 +56,6 @@ function set_font_size() {
     for (let i = 0; i < elements.length; i++) {
         console.log("lil-gui", i, elements[i])
     }
-    /*
-    const gui = document.getElementById("panel_gui") as HTMLInputElement;
-    console.log("fs gui", gui.style.fontSize)
-    */
 }
 
 //----------------------------------------------------------------------------------------------
@@ -71,14 +64,12 @@ function set_color_table_out() {
 
     const el = document.getElementById("id_color_table_out") as HTMLInputElement;
     color_table_out = el.value
-    //console.log("color_table_out", color_table_out)
 
     const ntabelle = document.getElementById("nodeTable") as HTMLTableElement;
     ntabelle.style.backgroundColor = color_table_out
 
     const etabelle = document.getElementById("elemTable") as HTMLTableElement;
     etabelle.style.backgroundColor = color_table_out
-
 
 }
 
@@ -88,8 +79,6 @@ function set_color_table_in() {
 
     const el = document.getElementById("id_color_table_in") as HTMLInputElement;
     color_table_in = el.value
-    //console.log("color_table_in", color_table_in)
-
 
     const ntabelle = document.getElementById("nodeTable") as HTMLTableElement;
     for (let i = 1; i < ntabelle.rows.length; i++) {
@@ -109,13 +98,11 @@ export function set_current_unit_length(unitLength: string) {
     current_unit_length = unitLength;
     old_unit_length = unitLength;
 
-
     const auswahl = document.getElementById("unitLength") as HTMLInputElement
     auswahl.value = unitLength
 
     set_unit_factors(unitLength)
     setNewUnits()
-
 
 }
 
@@ -164,12 +151,10 @@ function einstellungen() {
     nSpalten = etabelle.rows[0].cells.length;
     for (let i = 1; i < etabelle.rows.length; i++) {
         child = etabelle.rows[i].cells[1].firstElementChild as HTMLInputElement  // Emodul
-        //child.value = (parseFloat(child.value) * factor_stress).toString()
         let zahl = Number((parseFloat(child.value) * factor_stress).toPrecision(12)) * 1  // Rundungsfehler beseitigen
         child.value = zahl.toString()
 
         child = etabelle.rows[i].cells[3].firstElementChild as HTMLInputElement   // Dicke
-        //child.value = (parseFloat(child.value) * factor_length).toString()
         zahl = Number((parseFloat(child.value) * factor_length).toPrecision(12)) * 1  // Rundungsfehler beseitigen
         child.value = zahl.toString()
     }
@@ -179,7 +164,6 @@ function einstellungen() {
 
     el = document.getElementById("fyRd") as HTMLInputElement;
     el.value = (parseFloat(el.value) * factor_stress).toString()
-
 
     old_unit_length = current_unit_length
 
@@ -260,12 +244,10 @@ export function setNewUnits() {
 
 }
 
-
 //----------------------------------------------------------------------------------------------
 function saveLocalStorage() {
     //------------------------------------------------------------------------------------------
 
-    //    const input = document.getElementById('id_cb_saveLocalStorage') as HTMLInputElement | null;
     console.log("in saveLocalStorage : ")
 
     let el = document.getElementById("id_fontsize") as HTMLInputElement;
@@ -287,14 +269,12 @@ function saveLocalStorage() {
     if (wert > 200) window.localStorage.setItem('body_width', el.value);  // nur vernünftige werte abspeichern
 }
 
-
 //----------------------------------------------------------------------------------------------
 export function readLocalStorage() {
     //------------------------------------------------------------------------------------------
 
     console.log("enter readLocalStorage")
     let unitLength = window.localStorage.getItem('current_unit_length');
-    //console.log("unit of length found in local storage", unitLength)
 
     if (unitLength) {
         current_unit_length = unitLength
@@ -367,7 +347,6 @@ export function readLocalStorage() {
     }
 
     console.log("exit readLocalStorage")
-    //console.log("readLocalStorage", my_fontsize, color_table_out, color_table_in)
 
 }
 
@@ -389,26 +368,6 @@ function set_unit_factors(unitLength: string) {
     }
 
 }
-
-/*
-//----------------------------------------------------------------------------------------------
-export function set_table_colors() {
-    //------------------------------------------------------------------------------------------
-
-    const ntabelle = document.getElementById("nodeTable") as HTMLTableElement;
-    ntabelle.style.backgroundColor = color_table_out
-    for (let i = 1; i < ntabelle.rows.length; i++) {
-        ntabelle.rows[i].cells[0].style.backgroundColor = color_table_in
-    }
-
-    const etabelle = document.getElementById("elemTable") as HTMLTableElement;
-    etabelle.style.backgroundColor = color_table_out
-    for (let i = 1; i < etabelle.rows.length; i++) {
-        etabelle.rows[i].cells[0].style.backgroundColor = color_table_in
-    }
-
-}
-*/
 
 //----------------------------------------------------------------------------------------------
 export function deleteLocalStorage() {

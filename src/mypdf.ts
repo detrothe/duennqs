@@ -1,7 +1,5 @@
 import { jsPDF, jsPDFAPI } from "jspdf";
-//import autoTable from "jspdf-autotable";
 import { Canvg } from "canvg";
-//import { app, infoBox } from "./index.js";
 
 import { font } from "./FreeSans-normal.js";
 import { fontBold } from "./FreeSans-bold.js"
@@ -27,7 +25,6 @@ function htmlText(text: string, x: number, y: number) {
   //--------------------------------------------------------------------------------------------
 
   const html = htmlToPdfmake(text);
-  //console.log("html", text, "|" + html.text + "|", html.length)
 
   const fs = doc.getFontSize();
 
@@ -40,7 +37,6 @@ function htmlText(text: string, x: number, y: number) {
   }
 
   for (let i = 0; i < html.length; i++) {
-    //console.log("i,nodeName", i, html[i].text, html[i].nodeName)
     if (typeof html[i].nodeName === 'undefined') { // einfacher Text
       doc.text(html[i].text, xx, yy)
       xx += doc.getTextWidth(html[i].text)
@@ -148,9 +144,6 @@ export async function my_jspdf() {
   doc.setFont("freesans_normal");
   doc.setFontSize(fs)
   let yy = 20;
-
-  //doc.line(links, 1, 200, 1, "S");
-  //doc.line(links, 295, 200, 295, "S");
 
   const txtarea = document.getElementById("freetext") as HTMLTextAreaElement
   console.log("textarea", txtarea.value)
@@ -264,21 +257,6 @@ export async function my_jspdf() {
   }
   yy = neueZeile(yy, fs, 1)
 
-  /*
-    autoTable(doc, {
-      html: "#nodeTable",
-      startY: yy,
-      //theme: "plain",
-      tableWidth: 100,
-      //useCss: true,
-      margin: { left: links },
-      styles: {
-        font: "freesans_normal",
-        fontSize: fs
-      }
-    });
-  */
-
   {
     const nspalten = 3, nzeilen = nnodes
 
@@ -322,7 +300,6 @@ export async function my_jspdf() {
       yy = neueZeile(yy, fs1, 1)
     }
   }
-
 
   {
     const nspalten = 3, nzeilen = nelem
@@ -393,9 +370,7 @@ export async function my_jspdf() {
     }
   }
 
-
   doc.line(links, yy, 200, yy, "S");
-  //  yy = neueZeile(yy, fs1, 2)
   yy = testSeite(yy, fs1, 2, 13)
 
   doc.setFontSize(fs1)
@@ -407,7 +382,6 @@ export async function my_jspdf() {
   }
   doc.setFontSize(fs)
   doc.setFont("freesans_normal");
-
 
   let xsp = 60
   let xsp1 = 15
@@ -491,7 +465,6 @@ export async function my_jspdf() {
   }
   yy = neueZeile(yy, fs, 1)
 
-
   {
     let str: string, texWid: number
 
@@ -506,7 +479,6 @@ export async function my_jspdf() {
     texWid = doc.getTextWidth(str)
     doc.text(str, links, yy);
     htmlText("M<sub>xp</sub>" , links + texWid, yy)
-
 
     doc.setFontSize(fs)
     doc.setFont("freesans_bold");
@@ -545,7 +517,6 @@ export async function my_jspdf() {
       yy = neueZeile(yy, fs1, 1)
     }
   }
-
 
   {
     let str: string, texWid: number
@@ -591,22 +562,6 @@ export async function my_jspdf() {
       yy = neueZeile(yy, fs1, 1)
     }
   }
-
-  /*
-    autoTable(doc, {
-      html: "#id_table_spannung_mxs",
-      startY: yy,
-      theme: "plain",
-      tableWidth: 100,
-      useCss: true,
-      margin: { left: links },
-      styles: {
-        font: "freesans_normal",
-        fontSize: fs
-      },
-    });
-  */
-
 
   {
     const nspalten = 7, nzeilen = nelem
@@ -673,18 +628,15 @@ export async function my_jspdf() {
         str = myFormat(truss[i].stress_R[j - 4] * unit_stress_factor, 2, 2)
         texWid = doc.getTextWidth(str)
         doc.text(str, spalte[j] + 20 - texWid, yy);
-        //doc.text(myFormat(truss[i].stress_R[j - 4], 2, 2), spalte[j], yy);
       }
       yy = neueZeile(yy, fs1, 1)
     }
   }
 
-
   {
     const nspalten = 4, nzeilen = nelem
 
     yy = testSeite(yy, fs1, 1, 4 + nzeilen)
-
 
     if (app.browserLanguage == 'de') {
       doc.text("Normalspannungen aus Normalkraft, Biegemomenten und Wölbbimoment", links, yy);
@@ -723,22 +675,6 @@ export async function my_jspdf() {
       yy = neueZeile(yy, fs1, 1)
     }
   }
-
-
-  /*
-    autoTable(doc, {
-      html: "#id_table_vergleichsspannung",
-      //theme: "plain",
-      tableWidth: 100,
-      useCss: true,
-      margin: { left: links },
-      styles: {
-        font: "freesans_normal",
-        fontSize: 10,
-        fillColor: '#ffffff'
-      },
-    });
-  */
 
   {
     const nspalten = 4, nzeilen = nelem
@@ -792,7 +728,6 @@ export async function my_jspdf() {
     svg = svg.substring(0, svg.indexOf("</svg>")) + "</svg>";
     // @ts-ignore
     svg = svg.replaceAll("  ", "");
-    // console.log("svg", svg);
 
     var canvas = document.createElement("canvas");
     var context = canvas.getContext("2d");

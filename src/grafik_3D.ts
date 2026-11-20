@@ -4,17 +4,17 @@ import { MeshLine, MeshLineMaterial } from './renderers/THREE_MeshLine.js';
 
 import { myPanel, get_scale_factor, get_scale_factor_arrows } from "./mygui.js"
 
-import { OrbitControls } from './OrbitControls.js';
+import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
 
 import { node, truss, Gesamt_ys, Gesamt_zs, yM, zM, phi0, bezugswerte, u0 } from "./duennQ"
 import { nnodes, nelem } from "./duennQ_tabelle.js"
 import { ymin, ymax, zmin, zmax, slmax, Mxp } from "./duennQ";
 import { myScreen } from "./first.js";
-import { CSS2DObject, CSS2DRenderer } from "./renderers/CSS2DRenderer.js"
+import { CSS2DObject, CSS2DRenderer } from 'three/examples/jsm/renderers/CSS2DRenderer.js';
 
-import { FontLoader, Font } from "./renderers/FontLoaders.js";
-import { TTFLoader } from "./renderers/TTFLoader.js";
-import { TextGeometry } from './renderers/TextGeometry.js';
+import { FontLoader, Font } from 'three/examples/jsm/loaders/FontLoader.js';
+import { TTFLoader } from 'three/examples/jsm/loaders/TTFLoader.js';
+import { TextGeometry } from 'three/examples/jsm/geometries/TextGeometry.js';
 
 import { berechnung_erfolgreich } from "./globals.js";
 import { current_unit_length, current_unit_stress, unit_length_factor, unit_stress_factor } from "./einstellungen"

@@ -32,8 +32,8 @@ export default defineConfig({
             workbox: {
                 // Doku-Seiten, Bilder und die Schrift für die 3D-Beschriftung offline verfügbar
                 globPatterns: ['**/*.{js,css,html,png,ico,woff2,ttf,json}'],
-                // nicht benutzte Schriften nicht vorab laden
-                globIgnores: ['**/FreeSerif.ttf', '**/NotoMono-Regular.ttf', '**/fontawesome-webfont-*.ttf'],
+                // Font-Awesome-Schrift nur als woff2 vorab laden
+                globIgnores: ['**/fontawesome-webfont-*.ttf'],
                 // das Haupt-Bundle ist derzeit gut 3 MB groß
                 maximumFileSizeToCacheInBytes: 6 * 1024 * 1024,
                 cleanupOutdatedCaches: true,

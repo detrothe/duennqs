@@ -1,11 +1,8 @@
-//import './listener.js';
 
 import { app } from "./index";
-//import { testeZahl } from "./utility";
 import { resizeTable } from "./base_tabelle.js";
 import { saveAs } from 'file-saver';
 import { current_unit_length, set_current_unit_length } from "./einstellungen"
-
 
 //------------------------------------------------------------------------------------------------
 function handleFileSelect_read() {
@@ -15,13 +12,8 @@ function handleFileSelect_read() {
     input.type = 'file';
     input.onchange = _ => {
         // you can use this method to get file and perform respective operations
-        //let files =   Array.from(input.files);
-        //console.log(files);
-
-        //function handleFileSelect_read() {     // evt
 
         let files = Array.from(input.files);
-        //    const files = evt.target.files; // FileList object
         console.log("in select read", files);
         let filename;
 
@@ -37,11 +29,6 @@ function handleFileSelect_read() {
             reader.onload = (function (theFile) {
                 return function (e) {
                     // Render thumbnail.
-                    /*
-                    let span = document.createElement('span');
-                    span.innerHTML = e.target.result.split('\n'); //.join(';');
-                    document.getElementById('list').insertBefore(span, null);
-                    */
 
                     console.log("in result", e.target.result);
                     let jobj = JSON.parse(e.target.result);
@@ -53,7 +40,6 @@ function handleFileSelect_read() {
                     } else {
                         set_current_unit_length(jobj.unit_length)
                     }
-
 
                     // in Tabelle schreiben
                     document.getElementById("input_nodes").value = jobj.nnodes;
@@ -71,7 +57,6 @@ function handleFileSelect_read() {
                     document.getElementById("fyRd").value = jobj.fyRd;
                     document.getElementById("EMod_ref").value = jobj.EMod_ref;
                     document.getElementById("mue_ref").value = jobj.mue_ref;
-
 
                     resizeTable();
 
@@ -100,8 +85,6 @@ function handleFileSelect_read() {
 
             // Read in the image file as a data URL.
             reader.readAsText(f);
-            //console.log("f", reader);
-
 
         }
     }
@@ -109,14 +92,11 @@ function handleFileSelect_read() {
     input.click();
 }
 
-
 //------------------------------------------------------------------------------------------------
 async function handleFileSelect_save() {
     //--------------------------------------------------------------------------------------------
 
-    //const filename = window.prompt("Name der Datei mit Extension, z.B. test.txt\nDie Datei wird im Default Download Ordner gespeichert");
     console.log("in select save");
-    //console.log("filename", filename);
 
     const elem = document.getElementById("input_nodes");
 
@@ -127,15 +107,12 @@ async function handleFileSelect_save() {
         let tabelle = document.getElementById('nodeTable');
         let n_nodes = tabelle.rows.length - 1;
         let nSpalten = tabelle.rows[0].cells.length - 1;
-        //const neq = nZeilen;
-        //const nlf = nSpalten;
 
         const node = Array.from(Array(n_nodes), () => new Array(nSpalten));
 
         for (i = 0; i < n_nodes; i++) {
             for (j = 0; j < nSpalten; j++) {
                 node[i][j] = tabelle.rows[i + 1].cells[j + 1].firstElementChild.value;
-                //console.log(i,j,c[i][j]);
             }
         }
 
@@ -148,7 +125,6 @@ async function handleFileSelect_save() {
         for (i = 0; i < n_elem; i++) {
             for (j = 0; j < nSpalten; j++) {
                 elem[i][j] = tabelle.rows[i + 1].cells[j + 1].firstElementChild.value;
-                //console.log(i,j,a[i][j]);
             }
         }
 
@@ -173,15 +149,11 @@ async function handleFileSelect_save() {
             'node': node
         };
 
-
         let jsonse = JSON.stringify(polyData);
 
         console.log("stringify", jsonse);
 
-
         if (app.hasFSAccess) {
-
-            //window.alert("showSaveFilePicker bekannt")
 
             try {
                 // (A) CREATE BLOB OBJECT
@@ -194,17 +166,14 @@ async function handleFileSelect_save() {
                         accept: { "text/plain": [".txt"] }
                     }]
                 });
-                //console.log("fileHandle",fileHandle)
 
                 const fileStream = await fileHandle.createWritable();
-                //console.log("fileStream=",fileStream);
 
                 // (C) WRITE FILE
                 await fileStream.write(myBlob);
                 await fileStream.close();
 
             } catch (error) {
-                //alert(error.name);
                 alert(error.message);
             }
 
@@ -213,13 +182,11 @@ async function handleFileSelect_save() {
             download(filename, jsonse);
         } else {
 
-            //window.alert("showSaveFilePicker UNBEKANNT");
             const filename = window.prompt("Name der Datei mit Extension, z.B. test.txt\nDie Datei wird im Default Download Ordner gespeichert");
             const myFile = new File([jsonse], filename, { type: "text/plain;charset=utf-8" });
             try {
                 saveAs(myFile);
             } catch (error) {
-                //alert(error.name);
                 alert(error.message);
             }
 
@@ -227,13 +194,10 @@ async function handleFileSelect_save() {
 
     }
 
-    //  }
 }
 
-//document.getElementById('readFile').addEventListener('click', initFileSelect_read, false);
 document.getElementById('readFile').addEventListener('click', handleFileSelect_read, false);
 document.getElementById('saveFile').addEventListener('click', handleFileSelect_save, false);
-
 
 //------------------------------------------------------------------------------------------------
 function download(filename, text) {
