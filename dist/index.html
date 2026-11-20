@@ -137,42 +137,42 @@
         <table class="table_eng">
           <tbody>
             <tr>
-              <td class="td_eng_right">V<sub>y</sub>=</td>
+              <td class="td_eng_right" title="shear force in y-direction">V<sub>y</sub>=</td>
               <td>
                 <input type="number" step="any" id="Vy" name="Vy" class="input_kdtab" pattern="[0-9.,eE+-]*"
-                  onchange="berechnungErforderlich()" />
+                  onchange="berechnungErforderlich()" title="shear force in y-direction" />
               </td>
               <td class="td_eng">kN</td>
-              <td class="td_eng_right">M<sub>xp</sub>=</td>
+              <td class="td_eng_right" title="St. Venant's torsion, primary torsional moment">M<sub>xp</sub>=</td>
               <td>
                 <input type="number" step="any" id="Mxp" name="Mxp" class="input_kdtab" pattern="[0-9.,eE+-]*"
-                  onchange="berechnungErforderlich()" />
+                  onchange="berechnungErforderlich()" title="St. Venant's torsion, primary torsional moment"  />
               </td>
               <td class="td_eng">kNm</td>
-              <td class="td_eng_right">N=</td>
+              <td class="td_eng_right" title="axial force">N=</td>
               <td>
                 <input type="number" step="any" id="Nx" name="Nx" class="input_kdtab" pattern="[0-9.,eE+-]*"
-                  onchange="berechnungErforderlich()" />
+                  onchange="berechnungErforderlich()" title="axial force"/>
               </td>
               <td class="td_eng">kN</td>
             </tr>
             <tr>
-              <td class="td_eng_right">V<sub>z</sub>=</td>
+              <td class="td_eng_right" title="shear force in z-direction">V<sub>z</sub>=</td>
               <td>
                 <input type="number" step='any' id="Vz" name="Vz" class="input_kdtab" pattern="[0-9.,eE+-]*"
-                  onchange="berechnungErforderlich()"  value="500" />
+                  onchange="berechnungErforderlich()"  value="500" title="shear force in z-direction" />
               </td>
               <td class="td_eng">kN</td>
-              <td class="td_eng_right">M<sub>xs</sub>=</td>
+              <td class="td_eng_right" title="secondary torsional moment">M<sub>xs</sub>=</td>
               <td>
                 <input type="number" step="any" id="Mxs" name="Mxs" class="input_kdtab" pattern="[0-9.,eE+-]*"
-                  onchange="berechnungErforderlich()" />
+                  onchange="berechnungErforderlich()" title="secondary torsional moment"/>
               </td>
               <td class="td_eng">kNm</td>
-              <td class="td_eng_right">M<sub>y</sub>=</td>
+              <td class="td_eng_right" title="bendig moment about the y-axis">M<sub>y</sub>=</td>
               <td>
                 <input type="number" step="any" id="My" name="My" class="input_kdtab" pattern="[0-9.,eE+-]*"
-                  onchange="berechnungErforderlich()"  value="600"/>
+                  onchange="berechnungErforderlich()"  value="600" title="bendig moment about the y-axis"/>
               </td>
               <td class="td_eng">kNm</td>
             </tr>
@@ -180,16 +180,16 @@
               <td class="td_eng_right"></td>
               <td></td>
               <td class="td_eng"></td>
-              <td class="td_eng_right">M<sub>&omega;</sub>=</td>
+              <td class="td_eng_right" title="warping bimoment">M<sub>&omega;</sub>=</td>
               <td>
                 <input type="number" step="any" id="Momega" name="Momega" class="input_kdtab" pattern="[0-9.,eE+-]*"
-                  onchange="berechnungErforderlich()" />
+                  onchange="berechnungErforderlich()" title="warping bimoment"/>
               </td>
               <td class="td_eng">kNm²</td>
-              <td class="td_eng_right">M<sub>z</sub>=</td>
+              <td class="td_eng_right"  title="bending moment about the z-axis">M<sub>z</sub>=</td>
               <td>
                 <input type="number" step="any" id="Mz" name="Mz" class="input_kdtab" pattern="[0-9.,eE+-]*"
-                  onchange="berechnungErforderlich()" />
+                  onchange="berechnungErforderlich()" title="bending moment about the z-axis" />
               </td>
               <td class="td_eng">kNm</td>
             </tr>
@@ -559,9 +559,14 @@
     </div>
 
     <div id="footer" class="footer">
-      Querschnittswerte und Spannungen dünnwandiger Querschnitte, 5-Dezember-2025,
-      <a href="https://statikverstehen.de">&#169; statikverstehen.de </a>
+      Cross-sectional values and stresses of thin-walled cross-sections, 16-April-2026,
+      <a href="https://fea-apps.de">&#169; FEA-apps.de </a>
     </div>
+
+    <!-- <div id="footer" class="footer">
+      Querschnittswerte und Spannungen dünnwandiger Querschnitte, 16-April-2026,
+      <a href="https://statikverstehen.de">&#169; statikverstehen.de </a>
+    </div> -->
   </div>
 
   <nav id="context-menu" class="context-menu">
