@@ -308,7 +308,10 @@ ${msg('Bearbeitet von: Melis Muster')}"></textarea>
           <h4>${msg('Gerät')}</h4>
           <p id="infoBox"></p>
           <p class="footer">
-            Version ${__APP_VERSION__} &middot; ${__BUILD_DATE__} &middot; <a href="https://fea-apps.de">&#169; FEA-apps.de</a>
+            Version ${__APP_VERSION__} &middot; ${__BUILD_DATE__} &middot;
+            ${getLocale() === 'de'
+                ? html`<a href="https://statikverstehen.de">&#169; statikverstehen.de</a>`
+                : html`<a href="https://fea-apps.de">&#169; FEA-apps.de</a>`}
           </p>
         </sl-tab-panel>
 

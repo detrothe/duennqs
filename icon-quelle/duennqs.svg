@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512">
+<!-- App-Icon duennQs im Stil des blauen d2beam-/polyQuer-Icons:
+     dünnwandiger Hohlkasten mit Flanschen (Startbeispiel), Schubfluss als gelbe Pfeile in den Wänden.
+     Rendern: siehe README (Inkscape) -->
+<defs>
+  <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+    <stop offset="0" stop-color="#3a8ee6"/><stop offset="1" stop-color="#0a347f"/>
+  </linearGradient>
+  <linearGradient id="metall" x1="0" y1="0" x2="0" y2="1">
+    <stop offset="0" stop-color="#ffffff"/><stop offset="0.45" stop-color="#e3e7eb"/><stop offset="1" stop-color="#8e98a4"/>
+  </linearGradient>
+  <filter id="schatten" x="-20%" y="-20%" width="140%" height="140%">
+    <feGaussianBlur in="SourceAlpha" stdDeviation="6"/><feOffset dy="6" result="b"/><feFlood flood-color="#001a40" flood-opacity="0.45"/><feComposite in2="b" operator="in"/><feMerge><feMergeNode/><feMergeNode in="SourceGraphic"/></feMerge>
+  </filter>
+  <marker id="pfeil" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="3.2" markerHeight="3.2" orient="auto-start-reverse">
+    <path d="M0,0 L10,5 L0,10 z" fill="#ffd21f"/>
+  </marker>
+</defs>
+<rect width="512" height="512" fill="url(#bg)"/>
+<g id="figur">
+  <!-- Querschnitt: Obergurt mit Kragarmen, geneigte Stege, Untergurt (Wanddicke 20) -->
+  <g filter="url(#schatten)" fill="url(#metall)" stroke="#5d6875" stroke-width="2" stroke-linejoin="round">
+    <path d="M60,108 L452,108 L452,128 L366,128 L311,318 L201,318 L146,128 L60,128 z
+             M168,128 L218,298 L294,298 L344,128 z" fill-rule="evenodd"/>
+  </g>
+  <!-- Schubfluss (Umlauf im geschlossenen Teil) -->
+  <g stroke="#ffd21f" stroke-width="7" stroke-linecap="round" fill="none">
+    <line x1="196" y1="118" x2="316" y2="118" marker-end="url(#pfeil)"/>
+    <line x1="349" y1="150" x2="321" y2="246" marker-end="url(#pfeil)"/>
+    <line x1="285" y1="308" x2="227" y2="308" marker-end="url(#pfeil)"/>
+    <line x1="191" y1="246" x2="163" y2="150" marker-end="url(#pfeil)"/>
+  </g>
+</g>
+<text x="256" y="418" text-anchor="middle" font-family="Noto Sans" font-weight="700" font-size="52" fill="#e9edf1">duennQs</text>
+</svg>

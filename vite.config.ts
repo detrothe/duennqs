@@ -20,27 +20,38 @@ export default defineConfig({
             // (Registrierung und Prüfung in src/sw_update.ts)
             registerType: 'prompt',
             injectRegister: false,
-            includeAssets: ['favicon.ico', 'icon/duennQs.png'],
+            includeAssets: ['favicon-48.png', 'apple-touch-icon.png'],
+            // Manifest-Icons nicht zusätzlich vorab cachen (die 512er braucht nur die Installation)
+            includeManifestIcons: false,
             manifest: {
-                name: 'Querschnittswerte und Spannungen dünnwandiger Querschnitte',
+                name: 'duennQs – dünnwandige Querschnitte',
                 short_name: 'duennQs',
                 description: 'Querschnittswerte und Spannungen dünnwandiger Querschnitte',
                 lang: 'de',
+                // Identität der App wie bei der früheren Fassung (deren start_url), damit bereits
+                // installierte Apps das neue Manifest (Icons, Darstellung) übernehmen
+                id: '/?utm_source=homescreen',
                 start_url: './',
                 scope: './',
-                display: 'fullscreen',
-                display_override: ['fullscreen', 'window-controls-overlay'],
+                display: 'standalone',
                 orientation: 'any',
-                background_color: '#00008a',
-                theme_color: '#000000',
+                // wie d2beam-gui (helles Grau der Oberfläche); im Browser wählen die theme-color-Meta-Tags
+                // in index.html hell/dunkel passend zur Systemeinstellung
+                background_color: '#f3f3f3',
+                theme_color: '#f3f3f3',
                 categories: ['education', 'productivity'],
+                // Icons wie bei d2beam-gui; Vorlage: icon-quelle/duennqs.svg (mit Inkscape gerendert)
                 icons: [
-                    {src: 'icon/duennQs.png', sizes: '192x192', type: 'image/png', purpose: 'any'},
+                    {src: '192x192.png', sizes: '192x192', type: 'image/png', purpose: 'any'},
+                    {src: '512x512.png', sizes: '512x512', type: 'image/png', purpose: 'any'},
+                    {src: 'maskable_512.png', sizes: '512x512', type: 'image/png', purpose: 'maskable'},
                 ],
             },
             workbox: {
                 // Doku-Seiten und Bilder offline verfügbar
-                globPatterns: ['**/*.{js,css,html,png,ico,woff2}'],
+                globPatterns: ['**/*.{js,css,html,png,woff2}'],
+                // große Icons braucht nur die Installation, nicht der Offline-Betrieb
+                globIgnores: ['**/512x512.png', '**/maskable_512.png'],
                 // das Haupt-Bundle ist derzeit gut 2 MB groß (jspdf mit eingebetteter Schrift)
                 maximumFileSizeToCacheInBytes: 6 * 1024 * 1024,
                 cleanupOutdatedCaches: true,
