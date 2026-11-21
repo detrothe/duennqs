@@ -1,6 +1,6 @@
 {
   "name": "duennqs",
-  "version": "2.1.2",
+  "version": "2.1.3",
   "description": "Querschnittswerte und Spannungen duennwandiger Querschnitte",
   "scripts": {
     "dev": "vite --open --host",
