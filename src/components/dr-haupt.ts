@@ -187,38 +187,47 @@ ${msg('Bearbeitet von: Melis Muster')}"></textarea>
           </p>
 
           <h3>${msg('Schnittgrößen')}</h3>
-          <table class="schnittgroessen">
-            <tr>
-              ${this.feld('Vy', html`V<sub>y</sub>`, 'kN', msg('Querkraft in y-Richtung'))}
-              ${this.feld('Mxp', html`M<sub>xp</sub>`, 'kNm', msg('primäres Torsionsmoment (St. Venant)'))}
-              ${this.feld('Nx', 'N', 'kN', msg('Normalkraft'))}
-            </tr>
-            <tr>
-              ${this.feld('Vz', html`V<sub>z</sub>`, 'kN', msg('Querkraft in z-Richtung'))}
-              ${this.feld('Mxs', html`M<sub>xs</sub>`, 'kNm', msg('sekundäres Torsionsmoment'))}
-              ${this.feld('My', html`M<sub>y</sub>`, 'kNm', msg('Biegemoment um die y-Achse'))}
-            </tr>
-            <tr>
-              <td></td><td></td><td></td>
-              ${this.feld('Momega', html`M<sub>&omega;</sub>`, 'kNm²', msg('Wölbbimoment'))}
-              ${this.feld('Mz', html`M<sub>z</sub>`, 'kNm', msg('Biegemoment um die z-Achse'))}
-            </tr>
-          </table>
+          <!-- zwei Blöcke nebeneinander; auf schmalen Bildschirmen rutscht der rechte Block darunter -->
+          <div class="feldbloecke">
+            <table class="schnittgroessen">
+              <tr>
+                ${this.feld('Vy', html`V<sub>y</sub>`, 'kN', msg('Querkraft in y-Richtung'))}
+                ${this.feld('Mxp', html`M<sub>xp</sub>`, 'kNm', msg('primäres Torsionsmoment (St. Venant)'))}
+              </tr>
+              <tr>
+                ${this.feld('Vz', html`V<sub>z</sub>`, 'kN', msg('Querkraft in z-Richtung'))}
+                ${this.feld('Mxs', html`M<sub>xs</sub>`, 'kNm', msg('sekundäres Torsionsmoment'))}
+              </tr>
+              <tr>
+                <td></td><td></td><td></td>
+                ${this.feld('Momega', html`M<sub>&omega;</sub>`, 'kNm²', msg('Wölbbimoment'))}
+              </tr>
+            </table>
+            <table class="schnittgroessen">
+              <tr>${this.feld('Nx', 'N', 'kN', msg('Normalkraft'))}</tr>
+              <tr>${this.feld('My', html`M<sub>y</sub>`, 'kNm', msg('Biegemoment um die y-Achse'))}</tr>
+              <tr>${this.feld('Mz', html`M<sub>z</sub>`, 'kNm', msg('Biegemoment um die z-Achse'))}</tr>
+            </table>
+          </div>
 
           <h3>${msg('Bezugswerte')}</h3>
           <p>
             <input type="checkbox" id="material_equal">
             <label for="material_equal">${msg('alle Elemente haben gleiche Materialdaten')}</label>
           </p>
-          <table class="schnittgroessen">
-            <tr>
-              ${this.feld('EMod_ref', msg('E-Modul'), html`<span class="unit_stress">kN/cm²</span>`, msg('E-Modul (Bezugswert)'))}
-              ${this.feld('mue_ref', html`&nu;`, '', msg('Querdehnzahl (Bezugswert)'))}
-            </tr>
-            <tr>
-              ${this.feld('fyRd', html`f<sub>y,Rd</sub>`, html`<span class="unit_stress">kN/cm²</span>`, msg('Bemessungswert der Streckgrenze (für die Vergleichsspannung)'))}
-            </tr>
-          </table>
+          <div class="feldbloecke">
+            <table class="schnittgroessen">
+              <tr>
+                ${this.feld('EMod_ref', msg('E-Modul'), html`<span class="unit_stress">kN/cm²</span>`, msg('E-Modul (Bezugswert)'))}
+              </tr>
+              <tr>
+                ${this.feld('fyRd', html`f<sub>y,Rd</sub>`, html`<span class="unit_stress">kN/cm²</span>`, msg('Bemessungswert der Streckgrenze (für die Vergleichsspannung)'))}
+              </tr>
+            </table>
+            <table class="schnittgroessen">
+              <tr>${this.feld('mue_ref', html`&nu;`, '', msg('Querdehnzahl (Bezugswert)'))}</tr>
+            </table>
+          </div>
 
           <h3>${msg('Knoten')}</h3>
           <div class="zeile">
@@ -248,7 +257,7 @@ ${msg('Bearbeitet von: Melis Muster')}"></textarea>
             nzeilen="${START_ANZAHL_ELEMENTE}"
             nspalten="5"
             columns='${elementSpalten()}'
-            colwidth='["3","7","4","6","4","4"]'
+            colwidth='["3","3.5","2.5","2.5","2","2"]'
           ></dr-tabelle>
           <p class="hinweis">${msg('Rechte Maustaste bzw. langes Drücken auf markierte Zellen öffnet das Kontextmenü. In der Spalte No fügt + oberhalb eine Zeile ein, der Papierkorb löscht die Zeile (beides mit Rückgängig/Wiederherstellen).')}</p>
         </sl-tab-panel>

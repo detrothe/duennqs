@@ -192,11 +192,18 @@ hr {
 }
 
 .schnittgroessen td {
-    padding: 0.15rem 0.4rem;
+    padding: 0.15rem 0.25rem;
+}
+
+/* Eingabeblöcke (Schnittgrößen, Bezugswerte): nebeneinander, bei Platzmangel untereinander */
+.feldbloecke {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-start;
 }
 
 .schnittgroessen .input_tab {
-    width: 7rem;
+    width: 4.5rem;
     text-align: right;
 }
 
@@ -317,7 +324,7 @@ table.werte td.zahl,
 }
 
 .schnittgroessen td.einheit {
-    padding-right: 1.25rem;
+    padding-right: 0.75rem;
     white-space: nowrap;
 }
 
@@ -757,3 +764,13 @@ sl-color-picker::part(trigger) {
     height: 1.3rem;
 }
 
+/* schmale Smartphones hochkant: weniger Rand, damit Eingabe und Tabellen ohne Verschieben passen */
+@media (max-width: 380px) {
+    sl-tab-panel::part(base) {
+        padding: 0.5rem 0.25rem;
+    }
+
+    .schnittgroessen .input_tab {
+        width: 4rem;
+    }
+}
