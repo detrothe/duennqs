@@ -257,7 +257,7 @@ ${msg('Bearbeitet von: Melis Muster')}"></textarea>
             nzeilen="${START_ANZAHL_ELEMENTE}"
             nspalten="5"
             columns='${elementSpalten()}'
-            colwidth='["3","3.5","2.5","2.5","2","2"]'
+            colwidth='["3","4","2.5","2.5","2","2"]'
           ></dr-tabelle>
           <p class="hinweis">${msg('Rechte Maustaste bzw. langes Drücken auf markierte Zellen öffnet das Kontextmenü. In der Spalte No fügt + oberhalb eine Zeile ein, der Papierkorb löscht die Zeile (beides mit Rückgängig/Wiederherstellen).')}</p>
         </sl-tab-panel>

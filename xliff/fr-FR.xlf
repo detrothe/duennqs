@@ -504,7 +504,7 @@
 </trans-unit>
 <trans-unit id="s581b43714b756199">
   <source>σ über die Dicke</source>
-  <target>Σ sur l'épaisseur</target>
+  <target>σ sur l'épaisseur</target>
 </trans-unit>
 <trans-unit id="sa3b23dcc287a0498">
   <source>Seiten anzeigen</source>
@@ -520,7 +520,7 @@
 </trans-unit>
 <trans-unit id="s42f298cbba2e7b65">
   <source>rechts/links anzeigen</source>
-  <target>Afficher droite/gauche</target>
+  <target>Droite/gauche</target>
 </trans-unit>
 <trans-unit id="sc60893f8b1d00b8c">
   <source>Achsen anzeigen</source>
@@ -528,7 +528,7 @@
 </trans-unit>
 <trans-unit id="s4a03a64d096d0cd3">
   <source>Fangweite [px]</source>
-  <target>Rayon d'accrochage [px]</target>
+  <target>Rayon capture [px]</target>
 </trans-unit>
 <trans-unit id="s8469617a8c3f2f8d">
   <source>Bild speichern</source>

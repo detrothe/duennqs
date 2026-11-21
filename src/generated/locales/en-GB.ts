@@ -82,7 +82,7 @@
 's5747c1377ce8b0a5': `Properties and stresses of thin-walled cross sections`,
 's578e865ad974986a': `maximum equivalent stress, end of the element`,
 's581a0d6275ee0177': `maximum equivalent stress, middle of the element`,
-'s581b43714b756199': `Σ across thickness`,
+'s581b43714b756199': `σ across thickness`,
 's5917f7a203fcbf98': `Number of elements: `,
 's5a92006c27771749': `corner`,
 's5d987dc0dd03d316': `Elements`,

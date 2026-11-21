@@ -644,15 +644,20 @@ sl-color-picker::part(trigger) {
     overflow: hidden;
 }
 
-/* lil-gui: größere Schrift, Titelleiste in der Tabellenfarbe */
+/* lil-gui: kompakt, alle Maße in rem wie in d2beam-gui (Schrift 1rem), Titelleiste in der Tabellenfarbe */
 #view3d-gui .lil-gui {
-    --width: 280px;
-    --font-size: 15px;
-    --input-font-size: 15px;
-    --widget-height: 26px;
-    --title-height: 32px;
-    --checkbox-size: 18px;
-    --name-width: 55%;
+    --width: 16.5rem;
+    --font-size: 1rem;
+    --input-font-size: 1rem;
+    --widget-height: 1.6rem;
+    --title-height: 2rem;
+    --checkbox-size: 1.1rem;
+    --name-width: 60%;
+    --padding: 0.2rem;
+    --spacing: 0.2rem;
+    --slider-input-width: 30%;
+    --slider-input-min-width: 2.4rem;
+    --folder-indent: 0.4rem;
     --title-background-color: #b3ae00;
     --title-text-color: #fefffa;
 }

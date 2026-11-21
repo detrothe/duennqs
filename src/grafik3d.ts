@@ -20,9 +20,10 @@ import { app } from './state';
  * three.js: X = -(ȳ - ȳs),  Y = -(z̄ - z̄s),  Z = Wert · Überhöhung
  * Der Querschnitt liegt in der XY-Ebene, die Werte werden in Z (= Stabachse) aufgetragen.
  *
- * Dargestellt wird jeweils eine Größe: Normalspannung σ (über die Mittellinie oder über die Dicke),
- * Schubspannung τ und Vergleichsspannung σv (an der rechten und linken Seite jedes Elements),
- * Wölbordinate ω oder Verwölbung u (über die Mittellinie).
+ * Dargestellt wird jeweils eine Größe: Normalspannung σ (Fläche über der Mittellinie, wahlweise mit dem
+ * Spannungskörper über die Dicke als Rahmen), Schubspannung τ und Vergleichsspannung σv (an der rechten
+ * und linken Seite jedes Elements), Wölbordinate ω oder Verwölbung u (als verformter Querschnitt vor dem
+ * blassen unverformten).
  *
  * Werteabfrage
  * ------------
@@ -37,8 +38,6 @@ const FARBE_ZUG = 0x2020d0;       // σ > 0
 const FARBE_DRUCK = 0xd02020;     // σ < 0 (rot = Druck wie bisher)
 const FARBE_TAU = 0x009696;
 const FARBE_SIGMAV = 0x8040b0;
-const FARBE_POSITIV = 0x109050;   // ω, u
-const FARBE_NEGATIV = 0xc07010;
 const FARBE_FYRD = 0xc00000;
 const FARBE_QUERSCHNITT = 0x8a8a9a;
 const TEILUNG = 20;               // Stützstellen je Element für die Kurven
@@ -90,6 +89,7 @@ let seitenGruppe: THREE.Group | null = null;
 let pfeilGruppe: THREE.Group | null = null;
 let achsenGruppe: THREE.Group | null = null;
 let beschriftungGruppe: THREE.Group | null = null;
+let querschnittMaterialien: THREE.Material[] = [];   // Scheibe und Kanten des unverformten Querschnitts
 
 /** Punkt, an dem das Fangkreuz einrastet, mit Text für die Wertanzeige. */
 interface Fangpunkt {
@@ -273,14 +273,14 @@ function initBedienfeld(): void {
         () => a() === 'sigmaV']);
 
     g.add(optionen, 'beschriftung').name(msg('Beschriftung')).onChange(sichtbarkeit);
-    g.add(optionen, 'skalierung', 0.1, 5, 0.1).name(msg('Skalierung')).onChange(neuAufbauen);
+    g.add(optionen, 'skalierung', 0.1, 2, 0.1).name(msg('Skalierung')).onChange(neuAufbauen);
     nurBei.push([g.add(optionen, 'sigmaDicke').name(msg('σ über die Dicke')).onChange(() => {
         optionenZeigen();
         neuAufbauen();
     }), () => a() === 'sigma' || a() === 'sigmaV']);
-    // Seitenflächen gibt es bei σ nur über die Dicke (über der Mittellinie ist die Wand selbst das Diagramm)
+    // Seitenflächen gibt es nur bei τ und σv (bei σ ist die Fläche über der Mittellinie das Diagramm)
     nurBei.push([g.add(optionen, 'seiten').name(msg('Seiten anzeigen')).onChange(sichtbarkeit),
-        () => (a() === 'sigma' && optionen.sigmaDicke) || a() === 'tau' || a() === 'sigmaV']);
+        () => a() === 'tau' || a() === 'sigmaV']);
     nurBei.push([g.add(optionen, 'pfeile').name(msg('Pfeile anzeigen')).onChange(sichtbarkeit),
         () => a() === 'sigma' || a() === 'tau']);
     nurBei.push([g.add(optionen, 'skalierungPfeile', 0.2, 3, 0.1).name(msg('Skalierung Pfeile')).onChange(neuAufbauen),
@@ -384,21 +384,86 @@ function wandDreiecke(p: Punkt[], faktor: number): { pos: THREE.Vector3[]; neg: 
     return { pos, neg };
 }
 
-/** Polygon auf die Seite vorzeichen·w ≥ 0 zuschneiden (Sutherland–Hodgman an der Nulllinie). */
-function zuschneiden(poly: Punkt[], vorzeichen: 1 | -1): Punkt[] {
-    const res: Punkt[] = [];
-    for (let i = 0; i < poly.length; i++) {
-        const a = poly[i];
-        const b = poly[(i + 1) % poly.length];
-        const fa = vorzeichen * a.w;
-        const fb = vorzeichen * b.w;
-        if (fa >= 0) res.push(a);
-        if ((fa > 0 && fb < 0) || (fa < 0 && fb > 0)) {
-            const t = fa / (fa - fb);
-            res.push({ y: a.y + t * (b.y - a.y), z: a.z + t * (b.z - a.z), w: 0 });
+/** Wertekurve über einem Linienzug, an der Nulllinie geteilt und je nach Vorzeichen eingefärbt. */
+function farbKurve(p: Punkt[], faktor: number, farbePos: number, farbeNeg: number): THREE.Group {
+    const pos: THREE.Vector3[] = [], neg: THREE.Vector3[] = [];
+    const ziel = (w: number) => (w >= 0 ? pos : neg);
+    for (let i = 0; i + 1 < p.length; i++) {
+        const a = p[i], b = p[i + 1];
+        const a1 = toV(a.y, a.z, a.w * faktor), b1 = toV(b.y, b.z, b.w * faktor);
+        if (a.w * b.w >= 0) {
+            ziel(a.w + b.w).push(a1, b1);
+        } else {
+            const t = a.w / (a.w - b.w);
+            const c = toV(a.y + t * (b.y - a.y), a.z + t * (b.z - a.z));
+            ziel(a.w).push(a1, c);
+            ziel(b.w).push(c, b1);
         }
     }
-    return res;
+    const g = new THREE.Group();
+    for (const [punkte, farbe] of [[pos, farbePos], [neg, farbeNeg]] as const) {
+        if (punkte.length > 0) {
+            g.add(new THREE.LineSegments(new THREE.BufferGeometry().setFromPoints(punkte),
+                new THREE.LineBasicMaterial({ color: farbe })));
+        }
+    }
+    return g;
+}
+
+/**
+ * Rahmen des Spannungskörpers über die Dicke (wie in der früheren Version): Umriss der Eckwerte
+ * über der Elementfläche und senkrechte Kanten an den vier Ecken, nur als dünne Linien.
+ */
+function sigmaRahmen(i: number, faktor: number): THREE.LineSegments {
+    const el = truss[i];
+    const oben = el.pts_y.map((y, j) => toV(y, el.pts_z[j], el.sigma_xe[j] * faktor));
+    const punkte: THREE.Vector3[] = [];
+    for (let j = 0; j < 4; j++) {
+        punkte.push(oben[j], oben[(j + 1) % 4]);               // Umriss oben
+        punkte.push(toV(el.pts_y[j], el.pts_z[j]), oben[j]);   // senkrechte Kante
+    }
+    return new THREE.LineSegments(new THREE.BufferGeometry().setFromPoints(punkte),
+        new THREE.LineBasicMaterial({ color: 0x555555 }));
+}
+
+/**
+ * Verformter Querschnitt eines Elements: die Scheibe des Querschnitts, in Stabrichtung um w · faktor
+ * verschoben. w ist über der Mittellinie gegeben (kurve[j] bei t = j/TEILUNG) und gilt über die ganze Dicke.
+ */
+function verformteScheibe(i: number, kurve: Punkt[], faktor: number, material: THREE.Material,
+    kanten: THREE.LineBasicMaterial): THREE.Group {
+    const d = scheibenDicke();
+    const R: THREE.Vector3[] = [], L: THREE.Vector3[] = [], Rh: THREE.Vector3[] = [], Lh: THREE.Vector3[] = [];
+    kurve.forEach((p, j) => {
+        const h = p.w * faktor, t = j / TEILUNG;
+        const r = seitenPunkt(i, 'R', t), l = seitenPunkt(i, 'L', t);
+        R.push(toV(r.y, r.z, h));
+        L.push(toV(l.y, l.z, h));
+        Rh.push(toV(r.y, r.z, h - d));
+        Lh.push(toV(l.y, l.z, h - d));
+    });
+    const dreiecke: THREE.Vector3[] = [];
+    const viereck = (a: THREE.Vector3, b: THREE.Vector3, c: THREE.Vector3, e: THREE.Vector3) => dreiecke.push(a, b, c, a, c, e);
+    for (let j = 0; j < TEILUNG; j++) {
+        viereck(R[j], R[j + 1], L[j + 1], L[j]);         // Vorderseite
+        viereck(Rh[j], Lh[j], Lh[j + 1], Rh[j + 1]);     // Rückseite
+        viereck(R[j], Rh[j], Rh[j + 1], R[j + 1]);       // rechte Seite
+        viereck(L[j], L[j + 1], Lh[j + 1], Lh[j]);       // linke Seite
+    }
+    viereck(R[0], L[0], Lh[0], Rh[0]);                   // Stirnflächen
+    const n = TEILUNG;
+    viereck(R[n], Rh[n], Lh[n], L[n]);
+
+    const g = new THREE.Group();
+    g.add(new THREE.Mesh(new THREE.BufferGeometry().setFromPoints(dreiecke), material));
+    // Kanten: Umriss vorn und hinten, Ecken an den Stirnflächen
+    const linien: THREE.Vector3[] = [];
+    for (const kante of [R, L, Rh, Lh]) {
+        for (let j = 0; j < n; j++) linien.push(kante[j], kante[j + 1]);
+    }
+    for (const j of [0, n]) linien.push(R[j], L[j], Rh[j], Lh[j], R[j], Rh[j], L[j], Lh[j]);
+    g.add(new THREE.LineSegments(new THREE.BufferGeometry().setFromPoints(linien), kanten));
+    return g;
 }
 
 /** Räumlicher Pfeil (Zylinderschaft + Kegelspitze) vom Ursprung in Richtung dir. */
@@ -406,7 +471,7 @@ function raumPfeil(dir: THREE.Vector3, l: number, farbe: number): THREE.Group {
     const spitzeL = l * 0.25;
     const schaftL = l - spitzeL;
     const material = new THREE.MeshStandardMaterial({ color: farbe });
-    const schaft = new THREE.Mesh(new THREE.CylinderGeometry(l * 0.025, l * 0.025, schaftL, KREISTEILUNG), material);
+    const schaft = new THREE.Mesh(new THREE.CylinderGeometry(l * 0.015, l * 0.015, schaftL, KREISTEILUNG), material);
     schaft.position.y = schaftL / 2;
     const spitze = new THREE.Mesh(new THREE.ConeGeometry(l * 0.08, spitzeL, KREISTEILUNG), material);
     spitze.position.y = schaftL + spitzeL / 2;
@@ -491,11 +556,15 @@ function sigmaSeite(i: number, seite: Seite, t: number): number {
 //----------------------------------------------------------------------------------------------------------------------
 // Modell aufbauen
 
+/** Dicke der Querschnittsscheibe in Stabrichtung (nur Darstellung). */
+const scheibenDicke = () => groesse * 0.01;
+
 function baueQuerschnitt(): THREE.Group {
     const g = new THREE.Group();
-    const dicke = groesse * 0.01;
+    const dicke = scheibenDicke();
     const material = new THREE.MeshStandardMaterial({ color: FARBE_QUERSCHNITT });
     const kanten = new THREE.LineBasicMaterial({ color: 0x555566 });
+    querschnittMaterialien = [material, kanten];
     for (const el of truss) {
         const shape = new THREE.Shape(el.pts_y.map((y, j) => {
             const v = toV(y, el.pts_z[j]);
@@ -519,7 +588,7 @@ function baueQuerschnitt(): THREE.Group {
 
 function baueAchsen(): THREE.Group {
     const g = new THREE.Group();
-    const l = groesse * 0.2;
+    const l = groesse * 0.1;
     const achsen: [THREE.Vector3, number, string][] = [
         [new THREE.Vector3(0, 0, 1), 0xdd2222, 'x'],
         [new THREE.Vector3(-1, 0, 0), 0x22aa44, 'y'],
@@ -625,7 +694,7 @@ function baueDiagramm(): void {
     });
 
     const anzeige = optionen.anzeige;
-    const hoehe = (maxAbs: number) => maxAbs > 1e-12 ? groesse * 0.25 / maxAbs * optionen.skalierung : 0;
+    const hoehe = (maxAbs: number) => maxAbs > 1e-12 ? groesse * 0.175 / maxAbs * optionen.skalierung : 0;
 
     if (anzeige === 'keine') {
         node.forEach((k, i) => beschrifte(String(i + 1), toV(k.y, k.z)));
@@ -644,30 +713,28 @@ function baueDiagramm(): void {
 
         truss.forEach((el, i) => {
             const titel = `${msg('Element')} ${i + 1}`;
+            // Fläche über der Mittellinie (wie in der früheren Version), Kante oben rot/blau
+            const punkte: Punkt[] = [];
+            for (let k = 0; k <= TEILUNG; k++) {
+                const t = k / TEILUNG, m = mittelPunkt(i, t);
+                punkte.push({ ...m, w: el.sigma_x[0] + t * (el.sigma_x[2] - el.sigma_x[0]) });
+            }
+            const { pos, neg } = wandDreiecke(punkte, f);
+            diagramm!.add(flaeche(pos, FARBE_ZUG, 0.45), flaeche(neg, FARBE_DRUCK, 0.45));
+            diagramm!.add(farbKurve(punkte, f, FARBE_ZUG, FARBE_DRUCK));
+            punkte.forEach(p => fangpunkte.push({
+                pos: toV(p.y, p.z, p.w * f),
+                html: `<b>σ = ${spannung(p.w)}</b> ${current_unit_stress}<br>${titel}<br>${koordinaten(p.y, p.z)}`,
+            }));
+
             if (optionen.sigmaDicke) {
-                // Spannungskörper über der Elementfläche (Eckwerte, linear)
-                const poly: Punkt[] = el.pts_y.map((y, j) => ({ y, z: el.pts_z[j], w: el.sigma_xe[j] }));
-                for (const vz of [1, -1] as const) {
-                    const teil = zuschneiden(poly, vz);
-                    if (teil.length < 3 || !teil.some(p => vz * p.w > 1e-12 * maxAbs)) continue;
-                    const top = teil.map(p => toV(p.y, p.z, p.w * f));
-                    const deck: THREE.Vector3[] = [];
-                    for (let k = 1; k + 1 < top.length; k++) deck.push(top[0], top[k], top[k + 1]);
-                    diagramm!.add(flaeche(deck, farbe(vz), 0.45));
-                    diagramm!.add(linie(top, farbe(vz), true));
-                    const seiten: THREE.Vector3[] = [];
-                    for (let k = 0; k < teil.length; k++) {
-                        const a = teil[k], b = teil[(k + 1) % teil.length];
-                        seiten.push(toV(a.y, a.z), toV(b.y, b.z), top[(k + 1) % teil.length],
-                            toV(a.y, a.z), top[(k + 1) % teil.length], top[k]);
-                    }
-                    seitenGruppe!.add(flaeche(seiten, farbe(vz), 0.2));
-                }
-                poly.forEach((p, j) => {
-                    const pos = toV(p.y, p.z, p.w * f);
-                    beschrifte(spannung(p.w), pos);
+                // zusätzlich der Spannungskörper über die Dicke als dünner Rahmen (Eckwerte, linear)
+                diagramm!.add(sigmaRahmen(i, f));
+                el.pts_y.forEach((y, j) => {
+                    const z = el.pts_z[j], w = el.sigma_xe[j], pos = toV(y, z, w * f);
+                    beschrifte(spannung(w), pos);
                     fangpunkte.push({
-                        pos, html: `<b>σ = ${spannung(p.w)}</b> ${current_unit_stress}<br>${titel}, ${msg('Ecke')} ${j + 1}<br>${koordinaten(p.y, p.z)}`,
+                        pos, html: `<b>σ = ${spannung(w)}</b> ${current_unit_stress}<br>${titel}, ${msg('Ecke')} ${j + 1}<br>${koordinaten(y, z)}`,
                     });
                 });
                 for (const seite of ['R', 'L'] as const) {
@@ -680,20 +747,7 @@ function baueDiagramm(): void {
                     }
                 }
             } else {
-                // Spannungen über der Mittellinie
-                const punkte: Punkt[] = [];
-                for (let k = 0; k <= TEILUNG; k++) {
-                    const t = k / TEILUNG, m = mittelPunkt(i, t);
-                    punkte.push({ ...m, w: el.sigma_x[0] + t * (el.sigma_x[2] - el.sigma_x[0]) });
-                }
-                const { pos, neg } = wandDreiecke(punkte, f);
-                diagramm!.add(flaeche(pos, FARBE_ZUG, 0.45), flaeche(neg, FARBE_DRUCK, 0.45));
-                diagramm!.add(linie(punkte.map(p => toV(p.y, p.z, p.w * f)), 0x333333));
                 for (const p of [punkte[0], punkte[TEILUNG]]) beschrifte(spannung(p.w), toV(p.y, p.z, p.w * f));
-                punkte.forEach(p => fangpunkte.push({
-                    pos: toV(p.y, p.z, p.w * f),
-                    html: `<b>σ = ${spannung(p.w)}</b> ${current_unit_stress}<br>${titel}<br>${koordinaten(p.y, p.z)}`,
-                }));
             }
             for (const t of [0, 0.25, 0.5, 0.75, 1]) {
                 const m = mittelPunkt(i, t);
@@ -819,11 +873,13 @@ function baueDiagramm(): void {
         // mindestens 2 Nachkommastellen, bei kleinen Werten (Verwölbung) 3 gültige Ziffern
         const stellen = maxAbs > 0 ? Math.min(8, Math.max(2, 2 - Math.floor(Math.log10(maxAbs * lf)))) : 2;
         const text = (w: number) => zahl(w * lf, stellen);
+        // ω und u beschreiben die Verformung des Querschnitts in Stabrichtung: verformter Querschnitt als
+        // Scheibe, der unverformte bleibt blass im Hintergrund
+        const scheibe = new THREE.MeshStandardMaterial({ color: FARBE_QUERSCHNITT, side: THREE.DoubleSide });
+        const kanten = new THREE.LineBasicMaterial({ color: 0x555566 });
         kurven.forEach((kurve, i) => {
-            const { pos, neg } = wandDreiecke(kurve, f);
-            diagramm!.add(flaeche(pos, FARBE_POSITIV, 0.45), flaeche(neg, FARBE_NEGATIV, 0.45));
+            diagramm!.add(verformteScheibe(i, kurve, f, scheibe, kanten));
             const top = (p: Punkt) => toV(p.y, p.z, p.w * f);
-            diagramm!.add(linie(kurve.map(top), 0x333333));
             kurve.forEach(p => fangpunkte.push({
                 pos: top(p),
                 html: `<b>${name} = ${text(p.w)}</b> ${einheitWert}<br>${msg('Element')} ${i + 1}<br>${koordinaten(p.y, p.z)}`,
@@ -836,6 +892,15 @@ function baueDiagramm(): void {
             }
         });
         minmax = `min/max ${name} : ${text(Math.min(...alle))} / ${text(Math.max(...alle))}`;
+    }
+
+    // bei ω und u den unverformten Querschnitt blass im Hintergrund
+    const blass = anzeige === 'omega' || anzeige === 'u';
+    for (const m of querschnittMaterialien) {
+        m.transparent = blass;
+        m.opacity = blass ? 0.2 : 1;
+        m.depthWrite = !blass;
+        m.needsUpdate = true;
     }
 
     if (optionen.seitenLR) diagramm.add(baueSeitenLR());
