@@ -12,7 +12,6 @@ import { initTabellen, setzeBeispiel, leereEingabe, spaltenAktualisieren } from 
 import { initEinstellungen } from './einstellungen';
 import { initDateien, verwerfenBestaetigt, setzeDateiname, gespeichertenStandInitialisieren } from './dateien';
 import { zeichneQuerschnitt } from './grafik';
-import { my_jspdf } from './mypdf';
 import { alertdialog } from './components/confirm_dialog';
 import { setLocale, startSprache } from './localization';
 import { initAutosave } from './autosave';
@@ -79,7 +78,8 @@ async function start(): Promise<void> {
     byId('rechnen').addEventListener('click', () => duennQ());
     byId('neueEingabe').addEventListener('click', () => void neueEingabe());
     byId('id_pdf').addEventListener('click', () => {
-        if (app.gerechnet) void my_jspdf();
+        // PDF-Ausgabe (jspdf, Schriften ca. 1,5 MB) erst bei Bedarf nachladen, wie die 3D-Ansicht
+        if (app.gerechnet) void import('./mypdf').then(m => m.my_jspdf());
         else void alertdialog('ok', msg('Es liegt keine fehlerfreie Berechnung vor.'));
     });
 
