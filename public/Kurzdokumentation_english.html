@@ -1,0 +1,484 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<title>duennQs – Section properties and stresses of thin-walled cross sections</title>
+		<meta name="author" content="Prof. Dr.-Ing. Detlef Rothe">
+		<style>
+		body {
+			font-size: 1em;
+			font-family: "FreeSans", sans-serif;
+			line-height: 150%;
+		}
+
+		p {
+			margin-bottom: 0.6em;
+		}
+
+		h1,
+		h2 {
+			color: #1c1c6a;
+			line-height: 115%;
+			font-weight: bold;
+			margin-bottom: 0;
+		}
+
+		h1 {
+			font-size: 1.2em;
+			margin-top: 2em;
+		}
+
+		h2 {
+			font-size: 1.125em;
+			margin-top: 0.83em;
+		}
+
+		a {
+			color: #1c1c6a;
+			text-decoration: none;
+		}
+
+		/* Pfeil nur vor den Links im Inhaltsverzeichnis; die Überschriften
+		   (href="#", Sprung nach oben) bekommen keinen */
+		a[href^="#"]:not([href="#"])::before {
+			content: '➡ ';
+		}
+
+		/* Abbildungen, zentriert; Breite über das width-Attribut */
+		img.bild {
+			display: block;
+			margin: auto;
+			max-width: 100%;
+			height: auto;
+		}
+
+		.bildtext {
+			text-align: center;
+			font-size: 0.9em;
+		}
+
+		li {
+			margin-bottom: 0.3em;
+		}
+	</style>
+	</head>
+	<body>
+		<h1>Contents</h1>
+		<p>
+			<a href="#uebersicht">Overview</a>
+			<br>
+			<a href="#vorzeichen">Coordinate system and sign convention</a>
+			<br>
+			<a href="#beispiel">Example</a>
+			<br>
+			<a href="#hinweiseApp">Notes on using the app</a>
+			<br>
+			<a href="#tabellen">Tables and context menu</a>
+			<br>
+			<a href="#dateien">Files, PDF and automatic backup</a>
+			<br>
+			<a href="#darstellung_2D">2D view (System tab)</a>
+			<br>
+			<a href="#darstellung_3D">3D views</a>
+			<br>
+			<a href="#bezeichnungen">Notation</a>
+			<br>
+			<a href="#voreinstellungen">Settings</a>
+			<br>
+			<a href="#installation">Installing the app on the desktop</a>
+			<br>
+			<a href="#kompatibilitaet">Compatibility</a>
+			<br>
+			<a href="#tastatur">Help: my keyboard has no minus key, virtual keyboard</a>
+			<br>
+			<a href="#kontakt">Contact and error reports</a>
+		</p>
+
+		<h1 id="uebersicht">
+			<a href="#">Overview</a>
+		</h1>
+		<p>
+			With this web application you can calculate the cross-section properties and stresses of
+			thin-walled cross sections. The centre-line model (wire model) is used and solved with the
+			finite element method [1], [2]. Similar to a frame or truss, the cross section is described by
+			straight elements connected at nodes. Every element must be connected to at least one other
+			element, so there must be no elements standing “alone” in the cross section. From every
+			element there has to be a path to all other elements.
+		</p>
+		<p>
+			You enter the node coordinates in an auxiliary ȳ-z̄ coordinate system whose origin can be
+			chosen freely.
+			Each element has a start node and an end node and represents quadratic shear stress
+			distributions exactly, so no mesh refinement is needed.
+			If you look along the element from its start to its end, the right side of the element is on
+			your right-hand side.
+		</p>
+		<p>
+			As the elements can have different material properties, reference values for Young's modulus
+			and Poisson's ratio have to be given. The calculated section properties are ideal (transformed)
+			values related to these reference values. If you use them for a member in a frame analysis
+			program, enter the same reference values there as material data.
+		</p>
+		<p>
+			The normal stresses due to N, M<sub>y</sub> and M<sub>z</sub> are calculated with the usual
+			formulas of mechanics, assuming that plane sections remain plane (Bernoulli), and the normal
+			stresses due to M<sub>ω</sub> via the warping ordinate.
+			Shear stresses are positive when they act in the direction of the local coordinate system of
+			the element. The positive local direction points from the start node to the end node.
+		</p>
+		<p>Features of the program:</p>
+		<ul>
+			<li>The cross section can be unsymmetrical, open and/or closed.</li>
+			<li>Linear elastic material.</li>
+			<li>The thickness is constant within each element.</li>
+			<li>Each element can have its own material properties.</li>
+			<li>Calculation of all section properties including shear centre, torsion constant and
+				warping constant.</li>
+			<li>
+				Stresses due to normal force N, shear forces V<sub>y</sub> and V<sub>z</sub>, bending
+				moments M<sub>y</sub> and M<sub>z</sub>, primary and secondary torsion M<sub>xp</sub> and
+				M<sub>xs</sub> as well as the warping bimoment M<sub>ω</sub>.
+			</li>
+		</ul>
+
+		<h2 id="vorzeichen">
+			<a href="#">Coordinate system and sign convention</a>
+		</h2>
+		<p>
+			<img src="Vorzeichen_Querschnitt.png" alt="Sign convention of the internal forces" class="bild" width="480">
+		</p>
+		<p class="bildtext">Sign convention of the internal forces</p>
+		<p>
+			<img src="vorzeichen.png" alt="Sign convention of an element" class="bild" width="351">
+		</p>
+		<p class="bildtext">Sign convention of an element</p>
+
+		<h1 id="beispiel">
+			<a href="#">Example</a>
+		</h1>
+		<h2>Single-cell box section</h2>
+		<p>
+			This example is treated in [2]. The cross-section data are loaded automatically when the app
+			is started for the first time, with the internal forces V<sub>z</sub> = 500 kN and
+			M<sub>y</sub> = 600 kNm.
+		</p>
+		<p>
+			<img src="beispiel_querschnitt.png" alt="Example box section" class="bild" width="401">
+		</p>
+		<p>In [2] the cross section is also analysed for the following internal forces:</p>
+		<p>
+			M<sub>xp</sub> = 250 kNm; M<sub>xs</sub> = 150 kNm; M<sub>ω</sub> = 10 kNm²
+			<br>
+			V<sub>y</sub> = 1000 kN; V<sub>z</sub> = 500 kN
+		</p>
+		<p>Material: E = 21,000 kN/cm²; ν = 0.3</p>
+
+		<h1 id="hinweiseApp">
+			<a href="#">Notes on using the app</a>
+		</h1>
+		<p>
+			The app has the tabs <i>Input</i>, <i>Results</i>, <i>System</i>, <i>3D</i>, <i>Info</i> and
+			ꔷꔷꔷ (settings). If you move the mouse over a button or press it with your finger for a while,
+			a short help text appears.
+		</p>
+		<h2>Input</h2>
+		<p>
+			Both comma and point are allowed as decimal separator, a thousands separator is not.
+		</p>
+		<p>
+			The text in the <i>free text</i> field is included in the PDF output, for example for the task
+			and your name. Simple HTML formatting such as &lt;b&gt;bold&lt;/b&gt; is possible.
+		</p>
+		<p>
+			If <i>all elements have the same material data</i> is ticked, the reference values apply to all
+			elements and the columns E and ν of the element table are hidden.
+			f<sub>y,Rd</sub> is used to mark exceeded equivalent stresses in red in the <i>Results</i> tab,
+			and in 3D it can be shown together with the equivalent stress.
+		</p>
+		<p>
+			<i>Calculate</i> starts the calculation, after which the app switches to the <i>Results</i>
+			tab. If the <i>Calculate</i> button is highlighted in colour, the input has changed since the
+			last calculation.
+		</p>
+
+		<h2 id="tabellen">
+			<a href="#">Tables and context menu</a>
+		</h2>
+		<p>
+			You change the number of rows of the node and element tables with − and + next to
+			<i>Number of nodes</i> and <i>Number of elements</i>, or by typing the number. Rows are added or
+			removed at the end of the table.
+		</p>
+		<p>
+			In the element table, + in the No column inserts a row above, the bin deletes the row. Both can
+			be undone and redone. The node table deliberately does not offer this: nod1 and nod2 of the
+			elements refer to the node numbers, which would otherwise shift unnoticed. This also keeps the
+			numbers in line with your sketch on paper.
+		</p>
+		<p>
+			To speed up the input, you can copy and generate values in the tables. Select a block by
+			dragging across the cells while holding the <b>right</b> mouse button. When you release it, the
+			context menu appears.
+			<br>
+			<b>Touch screens:</b> First switch on <i>Allow selecting cells with a finger</i> in the ꔷꔷꔷ
+			tab. Then select the cells by swiping across them with your finger or pen. When you lift it,
+			the context menu appears.
+		</p>
+		<p>
+			<img src="kontextmenue_en.png" alt="Context menu" class="bild" width="300">
+		</p>
+		<p class="bildtext">Context menu</p>
+		<ul>
+			<li><b>copy value of first cell:</b> The value of the first selected cell is copied into the
+				other selected cells.</li>
+			<li><b>copy values of first row:</b> Select at least two rows. The values of the top row are
+				copied downwards column by column.</li>
+			<li><b>increment by 1:</b> Select at least two rows. Starting from the top row, the values are
+				increased by 1 column by column.</li>
+			<li><b>increment by delta:</b> Select at least three rows. The difference between the two top
+				rows gives a delta for each column, by which the rows below are incremented further.</li>
+			<li><b>copy to clipboard:</b> The content of the selected cells is copied to the clipboard,
+				for example for another place in the table or for a spreadsheet.</li>
+			<li><b>insert from clipboard:</b> The content of the clipboard is inserted starting at the top
+				left cell of the selected area.</li>
+			<li><b>close:</b> The context menu is closed without any further action.</li>
+		</ul>
+		<p>
+			Note: a Bluetooth mouse and/or keyboard can also be connected to tablets and smartphones.
+		</p>
+
+		<h2 id="dateien">
+			<a href="#">Files, PDF and automatic backup</a>
+		</h2>
+		<p>
+			With the buttons above the input you start a new input, read a saved input or save the current
+			input. Input files have the extension <i>.duennqs</i> (on Android <i>.duennqs.json</i>); older
+			<i>.txt</i> files can still be read. You can also simply drag a file into the app window with
+			the mouse. If there are changes that have not been saved yet, the app asks before starting a
+			new input or opening another file.
+		</p>
+		<p>
+			In the <i>Results</i> tab, the PDF button saves the results as a PDF file, including the input
+			and the cross-section drawing.
+		</p>
+		<p>
+			The current input is backed up automatically in the browser, for example when the app goes
+			into the background or is closed, and is restored at the next start. This does not replace
+			saving to a file.
+		</p>
+		<p>
+			When a new version of the app is available, you are asked whether it should be reloaded. The
+			current input is kept.
+		</p>
+
+		<h2 id="darstellung_2D">
+			<a href="#">2D view (System tab)</a>
+		</h2>
+		<p>
+			The <i>System</i> tab shows the cross section in the ȳ-z̄ plane with centroid, principal axes
+			and shear centre. The crosshair shows the coordinates and snaps to nodes, centroid and shear
+			centre; at nodes it also shows the warping ordinate ω.
+			<i>Numbers</i> shows or hides the node and element numbers, <i>SVG</i> saves the drawing as an
+			SVG file.
+		</p>
+
+		<h2 id="darstellung_3D">
+			<a href="#">3D views</a>
+		</h2>
+		<p>
+			The <i>3D</i> tab shows the results in space. Values are plotted in the direction of the member
+			axis x. With the mouse you rotate (left button), pan (right button) and zoom (wheel) the view;
+			with two fingers you rotate and zoom. With one finger you either query values or pan the view;
+			the button at the bottom left switches between the two. The crosshair snaps to the points of the
+			displayed quantity and shows the value.
+		</p>
+		<p>
+			The settings are in the <i>Control panel</i>. It only shows the options that fit the selected
+			display.
+		</p>
+		<p>
+			<img src="bedienfeld_en.png" alt="Control panel of the 3D view" class="bild" width="264">
+		</p>
+		<p class="bildtext">Control panel</p>
+		<ul>
+			<li><b>Display:</b>
+				<ul>
+					<li><i>Cross section only</i> with node and element numbers.</li>
+					<li><i>Normal stress σ</i>: area over the centre line, compression red and tension
+						blue.</li>
+					<li><i>Shear stress τ</i> on the right and left side of each element.</li>
+					<li><i>Equivalent stress σv</i> according to von Mises:
+						σ<sub>v</sub> = √(σ² + 3·τ²).</li>
+					<li><i>Warping ordinate ω</i> and <i>Warping displacement u</i>: both describe a deformation of the
+						cross section in the direction of the member axis. The deformed cross section is
+						drawn in front of the faded undeformed one. The warping u due to the shear stresses
+						is calculated as in the FEM and shown relative to its mean value over the
+						cross-section area. The reference point has no influence on the stresses, as only the
+						derivatives of u are needed [1], [2].</li>
+				</ul>
+			</li>
+			<li><b>Show fyRd:</b> for the equivalent stress, f<sub>y,Rd</sub> is drawn as a plane above the
+				cross section. The maximum equivalent stress and the utilisation are shown at the bottom
+				right.</li>
+			<li><b>Labels:</b> values at the element ends and extreme values.</li>
+			<li><b>Scaling:</b> exaggeration of the displayed quantity.</li>
+			<li><b>σ across thickness:</b> for the normal stress, the stress body across the element
+				thickness is also drawn as a frame. For the equivalent stress, σ is then taken at the
+				faces of the elements instead of on the centre line.</li>
+			<li><b>Show sides:</b> side faces for shear and equivalent stress.</li>
+			<li><b>Show arrows</b> and <b>Scale arrows:</b> direction arrows of the normal and shear
+				stresses.</li>
+			<li><b>Show right/left:</b> marks the right and left side of the elements and shows the
+				direction from start node to end node with an arrow.</li>
+			<li><b>Show axes:</b> coordinate axes at the centroid.</li>
+			<li><b>Snap radius [px]:</b> distance within which the crosshair snaps.</li>
+			<li><b>Save image:</b> saves the view as a PNG file in a selectable resolution, optionally
+				with a white background.</li>
+			<li><b>Reset:</b> resets scaling, viewing direction and zoom.</li>
+		</ul>
+
+		<h2 id="bezeichnungen">
+			<a href="#">Notation</a>
+		</h2>
+		<p>
+			Node incidences of the elements:
+			<br>
+			nod1 = node number at the start of the element
+			<br>
+			nod2 = node number at the end of the element
+		</p>
+		<p>
+			A<sub>geom</sub> = geometric cross-section area, without taking the material data into
+			account.
+		</p>
+		<p>
+			Shear stresses due to primary torsion M<sub>xp</sub>:
+			<br>
+			τ<sub>xs0,L</sub> = shear stress from the open-section part, left side, linear across the
+			element thickness
+			<br>
+			τ<sub>xs0,R</sub> = shear stress from the open-section part, right side
+			<br>
+			τ<sub>xs1</sub> = shear stress from the closed-section part, constant across the element
+			thickness
+		</p>
+		<p>
+			Shear stresses due to shear force and secondary torsion M<sub>xs</sub>:
+			<br>
+			τ<sub>xsa</sub> = shear stress at the start of the element a
+			<br>
+			τ<sub>xsm</sub> = shear stress at the middle of the element m
+			<br>
+			τ<sub>xse</sub> = shear stress at the end of the element e, all constant across the element
+			thickness
+		</p>
+		<p>All other notation analogously.</p>
+
+		<h2 id="voreinstellungen">
+			<a href="#">Settings</a>
+		</h2>
+		<p>
+			In the ꔷꔷꔷ tab you set the language, the length unit, the font size, the selection of cells
+			with a finger as well as the colours of the tables and the accent colour.
+			The stress unit follows the length unit: mm → N/mm²; cm → kN/cm²; m → MN/m². Existing input
+			values are converted, after which you need to calculate again. The large font sizes are meant
+			for projection with a beamer.
+		</p>
+		<p>
+			You can save the settings as defaults in the local storage of the browser; they are then
+			available again after a restart. The button below deletes the defaults again.
+			<br>
+			The local storage is not a cookie. This web application performs all calculations locally in
+			the browser in JavaScript. No data is exchanged with a web server, so no network connection is
+			needed after the app has started.
+		</p>
+
+		<h2 id="installation">
+			<a href="#">Installing the app on the desktop</a>
+		</h2>
+		<p>
+			This application is programmed as a web application (web app), so you can install it on the
+			desktop under all operating systems. An icon is created, and the app behaves like an app
+			installed from a store. duennQs still runs in the browser, but without controls such as the
+			address bar. The installation differs depending on operating system, version and browser.
+		</p>
+		<p>
+			On Android, once duennQs has been opened in the Chrome browser, choose <i>Install app</i> from
+			the application menu <i>(three-dot menu)</i> at the top right and confirm the dialog. A new icon
+			named duennQs then appears on the desktop.
+		</p>
+		<p>
+			On iOS, use the Safari browser. Here the command is called <i>Add to Home Screen</i> (share
+			symbol, then the symbol with the plus).
+		</p>
+		<p>
+			On Microsoft Windows the procedure is similar to Android. In the Edge browser, the application
+			menu <i>(three-dot menu)</i> contains the following section:
+		</p>
+		<p>
+			<img src="app-install-windows.png" alt="Installation on Windows" class="bild" width="423">
+		</p>
+		<p>
+			Newer versions of Chrome may ask you directly whether you want to install the app, see the
+			symbol on the right of the address bar:
+		</p>
+		<p>
+			<img src="chrome_install.png" alt="Installation with Chrome" class="bild" width="436">
+		</p>
+		<p>On macOS, use Microsoft Edge or Google Chrome for the installation.</p>
+		<p>
+			Firefox does not support the installation at present. On Windows and Linux you can switch to
+			full-screen mode with the F11 key instead.
+		</p>
+		<p>
+			On Android, iOS and Linux you uninstall the app by deleting the icon on the desktop. On Windows
+			the app is uninstalled like a normal program.
+		</p>
+
+		<h2 id="kompatibilitaet">
+			<a href="#">Compatibility</a>
+		</h2>
+		<p>
+			Tested on Windows 10↑, macOS Catalina 10.15.7↑, Ubuntu 22.04↑, Android 9–16 and iOS 15.7.3↑,
+			each with the current version of Chrome, Chromium, Edge, Safari and Firefox. Only the current
+			browser versions are tested and supported.
+		</p>
+
+		<h2 id="tastatur">
+			<a href="#">Virtual keyboard</a>
+		</h2>
+		<p>
+			On some Android devices, especially from Samsung, the numeric keyboard has no minus key.
+			Unfortunately the HTML specification leaves this to the device manufacturer. In this case an
+			additional virtual keyboard is recommended, for example the Google keyboard Gboard from the Play
+			Store. After installing it, you still have to activate the keyboard, ideally right away in the
+			Play Store. Later you can switch between the installed keyboards at any time (symbol at the
+			bottom right of the keyboard).
+		</p>
+
+		<h2 id="kontakt">
+			<a href="#">Contact and error reports</a>
+		</h2>
+		<p>
+			For suggestions, requests and error reports, please use the e-mail address
+			statikverstehen&#x40;web.de.
+			For error reports, a copy of the input file as an attachment is usually helpful.
+		</p>
+
+		<h1>
+			<a href="#">References</a>
+		</h1>
+		<p>
+			[1] Matthias Kraus:
+			Computerorientierte Berechnungsmethoden für beliebige Stabquerschnitte des Stahlbaus,
+			doctoral thesis, Bochum 2005
+		</p>
+		<p>
+			[2] Matthias Kraus; Rolf Kindmann:
+			Finite-Elemente-Methoden im Stahlbau, 2nd edition, Ernst W. &amp; Sohn Verlag, 2019
+			<br>English edition: Rolf Kindmann; Matthias Kraus:
+			Steel Structures: Design using FEM, Ernst W. &amp; Sohn Verlag, 2011
+		</p>
+	</body>
+</html>

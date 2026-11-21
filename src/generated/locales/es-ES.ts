@@ -43,7 +43,6 @@
 's2202f9c5118ff020': `tensión tangencial al final del elemento, nudo 2, lado izquierdo`,
 's242244c7d728763b': `Propiedades ideales de la sección`,
 's255fc944b18ba548': `copiar el valor de la primera celda`,
-'s2a26513593107f4d': `docu_en.html`,
 's2a527d2aa4924cec': `Hay cambios que aún no se han guardado.`,
 's2ad271c4bf69a58d': `Permitir la selección de celdas con el dedo`,
 's2b41d1fba90e38cb': `Rótulos`,

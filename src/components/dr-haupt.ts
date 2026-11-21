@@ -65,6 +65,15 @@ const SCHRIFTGROESSEN: [string, string][] = [
     ['1.5rem', '24'],
 ];
 
+/** Kurzdokumentation im Tab Info je Sprache (Dateien in public/, wie d2beam-gui) */
+const DOKUMENTATION: Record<string, string> = {
+    'de': 'Kurzdokumentation_deutsch.html',
+    'en-GB': 'Kurzdokumentation_english.html',
+    'es-ES': 'Kurzdokumentation_spanish.html',
+    'fr-FR': 'Kurzdokumentation_french.html',
+    'it-IT': 'Kurzdokumentation_italian.html',
+};
+
 const FARBEN = '#cfd915;#b3ae00;#ffffff;#f5f5f5;#d8d8d8;#828282;#404040;#000000;#0284c7;#2e7d32;#c62828;#ef6c00';
 
 @customElement('dr-haupt')
@@ -321,15 +330,18 @@ ${msg('Bearbeitet von: Melis Muster')}"></textarea>
 
         <!------------------------------------------------------------------------------------ Info -->
         <sl-tab-panel name="info">
-          <iframe id="id_doc" src="${msg('Kurzdokumentation zu Duenne Querschnitte.html')}"></iframe>
-          <h4>${msg('Gerät')}</h4>
-          <p id="infoBox"></p>
-          <p class="footer">
-            Version ${__APP_VERSION__} &middot; ${__BUILD_DATE__} &middot;
-            ${getLocale() === 'de'
-                ? html`<a href="https://statikverstehen.de">&#169; statikverstehen.de</a>`
-                : html`<a href="https://fea-apps.de">&#169; FEA-apps.de</a>`}
-          </p>
+          <!-- zentriert wie in d2beam-gui (width: min(760px, 100%), margin auto) -->
+          <div class="info_inhalt">
+            <iframe id="id_doc" src="${DOKUMENTATION[getLocale()] ?? DOKUMENTATION['en-GB']}"></iframe>
+            <h4>${msg('Gerät')}</h4>
+            <p id="infoBox"></p>
+            <p class="footer">
+              Version ${__APP_VERSION__} &middot; ${__BUILD_DATE__} &middot;
+              ${getLocale() === 'de'
+                  ? html`<a href="https://statikverstehen.de">&#169; statikverstehen.de</a>`
+                  : html`<a href="https://fea-apps.de">&#169; FEA-apps.de</a>`}
+            </p>
+          </div>
         </sl-tab-panel>
 
         <!---------------------------------------------------------------------------- Einstellungen -->

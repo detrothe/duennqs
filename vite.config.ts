@@ -52,7 +52,7 @@ export default defineConfig({
                 globPatterns: ['**/*.{js,css,html,png,woff2}'],
                 // große Icons braucht nur die Installation, nicht der Offline-Betrieb
                 globIgnores: ['**/512x512.png', '**/maskable_512.png'],
-                // das Haupt-Bundle ist derzeit gut 2 MB groß (jspdf mit eingebetteter Schrift)
+                // größter Chunk: PDF-Ausgabe (jspdf mit Schrift) mit knapp 700 kB
                 maximumFileSizeToCacheInBytes: 6 * 1024 * 1024,
                 cleanupOutdatedCaches: true,
                 clientsClaim: true,

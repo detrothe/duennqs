@@ -597,10 +597,15 @@ sl-color-picker::part(trigger) {
 
 /*----------------------------------------------------------------------------------------- Info: Dokumentation */
 
+/* Inhalt des Tabs Info zentriert wie in d2beam-gui */
+.info_inhalt {
+    width: min(760px, 100%);
+    margin: 0 auto;
+}
+
 #id_doc {
     display: block;
     width: 100%;
-    max-width: 800px;
     height: calc(100dvh - 8rem);
     border: none;
     background-color: white;

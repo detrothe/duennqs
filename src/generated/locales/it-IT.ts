@@ -43,7 +43,6 @@
 's2202f9c5118ff020': `tensione tangenziale alla fine dell'elemento, nodo 2, lato sinistro`,
 's242244c7d728763b': `Caratteristiche ideali della sezione`,
 's255fc944b18ba548': `copia il valore della prima cella`,
-'s2a26513593107f4d': `docu_en.html`,
 's2a527d2aa4924cec': `Ci sono modifiche non ancora salvate.`,
 's2ad271c4bf69a58d': `Consenti la selezione delle celle con il dito`,
 's2b41d1fba90e38cb': `Etichette`,

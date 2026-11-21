@@ -1,0 +1,490 @@
+<!DOCTYPE html>
+<html lang="es">
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<title>duennQs – Propiedades y tensiones de secciones de pared delgada</title>
+		<meta name="author" content="Prof. Dr.-Ing. Detlef Rothe">
+		<style>
+		body {
+			font-size: 1em;
+			font-family: "FreeSans", sans-serif;
+			line-height: 150%;
+		}
+
+		p {
+			margin-bottom: 0.6em;
+		}
+
+		h1,
+		h2 {
+			color: #1c1c6a;
+			line-height: 115%;
+			font-weight: bold;
+			margin-bottom: 0;
+		}
+
+		h1 {
+			font-size: 1.2em;
+			margin-top: 2em;
+		}
+
+		h2 {
+			font-size: 1.125em;
+			margin-top: 0.83em;
+		}
+
+		a {
+			color: #1c1c6a;
+			text-decoration: none;
+		}
+
+		/* Pfeil nur vor den Links im Inhaltsverzeichnis; die Überschriften
+		   (href="#", Sprung nach oben) bekommen keinen */
+		a[href^="#"]:not([href="#"])::before {
+			content: '➡ ';
+		}
+
+		/* Abbildungen, zentriert; Breite über das width-Attribut */
+		img.bild {
+			display: block;
+			margin: auto;
+			max-width: 100%;
+			height: auto;
+		}
+
+		.bildtext {
+			text-align: center;
+			font-size: 0.9em;
+		}
+
+		li {
+			margin-bottom: 0.3em;
+		}
+	</style>
+	</head>
+	<body>
+		<h1>Índice</h1>
+		<p>
+			<a href="#uebersicht">Resumen</a>
+			<br>
+			<a href="#vorzeichen">Sistema de coordenadas y criterio de signos</a>
+			<br>
+			<a href="#beispiel">Ejemplo</a>
+			<br>
+			<a href="#hinweiseApp">Indicaciones para el uso de la app</a>
+			<br>
+			<a href="#tabellen">Tablas y menú contextual</a>
+			<br>
+			<a href="#dateien">Archivos, PDF y copia de seguridad automática</a>
+			<br>
+			<a href="#darstellung_2D">Representación 2D (pestaña Sistema)</a>
+			<br>
+			<a href="#darstellung_3D">Representaciones 3D</a>
+			<br>
+			<a href="#bezeichnungen">Notación</a>
+			<br>
+			<a href="#voreinstellungen">Configuración</a>
+			<br>
+			<a href="#installation">Instalar la app en el escritorio</a>
+			<br>
+			<a href="#kompatibilitaet">Compatibilidad</a>
+			<br>
+			<a href="#tastatur">Ayuda: mi teclado no tiene tecla de menos, teclado virtual</a>
+			<br>
+			<a href="#kontakt">Contacto y notificación de errores</a>
+		</p>
+
+		<h1 id="uebersicht">
+			<a href="#">Resumen</a>
+		</h1>
+		<p>
+			Con esta aplicación web puedes calcular las propiedades y las tensiones de secciones de pared
+			delgada. Se utiliza el modelo de línea media (modelo de alambre), que se resuelve con el método
+			de los elementos finitos [1], [2]. De forma similar a un pórtico o una celosía, la sección se
+			describe mediante elementos rectos unidos en nudos. Cada elemento debe estar unido al menos a
+			otro elemento, es decir, no puede haber elementos «sueltos» en la sección. Desde cada elemento
+			tiene que existir un camino hacia todos los demás.
+		</p>
+		<p>
+			Las coordenadas de los nudos se introducen en un sistema auxiliar ȳ-z̄ cuyo origen puede
+			elegirse libremente.
+			Cada elemento tiene un nudo inicial y un nudo final y representa exactamente distribuciones
+			cuadráticas de la tensión tangencial, por lo que no es necesario refinar la malla.
+			Si miras a lo largo del elemento desde su inicio hasta su final, el lado derecho del elemento
+			queda a tu mano derecha.
+		</p>
+		<p>
+			Como los elementos pueden tener propiedades de material distintas, hay que indicar valores de
+			referencia para el módulo de elasticidad y el coeficiente de Poisson. Las propiedades
+			calculadas son valores ideales referidos a estos valores de referencia. Si las utilizas para una
+			barra en un programa de estructuras, introduce allí los mismos valores de referencia como datos
+			del material.
+		</p>
+		<p>
+			Las tensiones normales debidas a N, M<sub>y</sub> y M<sub>z</sub> se calculan con las fórmulas
+			habituales de la mecánica, suponiendo que las secciones planas permanecen planas (Bernoulli), y
+			las debidas a M<sub>ω</sub> mediante la ordenada de alabeo.
+			Las tensiones tangenciales son positivas cuando actúan en la dirección del sistema de
+			coordenadas local del elemento. La dirección local positiva va del nudo inicial al nudo final.
+		</p>
+		<p>Características del programa:</p>
+		<ul>
+			<li>La sección puede ser asimétrica, abierta y/o cerrada.</li>
+			<li>Material elástico lineal.</li>
+			<li>El espesor es constante en cada elemento.</li>
+			<li>Cada elemento puede tener sus propias propiedades de material.</li>
+			<li>Cálculo de todas las propiedades de la sección, incluidos el centro de esfuerzos
+				cortantes, el módulo de torsión y el módulo de alabeo.</li>
+			<li>
+				Tensiones debidas al esfuerzo normal N, a los esfuerzos cortantes V<sub>y</sub> y
+				V<sub>z</sub>, a los momentos flectores M<sub>y</sub> y M<sub>z</sub>, a la torsión
+				primaria y secundaria M<sub>xp</sub> y M<sub>xs</sub> y al bimomento M<sub>ω</sub>.
+			</li>
+		</ul>
+
+		<h2 id="vorzeichen">
+			<a href="#">Sistema de coordenadas y criterio de signos</a>
+		</h2>
+		<p>
+			<img src="Vorzeichen_Querschnitt.png" alt="Criterio de signos de los esfuerzos" class="bild" width="480">
+		</p>
+		<p class="bildtext">Criterio de signos de los esfuerzos</p>
+		<p>
+			<img src="vorzeichen.png" alt="Criterio de signos del elemento" class="bild" width="351">
+		</p>
+		<p class="bildtext">Criterio de signos del elemento</p>
+
+		<h1 id="beispiel">
+			<a href="#">Ejemplo</a>
+		</h1>
+		<h2>Sección cajón unicelular</h2>
+		<p>
+			Este ejemplo se trata en [2]. Los datos de la sección se cargan automáticamente la primera vez
+			que se inicia la app, con los esfuerzos V<sub>z</sub> = 500 kN y M<sub>y</sub> = 600 kNm.
+		</p>
+		<p>
+			<img src="beispiel_querschnitt.png" alt="Ejemplo de sección cajón" class="bild" width="401">
+		</p>
+		<p>En [2] la sección se estudia además con los siguientes esfuerzos:</p>
+		<p>
+			M<sub>xp</sub> = 250 kNm; M<sub>xs</sub> = 150 kNm; M<sub>ω</sub> = 10 kNm²
+			<br>
+			V<sub>y</sub> = 1000 kN; V<sub>z</sub> = 500 kN
+		</p>
+		<p>Material: E = 21.000 kN/cm²; ν = 0,3</p>
+
+		<h1 id="hinweiseApp">
+			<a href="#">Indicaciones para el uso de la app</a>
+		</h1>
+		<p>
+			La app tiene las pestañas <i>Entrada</i>, <i>Resultados</i>, <i>Sistema</i>, <i>3D</i>,
+			<i>Info</i> y ꔷꔷꔷ (configuración). Si pasas el ratón sobre un botón o lo mantienes pulsado con
+			el dedo, aparece un breve texto de ayuda.
+		</p>
+		<h2>Entrada</h2>
+		<p>
+			Como separador decimal se admiten la coma y el punto; no se admite separador de miles.
+		</p>
+		<p>
+			El texto del campo <i>texto libre</i> se incluye en la salida PDF, por ejemplo para el
+			enunciado y tu nombre. Se admiten formatos HTML sencillos como &lt;b&gt;negrita&lt;/b&gt;.
+		</p>
+		<p>
+			Si marcas <i>todos los elementos tienen el mismo material</i>, los valores de referencia se
+			aplican a todos los elementos y se ocultan las columnas E y ν de la tabla de elementos.
+			Con f<sub>y,Rd</sub> se marcan en rojo en la pestaña <i>Resultados</i> las tensiones
+			equivalentes que lo superan; en 3D puede mostrarse junto con la tensión equivalente.
+		</p>
+		<p>
+			<i>Calcular</i> inicia el cálculo; después la app cambia a la pestaña <i>Resultados</i>. Si el
+			botón <i>Calcular</i> aparece resaltado en color, la entrada ha cambiado desde el último
+			cálculo.
+		</p>
+
+		<h2 id="tabellen">
+			<a href="#">Tablas y menú contextual</a>
+		</h2>
+		<p>
+			El número de filas de las tablas de nudos y de elementos se cambia con − y + junto a
+			<i>Número de nudos</i> y <i>Número de elementos</i>, o escribiendo el número. Las filas se
+			añaden o se eliminan al final de la tabla.
+		</p>
+		<p>
+			En la tabla de elementos, + en la columna No inserta una fila encima y la papelera borra la
+			fila. Ambas acciones pueden deshacerse y rehacerse. La tabla de nudos no lo ofrece a propósito:
+			nod1 y nod2 de los elementos hacen referencia a los números de nudo, que de otro modo se
+			desplazarían sin que te dieras cuenta. Así los números también siguen coincidiendo con tu
+			croquis en papel.
+		</p>
+		<p>
+			Para agilizar la entrada puedes copiar y generar valores en las tablas. Selecciona un bloque
+			arrastrando sobre las celdas con el botón <b>derecho</b> del ratón pulsado. Al soltarlo aparece
+			el menú contextual.
+			<br>
+			<b>Pantallas táctiles:</b> activa primero <i>Permitir la selección de celdas con el dedo</i>
+			en la pestaña ꔷꔷꔷ. Después selecciona las celdas deslizando el dedo o el lápiz sobre ellas. Al
+			levantarlo aparece el menú contextual.
+		</p>
+		<p>
+			<img src="kontextmenue_es.png" alt="Menú contextual" class="bild" width="300">
+		</p>
+		<p class="bildtext">Menú contextual</p>
+		<ul>
+			<li><b>copiar el valor de la primera celda:</b> el valor de la primera celda seleccionada se
+				copia en las demás celdas seleccionadas.</li>
+			<li><b>copiar los valores de la primera fila:</b> selecciona al menos dos filas. Los valores de
+				la fila superior se copian hacia abajo, columna por columna.</li>
+			<li><b>incrementar en 1:</b> selecciona al menos dos filas. A partir de la fila superior, los
+				valores se incrementan en 1 columna por columna.</li>
+			<li><b>incrementar en delta:</b> selecciona al menos tres filas. La diferencia entre las dos
+				filas superiores da un delta por columna, con el que se siguen incrementando las filas
+				inferiores.</li>
+			<li><b>copiar al portapapeles:</b> el contenido de las celdas seleccionadas se copia al
+				portapapeles, por ejemplo para otro lugar de la tabla o para una hoja de cálculo.</li>
+			<li><b>pegar desde el portapapeles:</b> el contenido del portapapeles se pega a partir de la
+				celda superior izquierda de la zona seleccionada.</li>
+			<li><b>cerrar:</b> el menú contextual se cierra sin más acciones.</li>
+		</ul>
+		<p>
+			Nota: a tabletas y smartphones también se les puede conectar un ratón y/o un teclado
+			Bluetooth.
+		</p>
+
+		<h2 id="dateien">
+			<a href="#">Archivos, PDF y copia de seguridad automática</a>
+		</h2>
+		<p>
+			Con los botones situados sobre la entrada empiezas una entrada nueva, lees una entrada guardada
+			o guardas la entrada actual. Los archivos de entrada tienen la extensión <i>.duennqs</i> (en
+			Android <i>.duennqs.json</i>); los archivos <i>.txt</i> antiguos se siguen pudiendo leer.
+			También puedes arrastrar un archivo con el ratón a la ventana de la app. Si hay cambios sin
+			guardar, la app pregunta antes de empezar una entrada nueva o abrir otro archivo.
+		</p>
+		<p>
+			En la pestaña <i>Resultados</i>, el botón PDF guarda los resultados como archivo PDF, incluidos
+			la entrada y el dibujo de la sección.
+		</p>
+		<p>
+			La entrada actual se guarda automáticamente en el navegador, por ejemplo cuando la app pasa a
+			segundo plano o se cierra, y se recupera en el siguiente inicio. Esto no sustituye a guardar en
+			un archivo.
+		</p>
+		<p>
+			Cuando hay una versión nueva de la app, se te pregunta si quieres recargarla. La entrada actual
+			se conserva.
+		</p>
+
+		<h2 id="darstellung_2D">
+			<a href="#">Representación 2D (pestaña Sistema)</a>
+		</h2>
+		<p>
+			La pestaña <i>Sistema</i> muestra la sección en el plano ȳ-z̄ con el centro de gravedad, los
+			ejes principales y el centro de esfuerzos cortantes. La cruz de captura muestra las coordenadas
+			y se ajusta a los nudos, al centro de gravedad y al centro de esfuerzos cortantes; en los nudos
+			muestra también la ordenada de alabeo ω.
+			<i>Números</i> muestra u oculta los números de nudos y elementos, <i>SVG</i> guarda el dibujo
+			como archivo SVG.
+		</p>
+
+		<h2 id="darstellung_3D">
+			<a href="#">Representaciones 3D</a>
+		</h2>
+		<p>
+			La pestaña <i>3D</i> muestra los resultados en el espacio. Los valores se representan en la
+			dirección del eje de la barra x. Con el ratón giras (botón izquierdo), desplazas (botón
+			derecho) y haces zoom (rueda) en la vista; con dos dedos giras y haces zoom. Con un dedo
+			consultas valores o desplazas la vista; el botón de abajo a la izquierda cambia entre ambos
+			modos. La cruz de captura se ajusta a los puntos de la magnitud representada y muestra su
+			valor.
+		</p>
+		<p>
+			Los ajustes están en el <i>Panel de control</i>. Solo muestra las opciones que corresponden a
+			la representación elegida.
+		</p>
+		<p>
+			<img src="bedienfeld_es.png" alt="Panel de control de la vista 3D" class="bild" width="264">
+		</p>
+		<p class="bildtext">Panel de control</p>
+		<ul>
+			<li><b>Mostrar:</b>
+				<ul>
+					<li><i>Solo sección</i> con los números de nudos y elementos.</li>
+					<li><i>Tensión normal σ</i>: superficie sobre la línea media, compresión en rojo y
+						tracción en azul.</li>
+					<li><i>Tensión tangencial τ</i> en los lados derecho e izquierdo de cada elemento.</li>
+					<li><i>Tensión equivalente σv</i> según von Mises:
+						σ<sub>v</sub> = √(σ² + 3·τ²).</li>
+					<li><i>Ordenada de alabeo ω</i> y <i>Alabeo u</i>: ambas describen una deformación de
+						la sección en la dirección del eje de la barra. Se dibuja la sección deformada
+						delante de la sección sin deformar, que aparece atenuada. El alabeo u debido a las
+						tensiones tangenciales se calcula como en el MEF y se representa respecto a su valor
+						medio sobre el área de la sección. El punto de referencia no influye en las
+						tensiones, ya que solo se necesitan las derivadas de u [1], [2].</li>
+				</ul>
+			</li>
+			<li><b>Mostrar fyRd:</b> en la tensión equivalente, f<sub>y,Rd</sub> se dibuja como un plano
+				sobre la sección. Abajo a la derecha se indican la tensión equivalente máxima y el grado de
+				aprovechamiento.</li>
+			<li><b>Rótulos:</b> valores en los extremos de los elementos y valores extremos.</li>
+			<li><b>Escala:</b> exageración de la magnitud representada.</li>
+			<li><b>σ en el espesor:</b> en la tensión normal se dibuja además el cuerpo de tensiones en el
+				espesor del elemento como un marco. En la tensión equivalente, σ se toma entonces en las
+				caras de los elementos en lugar de en la línea media.</li>
+			<li><b>Mostrar lados:</b> caras laterales en la tensión tangencial y la equivalente.</li>
+			<li><b>Mostrar flechas</b> y <b>Escala de flechas:</b> flechas de dirección de las tensiones
+				normales y tangenciales.</li>
+			<li><b>Derecha/izquierda:</b> marca los lados derecho e izquierdo de los elementos y muestra
+				con una flecha la dirección del nudo inicial al final.</li>
+			<li><b>Mostrar ejes:</b> ejes de coordenadas en el centro de gravedad.</li>
+			<li><b>Radio captura [px]:</b> distancia a la que se ajusta la cruz de captura.</li>
+			<li><b>Guardar imagen:</b> guarda la vista como archivo PNG con resolución seleccionable,
+				opcionalmente con fondo blanco.</li>
+			<li><b>Restablecer:</b> restablece la escala, la dirección de la vista y el zoom.</li>
+		</ul>
+
+		<h2 id="bezeichnungen">
+			<a href="#">Notación</a>
+		</h2>
+		<p>
+			Incidencias de nudos de los elementos:
+			<br>
+			nod1 = número del nudo al inicio del elemento
+			<br>
+			nod2 = número del nudo al final del elemento
+		</p>
+		<p>
+			A<sub>geom</sub> = área geométrica de la sección, sin tener en cuenta los datos del material.
+		</p>
+		<p>
+			Tensiones tangenciales por torsión primaria M<sub>xp</sub>:
+			<br>
+			τ<sub>xs0,L</sub> = tensión tangencial de la parte de sección abierta, lado izquierdo, lineal
+			en el espesor del elemento
+			<br>
+			τ<sub>xs0,R</sub> = tensión tangencial de la parte de sección abierta, lado derecho
+			<br>
+			τ<sub>xs1</sub> = tensión tangencial de la parte de sección cerrada, constante en el espesor
+			del elemento
+		</p>
+		<p>
+			Tensiones tangenciales por esfuerzo cortante y torsión secundaria M<sub>xs</sub>:
+			<br>
+			τ<sub>xsa</sub> = tensión tangencial al inicio del elemento a
+			<br>
+			τ<sub>xsm</sub> = tensión tangencial en el centro del elemento m
+			<br>
+			τ<sub>xse</sub> = tensión tangencial al final del elemento e, todas constantes en el espesor
+			del elemento
+		</p>
+		<p>El resto de la notación es análoga.</p>
+
+		<h2 id="voreinstellungen">
+			<a href="#">Configuración</a>
+		</h2>
+		<p>
+			En la pestaña ꔷꔷꔷ ajustas el idioma (<i>Language</i>), la unidad de longitud, el tamaño de
+			letra, la selección de celdas con el dedo, los colores de las tablas y el color de acento.
+			La unidad de tensión sigue a la unidad de longitud: mm → N/mm²; cm → kN/cm²; m → MN/m². Los
+			valores introducidos se convierten; después hay que volver a calcular. Los tamaños de letra
+			grandes están pensados para la proyección con un proyector.
+		</p>
+		<p>
+			Puedes guardar la configuración como valores predeterminados en el almacenamiento local del
+			navegador; así vuelve a estar disponible tras un reinicio. Con el botón de debajo se borran de
+			nuevo los valores predeterminados.
+			<br>
+			El almacenamiento local (local storage) no son cookies. Esta aplicación web realiza todos los
+			cálculos localmente en el navegador con JavaScript. No se intercambian datos con ningún
+			servidor web, por lo que tras iniciar la app ya no hace falta conexión de red.
+		</p>
+
+		<h2 id="installation">
+			<a href="#">Instalar la app en el escritorio</a>
+		</h2>
+		<p>
+			Esta aplicación está programada como aplicación web (web app), de modo que puedes instalarla en
+			el escritorio en cualquier sistema operativo. Se crea un icono y la app se comporta como una app
+			instalada desde una tienda. duennQs sigue ejecutándose en el navegador, pero sin elementos como
+			la barra de direcciones. La instalación varía según el sistema operativo, la versión y el
+			navegador.
+		</p>
+		<p>
+			En Android, una vez abierto duennQs en el navegador Chrome, elige <i>Instalar aplicación</i> en
+			el menú de la aplicación <i>(menú de tres puntos)</i> arriba a la derecha y confirma el diálogo.
+			En el escritorio aparece entonces un nuevo icono llamado duennQs.
+		</p>
+		<p>
+			En iOS utiliza el navegador Safari. Allí la orden se llama <i>Añadir a pantalla de inicio</i>
+			(símbolo de compartir y después el símbolo con el más).
+		</p>
+		<p>
+			En Microsoft Windows el procedimiento es parecido al de Android. En el navegador Edge, el menú
+			de la aplicación <i>(menú de tres puntos)</i> contiene la siguiente sección:
+		</p>
+		<p>
+			<img src="app-install-windows.png" alt="Instalación en Windows" class="bild" width="423">
+		</p>
+		<p>
+			Las versiones recientes de Chrome pueden preguntar directamente si quieres instalar la app,
+			véase el símbolo a la derecha de la barra de direcciones:
+		</p>
+		<p>
+			<img src="chrome_install.png" alt="Instalación con Chrome" class="bild" width="436">
+		</p>
+		<p>En macOS utiliza Microsoft Edge o Google Chrome para la instalación.</p>
+		<p>
+			Firefox no admite la instalación por ahora. En Windows y Linux puedes pasar al modo de pantalla
+			completa con la tecla F11 como alternativa.
+		</p>
+		<p>
+			En Android, iOS y Linux la app se desinstala borrando el icono del escritorio. En Windows se
+			desinstala como un programa normal.
+		</p>
+
+		<h2 id="kompatibilitaet">
+			<a href="#">Compatibilidad</a>
+		</h2>
+		<p>
+			Probado en Windows 10↑, macOS Catalina 10.15.7↑, Ubuntu 22.04↑, Android 9–16 e iOS 15.7.3↑,
+			en cada caso con la versión actual de Chrome, Chromium, Edge, Safari y Firefox. Solo se prueban
+			y se admiten las versiones actuales de los navegadores.
+		</p>
+
+		<h2 id="tastatur">
+			<a href="#">Teclado virtual</a>
+		</h2>
+		<p>
+			En algunos dispositivos Android, sobre todo de Samsung, el teclado numérico no tiene tecla de
+			menos. Por desgracia, la especificación HTML deja esto en manos del fabricante. En ese caso se
+			recomienda un teclado virtual adicional, por ejemplo el teclado de Google Gboard de Play Store.
+			Tras instalarlo, todavía hay que activar el teclado, mejor directamente en Play Store. Después
+			puedes cambiar en cualquier momento entre los teclados instalados (símbolo abajo a la derecha
+			del teclado).
+		</p>
+
+		<h2 id="kontakt">
+			<a href="#">Contacto y notificación de errores</a>
+		</h2>
+		<p>
+			Para sugerencias, deseos y notificaciones de errores, utiliza la dirección de correo
+			statikverstehen&#x40;web.de.
+			Al notificar un error suele ser útil adjuntar una copia del archivo de entrada.
+		</p>
+
+		<h1>
+			<a href="#">Bibliografía</a>
+		</h1>
+		<p>
+			[1] Matthias Kraus:
+			Computerorientierte Berechnungsmethoden für beliebige Stabquerschnitte des Stahlbaus,
+			tesis doctoral, Bochum 2005
+		</p>
+		<p>
+			[2] Matthias Kraus; Rolf Kindmann:
+			Finite-Elemente-Methoden im Stahlbau, 2.ª edición, Ernst W. &amp; Sohn Verlag, 2019
+			<br>Edición en inglés: Rolf Kindmann; Matthias Kraus:
+			Steel Structures: Design using FEM, Ernst W. &amp; Sohn Verlag, 2011
+		</p>
+	</body>
+</html>

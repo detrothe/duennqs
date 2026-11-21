@@ -1,0 +1,500 @@
+<!DOCTYPE html>
+<html lang="fr">
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<title>duennQs – Caractéristiques et contraintes de sections à parois minces</title>
+		<meta name="author" content="Prof. Dr.-Ing. Detlef Rothe">
+		<style>
+		body {
+			font-size: 1em;
+			font-family: "FreeSans", sans-serif;
+			line-height: 150%;
+		}
+
+		p {
+			margin-bottom: 0.6em;
+		}
+
+		h1,
+		h2 {
+			color: #1c1c6a;
+			line-height: 115%;
+			font-weight: bold;
+			margin-bottom: 0;
+		}
+
+		h1 {
+			font-size: 1.2em;
+			margin-top: 2em;
+		}
+
+		h2 {
+			font-size: 1.125em;
+			margin-top: 0.83em;
+		}
+
+		a {
+			color: #1c1c6a;
+			text-decoration: none;
+		}
+
+		/* Pfeil nur vor den Links im Inhaltsverzeichnis; die Überschriften
+		   (href="#", Sprung nach oben) bekommen keinen */
+		a[href^="#"]:not([href="#"])::before {
+			content: '➡ ';
+		}
+
+		/* Abbildungen, zentriert; Breite über das width-Attribut */
+		img.bild {
+			display: block;
+			margin: auto;
+			max-width: 100%;
+			height: auto;
+		}
+
+		.bildtext {
+			text-align: center;
+			font-size: 0.9em;
+		}
+
+		li {
+			margin-bottom: 0.3em;
+		}
+	</style>
+	</head>
+	<body>
+		<h1>Sommaire</h1>
+		<p>
+			<a href="#uebersicht">Présentation</a>
+			<br>
+			<a href="#vorzeichen">Système de coordonnées et conventions de signe</a>
+			<br>
+			<a href="#beispiel">Exemple</a>
+			<br>
+			<a href="#hinweiseApp">Conseils d'utilisation de l'app</a>
+			<br>
+			<a href="#tabellen">Tableaux et menu contextuel</a>
+			<br>
+			<a href="#dateien">Fichiers, PDF et sauvegarde automatique</a>
+			<br>
+			<a href="#darstellung_2D">Représentation 2D (onglet Système)</a>
+			<br>
+			<a href="#darstellung_3D">Représentations 3D</a>
+			<br>
+			<a href="#bezeichnungen">Notations</a>
+			<br>
+			<a href="#voreinstellungen">Paramètres</a>
+			<br>
+			<a href="#installation">Installer l'app sur le bureau</a>
+			<br>
+			<a href="#kompatibilitaet">Compatibilité</a>
+			<br>
+			<a href="#tastatur">Aide : mon clavier n'a pas de touche moins, clavier virtuel</a>
+			<br>
+			<a href="#kontakt">Contact et signalement d'erreurs</a>
+		</p>
+
+		<h1 id="uebersicht">
+			<a href="#">Présentation</a>
+		</h1>
+		<p>
+			Avec cette application web, tu peux calculer les caractéristiques et les contraintes de sections
+			à parois minces. Le modèle de ligne moyenne (modèle filaire) est utilisé et résolu par la
+			méthode des éléments finis [1], [2]. Comme pour un portique ou un treillis, la section est
+			décrite par des éléments droits reliés entre eux par des nœuds. Chaque élément doit être relié
+			à au moins un autre élément : aucun élément ne doit rester « isolé » dans la section. De chaque
+			élément, il doit exister un chemin vers tous les autres.
+		</p>
+		<p>
+			Tu saisis les coordonnées des nœuds dans un repère auxiliaire ȳ-z̄ dont l'origine peut être
+			choisie librement.
+			Chaque élément a un nœud de début et un nœud de fin et représente exactement des répartitions
+			quadratiques de la contrainte de cisaillement ; un raffinement n'est donc pas nécessaire.
+			Si tu regardes le long de l'élément de son début vers sa fin, le côté droit de l'élément se
+			trouve à ta main droite.
+		</p>
+		<p>
+			Comme les éléments peuvent avoir des caractéristiques de matériau différentes, il faut indiquer
+			des valeurs de référence pour le module d'élasticité et le coefficient de Poisson. Les
+			caractéristiques calculées sont des valeurs idéales rapportées à ces valeurs de référence. Si
+			tu les utilises pour une barre dans un logiciel de calcul de structures, indique-y les mêmes
+			valeurs de référence comme données de matériau.
+		</p>
+		<p>
+			Les contraintes normales dues à N, M<sub>y</sub> et M<sub>z</sub> sont calculées avec les
+			formules habituelles de la mécanique, en supposant que les sections planes restent planes
+			(Bernoulli), et celles dues à M<sub>ω</sub> au moyen de l'ordonnée de gauchissement.
+			Les contraintes de cisaillement sont positives lorsqu'elles agissent dans le sens du repère
+			local de l'élément. Le sens local positif va du nœud de début au nœud de fin.
+		</p>
+		<p>Caractéristiques du programme :</p>
+		<ul>
+			<li>La section peut être dissymétrique, ouverte et/ou fermée.</li>
+			<li>Matériau élastique linéaire.</li>
+			<li>L'épaisseur est constante dans chaque élément.</li>
+			<li>Chaque élément peut avoir ses propres caractéristiques de matériau.</li>
+			<li>Calcul de toutes les caractéristiques de la section, y compris le centre de cisaillement,
+				l'inertie de torsion et l'inertie de gauchissement.</li>
+			<li>
+				Contraintes dues à l'effort normal N, aux efforts tranchants V<sub>y</sub> et
+				V<sub>z</sub>, aux moments fléchissants M<sub>y</sub> et M<sub>z</sub>, à la torsion
+				primaire et secondaire M<sub>xp</sub> et M<sub>xs</sub> ainsi qu'au bimoment
+				M<sub>ω</sub>.
+			</li>
+		</ul>
+
+		<h2 id="vorzeichen">
+			<a href="#">Système de coordonnées et conventions de signe</a>
+		</h2>
+		<p>
+			<img src="Vorzeichen_Querschnitt.png" alt="Conventions de signe des efforts" class="bild" width="480">
+		</p>
+		<p class="bildtext">Conventions de signe des efforts</p>
+		<p>
+			<img src="vorzeichen.png" alt="Conventions de signe de l'élément" class="bild" width="351">
+		</p>
+		<p class="bildtext">Conventions de signe de l'élément</p>
+
+		<h1 id="beispiel">
+			<a href="#">Exemple</a>
+		</h1>
+		<h2>Section caisson unicellulaire</h2>
+		<p>
+			Cet exemple est traité dans [2]. Les données de la section sont chargées automatiquement au
+			premier démarrage de l'app, avec les efforts V<sub>z</sub> = 500 kN et
+			M<sub>y</sub> = 600 kNm.
+		</p>
+		<p>
+			<img src="beispiel_querschnitt.png" alt="Exemple de section caisson" class="bild" width="401">
+		</p>
+		<p>Dans [2], la section est en outre étudiée avec les efforts suivants :</p>
+		<p>
+			M<sub>xp</sub> = 250 kNm ; M<sub>xs</sub> = 150 kNm ; M<sub>ω</sub> = 10 kNm²
+			<br>
+			V<sub>y</sub> = 1000 kN ; V<sub>z</sub> = 500 kN
+		</p>
+		<p>Matériau : E = 21 000 kN/cm² ; ν = 0,3</p>
+
+		<h1 id="hinweiseApp">
+			<a href="#">Conseils d'utilisation de l'app</a>
+		</h1>
+		<p>
+			L'app comporte les onglets <i>Saisie</i>, <i>Résultats</i>, <i>Système</i>, <i>3D</i>,
+			<i>Info</i> et ꔷꔷꔷ (paramètres). Si tu passes la souris sur un bouton ou que tu appuies
+			longuement dessus avec le doigt, un court texte d'aide apparaît.
+		</p>
+		<h2>Saisie</h2>
+		<p>
+			La virgule et le point sont admis comme séparateur décimal, un séparateur de milliers ne l'est
+			pas.
+		</p>
+		<p>
+			Le texte du champ <i>texte libre</i> est repris dans la sortie PDF, par exemple pour l'énoncé
+			et ton nom. Des mises en forme HTML simples comme &lt;b&gt;gras&lt;/b&gt; sont possibles.
+		</p>
+		<p>
+			Si <i>tous les éléments ont les mêmes données de matériau</i> est coché, les valeurs de
+			référence s'appliquent à tous les éléments et les colonnes E et ν du tableau des éléments sont
+			masquées.
+			Avec f<sub>y,Rd</sub>, les contraintes équivalentes dépassées sont marquées en rouge dans
+			l'onglet <i>Résultats</i> ; en 3D, f<sub>y,Rd</sub> peut être affiché avec la contrainte
+			équivalente.
+		</p>
+		<p>
+			<i>Calculer</i> lance le calcul, puis l'app passe à l'onglet <i>Résultats</i>. Si le bouton
+			<i>Calculer</i> est mis en couleur, la saisie a été modifiée depuis le dernier calcul.
+		</p>
+
+		<h2 id="tabellen">
+			<a href="#">Tableaux et menu contextuel</a>
+		</h2>
+		<p>
+			Tu modifies le nombre de lignes des tableaux des nœuds et des éléments avec − et + à côté de
+			<i>Nombre de nœuds</i> et <i>Nombre d'éléments</i>, ou en saisissant le nombre. Les lignes
+			sont ajoutées ou supprimées en fin de tableau.
+		</p>
+		<p>
+			Dans le tableau des éléments, + dans la colonne No insère une ligne au-dessus, la corbeille
+			supprime la ligne. Les deux actions peuvent être annulées et rétablies. Le tableau des nœuds ne
+			le propose volontairement pas : nod1 et nod2 des éléments renvoient aux numéros de nœuds, qui se
+			décaleraient sinon sans qu'on le remarque. Les numéros restent ainsi conformes à ton croquis
+			sur papier.
+		</p>
+		<p>
+			Pour accélérer la saisie, tu peux copier et générer des valeurs dans les tableaux. Sélectionne
+			un bloc en faisant glisser la souris sur les cellules avec le bouton <b>droit</b> enfoncé. Au
+			relâchement, le menu contextuel apparaît.
+			<br>
+			<b>Écrans tactiles :</b> active d'abord <i>Autoriser la sélection de cellules au doigt</i>
+			dans l'onglet ꔷꔷꔷ. Sélectionne ensuite les cellules en les balayant avec le doigt ou le stylet.
+			Quand tu le lèves, le menu contextuel apparaît.
+		</p>
+		<p>
+			<img src="kontextmenue_fr.png" alt="Menu contextuel" class="bild" width="300">
+		</p>
+		<p class="bildtext">Menu contextuel</p>
+		<ul>
+			<li><b>copier la valeur de la première cellule :</b> la valeur de la première cellule
+				sélectionnée est copiée dans les autres cellules sélectionnées.</li>
+			<li><b>copier les valeurs de la première ligne :</b> sélectionne au moins deux lignes. Les
+				valeurs de la ligne du haut sont recopiées vers le bas, colonne par colonne.</li>
+			<li><b>incrémenter de 1 :</b> sélectionne au moins deux lignes. À partir de la ligne du haut,
+				les valeurs sont augmentées de 1 colonne par colonne.</li>
+			<li><b>incrémenter de delta :</b> sélectionne au moins trois lignes. La différence entre les
+				deux lignes du haut donne un delta par colonne, dont les lignes suivantes sont encore
+				incrémentées.</li>
+			<li><b>copier dans le presse-papiers :</b> le contenu des cellules sélectionnées est copié dans
+				le presse-papiers, par exemple pour un autre endroit du tableau ou pour un tableur.</li>
+			<li><b>insérer depuis le presse-papiers :</b> le contenu du presse-papiers est inséré à partir
+				de la cellule en haut à gauche de la zone sélectionnée.</li>
+			<li><b>fermer :</b> le menu contextuel se ferme sans autre action.</li>
+		</ul>
+		<p>
+			Remarque : une souris et/ou un clavier Bluetooth peuvent aussi être connectés aux tablettes et
+			aux smartphones.
+		</p>
+
+		<h2 id="dateien">
+			<a href="#">Fichiers, PDF et sauvegarde automatique</a>
+		</h2>
+		<p>
+			Les boutons au-dessus de la saisie te permettent de commencer une nouvelle saisie, de lire une
+			saisie enregistrée ou d'enregistrer la saisie actuelle. Les fichiers de saisie ont l'extension
+			<i>.duennqs</i> (sous Android <i>.duennqs.json</i>) ; les anciens fichiers <i>.txt</i> peuvent
+			toujours être lus. Tu peux aussi simplement faire glisser un fichier dans la fenêtre de l'app
+			avec la souris. S'il y a des modifications non enregistrées, l'app demande confirmation avant
+			une nouvelle saisie ou l'ouverture d'un autre fichier.
+		</p>
+		<p>
+			Dans l'onglet <i>Résultats</i>, le bouton PDF enregistre les résultats dans un fichier PDF,
+			avec la saisie et le dessin de la section.
+		</p>
+		<p>
+			La saisie actuelle est sauvegardée automatiquement dans le navigateur, par exemple quand l'app
+			passe en arrière-plan ou est fermée, et elle est restaurée au démarrage suivant. Cela ne
+			remplace pas l'enregistrement dans un fichier.
+		</p>
+		<p>
+			Lorsqu'une nouvelle version de l'app est disponible, l'app te demande si elle doit être
+			rechargée. La saisie actuelle est conservée.
+		</p>
+
+		<h2 id="darstellung_2D">
+			<a href="#">Représentation 2D (onglet Système)</a>
+		</h2>
+		<p>
+			L'onglet <i>Système</i> montre la section dans le plan ȳ-z̄ avec le centre de gravité, les axes
+			principaux et le centre de cisaillement. Le réticule affiche les coordonnées et s'accroche aux
+			nœuds, au centre de gravité et au centre de cisaillement ; aux nœuds, il indique aussi
+			l'ordonnée de gauchissement ω.
+			<i>Numéros</i> affiche ou masque les numéros des nœuds et des éléments, <i>SVG</i> enregistre
+			le dessin dans un fichier SVG.
+		</p>
+
+		<h2 id="darstellung_3D">
+			<a href="#">Représentations 3D</a>
+		</h2>
+		<p>
+			L'onglet <i>3D</i> montre les résultats dans l'espace. Les valeurs sont portées dans la
+			direction de l'axe de la barre x. À la souris, tu fais tourner (bouton gauche), déplaces (bouton
+			droit) et zoomes (molette) la vue ; avec deux doigts, tu la fais tourner et zoomes. Avec un
+			doigt, tu affiches des valeurs ou déplaces la vue ; le bouton en bas à gauche bascule entre les
+			deux. Le réticule s'accroche aux points de la grandeur représentée et affiche sa valeur.
+		</p>
+		<p>
+			Les réglages se trouvent dans le <i>Panneau de commande</i>. Il n'affiche que les options qui
+			correspondent à la représentation choisie.
+		</p>
+		<p>
+			<img src="bedienfeld_fr.png" alt="Panneau de commande de la vue 3D" class="bild" width="264">
+		</p>
+		<p class="bildtext">Panneau de commande</p>
+		<ul>
+			<li><b>Affichage :</b>
+				<ul>
+					<li><i>Section seule</i> avec les numéros des nœuds et des éléments.</li>
+					<li><i>Contrainte normale σ</i> : surface au-dessus de la ligne moyenne, compression en
+						rouge et traction en bleu.</li>
+					<li><i>Contrainte de cisaillement τ</i> sur les côtés droit et gauche de chaque
+						élément.</li>
+					<li><i>Contrainte équivalente σv</i> selon von Mises :
+						σ<sub>v</sub> = √(σ² + 3·τ²).</li>
+					<li><i>Ordonnée de gauchissement ω</i> et <i>Gauchissement u</i> : toutes deux
+						décrivent une déformation de la section dans la direction de l'axe de la barre. La
+						section déformée est dessinée devant la section non déformée, affichée en pâle. Le
+						gauchissement u dû aux contraintes de cisaillement est calculé comme dans la MEF et
+						représenté par rapport à sa valeur moyenne sur l'aire de la section. Le point de
+						référence n'a pas d'influence sur les contraintes, car seules les dérivées de u sont
+						nécessaires [1], [2].</li>
+				</ul>
+			</li>
+			<li><b>Afficher fyRd :</b> pour la contrainte équivalente, f<sub>y,Rd</sub> est dessiné comme
+				un plan au-dessus de la section. La contrainte équivalente maximale et le taux de travail
+				sont indiqués en bas à droite.</li>
+			<li><b>Étiquettes :</b> valeurs aux extrémités des éléments et valeurs extrêmes.</li>
+			<li><b>Échelle :</b> amplification de la grandeur représentée.</li>
+			<li><b>σ sur l'épaisseur :</b> pour la contrainte normale, le volume des contraintes sur
+				l'épaisseur de l'élément est en plus dessiné sous forme de cadre. Pour la contrainte
+				équivalente, σ est alors pris sur les faces des éléments au lieu de la ligne moyenne.</li>
+			<li><b>Afficher les côtés :</b> faces latérales pour les contraintes de cisaillement et
+				équivalente.</li>
+			<li><b>Afficher les flèches</b> et <b>Échelle des flèches :</b> flèches de direction des
+				contraintes normales et de cisaillement.</li>
+			<li><b>Droite/gauche :</b> repère les côtés droit et gauche des éléments et montre par une
+				flèche le sens du nœud de début vers le nœud de fin.</li>
+			<li><b>Afficher les axes :</b> axes de coordonnées au centre de gravité.</li>
+			<li><b>Rayon capture [px] :</b> distance à laquelle le réticule s'accroche.</li>
+			<li><b>Enregistrer l'image :</b> enregistre la vue dans un fichier PNG avec une résolution au
+				choix, éventuellement sur fond blanc.</li>
+			<li><b>Réinitialiser :</b> rétablit l'échelle, la direction de vue et le zoom.</li>
+		</ul>
+
+		<h2 id="bezeichnungen">
+			<a href="#">Notations</a>
+		</h2>
+		<p>
+			Incidences nodales des éléments :
+			<br>
+			nod1 = numéro du nœud au début de l'élément
+			<br>
+			nod2 = numéro du nœud à la fin de l'élément
+		</p>
+		<p>
+			A<sub>geom</sub> = aire géométrique de la section, sans tenir compte des données de matériau.
+		</p>
+		<p>
+			Contraintes de cisaillement dues à la torsion primaire M<sub>xp</sub> :
+			<br>
+			τ<sub>xs0,L</sub> = contrainte de cisaillement de la part section ouverte, côté gauche,
+			linéaire sur l'épaisseur de l'élément
+			<br>
+			τ<sub>xs0,R</sub> = contrainte de cisaillement de la part section ouverte, côté droit
+			<br>
+			τ<sub>xs1</sub> = contrainte de cisaillement de la part section fermée, constante sur
+			l'épaisseur de l'élément
+		</p>
+		<p>
+			Contraintes de cisaillement dues à l'effort tranchant et à la torsion secondaire
+			M<sub>xs</sub> :
+			<br>
+			τ<sub>xsa</sub> = contrainte de cisaillement au début de l'élément a
+			<br>
+			τ<sub>xsm</sub> = contrainte de cisaillement au milieu de l'élément m
+			<br>
+			τ<sub>xse</sub> = contrainte de cisaillement à la fin de l'élément e, toutes constantes sur
+			l'épaisseur de l'élément
+		</p>
+		<p>Toutes les autres notations par analogie.</p>
+
+		<h2 id="voreinstellungen">
+			<a href="#">Paramètres</a>
+		</h2>
+		<p>
+			Dans l'onglet ꔷꔷꔷ, tu règles la langue (<i>Language</i>), l'unité de longueur, la taille de
+			police, la sélection de cellules au doigt ainsi que les couleurs des tableaux et la couleur
+			d'accentuation.
+			L'unité de contrainte suit l'unité de longueur : mm → N/mm² ; cm → kN/cm² ; m → MN/m². Les
+			valeurs saisies sont converties ; il faut ensuite recalculer. Les grandes tailles de police
+			sont prévues pour la projection avec un vidéoprojecteur.
+		</p>
+		<p>
+			Tu peux enregistrer les paramètres comme valeurs par défaut dans le stockage local du
+			navigateur ; ils sont alors de nouveau disponibles après un redémarrage. Le bouton en dessous
+			supprime à nouveau ces valeurs par défaut.
+			<br>
+			Le stockage local (local storage) n'est pas un cookie. Cette application web effectue tous les
+			calculs localement dans le navigateur en JavaScript. Aucune donnée n'est échangée avec un
+			serveur web ; après le démarrage de l'app, une connexion réseau n'est donc plus nécessaire.
+		</p>
+
+		<h2 id="installation">
+			<a href="#">Installer l'app sur le bureau</a>
+		</h2>
+		<p>
+			Cette application est programmée comme application web (web app) ; tu peux donc l'installer
+			sur le bureau sous tous les systèmes d'exploitation. Une icône est créée et l'app se comporte
+			comme une app installée depuis un store. duennQs continue de s'exécuter dans le navigateur, mais
+			sans éléments comme la barre d'adresse. L'installation diffère selon le système d'exploitation,
+			sa version et le navigateur.
+		</p>
+		<p>
+			Sous Android, une fois duennQs ouvert dans le navigateur Chrome, choisis <i>Installer
+			l'application</i> dans le menu de l'application <i>(menu à trois points)</i> en haut à droite
+			et confirme la boîte de dialogue. Une nouvelle icône nommée duennQs apparaît alors sur le
+			bureau.
+		</p>
+		<p>
+			Sous iOS, utilise le navigateur Safari. La commande s'appelle <i>Sur l'écran d'accueil</i>
+			(symbole de partage, puis le symbole avec le plus).
+		</p>
+		<p>
+			Sous Microsoft Windows, la procédure est semblable à celle d'Android. Dans le navigateur Edge,
+			le menu de l'application <i>(menu à trois points)</i> contient la section suivante :
+		</p>
+		<p>
+			<img src="app-install-windows.png" alt="Installation sous Windows" class="bild" width="423">
+		</p>
+		<p>
+			Les versions récentes de Chrome peuvent te demander directement si tu veux installer l'app,
+			voir le symbole à droite de la barre d'adresse :
+		</p>
+		<p>
+			<img src="chrome_install.png" alt="Installation avec Chrome" class="bild" width="436">
+		</p>
+		<p>Sous macOS, utilise Microsoft Edge ou Google Chrome pour l'installation.</p>
+		<p>
+			Firefox ne prend pas en charge l'installation pour le moment. Sous Windows et Linux, tu peux à
+			la place passer en mode plein écran avec la touche F11.
+		</p>
+		<p>
+			Sous Android, iOS et Linux, l'app se désinstalle en supprimant l'icône du bureau. Sous Windows,
+			elle se désinstalle comme un programme normal.
+		</p>
+
+		<h2 id="kompatibilitaet">
+			<a href="#">Compatibilité</a>
+		</h2>
+		<p>
+			Testé sous Windows 10↑, macOS Catalina 10.15.7↑, Ubuntu 22.04↑, Android 9–16 et iOS 15.7.3↑,
+			chaque fois avec la version actuelle de Chrome, Chromium, Edge, Safari et Firefox. Seules les
+			versions actuelles des navigateurs sont testées et prises en charge.
+		</p>
+
+		<h2 id="tastatur">
+			<a href="#">Clavier virtuel</a>
+		</h2>
+		<p>
+			Sur certains appareils Android, en particulier de Samsung, le clavier numérique n'a pas de
+			touche moins. Malheureusement, la spécification HTML laisse ce choix au fabricant. Dans ce cas,
+			un clavier virtuel supplémentaire est recommandé, par exemple le clavier Google Gboard du Play
+			Store. Après l'installation, il faut encore activer le clavier, de préférence directement dans
+			le Play Store. Ensuite, tu peux passer à tout moment d'un clavier installé à l'autre (symbole en
+			bas à droite du clavier).
+		</p>
+
+		<h2 id="kontakt">
+			<a href="#">Contact et signalement d'erreurs</a>
+		</h2>
+		<p>
+			Pour les suggestions, les souhaits et le signalement d'erreurs, utilise l'adresse e-mail
+			statikverstehen&#x40;web.de.
+			Pour signaler une erreur, joindre une copie du fichier de saisie est généralement utile.
+		</p>
+
+		<h1>
+			<a href="#">Bibliographie</a>
+		</h1>
+		<p>
+			[1] Matthias Kraus :
+			Computerorientierte Berechnungsmethoden für beliebige Stabquerschnitte des Stahlbaus,
+			thèse de doctorat, Bochum 2005
+		</p>
+		<p>
+			[2] Matthias Kraus ; Rolf Kindmann :
+			Finite-Elemente-Methoden im Stahlbau, 2e édition, Ernst W. &amp; Sohn Verlag, 2019
+			<br>Édition anglaise : Rolf Kindmann ; Matthias Kraus :
+			Steel Structures: Design using FEM, Ernst W. &amp; Sohn Verlag, 2011
+		</p>
+	</body>
+</html>

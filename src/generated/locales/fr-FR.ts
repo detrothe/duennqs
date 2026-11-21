@@ -43,7 +43,6 @@
 's2202f9c5118ff020': `contrainte de cisaillement à la fin de l'élément, nœud 2, côté gauche`,
 's242244c7d728763b': `Caractéristiques idéales de la section`,
 's255fc944b18ba548': `copier la valeur de la première cellule`,
-'s2a26513593107f4d': `docu_en.html`,
 's2a527d2aa4924cec': `Certaines modifications ne sont pas encore enregistrées.`,
 's2ad271c4bf69a58d': `Autoriser la sélection de cellules au doigt`,
 's2b41d1fba90e38cb': `Étiquettes`,

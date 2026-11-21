@@ -1,0 +1,490 @@
+<!DOCTYPE html>
+<html lang="de">
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<title>duennQs – Querschnittswerte und Spannungen dünnwandiger Querschnitte</title>
+		<meta name="author" content="Prof. Dr.-Ing. Detlef Rothe">
+		<style>
+		body {
+			font-size: 1em;
+			font-family: "FreeSans", sans-serif;
+			line-height: 150%;
+		}
+
+		p {
+			margin-bottom: 0.6em;
+		}
+
+		h1,
+		h2 {
+			color: #1c1c6a;
+			line-height: 115%;
+			font-weight: bold;
+			margin-bottom: 0;
+		}
+
+		h1 {
+			font-size: 1.2em;
+			margin-top: 2em;
+		}
+
+		h2 {
+			font-size: 1.125em;
+			margin-top: 0.83em;
+		}
+
+		a {
+			color: #1c1c6a;
+			text-decoration: none;
+		}
+
+		/* Pfeil nur vor den Links im Inhaltsverzeichnis; die Überschriften
+		   (href="#", Sprung nach oben) bekommen keinen */
+		a[href^="#"]:not([href="#"])::before {
+			content: '➡ ';
+		}
+
+		/* Abbildungen, zentriert; Breite über das width-Attribut */
+		img.bild {
+			display: block;
+			margin: auto;
+			max-width: 100%;
+			height: auto;
+		}
+
+		.bildtext {
+			text-align: center;
+			font-size: 0.9em;
+		}
+
+		li {
+			margin-bottom: 0.3em;
+		}
+	</style>
+	</head>
+	<body>
+		<h1>Inhaltsverzeichnis</h1>
+		<p>
+			<a href="#uebersicht">Übersicht</a>
+			<br>
+			<a href="#vorzeichen">Koordinatensystem und Vorzeichen</a>
+			<br>
+			<a href="#beispiel">Beispiel</a>
+			<br>
+			<a href="#hinweiseApp">Hinweise zur Bedienung der App</a>
+			<br>
+			<a href="#tabellen">Tabellen und Kontextmenü</a>
+			<br>
+			<a href="#dateien">Dateien, PDF und automatische Sicherung</a>
+			<br>
+			<a href="#darstellung_2D">Darstellung 2D (Tab System)</a>
+			<br>
+			<a href="#darstellung_3D">Darstellungen 3D</a>
+			<br>
+			<a href="#bezeichnungen">Bezeichnungen</a>
+			<br>
+			<a href="#voreinstellungen">Voreinstellungen</a>
+			<br>
+			<a href="#installation">Installation der App auf dem Desktop</a>
+			<br>
+			<a href="#kompatibilitaet">Kompatibilität</a>
+			<br>
+			<a href="#tastatur">Hilfe: Meine Tastatur hat keine Minus-Taste, virtuelle Tastatur</a>
+			<br>
+			<a href="#kontakt">Kontakt und Fehlermeldungen</a>
+		</p>
+
+		<h1 id="uebersicht">
+			<a href="#">Übersicht</a>
+		</h1>
+		<p>
+			Mit dieser Webanwendung kannst du Querschnittswerte und Spannungen von dünnwandigen
+			Querschnitten berechnen. Verwendet wird das Mittellinienmodell (Drahtmodell), gelöst wird mit
+			der Methode der finiten Elemente [1], [2]. Der Querschnitt wird ähnlich wie ein Stab- oder
+			Fachwerk durch gerade Elemente beschrieben, die über Knoten miteinander verbunden sind. Jedes
+			Element muss mit mindestens einem anderen Element verbunden sein, es darf also keine Elemente
+			„alleine“ im Querschnitt geben. Von jedem Element muss es einen Pfad zu allen anderen Elementen
+			geben.
+		</p>
+		<p>
+			Die Knotenkoordinaten gibst du in einem ȳ-z̄-Hilfskoordinatensystem ein, dessen Ursprung
+			beliebig gewählt werden kann.
+			Jedes Element hat einen Anfangs- und einen Endknoten und kann quadratische
+			Schubspannungsverläufe exakt darstellen. Eine Verfeinerung ist deshalb nicht erforderlich.
+			Wenn du gedanklich vom Elementanfang zum Elementende blickst, liegt die rechte Seite des
+			Elements an deiner rechten Hand.
+		</p>
+		<p>
+			Da die Elemente unterschiedliche Materialeigenschaften haben können, sind Bezugswerte für
+			E-Modul und Querdehnzahl anzugeben. Die berechneten Querschnittswerte sind ideelle Werte, die
+			auf diese Bezugswerte bezogen sind. Verwendest du sie für einen Stab in einem
+			Stabwerksprogramm, gib dort dieselben Bezugswerte als Materialdaten an.
+		</p>
+		<p>
+			Die Normalspannungen infolge N, M<sub>y</sub> und M<sub>z</sub> werden mit den üblichen
+			Formeln der Mechanik unter der Annahme des Ebenbleibens der Querschnitte nach Bernoulli
+			berechnet, die Normalspannungen infolge M<sub>ω</sub> über die Wölbordinate.
+			Schubspannungen sind positiv, wenn sie in Richtung des lokalen Koordinatensystems des Elements
+			wirken. Die positive lokale Richtung zeigt vom Anfangs- zum Endknoten.
+		</p>
+		<p>Eigenschaften des Programms:</p>
+		<ul>
+			<li>Der Querschnitt kann unsymmetrisch, offen und/oder geschlossen sein.</li>
+			<li>Linear elastisches Material.</li>
+			<li>Die Dicke ist je Element konstant.</li>
+			<li>Jedes Element kann eigene Materialeigenschaften haben.</li>
+			<li>Berechnung aller Querschnittswerte einschließlich Schubmittelpunkt, Torsions- und
+				Wölbwiderstand.</li>
+			<li>
+				Spannungen infolge Normalkraft N, Querkräften V<sub>y</sub> und V<sub>z</sub>,
+				Biegemomenten M<sub>y</sub> und M<sub>z</sub>, primärer und sekundärer Torsion
+				M<sub>xp</sub> und M<sub>xs</sub> sowie Wölbbimoment M<sub>ω</sub>.
+			</li>
+		</ul>
+
+		<h2 id="vorzeichen">
+			<a href="#">Koordinatensystem und Vorzeichen</a>
+		</h2>
+		<p>
+			<img src="Vorzeichen_Querschnitt.png" alt="Vorzeichen der Schnittgrößen" class="bild" width="480">
+		</p>
+		<p class="bildtext">Vorzeichen der Schnittgrößen</p>
+		<p>
+			<img src="vorzeichen.png" alt="Vorzeichen am Element" class="bild" width="351">
+		</p>
+		<p class="bildtext">Vorzeichen am Element</p>
+
+		<h1 id="beispiel">
+			<a href="#">Beispiel</a>
+		</h1>
+		<h2>Einzelliger Hohlkastenquerschnitt</h2>
+		<p>
+			Dieses Beispiel wird in [2] behandelt. Die Querschnittsdaten werden beim ersten Programmstart
+			automatisch geladen, als Schnittgrößen sind dabei V<sub>z</sub> = 500 kN und
+			M<sub>y</sub> = 600 kNm eingetragen.
+		</p>
+		<p>
+			<img src="beispiel_querschnitt.png" alt="Beispiel Hohlkastenquerschnitt" class="bild" width="401">
+		</p>
+		<p>In [2] wird der Querschnitt zusätzlich mit folgenden Schnittgrößen untersucht:</p>
+		<p>
+			M<sub>xp</sub> = 250 kNm; M<sub>xs</sub> = 150 kNm; M<sub>ω</sub> = 10 kNm²
+			<br>
+			V<sub>y</sub> = 1000 kN; V<sub>z</sub> = 500 kN
+		</p>
+		<p>Material: E = 21.000 kN/cm²; ν = 0,3</p>
+
+		<h1 id="hinweiseApp">
+			<a href="#">Hinweise zur Bedienung der App</a>
+		</h1>
+		<p>
+			Die App hat die Tabs <i>Eingabe</i>, <i>Ergebnisse</i>, <i>System</i>, <i>3D</i>, <i>Info</i>
+			und ꔷꔷꔷ (Einstellungen). Wenn du mit der Maus über einen Button fährst oder ihn mit dem Finger
+			lange drückst, erscheint ein kurzer Hilfetext.
+		</p>
+		<h2>Eingabe</h2>
+		<p>
+			Als Dezimaltrennzeichen sind Komma und Punkt zulässig, ein Tausendertrennzeichen nicht.
+		</p>
+		<p>
+			Den Text im Feld <i>freier Text</i> übernimmt die PDF-Ausgabe, zum Beispiel für Aufgabe und
+			Namen. Einfache HTML-Formatierungen wie &lt;b&gt;fett&lt;/b&gt; sind möglich.
+		</p>
+		<p>
+			Ist <i>alle Elemente haben gleiche Materialdaten</i> angekreuzt, gelten die Bezugswerte für
+			alle Elemente. Die Spalten E und ν der Elementtabelle werden dann ausgeblendet.
+			Mit f<sub>y,Rd</sub> werden im Tab <i>Ergebnisse</i> überschrittene Vergleichsspannungen rot
+			markiert, in 3D kann f<sub>y,Rd</sub> zur Vergleichsspannung eingeblendet werden.
+		</p>
+		<p>
+			Mit <i>Rechnen</i> startest du die Berechnung, danach wechselt die App in den Tab
+			<i>Ergebnisse</i>. Ist der Button <i>Rechnen</i> farbig hinterlegt, wurde die Eingabe seit der
+			letzten Berechnung geändert.
+		</p>
+
+		<h2 id="tabellen">
+			<a href="#">Tabellen und Kontextmenü</a>
+		</h2>
+		<p>
+			Die Anzahl der Zeilen der Knoten- und der Elementtabelle änderst du mit − und + neben
+			<i>Anzahl Knoten</i> bzw. <i>Anzahl Elemente</i> oder durch Eingabe der Anzahl. Zeilen kommen
+			dabei am Tabellenende hinzu oder fallen dort weg.
+		</p>
+		<p>
+			In der Elementtabelle fügt + in der Spalte No oberhalb eine Zeile ein, der Papierkorb löscht
+			die Zeile. Beides lässt sich rückgängig machen und
+			wiederherstellen. In der Knotentabelle gibt es das bewusst nicht: nod1 und nod2 der Elemente
+			verweisen auf die Knotennummern, die sich sonst unbemerkt verschieben würden. Die Nummern
+			bleiben so auch passend zu deiner Skizze auf Papier.
+		</p>
+		<p>
+			Um die Eingabe zu beschleunigen, kannst du Werte in den Tabellen kopieren und generieren.
+			Markiere dazu einen Block, indem du mit gedrückter <b>rechter</b> Maustaste über die Zellen
+			ziehst. Beim Loslassen erscheint das Kontextmenü.
+			<br>
+			<b>Touchscreens:</b> Schalte zuerst im Tab ꔷꔷꔷ <i>Selektion von Zellen mit Finger
+			erlauben</i> ein. Dann markierst du die Zellen, indem du mit dem Finger oder Stift darüber
+			streichst. Nach dem Anheben erscheint das Kontextmenü.
+		</p>
+		<p>
+			<img src="kontextmenue_de.png" alt="Kontextmenü" class="bild" width="300">
+		</p>
+		<p class="bildtext">Kontextmenü</p>
+		<ul>
+			<li><b>Wert der ersten Zelle kopieren:</b> Der Wert der zuerst markierten Zelle wird in die
+				anderen markierten Zellen kopiert.</li>
+			<li><b>Werte der ersten Zeile kopieren:</b> Markiere mindestens zwei Zeilen. Die Werte der
+				obersten Zeile werden spaltenweise nach unten kopiert.</li>
+			<li><b>um 1 hochzählen:</b> Markiere mindestens zwei Zeilen. Ausgehend von der obersten Zeile
+				werden die Werte spaltenweise jeweils um 1 erhöht.</li>
+			<li><b>um Delta hochzählen:</b> Markiere mindestens drei Zeilen. Aus der Differenz der beiden
+				obersten Zeilen wird spaltenweise ein Delta bestimmt, um das die darunterliegenden Zeilen
+				weiter hochgezählt werden.</li>
+			<li><b>in Zwischenablage kopieren:</b> Der Inhalt der markierten Zellen wird in die
+				Zwischenablage kopiert, zum Beispiel für eine andere Stelle der Tabelle oder für eine
+				Tabellenkalkulation.</li>
+			<li><b>aus Zwischenablage einfügen:</b> Der Inhalt der Zwischenablage wird ab der linken
+				oberen Zelle des markierten Bereichs eingefügt.</li>
+			<li><b>schließen:</b> Das Kontextmenü wird ohne weitere Aktion geschlossen.</li>
+		</ul>
+		<p>
+			Hinweis: An Tablets und Smartphones lässt sich auch eine Bluetooth-Maus und/oder -Tastatur
+			anschließen.
+		</p>
+
+		<h2 id="dateien">
+			<a href="#">Dateien, PDF und automatische Sicherung</a>
+		</h2>
+		<p>
+			Mit den Buttons über der Eingabe beginnst du eine neue Eingabe, liest eine gespeicherte
+			Eingabe ein oder speicherst die aktuelle Eingabe. Eingabedateien haben die Endung
+			<i>.duennqs</i> (unter Android <i>.duennqs.json</i>), ältere <i>.txt</i>-Dateien können
+			weiterhin gelesen werden. Eine Datei kannst du auch einfach mit der Maus in das Fenster der App
+			ziehen. Gibt es Änderungen, die noch nicht gespeichert sind, fragt die App vor einer neuen
+			Eingabe oder dem Öffnen einer anderen Datei nach.
+		</p>
+		<p>
+			Im Tab <i>Ergebnisse</i> speicherst du die Ergebnisse mit dem PDF-Button als PDF-Datei,
+			einschließlich Eingabe und Querschnittsgrafik.
+		</p>
+		<p>
+			Die aktuelle Eingabe wird automatisch im Browser gesichert, zum Beispiel wenn die App in den
+			Hintergrund wechselt oder geschlossen wird. Beim nächsten Start ist sie wieder da. Das ersetzt
+			nicht das Speichern in einer Datei.
+		</p>
+		<p>
+			Gibt es eine neue Version der App, erscheint eine Rückfrage, ob neu geladen werden soll. Die
+			aktuelle Eingabe bleibt dabei erhalten.
+		</p>
+
+		<h2 id="darstellung_2D">
+			<a href="#">Darstellung 2D (Tab System)</a>
+		</h2>
+		<p>
+			Im Tab <i>System</i> wird der Querschnitt in der ȳ-z̄-Ebene mit Schwerpunkt, Hauptachsen und
+			Schubmittelpunkt gezeichnet. Das Fangkreuz zeigt die Koordinaten an und rastet an Knoten, Schwerpunkt und
+			Schubmittelpunkt ein, an Knoten auch mit der Wölbordinate ω.
+			<i>Nummern</i> blendet die Knoten- und Elementnummern ein und aus, <i>SVG</i> speichert die
+			Grafik als SVG-Datei.
+		</p>
+
+		<h2 id="darstellung_3D">
+			<a href="#">Darstellungen 3D</a>
+		</h2>
+		<p>
+			Im Tab <i>3D</i> werden die Ergebnisse räumlich dargestellt. Die Werte werden in Richtung der
+			Stabachse x aufgetragen. Mit der Maus drehst (linke Taste), verschiebst (rechte Taste) und
+			zoomst (Mausrad) du die Ansicht, mit zwei Fingern drehst und zoomst du. Mit einem Finger
+			werden Werte angezeigt oder die Ansicht verschoben, umgeschaltet wird mit dem Button links
+			unten. Das Fangkreuz rastet an den Punkten der dargestellten Größe ein und zeigt den Wert an.
+		</p>
+		<p>
+			Die Einstellungen stehen im <i>Bedienfeld</i>. Es zeigt nur die Optionen, die zur gewählten
+			Anzeige passen.
+		</p>
+		<p>
+			<img src="bedienfeld_de.png" alt="Bedienfeld der 3D-Ansicht" class="bild" width="264">
+		</p>
+		<p class="bildtext">Bedienfeld</p>
+		<ul>
+			<li><b>Anzeige:</b>
+				<ul>
+					<li><i>nur Querschnitt</i> mit Knoten- und Elementnummern.</li>
+					<li><i>Normalspannung σ</i>: Fläche über der Mittellinie, Druck rot und Zug blau.</li>
+					<li><i>Schubspannung τ</i> an der rechten und linken Seite jedes Elements.</li>
+					<li><i>Vergleichsspannung σv</i> nach von Mises:
+						σ<sub>v</sub> = √(σ² + 3·τ²).</li>
+					<li><i>Wölbordinate ω</i> und <i>Verwölbung u</i>: Beide beschreiben eine Verformung
+						des Querschnitts in Stabrichtung. Gezeichnet wird der verformte Querschnitt vor dem
+						blassen unverformten. Die Verwölbung u infolge der Schubspannungen wird wie in der
+						FEM berechnet und bezogen auf ihren Mittelwert über die Querschnittsfläche
+						dargestellt. Auf die Spannungen hat der Bezugspunkt keinen Einfluss, da nur die
+						Ableitungen von u benötigt werden [1], [2].</li>
+				</ul>
+			</li>
+			<li><b>fyRd anzeigen:</b> Bei der Vergleichsspannung wird f<sub>y,Rd</sub> als Ebene über
+				dem Querschnitt gezeichnet. Rechts unten stehen die größte Vergleichsspannung und die
+				Ausnutzung.</li>
+			<li><b>Beschriftung:</b> Werte an den Elementenden und Extremwerte.</li>
+			<li><b>Skalierung:</b> Überhöhung der dargestellten Größe.</li>
+			<li><b>σ über die Dicke:</b> Bei der Normalspannung wird zusätzlich der Spannungskörper über
+				die Elementdicke als Rahmen gezeichnet. Bei der Vergleichsspannung wird σ dann an den
+				Rändern der Elemente statt in der Mittellinie verwendet.</li>
+			<li><b>Seiten anzeigen:</b> Seitenflächen bei Schub- und Vergleichsspannung.</li>
+			<li><b>Pfeile anzeigen</b> und <b>Skalierung Pfeile:</b> Richtungspfeile der Normal- und
+				Schubspannungen.</li>
+			<li><b>rechts/links anzeigen:</b> kennzeichnet die rechte und linke Seite der Elemente und
+				zeigt mit einem Pfeil die Richtung vom Anfangs- zum Endknoten.</li>
+			<li><b>Achsen anzeigen:</b> Koordinatenkreuz im Schwerpunkt.</li>
+			<li><b>Fangweite [px]:</b> Abstand, in dem das Fangkreuz einrastet.</li>
+			<li><b>Bild speichern:</b> speichert die Ansicht als PNG-Datei in wählbarer Auflösung,
+				wahlweise mit weißem Hintergrund.</li>
+			<li><b>Zurücksetzen:</b> setzt Skalierung, Blickrichtung und Zoom zurück.</li>
+		</ul>
+
+		<h2 id="bezeichnungen">
+			<a href="#">Bezeichnungen</a>
+		</h2>
+		<p>
+			Knoten-Inzidenzen der Elemente:
+			<br>
+			nod1 = Knotennummer am Elementanfang
+			<br>
+			nod2 = Knotennummer am Elementende
+		</p>
+		<p>
+			A<sub>geom</sub> = geometrische Querschnittsfläche, ohne Berücksichtigung der Materialdaten.
+		</p>
+		<p>
+			Schubspannungen aus primärer Torsion M<sub>xp</sub>:
+			<br>
+			τ<sub>xs0,L</sub> = Schubspannung aus dem Anteil offener Querschnitt, linke Seite, linear
+			über die Elementdicke
+			<br>
+			τ<sub>xs0,R</sub> = Schubspannung aus dem Anteil offener Querschnitt, rechte Seite
+			<br>
+			τ<sub>xs1</sub> = Schubspannung aus dem Anteil geschlossener Querschnitt, konstant über die
+			Elementdicke
+		</p>
+		<p>
+			Schubspannungen aus Querkraft und sekundärer Torsion M<sub>xs</sub>:
+			<br>
+			τ<sub>xsa</sub> = Schubspannung am Elementanfang a
+			<br>
+			τ<sub>xsm</sub> = Schubspannung in Elementmitte m
+			<br>
+			τ<sub>xse</sub> = Schubspannung am Elementende e, alle konstant über die Elementdicke
+		</p>
+		<p>Alle anderen Bezeichnungen analog.</p>
+
+		<h2 id="voreinstellungen">
+			<a href="#">Voreinstellungen</a>
+		</h2>
+		<p>
+			Im Tab ꔷꔷꔷ stellst du die Sprache (<i>Language</i>), die Längeneinheit, die Schriftgröße,
+			die Selektion von Zellen mit dem Finger sowie die Farben der Tabellen und die Akzentfarbe ein.
+			Mit der Längeneinheit wird die Einheit der Spannungen angepasst:
+			mm → N/mm²; cm → kN/cm²; m → MN/m². Vorhandene Eingabewerte werden dabei umgerechnet, danach
+			ist neu zu rechnen. Die großen Schriftgrößen sind für die Projektion mit dem Beamer gedacht.
+		</p>
+		<p>
+			Die Einstellungen kannst du als Voreinstellung im lokalen Speicher des Browsers speichern, sie
+			stehen dann nach einem Neustart wieder zur Verfügung. Mit dem Button darunter werden die
+			Voreinstellungen wieder gelöscht.
+			<br>
+			Beim lokalen Speicher (local storage) handelt es sich nicht um Cookies. Diese Webanwendung
+			führt alle Berechnungen lokal im Browser in JavaScript durch. Es werden keine Daten mit einem
+			Webserver ausgetauscht. Nach dem Programmstart ist deshalb keine Netzwerkverbindung mehr
+			erforderlich.
+		</p>
+
+		<h2 id="installation">
+			<a href="#">Installation der App auf dem Desktop</a>
+		</h2>
+		<p>
+			Diese Anwendung ist als Webanwendung (Web App) programmiert, so dass du sie unter allen
+			Betriebssystemen auf dem Desktop installieren kannst. Dafür wird ein Icon erstellt, und die App
+			verhält sich wie eine aus einem Store installierte App. duennQs läuft weiterhin im Browser,
+			allerdings ohne Bedienelemente wie die Adressleiste. Die Installation unterscheidet sich je
+			nach Betriebssystem, Version und Browser.
+		</p>
+		<p>
+			Unter Android wählst du, nachdem duennQs einmal im Chrome-Browser geöffnet wurde, rechts oben
+			im Anwendungsmenü <i>(Drei-Punkte-Menü)</i> die Option <i>App installieren</i> und bestätigst
+			den Dialog. Auf dem Desktop gibt es dann ein neues Icon mit dem Namen duennQs.
+		</p>
+		<p>
+			Unter iOS verwendest du den Safari-Browser. Hier heißt der Befehl <i>Zum Home-Bildschirm</i>
+			(Teilen-Symbol, dann das Symbol mit dem Plus).
+		</p>
+		<p>
+			Unter Microsoft Windows geht es ähnlich wie unter Android. Im Edge-Browser steht im
+			Anwendungsmenü <i>(Drei-Punkte-Menü)</i> folgender Abschnitt:
+		</p>
+		<p>
+			<img src="app-install-windows.png" alt="Installation unter Windows" class="bild" width="423">
+		</p>
+		<p>
+			Neuere Chrome-Versionen fragen unter Umständen direkt, ob die App installiert werden soll,
+			siehe das Symbol rechts in der Adressleiste:
+		</p>
+		<p>
+			<img src="chrome_install.png" alt="Installation mit Chrome" class="bild" width="436">
+		</p>
+		<p>Unter macOS verwendest du zur Installation Microsoft Edge oder Google Chrome.</p>
+		<p>
+			Firefox unterstützt die Installation derzeit nicht. Unter Windows und Linux kannst du
+			alternativ mit der Taste F11 in den Vollbildmodus umschalten.
+		</p>
+		<p>
+			Deinstalliert wird unter Android, iOS und Linux durch Löschen des Icons auf dem Desktop. Unter
+			Windows wird die App wie ein normales Programm deinstalliert.
+		</p>
+
+		<h2 id="kompatibilitaet">
+			<a href="#">Kompatibilität</a>
+		</h2>
+		<p>
+			Getestet wurde unter Windows 10↑, macOS Catalina 10.15.7↑, Ubuntu 22.04↑, Android 9–16 und
+			iOS 15.7.3↑, jeweils mit der aktuellen Version von Chrome, Chromium, Edge, Safari und Firefox.
+			Nur die aktuellen Browserversionen werden getestet und unterstützt.
+		</p>
+
+		<h2 id="tastatur">
+			<a href="#">Virtuelle Tastatur</a>
+		</h2>
+		<p>
+			Auf manchen Android-Geräten, besonders von Samsung, hat die numerische Tastatur keine Taste für
+			das Minuszeichen. Die HTML-Spezifikation überlässt das leider dem Gerätehersteller. In diesem
+			Fall empfiehlt sich eine zusätzliche virtuelle Tastatur, zum Beispiel die Google-Tastatur
+			Gboard aus dem Play Store. Nach der Installation musst du die Tastatur noch aktivieren, am
+			besten gleich im Play Store. Später kannst du jederzeit zwischen den installierten Tastaturen
+			wechseln (Symbol rechts unten auf der Tastatur).
+		</p>
+
+		<h2 id="kontakt">
+			<a href="#">Kontakt und Fehlermeldungen</a>
+		</h2>
+		<p>
+			Für Hinweise, Wünsche und Fehlermeldungen verwende die E-Mail-Adresse
+			statikverstehen&#x40;web.de.
+			Bei Fehlermeldungen ist eine Kopie der Eingabedatei als Anhang meist hilfreich.
+		</p>
+
+		<h1>
+			<a href="#">Literatur</a>
+		</h1>
+		<p>
+			[1] Matthias Kraus:
+			Computerorientierte Berechnungsmethoden für beliebige Stabquerschnitte des Stahlbaus,
+			Dissertation, Bochum 2005
+		</p>
+		<p>
+			[2] Matthias Kraus; Rolf Kindmann:
+			Finite-Elemente-Methoden im Stahlbau, 2. Auflage, Ernst W. &amp; Sohn Verlag, 2019
+			<br>Englische Ausgabe: Rolf Kindmann; Matthias Kraus:
+			Steel Structures: Design using FEM, Ernst W. &amp; Sohn Verlag, 2011
+		</p>
+	</body>
+</html>

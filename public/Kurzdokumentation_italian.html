@@ -1,0 +1,488 @@
+<!DOCTYPE html>
+<html lang="it">
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<title>duennQs – Caratteristiche e tensioni di sezioni in parete sottile</title>
+		<meta name="author" content="Prof. Dr.-Ing. Detlef Rothe">
+		<style>
+		body {
+			font-size: 1em;
+			font-family: "FreeSans", sans-serif;
+			line-height: 150%;
+		}
+
+		p {
+			margin-bottom: 0.6em;
+		}
+
+		h1,
+		h2 {
+			color: #1c1c6a;
+			line-height: 115%;
+			font-weight: bold;
+			margin-bottom: 0;
+		}
+
+		h1 {
+			font-size: 1.2em;
+			margin-top: 2em;
+		}
+
+		h2 {
+			font-size: 1.125em;
+			margin-top: 0.83em;
+		}
+
+		a {
+			color: #1c1c6a;
+			text-decoration: none;
+		}
+
+		/* Pfeil nur vor den Links im Inhaltsverzeichnis; die Überschriften
+		   (href="#", Sprung nach oben) bekommen keinen */
+		a[href^="#"]:not([href="#"])::before {
+			content: '➡ ';
+		}
+
+		/* Abbildungen, zentriert; Breite über das width-Attribut */
+		img.bild {
+			display: block;
+			margin: auto;
+			max-width: 100%;
+			height: auto;
+		}
+
+		.bildtext {
+			text-align: center;
+			font-size: 0.9em;
+		}
+
+		li {
+			margin-bottom: 0.3em;
+		}
+	</style>
+	</head>
+	<body>
+		<h1>Indice</h1>
+		<p>
+			<a href="#uebersicht">Panoramica</a>
+			<br>
+			<a href="#vorzeichen">Sistema di coordinate e convenzione dei segni</a>
+			<br>
+			<a href="#beispiel">Esempio</a>
+			<br>
+			<a href="#hinweiseApp">Indicazioni per l'uso dell'app</a>
+			<br>
+			<a href="#tabellen">Tabelle e menu contestuale</a>
+			<br>
+			<a href="#dateien">File, PDF e salvataggio automatico</a>
+			<br>
+			<a href="#darstellung_2D">Rappresentazione 2D (scheda Sistema)</a>
+			<br>
+			<a href="#darstellung_3D">Rappresentazioni 3D</a>
+			<br>
+			<a href="#bezeichnungen">Simboli</a>
+			<br>
+			<a href="#voreinstellungen">Impostazioni</a>
+			<br>
+			<a href="#installation">Installare l'app sul desktop</a>
+			<br>
+			<a href="#kompatibilitaet">Compatibilità</a>
+			<br>
+			<a href="#tastatur">Aiuto: la mia tastiera non ha il tasto meno, tastiera virtuale</a>
+			<br>
+			<a href="#kontakt">Contatti e segnalazione di errori</a>
+		</p>
+
+		<h1 id="uebersicht">
+			<a href="#">Panoramica</a>
+		</h1>
+		<p>
+			Con questa applicazione web puoi calcolare le caratteristiche e le tensioni di sezioni in parete
+			sottile. Si utilizza il modello della linea media (modello a filo), risolto con il metodo degli
+			elementi finiti [1], [2]. Come per un telaio o una travatura reticolare, la sezione è descritta
+			da elementi rettilinei collegati tra loro nei nodi. Ogni elemento deve essere collegato ad
+			almeno un altro elemento: nella sezione non possono esserci elementi «isolati». Da ogni
+			elemento deve esistere un percorso verso tutti gli altri.
+		</p>
+		<p>
+			Le coordinate dei nodi si inseriscono in un sistema ausiliario ȳ-z̄, la cui origine può essere
+			scelta liberamente.
+			Ogni elemento ha un nodo iniziale e un nodo finale e rappresenta esattamente andamenti quadratici
+			della tensione tangenziale, per cui non è necessario infittire la discretizzazione.
+			Se guardi lungo l'elemento dal suo inizio alla sua fine, il lato destro dell'elemento si trova
+			alla tua destra.
+		</p>
+		<p>
+			Poiché gli elementi possono avere proprietà del materiale diverse, occorre indicare valori di
+			riferimento per il modulo elastico e il coefficiente di Poisson. Le caratteristiche calcolate
+			sono valori ideali riferiti a questi valori di riferimento. Se le utilizzi per un'asta in un
+			programma di calcolo strutturale, inserisci lì gli stessi valori di riferimento come dati del
+			materiale.
+		</p>
+		<p>
+			Le tensioni normali dovute a N, M<sub>y</sub> e M<sub>z</sub> sono calcolate con le formule
+			usuali della meccanica, assumendo che le sezioni piane restino piane (Bernoulli), quelle dovute
+			a M<sub>ω</sub> tramite l'ordinata di ingobbamento.
+			Le tensioni tangenziali sono positive quando agiscono nella direzione del sistema di coordinate
+			locale dell'elemento. La direzione locale positiva va dal nodo iniziale al nodo finale.
+		</p>
+		<p>Caratteristiche del programma:</p>
+		<ul>
+			<li>La sezione può essere asimmetrica, aperta e/o chiusa.</li>
+			<li>Materiale elastico lineare.</li>
+			<li>Lo spessore è costante in ogni elemento.</li>
+			<li>Ogni elemento può avere proprie caratteristiche del materiale.</li>
+			<li>Calcolo di tutte le caratteristiche della sezione, compresi il centro di taglio, la
+				costante torsionale e la costante di ingobbamento.</li>
+			<li>
+				Tensioni dovute allo sforzo normale N, ai tagli V<sub>y</sub> e V<sub>z</sub>, ai momenti
+				flettenti M<sub>y</sub> e M<sub>z</sub>, alla torsione primaria e secondaria
+				M<sub>xp</sub> e M<sub>xs</sub> e al bimomento M<sub>ω</sub>.
+			</li>
+		</ul>
+
+		<h2 id="vorzeichen">
+			<a href="#">Sistema di coordinate e convenzione dei segni</a>
+		</h2>
+		<p>
+			<img src="Vorzeichen_Querschnitt.png" alt="Convenzione dei segni delle sollecitazioni" class="bild" width="480">
+		</p>
+		<p class="bildtext">Convenzione dei segni delle sollecitazioni</p>
+		<p>
+			<img src="vorzeichen.png" alt="Convenzione dei segni dell'elemento" class="bild" width="351">
+		</p>
+		<p class="bildtext">Convenzione dei segni dell'elemento</p>
+
+		<h1 id="beispiel">
+			<a href="#">Esempio</a>
+		</h1>
+		<h2>Sezione a cassone monocellulare</h2>
+		<p>
+			Questo esempio è trattato in [2]. I dati della sezione vengono caricati automaticamente al primo
+			avvio dell'app, con le sollecitazioni V<sub>z</sub> = 500 kN e M<sub>y</sub> = 600 kNm.
+		</p>
+		<p>
+			<img src="beispiel_querschnitt.png" alt="Esempio di sezione a cassone" class="bild" width="401">
+		</p>
+		<p>In [2] la sezione è studiata anche con le seguenti sollecitazioni:</p>
+		<p>
+			M<sub>xp</sub> = 250 kNm; M<sub>xs</sub> = 150 kNm; M<sub>ω</sub> = 10 kNm²
+			<br>
+			V<sub>y</sub> = 1000 kN; V<sub>z</sub> = 500 kN
+		</p>
+		<p>Materiale: E = 21.000 kN/cm²; ν = 0,3</p>
+
+		<h1 id="hinweiseApp">
+			<a href="#">Indicazioni per l'uso dell'app</a>
+		</h1>
+		<p>
+			L'app ha le schede <i>Input</i>, <i>Risultati</i>, <i>Sistema</i>, <i>3D</i>, <i>Info</i> e
+			ꔷꔷꔷ (impostazioni). Se passi con il mouse su un pulsante o lo tieni premuto con il dito,
+			compare un breve testo di aiuto.
+		</p>
+		<h2>Input</h2>
+		<p>
+			Come separatore decimale sono ammessi la virgola e il punto, il separatore delle migliaia non è
+			ammesso.
+		</p>
+		<p>
+			Il testo del campo <i>testo libero</i> viene riportato nell'output PDF, per esempio per il testo
+			dell'esercizio e il tuo nome. Sono possibili semplici formattazioni HTML come
+			&lt;b&gt;grassetto&lt;/b&gt;.
+		</p>
+		<p>
+			Se è spuntato <i>tutti gli elementi hanno lo stesso materiale</i>, i valori di riferimento valgono
+			per tutti gli elementi e le colonne E e ν della tabella degli elementi vengono nascoste.
+			Con f<sub>y,Rd</sub> le tensioni equivalenti superate vengono evidenziate in rosso nella scheda
+			<i>Risultati</i>; in 3D f<sub>y,Rd</sub> può essere mostrato insieme alla tensione
+			equivalente.
+		</p>
+		<p>
+			<i>Calcola</i> avvia il calcolo, dopodiché l'app passa alla scheda <i>Risultati</i>. Se il
+			pulsante <i>Calcola</i> è evidenziato a colori, l'input è cambiato dall'ultimo calcolo.
+		</p>
+
+		<h2 id="tabellen">
+			<a href="#">Tabelle e menu contestuale</a>
+		</h2>
+		<p>
+			Il numero di righe delle tabelle dei nodi e degli elementi si modifica con − e + accanto a
+			<i>Numero di nodi</i> e <i>Numero di elementi</i>, oppure digitando il numero. Le righe vengono
+			aggiunte o tolte alla fine della tabella.
+		</p>
+		<p>
+			Nella tabella degli elementi, + nella colonna No inserisce una riga sopra, il cestino elimina la
+			riga. Entrambe le operazioni si possono annullare e ripetere. La tabella dei nodi
+			volutamente non lo prevede: nod1 e nod2 degli elementi si riferiscono ai numeri dei nodi, che
+			altrimenti si sposterebbero senza che te ne accorga. Così i numeri restano anche coerenti con
+			il tuo schizzo su carta.
+		</p>
+		<p>
+			Per velocizzare l'input puoi copiare e generare valori nelle tabelle. Seleziona un blocco
+			trascinando sulle celle con il tasto <b>destro</b> del mouse premuto. Al rilascio compare il
+			menu contestuale.
+			<br>
+			<b>Touchscreen:</b> attiva prima <i>Consenti la selezione delle celle con il dito</i> nella
+			scheda ꔷꔷꔷ. Poi seleziona le celle passandoci sopra con il dito o la penna. Quando lo sollevi,
+			compare il menu contestuale.
+		</p>
+		<p>
+			<img src="kontextmenue_it.png" alt="Menu contestuale" class="bild" width="300">
+		</p>
+		<p class="bildtext">Menu contestuale</p>
+		<ul>
+			<li><b>copia il valore della prima cella:</b> il valore della prima cella selezionata viene
+				copiato nelle altre celle selezionate.</li>
+			<li><b>copia i valori della prima riga:</b> seleziona almeno due righe. I valori della riga più
+				in alto vengono copiati verso il basso, colonna per colonna.</li>
+			<li><b>incrementa di 1:</b> seleziona almeno due righe. A partire dalla riga più in alto, i
+				valori vengono aumentati di 1 colonna per colonna.</li>
+			<li><b>incrementa di delta:</b> seleziona almeno tre righe. La differenza tra le due righe più
+				in alto dà un delta per ogni colonna, di cui vengono incrementate le righe sottostanti.</li>
+			<li><b>copia negli appunti:</b> il contenuto delle celle selezionate viene copiato negli
+				appunti, per esempio per un altro punto della tabella o per un foglio di calcolo.</li>
+			<li><b>inserisci dagli appunti:</b> il contenuto degli appunti viene inserito a partire dalla
+				cella in alto a sinistra dell'area selezionata.</li>
+			<li><b>chiudi:</b> il menu contestuale si chiude senza ulteriori azioni.</li>
+		</ul>
+		<p>
+			Nota: a tablet e smartphone si possono collegare anche un mouse e/o una tastiera Bluetooth.
+		</p>
+
+		<h2 id="dateien">
+			<a href="#">File, PDF e salvataggio automatico</a>
+		</h2>
+		<p>
+			Con i pulsanti sopra l'input inizi un nuovo input, leggi un input salvato o salvi l'input
+			attuale. I file di input hanno l'estensione <i>.duennqs</i> (su Android
+			<i>.duennqs.json</i>); i vecchi file <i>.txt</i> si possono ancora leggere. Puoi anche
+			trascinare un file con il mouse nella finestra dell'app. Se ci sono modifiche non ancora
+			salvate, l'app chiede conferma prima di un nuovo input o dell'apertura di un altro file.
+		</p>
+		<p>
+			Nella scheda <i>Risultati</i>, il pulsante PDF salva i risultati in un file PDF, compresi l'input
+			e il disegno della sezione.
+		</p>
+		<p>
+			L'input attuale viene salvato automaticamente nel browser, per esempio quando l'app passa in
+			background o viene chiusa, e viene ripristinato all'avvio successivo. Questo non sostituisce il
+			salvataggio in un file.
+		</p>
+		<p>
+			Quando è disponibile una nuova versione dell'app, ti viene chiesto se ricaricarla. L'input
+			attuale viene mantenuto.
+		</p>
+
+		<h2 id="darstellung_2D">
+			<a href="#">Rappresentazione 2D (scheda Sistema)</a>
+		</h2>
+		<p>
+			La scheda <i>Sistema</i> mostra la sezione nel piano ȳ-z̄ con baricentro, assi principali e
+			centro di taglio. Il mirino mostra le coordinate e si aggancia ai nodi, al baricentro e al
+			centro di taglio; nei nodi mostra anche l'ordinata di ingobbamento ω.
+			<i>Numeri</i> mostra o nasconde i numeri di nodi ed elementi, <i>SVG</i> salva il disegno come
+			file SVG.
+		</p>
+
+		<h2 id="darstellung_3D">
+			<a href="#">Rappresentazioni 3D</a>
+		</h2>
+		<p>
+			La scheda <i>3D</i> mostra i risultati nello spazio. I valori sono riportati nella direzione
+			dell'asse dell'asta x. Con il mouse ruoti (tasto sinistro), sposti (tasto destro) e ingrandisci
+			(rotellina) la vista; con due dita ruoti e ingrandisci. Con un dito interroghi i valori oppure
+			sposti la vista; il pulsante in basso a sinistra passa da una modalità all'altra. Il mirino si
+			aggancia ai punti della grandezza rappresentata e ne mostra il valore.
+		</p>
+		<p>
+			Le impostazioni si trovano nel <i>Pannello di controllo</i>, che mostra solo le opzioni adatte
+			alla rappresentazione scelta.
+		</p>
+		<p>
+			<img src="bedienfeld_it.png" alt="Pannello di controllo della vista 3D" class="bild" width="264">
+		</p>
+		<p class="bildtext">Pannello di controllo</p>
+		<ul>
+			<li><b>Visualizza:</b>
+				<ul>
+					<li><i>Solo sezione</i> con i numeri di nodi ed elementi.</li>
+					<li><i>Tensione normale σ</i>: superficie sopra la linea media, compressione in rosso e
+						trazione in blu.</li>
+					<li><i>Tensione tangenziale τ</i> sui lati destro e sinistro di ogni elemento.</li>
+					<li><i>Tensione equivalente σv</i> secondo von Mises:
+						σ<sub>v</sub> = √(σ² + 3·τ²).</li>
+					<li><i>Ordinata di ingobbamento ω</i> e <i>Ingobbamento u</i>: entrambe descrivono una
+						deformazione della sezione nella direzione dell'asse dell'asta. La sezione deformata
+						è disegnata davanti a quella indeformata, mostrata in modo attenuato. L'ingobbamento u
+						dovuto alle tensioni tangenziali è calcolato come nel FEM e rappresentato rispetto al
+						suo valore medio sull'area della sezione. Il punto di riferimento non influisce sulle
+						tensioni, poiché servono solo le derivate di u [1], [2].</li>
+				</ul>
+			</li>
+			<li><b>Mostra fyRd:</b> per la tensione equivalente, f<sub>y,Rd</sub> è disegnato come un piano
+				sopra la sezione. In basso a destra sono indicati la tensione equivalente massima e il grado
+				di sfruttamento.</li>
+			<li><b>Etichette:</b> valori alle estremità degli elementi e valori estremi.</li>
+			<li><b>Scala:</b> amplificazione della grandezza rappresentata.</li>
+			<li><b>σ nello spessore:</b> per la tensione normale viene disegnato in più, come cornice, il
+				solido delle tensioni nello spessore dell'elemento. Per la tensione equivalente, σ viene
+				allora preso sulle facce degli elementi invece che sulla linea media.</li>
+			<li><b>Mostra lati:</b> facce laterali per la tensione tangenziale e quella equivalente.</li>
+			<li><b>Mostra frecce</b> e <b>Scala frecce:</b> frecce di direzione delle tensioni normali e
+				tangenziali.</li>
+			<li><b>Destra/sinistra:</b> contrassegna i lati destro e sinistro degli elementi e indica con
+				una freccia la direzione dal nodo iniziale al nodo finale.</li>
+			<li><b>Mostra assi:</b> assi coordinati nel baricentro.</li>
+			<li><b>Raggio aggancio [px]:</b> distanza entro cui il mirino si aggancia.</li>
+			<li><b>Salva immagine:</b> salva la vista come file PNG con risoluzione a scelta,
+				eventualmente con sfondo bianco.</li>
+			<li><b>Ripristina:</b> ripristina scala, direzione di vista e zoom.</li>
+		</ul>
+
+		<h2 id="bezeichnungen">
+			<a href="#">Simboli</a>
+		</h2>
+		<p>
+			Incidenze nodali degli elementi:
+			<br>
+			nod1 = numero del nodo all'inizio dell'elemento
+			<br>
+			nod2 = numero del nodo alla fine dell'elemento
+		</p>
+		<p>
+			A<sub>geom</sub> = area geometrica della sezione, senza tenere conto dei dati del materiale.
+		</p>
+		<p>
+			Tensioni tangenziali dovute alla torsione primaria M<sub>xp</sub>:
+			<br>
+			τ<sub>xs0,L</sub> = tensione tangenziale della parte a sezione aperta, lato sinistro, lineare
+			nello spessore dell'elemento
+			<br>
+			τ<sub>xs0,R</sub> = tensione tangenziale della parte a sezione aperta, lato destro
+			<br>
+			τ<sub>xs1</sub> = tensione tangenziale della parte a sezione chiusa, costante nello spessore
+			dell'elemento
+		</p>
+		<p>
+			Tensioni tangenziali dovute al taglio e alla torsione secondaria M<sub>xs</sub>:
+			<br>
+			τ<sub>xsa</sub> = tensione tangenziale all'inizio dell'elemento a
+			<br>
+			τ<sub>xsm</sub> = tensione tangenziale a metà dell'elemento m
+			<br>
+			τ<sub>xse</sub> = tensione tangenziale alla fine dell'elemento e, tutte costanti nello
+			spessore dell'elemento
+		</p>
+		<p>Tutti gli altri simboli in modo analogo.</p>
+
+		<h2 id="voreinstellungen">
+			<a href="#">Impostazioni</a>
+		</h2>
+		<p>
+			Nella scheda ꔷꔷꔷ imposti la lingua (<i>Language</i>), l'unità di lunghezza, la dimensione del
+			carattere, la selezione delle celle con il dito, i colori delle tabelle e il colore di accento.
+			L'unità delle tensioni segue l'unità di lunghezza: mm → N/mm²; cm → kN/cm²; m → MN/m². I valori
+			inseriti vengono convertiti; dopo occorre ricalcolare. Le dimensioni grandi del carattere sono
+			pensate per la proiezione con un videoproiettore.
+		</p>
+		<p>
+			Puoi salvare le impostazioni come valori predefiniti nella memoria locale del browser; saranno
+			di nuovo disponibili dopo un riavvio. Il pulsante sottostante cancella di nuovo i valori
+			predefiniti.
+			<br>
+			La memoria locale (local storage) non è un cookie. Questa applicazione web esegue tutti i calcoli
+			localmente nel browser in JavaScript. Non vengono scambiati dati con alcun server web, quindi
+			dopo l'avvio dell'app non serve più una connessione di rete.
+		</p>
+
+		<h2 id="installation">
+			<a href="#">Installare l'app sul desktop</a>
+		</h2>
+		<p>
+			Questa applicazione è programmata come applicazione web (web app), quindi puoi installarla sul
+			desktop con qualsiasi sistema operativo. Viene creata un'icona e l'app si comporta come un'app
+			installata da uno store. duennQs continua a funzionare nel browser, ma senza elementi come la
+			barra degli indirizzi. L'installazione varia secondo il sistema operativo, la versione e il
+			browser.
+		</p>
+		<p>
+			Su Android, dopo aver aperto duennQs nel browser Chrome, scegli <i>Installa app</i> dal menu
+			dell'applicazione <i>(menu con tre puntini)</i> in alto a destra e conferma la finestra di
+			dialogo. Sul desktop compare quindi una nuova icona chiamata duennQs.
+		</p>
+		<p>
+			Su iOS usa il browser Safari. Qui il comando si chiama <i>Aggiungi alla schermata Home</i>
+			(simbolo di condivisione, poi il simbolo con il più).
+		</p>
+		<p>
+			Su Microsoft Windows la procedura è simile a quella di Android. Nel browser Edge, il menu
+			dell'applicazione <i>(menu con tre puntini)</i> contiene la seguente sezione:
+		</p>
+		<p>
+			<img src="app-install-windows.png" alt="Installazione su Windows" class="bild" width="423">
+		</p>
+		<p>
+			Le versioni recenti di Chrome possono chiederti direttamente se vuoi installare l'app, vedi il
+			simbolo a destra nella barra degli indirizzi:
+		</p>
+		<p>
+			<img src="chrome_install.png" alt="Installazione con Chrome" class="bild" width="436">
+		</p>
+		<p>Su macOS usa Microsoft Edge o Google Chrome per l'installazione.</p>
+		<p>
+			Firefox al momento non supporta l'installazione. Su Windows e Linux puoi in alternativa passare
+			alla modalità a schermo intero con il tasto F11.
+		</p>
+		<p>
+			Su Android, iOS e Linux l'app si disinstalla eliminando l'icona dal desktop. Su Windows si
+			disinstalla come un normale programma.
+		</p>
+
+		<h2 id="kompatibilitaet">
+			<a href="#">Compatibilità</a>
+		</h2>
+		<p>
+			Testato su Windows 10↑, macOS Catalina 10.15.7↑, Ubuntu 22.04↑, Android 9–16 e iOS 15.7.3↑,
+			ogni volta con la versione attuale di Chrome, Chromium, Edge, Safari e Firefox. Vengono testate
+			e supportate solo le versioni attuali dei browser.
+		</p>
+
+		<h2 id="tastatur">
+			<a href="#">Tastiera virtuale</a>
+		</h2>
+		<p>
+			Su alcuni dispositivi Android, soprattutto Samsung, la tastiera numerica non ha il tasto meno.
+			Purtroppo la specifica HTML lascia questa scelta al produttore. In questo caso si consiglia una
+			tastiera virtuale aggiuntiva, per esempio la tastiera Google Gboard dal Play Store. Dopo
+			l'installazione devi ancora attivare la tastiera, meglio subito nel Play Store. In seguito puoi
+			passare in qualsiasi momento da una tastiera installata all'altra (simbolo in basso a destra
+			sulla tastiera).
+		</p>
+
+		<h2 id="kontakt">
+			<a href="#">Contatti e segnalazione di errori</a>
+		</h2>
+		<p>
+			Per suggerimenti, richieste e segnalazioni di errori usa l'indirizzo e-mail
+			statikverstehen&#x40;web.de.
+			Nella segnalazione di un errore è spesso utile allegare una copia del file di input.
+		</p>
+
+		<h1>
+			<a href="#">Bibliografia</a>
+		</h1>
+		<p>
+			[1] Matthias Kraus:
+			Computerorientierte Berechnungsmethoden für beliebige Stabquerschnitte des Stahlbaus,
+			tesi di dottorato, Bochum 2005
+		</p>
+		<p>
+			[2] Matthias Kraus; Rolf Kindmann:
+			Finite-Elemente-Methoden im Stahlbau, 2ª edizione, Ernst W. &amp; Sohn Verlag, 2019
+			<br>Edizione inglese: Rolf Kindmann; Matthias Kraus:
+			Steel Structures: Design using FEM, Ernst W. &amp; Sohn Verlag, 2011
+		</p>
+	</body>
+</html>

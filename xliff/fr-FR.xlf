@@ -154,10 +154,6 @@
   <source>3D-Ansicht: bitte zuerst Rechnen drücken</source>
   <target>Vue 3D : appuyez d'abord sur Calculer</target>
 </trans-unit>
-<trans-unit id="s2a26513593107f4d">
-  <source>Kurzdokumentation zu Duenne Querschnitte.html</source>
-  <target>docu_en.html</target>
-</trans-unit>
 <trans-unit id="sa1781a00a872bf21">
   <source>Gerät</source>
   <target>Appareil</target>

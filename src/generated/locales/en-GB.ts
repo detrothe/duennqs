@@ -43,7 +43,6 @@
 's2202f9c5118ff020': `shear stress at the end of the element, element node 2, left side`,
 's242244c7d728763b': `Ideal cross-section properties`,
 's255fc944b18ba548': `copy value of first cell`,
-'s2a26513593107f4d': `docu_en.html`,
 's2a527d2aa4924cec': `There are changes that have not been saved yet.`,
 's2ad271c4bf69a58d': `Allow selecting cells with a finger`,
 's2b41d1fba90e38cb': `Labels`,
