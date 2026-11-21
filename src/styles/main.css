@@ -674,8 +674,9 @@ sl-color-picker::part(trigger) {
     --slider-input-width: 30%;
     --slider-input-min-width: 2.4rem;
     --folder-indent: 0.4rem;
-    --title-background-color: #b3ae00;
-    --title-text-color: #fefffa;
+    /* Titelleiste in der im Tab ꔷꔷꔷ gewählten Tabellenfarbe (Text hell/dunkel passend dazu) */
+    --title-background-color: var(--table_bg, #cfd915);
+    --title-text-color: var(--table_fg, #000000);
 }
 
 /* rechts unten, damit es auf dem Smartphone nicht mit dem Bedienfeld überlappt */
