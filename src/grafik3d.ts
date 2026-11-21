@@ -36,8 +36,9 @@ type Anzeige = 'keine' | 'sigma' | 'tau' | 'sigmaV' | 'omega' | 'u';
 
 const FARBE_ZUG = 0x2020d0;       // σ > 0
 const FARBE_DRUCK = 0xd02020;     // σ < 0 (rot = Druck wie bisher)
-const FARBE_TAU = 0x009696;
-const FARBE_SIGMAV = 0x8040b0;
+const FARBE_TAU = 0x4f6f8f;       // blaugrau
+const FARBE_SIGMAV = 0x3f5d7d;    // etwas dunkleres Blaugrau
+const FARBE_TAU_LINIE = 0x34495e; // Randkurven und Pfeile bei τ und σv
 const FARBE_FYRD = 0xc00000;
 const FARBE_QUERSCHNITT = 0x8a8a9a;
 const TEILUNG = 20;               // Stützstellen je Element für die Kurven
@@ -483,12 +484,12 @@ function raumPfeil(dir: THREE.Vector3, l: number, farbe: number): THREE.Group {
 
 /**
  * Flacher Pfeil in der Querschnittsebene (etwas vor dem Querschnitt) mit Mitte bei (y, z)
- * in Richtung (ey, ez); liefert Dreiecke.
+ * in Richtung (ey, ez); liefert Dreiecke. breite skaliert Schaft und Spitze quer zur Richtung.
  */
-function flachPfeil(y: number, z: number, ey: number, ez: number, l: number): THREE.Vector3[] {
+function flachPfeil(y: number, z: number, ey: number, ez: number, l: number, breite = 1): THREE.Vector3[] {
     const vor = groesse * 0.002;
     const ny = -ez, nz = ey;              // Normale in der Ebene
-    const b = l * 0.08, kb = l * 0.25, kl = l * 0.35;
+    const b = l * 0.08 * breite, kb = l * 0.25 * breite, kl = l * 0.35;
     const p = (s: number, q: number) => toV(y + ey * s + ny * q, z + ez * s + nz * q, vor);
     const s0 = -l / 2, s1 = l / 2 - kl, s2 = l / 2;
     return [
@@ -802,7 +803,7 @@ function baueDiagramm(): void {
                 const kurve = k[seite];
                 const { pos, neg } = wandDreiecke(kurve, f);
                 seitenGruppe!.add(flaeche([...pos, ...neg], farbe, 0.15));
-                diagramm!.add(linie([toV(kurve[0].y, kurve[0].z), ...kurve.map(top), toV(kurve[TEILUNG].y, kurve[TEILUNG].z)], 0x385d8a));
+                diagramm!.add(linie([toV(kurve[0].y, kurve[0].z), ...kurve.map(top), toV(kurve[TEILUNG].y, kurve[TEILUNG].z)], FARBE_TAU_LINIE));
                 kurve.forEach(p => fangpunkte.push({
                     pos: top(p),
                     html: `<b>${name} = ${spannung(p.w)}</b> ${current_unit_stress}<br>${titel}, ${msg('Seite', { id: 'element_seite', desc: 'rechte oder linke Seite eines Elements (R/L)' })} ${seite}<br>${koordinaten(p.y, p.z)}`,
@@ -821,7 +822,8 @@ function baueDiagramm(): void {
                         if (Math.abs(tau) < 1e-12 * maxAbs) continue;
                         const p = seitenPunkt(i, seite, t);
                         const sg = Math.sign(tau);
-                        pfeile.push(...flachPfeil(p.y, p.z, sg * ey, sg * ez, groesse * 0.03 * optionen.skalierungPfeile));
+                        // 80 % der Breite: schlanker, gleiche Länge
+                        pfeile.push(...flachPfeil(p.y, p.z, sg * ey, sg * ez, groesse * 0.03 * optionen.skalierungPfeile, 0.8));
                     }
                 }
             }
@@ -837,7 +839,7 @@ function baueDiagramm(): void {
                 }
             }
         });
-        if (pfeile.length > 0) pfeilGruppe.add(flaeche(pfeile, 0x004040, 1));
+        if (pfeile.length > 0) pfeilGruppe.add(flaeche(pfeile, FARBE_TAU_LINIE, 1));
 
         if (istTau) {
             minmax = `min/max τ : ${zahl(Math.min(...alle) * unit_stress_factor, 2)} / ${zahl(Math.max(...alle) * unit_stress_factor, 2)}`;
