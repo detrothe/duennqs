@@ -12,6 +12,7 @@ import { alertdialog } from './components/confirm_dialog';
  * Seite neu geladen und die Eingabe wäre weg. Deshalb wird bei jedem Wechsel in den Hintergrund
  * (visibilitychange → hidden), beim Verlassen (pagehide) und beim Schließen (beforeunload) gespeichert
  * und beim Start wieder eingelesen. Doppeltes Speichern schadet nicht, daher auf allen Plattformen.
+ * Sind in der Sicherung alle Tabellenzellen leer, bleibt beim Start das Beispiel stehen.
  */
 
 const SCHLUESSEL = 'DUENNQS_current_input';
@@ -33,6 +34,14 @@ export function sichern(): void {
     }
 }
 
+/** true, wenn alle Zellen der Knoten- und der Elementtabelle in der gesicherten Eingabe leer sind. */
+function tabellenLeer(eingabe: string): boolean {
+    const daten = JSON.parse(eingabe) as { node?: unknown[][]; elem?: unknown[][] };
+    const leer = (zeilen: unknown[][] | undefined) =>
+        !Array.isArray(zeilen) || zeilen.every(z => !Array.isArray(z) || z.every(w => w === null || String(w).trim() === ''));
+    return leer(daten.node) && leer(daten.elem);
+}
+
 function wiederherstellen(): void {
     let text: string | null = null;
     try {
@@ -45,6 +54,12 @@ function wiederherstellen(): void {
 
     try {
         const daten = JSON.parse(text) as Sicherung;
+        // Leere Tabellen nicht wiederherstellen, sondern mit dem Startbeispiel beginnen. Sonst bliebe die App
+        // nach einer leer gesicherten Eingabe dauerhaft leer, weil beim Neuladen sofort wieder gesichert wird.
+        if (tabellenLeer(daten.eingabe)) {
+            console.info('autosave: gesicherte Tabellen sind leer, Startbeispiel bleibt');
+            return;
+        }
         if (!eingabeEinlesen(daten.eingabe)) throw new Error('gespeicherte Eingabe wurde abgelehnt');
         setzeDateiname(daten.dateiname ?? '');
         // Ergebnis wiederherstellen, aber im Tab Eingabe bleiben
