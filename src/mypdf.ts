@@ -136,7 +136,7 @@ export async function my_jspdf() {
   Seite = msg('Seite')
 
   // Default export is a4 paper, portrait, using millimeters for units
-  doc = new jsPDF();
+  doc = new jsPDF({ compress: true });   // Seiteninhalte komprimieren
 
   doc.addFileToVFS("freesans.ttf", font);
   doc.addFont("freesans.ttf", "freesans_normal", "normal");
@@ -680,7 +680,8 @@ export async function my_jspdf() {
     }
     doc.text(msg('Querschnitt'), links, yy)
 
-    doc.addImage(imgData, "PNG", 0, yy, 200, 200); // * myScreen.clientHeight / myScreen.svgWidth);
+    // Bild komprimiert einbetten (unkomprimiert waren es ca. 9 MB für 1500 × 1500 Pixel)
+    doc.addImage(imgData, "PNG", 0, yy, 200, 200, undefined, "FAST");
 
     letzteSeite();
 
