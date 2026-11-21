@@ -19,8 +19,15 @@ export function get_querschnittRechteck_name(index: number): string {
 }
 
 // --- pages/globals
-/** Fingerauswahl (Ziehen über mehrere Zellen) in Tabellen erlauben – wie Standard in d2beam-gui. */
-export const touch_support_table = true;
+/**
+ * Fingerauswahl (Ziehen über mehrere Zellen) in Tabellen erlauben. Standard aus wie in d2beam-gui –
+ * einschalten im Tab ꔷꔷꔷ (einstellungen.ts).
+ */
+export let touch_support_table = false;
+
+export function set_touch_support_table(wert: boolean): void {
+    touch_support_table = wert;
+}
 
 // --- pages/utility
 export function write(text: string): void {

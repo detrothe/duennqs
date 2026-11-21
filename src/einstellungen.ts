@@ -1,8 +1,11 @@
 /*
- * Tab ꔷꔷꔷ (Einstellungen) wie in d2beam-gui/quer_2: Längeneinheit, Farben der Tabellen und Akzentfarbe.
+ * Tab ꔷꔷꔷ (Einstellungen) wie in d2beam-gui/quer_2: Sprache, Längeneinheit, Schriftgröße,
+ * Zellenauswahl mit dem Finger, Farben der Tabellen und Akzentfarbe.
  *
  * Änderungen wirken sofort; dauerhaft (für den nächsten Start) erst nach
  * „Auswahl als Standardwerte im Browser speichern“ – wie in d2beam-gui.
+ *
+ * Die Schriftgröße setzt die Grundschrift (font-size von <html> = 1rem); alle Maße in rem wachsen mit.
  *
  * Farben wirken über CSS-Variablen am Dokument (werden auch in Shadow-DOMs vererbt):
  *   --table_bg / --table_fg  → dr-tabelle und Titelleiste des Bedienfelds in 3D
@@ -18,6 +21,7 @@ import { byId, berechnungErforderlich } from './state';
 import { alertdialog } from './components/confirm_dialog';
 import { einheitenUmrechnen, spaltenAktualisieren } from './eingabe';
 import { setLocale, KEY_LOCALE } from './localization';
+import { set_touch_support_table } from './components/tabelle_umgebung';
 
 export let current_unit_length = 'cm';
 export let current_unit_stress = 'kN/cm²';
@@ -38,6 +42,10 @@ const KEY_EINHEIT = 'DUENNQS_unit_length';
 const KEY_TABELLE = 'DUENNQS_color_table_out';
 const KEY_TEXT = 'DUENNQS_color_table_text';
 const KEY_AKZENT = 'DUENNQS_accent_color';
+const KEY_SCHRIFT = 'DUENNQS_fontsize';
+const KEY_TOUCH = 'DUENNQS_touch_support_tables';
+
+const STANDARD_SCHRIFT = '1rem';
 
 type Picker = HTMLElement & { value: string };
 
@@ -97,6 +105,12 @@ function akzentfarbe(farbe: string | null): void {
     }
 }
 
+/** Grundschrift setzen (1rem = Standard des Browsers). */
+function schriftgroesse(wert: string): void {
+    if (wert === STANDARD_SCHRIFT) document.documentElement.style.removeProperty('font-size');
+    else document.documentElement.style.fontSize = wert;
+}
+
 function lesen(key: string): string | null {
     try {
         return window.localStorage.getItem(key);
@@ -116,6 +130,8 @@ function speichern(): void {
         window.localStorage.setItem(KEY_LOCALE, byId<HTMLSelectElement>('id_locale').value);
         window.localStorage.setItem(KEY_TABELLE, picker('id_color_table_out').value);
         window.localStorage.setItem(KEY_TEXT, picker('id_color_table_text').value);
+        window.localStorage.setItem(KEY_SCHRIFT, byId<HTMLSelectElement>('id_fontsize').value);
+        window.localStorage.setItem(KEY_TOUCH, String(byId<HTMLInputElement>('id_touch_support_tables').checked));
         // Akzentfarbe nur speichern, wenn eine eigene gewählt ist (sonst Standard behalten)
         if (document.documentElement.dataset.accent) window.localStorage.setItem(KEY_AKZENT, picker('id_accent_color').value);
         else window.localStorage.removeItem(KEY_AKZENT);
@@ -127,13 +143,17 @@ function speichern(): void {
 
 function loeschen(): void {
     try {
-        for (const key of [KEY_EINHEIT, KEY_LOCALE, KEY_TABELLE, KEY_TEXT, KEY_AKZENT]) window.localStorage.removeItem(key);
+        for (const key of [KEY_EINHEIT, KEY_LOCALE, KEY_TABELLE, KEY_TEXT, KEY_AKZENT, KEY_SCHRIFT, KEY_TOUCH]) window.localStorage.removeItem(key);
     } catch { /* nichts zu tun */ }
     picker('id_color_table_out').value = STANDARD_TABELLE;
     picker('id_color_table_text').value = kontrastfarbe(STANDARD_TABELLE);
     picker('id_accent_color').value = STANDARD_AKZENT;
     tabellenfarben(STANDARD_TABELLE, kontrastfarbe(STANDARD_TABELLE));
     akzentfarbe(null);
+    byId<HTMLSelectElement>('id_fontsize').value = STANDARD_SCHRIFT;
+    schriftgroesse(STANDARD_SCHRIFT);
+    byId<HTMLInputElement>('id_touch_support_tables').checked = false;
+    set_touch_support_table(false);
     geaendert(false);
 }
 
@@ -150,6 +170,16 @@ export function initEinstellungen(): void {
     picker('id_accent_color').value = akzent ?? STANDARD_AKZENT;
     tabellenfarben(tabelle, text);
     akzentfarbe(akzent);
+
+    const schrift = lesen(KEY_SCHRIFT) ?? STANDARD_SCHRIFT;
+    const auswahlSchrift = byId<HTMLSelectElement>('id_fontsize');
+    auswahlSchrift.value = schrift;
+    if (auswahlSchrift.value !== schrift) auswahlSchrift.value = STANDARD_SCHRIFT;   // unbekannter Wert
+    schriftgroesse(auswahlSchrift.value);
+
+    const touch = lesen(KEY_TOUCH) === 'true';
+    byId<HTMLInputElement>('id_touch_support_tables').checked = touch;
+    set_touch_support_table(touch);
     geaendert(false);
 
     byId('unitLength').addEventListener('change', einheitGeaendert);
@@ -176,6 +206,14 @@ export function initEinstellungen(): void {
     byId('id_accent_color_reset').addEventListener('click', () => {
         akzentfarbe(null);
         picker('id_accent_color').value = STANDARD_AKZENT;
+        geaendert(true);
+    });
+    byId('id_fontsize').addEventListener('change', () => {
+        schriftgroesse(byId<HTMLSelectElement>('id_fontsize').value);
+        geaendert(true);
+    });
+    byId('id_touch_support_tables').addEventListener('change', () => {
+        set_touch_support_table(byId<HTMLInputElement>('id_touch_support_tables').checked);
         geaendert(true);
     });
     byId('id_cb_saveLocalStorage').addEventListener('click', speichern);

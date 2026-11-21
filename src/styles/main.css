@@ -475,6 +475,17 @@ table.einstellungen td {
     white-space: nowrap;
 }
 
+/* lange Texte (Checkbox mit Beschriftung) dürfen umbrechen */
+table.einstellungen td.umbruch {
+    white-space: normal;
+}
+
+.checkbox_zeile {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.4rem;
+}
+
 /* Farbauswahl: Quadrat mit abgerundeten Ecken (wie d2beam-gui) */
 sl-color-picker::part(trigger) {
     width: 2rem;

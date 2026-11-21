@@ -682,10 +682,6 @@
   <source>schließen</source>
   <target>close</target>
 </trans-unit>
-<trans-unit id="s985fe56722f6aa33">
-  <source>Sprache:</source>
-  <target>Language:</target>
-</trans-unit>
 <trans-unit id="knoten_nummer">
   <source>Knoten</source>
   <target>Node</target>
@@ -771,6 +767,22 @@
 <trans-unit id="sb29df2a56f19c0f6">
   <source>Es gibt eine neue Version. Jetzt neu laden? Die aktuelle Eingabe bleibt erhalten.</source>
   <target>A new version is available. Reload now? The current input is kept.</target>
+</trans-unit>
+<trans-unit id="s74b5f9fa24c3d8b3">
+  <source>Auf Touchscreens lassen sich Zellen mit dem Finger markieren, wenn das im Tab ꔷꔷꔷ eingeschaltet ist.</source>
+  <target>On touch screens, cells can be selected with a finger if this is switched on in the ꔷꔷꔷ tab.</target>
+</trans-unit>
+<trans-unit id="s0c6f4bc0ae2a0d3b">
+  <source>Schriftgröße:</source>
+  <target>Font size:</target>
+</trans-unit>
+<trans-unit id="s2153b0c36b61fda8">
+  <source>nur für Touchscreens:</source>
+  <target>Touch screens only:</target>
+</trans-unit>
+<trans-unit id="s2ad271c4bf69a58d">
+  <source>Selektion von Zellen mit Finger erlauben</source>
+  <target>Allow selecting cells with a finger</target>
 </trans-unit>
 </body>
 </file>

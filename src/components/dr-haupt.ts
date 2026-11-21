@@ -58,6 +58,13 @@ const WERTE: [string, unknown, unknown][] = [
     ['i_p2', html`i<sub>p</sub><sup>2</sup>`, 'cm²'],
 ];
 
+/** Schriftgröße (Wert für die Grundschrift = 1rem, angezeigt in px) wie in d2beam-gui */
+const SCHRIFTGROESSEN: [string, string][] = [
+    ['0.5rem', '8'], ['0.5625rem', '9'], ['0.625rem', '10'], ['0.6875rem', '11'], ['0.75rem', '12'], ['0.8125rem', '13'],
+    ['0.875rem', '14'], ['0.9375rem', '15'], ['1rem', '16'], ['1.125rem', '18'], ['1.25rem', '20'], ['1.375rem', '22'],
+    ['1.5rem', '24'],
+];
+
 const FARBEN = '#cfd915;#b3ae00;#ffffff;#f5f5f5;#d8d8d8;#828282;#404040;#000000;#0284c7;#2e7d32;#c62828;#ef6c00';
 
 @customElement('dr-haupt')
@@ -260,6 +267,7 @@ ${msg('Bearbeitet von: Melis Muster')}"></textarea>
             colwidth='["3","4","2.5","2.5","2","2"]'
           ></dr-tabelle>
           <p class="hinweis">${msg('Rechte Maustaste bzw. langes Drücken auf markierte Zellen öffnet das Kontextmenü. In der Spalte No fügt + oberhalb eine Zeile ein, der Papierkorb löscht die Zeile (beides mit Rückgängig/Wiederherstellen).')}</p>
+          <p class="hinweis">${msg('Auf Touchscreens lassen sich Zellen mit dem Finger markieren, wenn das im Tab ꔷꔷꔷ eingeschaltet ist.')}</p>
         </sl-tab-panel>
 
         <!---------------------------------------------------------------------------------- Ergebnisse -->
@@ -328,6 +336,15 @@ ${msg('Bearbeitet von: Melis Muster')}"></textarea>
         <sl-tab-panel name="einstellungen" id="id_panel_einstellungen">
           <h3>${msg('Einstellungen')}</h3>
           <table class="einstellungen">
+            <!-- Sprache ganz oben und immer englisch beschriftet (wie d2beam-gui), damit man sie auch ohne Deutsch findet -->
+            <tr>
+              <td><label for="id_locale">Language:</label></td>
+              <td>
+                <select id="id_locale">
+                  ${allLocales.map(l => html`<option value="${l}" ?selected=${l === getLocale()}>${sprachNamen[l]}</option>`)}
+                </select>
+              </td>
+            </tr>
             <tr>
               <td><label for="unitLength">${msg('Längeneinheit:')}</label></td>
               <td>
@@ -339,11 +356,20 @@ ${msg('Bearbeitet von: Melis Muster')}"></textarea>
               </td>
             </tr>
             <tr>
-              <td><label for="id_locale">${msg('Sprache:')}</label></td>
+              <td><label for="id_fontsize">${msg('Schriftgröße:')}</label></td>
               <td>
-                <select id="id_locale">
-                  ${allLocales.map(l => html`<option value="${l}" ?selected=${l === getLocale()}>${sprachNamen[l]}</option>`)}
+                <select id="id_fontsize">
+                  ${SCHRIFTGROESSEN.map(([wert, px]) => html`<option value="${wert}" ?selected=${wert === '1rem'}>${px}</option>`)}
                 </select>
+              </td>
+            </tr>
+            <tr>
+              <td>${msg('nur für Touchscreens:')}</td>
+              <td class="umbruch">
+                <div class="checkbox_zeile">
+                  <input type="checkbox" id="id_touch_support_tables">
+                  <label for="id_touch_support_tables">${msg('Selektion von Zellen mit Finger erlauben')}</label>
+                </div>
               </td>
             </tr>
             <tr>
