@@ -13,7 +13,7 @@ import { initEinstellungen } from './einstellungen';
 import { initDateien, verwerfenBestaetigt, setzeDateiname, gespeichertenStandInitialisieren } from './dateien';
 import { zeichneQuerschnitt } from './grafik';
 import { alertdialog } from './components/confirm_dialog';
-import { setLocale, startSprache } from './localization';
+import { setLocale, startSprache, seitenMetaAktualisieren } from './localization';
 import { initAutosave } from './autosave';
 import { starteVersionspruefung } from './sw_update';
 import { enableTouchHints } from './components/touch_hint';
@@ -58,6 +58,7 @@ function spracheAktualisieren(haupt: HTMLElementTagNameMap['dr-haupt']): void {
 async function start(): Promise<void> {
     const haupt = byId('id_haupt') as HTMLElementTagNameMap['dr-haupt'];
     await setLocale(startSprache());
+    seitenMetaAktualisieren();
     await haupt.updateComplete;
 
     initEinstellungen();   // Längeneinheit und Farben (vor dem Startbeispiel, das in der Einheit eingetragen wird)
@@ -98,6 +99,7 @@ async function start(): Promise<void> {
     // Sprachwechsel im Tab ꔷꔷꔷ (lit-localize meldet, wenn die Übersetzung geladen ist)
     window.addEventListener('lit-localize-status', ev => {
         if ((ev as CustomEvent).detail.status !== 'ready') return;
+        seitenMetaAktualisieren();
         void haupt.updateComplete.then(() => spracheAktualisieren(haupt));
     });
 

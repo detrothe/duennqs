@@ -1,0 +1,6 @@
+# gilt für duennqs.statikverstehen.de (Deutsch) und duennqs.fea-apps.de (andere Sprachen)
+User-agent: *
+Allow: /
+
+Sitemap: https://duennqs.statikverstehen.de/sitemap.xml
+Sitemap: https://duennqs.fea-apps.de/sitemap_intl.xml

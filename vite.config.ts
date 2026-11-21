@@ -51,7 +51,8 @@ export default defineConfig({
                 // Doku-Seiten und Bilder offline verfügbar
                 globPatterns: ['**/*.{js,css,html,png,woff2}'],
                 // große Icons braucht nur die Installation, nicht der Offline-Betrieb
-                globIgnores: ['**/512x512.png', '**/maskable_512.png'],
+                // og-image.png ist nur das Vorschaubild für Links in sozialen Medien
+                globIgnores: ['**/512x512.png', '**/maskable_512.png', '**/og-image.png'],
                 // größter Chunk: PDF-Ausgabe (jspdf mit Schrift) mit knapp 700 kB
                 maximumFileSizeToCacheInBytes: 6 * 1024 * 1024,
                 cleanupOutdatedCaches: true,

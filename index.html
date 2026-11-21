@@ -6,8 +6,52 @@
     <title>duennQs – Querschnittswerte und Spannungen dünnwandiger Querschnitte</title>
 
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5">
-    <meta name="description" content="Querschnittswerte und Spannungen dünnwandiger Querschnitte (Finite Elemente) – Properties and stresses of thin-walled cross sections">
+    <!-- Titel, Beschreibung, lang und canonical setzt src/localization.ts (seitenMetaAktualisieren) je nach Sprache.
+         Die Werte hier gelten für Dienste, die kein JavaScript ausführen (Linkvorschau in LinkedIn, Mail …). -->
+    <meta name="description" content="Kostenlose Web-App: Schubmittelpunkt, Torsions- und Wölbwiderstand, Spannungen dünnwandiger Querschnitte (FEM) – Free web app: shear centre, torsion and warping constant, stresses of thin-walled cross sections">
     <meta name="author" content="Prof. Dr.-Ing. Detlef Rothe">
+
+    <!-- Sprachversionen: Deutsch auf statikverstehen.de, die anderen Sprachen auf fea-apps.de (Start mit ?lang=) -->
+    <link rel="alternate" hreflang="de" href="https://duennqs.statikverstehen.de/">
+    <link rel="alternate" hreflang="en" href="https://duennqs.fea-apps.de/">
+    <link rel="alternate" hreflang="es" href="https://duennqs.fea-apps.de/?lang=es">
+    <link rel="alternate" hreflang="fr" href="https://duennqs.fea-apps.de/?lang=fr">
+    <link rel="alternate" hreflang="it" href="https://duennqs.fea-apps.de/?lang=it">
+    <link rel="alternate" hreflang="x-default" href="https://duennqs.fea-apps.de/">
+
+    <!-- Linkvorschau (Open Graph, auch von LinkedIn, Mastodon, Messengern genutzt) -->
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="duennQs">
+    <meta property="og:title" content="duennQs – thin-walled cross sections: properties and stresses">
+    <meta property="og:description" content="Free web app: shear centre, torsion and warping constant, normal, shear and von Mises stresses of open and closed thin-walled cross sections, 3D plots, works offline.">
+    <meta property="og:image" content="https://duennqs.fea-apps.de/og-image.png">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:image:alt" content="3D plot of the shear stresses in a thin-walled box section">
+    <meta name="twitter:card" content="summary_large_image">
+
+    <!-- strukturierte Daten für Suchmaschinen (schema.org) -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "WebApplication",
+        "name": "duennQs",
+        "alternateName": "Dünnwandige Querschnitte",
+        "description": "Free web app for section properties and stresses of thin-walled cross sections (FEM, centre-line model): shear centre, torsion constant, warping constant, warping ordinate, principal axes, normal, shear and von Mises stresses from N, My, Mz, Vy, Vz, primary and secondary torsion and warping bimoment; open and closed sections, several materials, 3D plots, pdf report, offline as PWA.",
+        "url": "https://duennqs.fea-apps.de/",
+        "sameAs": ["https://duennqs.statikverstehen.de/"],
+        "image": "https://duennqs.fea-apps.de/og-image.png",
+        "applicationCategory": "EducationalApplication",
+        "applicationSubCategory": "Structural engineering",
+        "operatingSystem": "Any (web browser)",
+        "browserRequirements": "Requires JavaScript and WebGL",
+        "isAccessibleForFree": true,
+        "offers": { "@type": "Offer", "price": "0", "priceCurrency": "EUR" },
+        "inLanguage": ["de", "en", "es", "fr", "it"],
+        "author": { "@type": "Person", "name": "Prof. Dr.-Ing. Detlef Rothe" },
+        "keywords": "thin-walled cross section, shear centre, shear center, warping constant, torsion constant, warping ordinate, shear stress, von Mises, Schubmittelpunkt, Wölbwiderstand, Torsionswiderstand, dünnwandige Querschnitte, centro de cortante, módulo de alabeo, centre de cisaillement, gauchissement, centro di taglio, ingobbamento"
+    }
+    </script>
     <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#181818">
     <meta name="theme-color" media="(prefers-color-scheme: light)" content="#f3f3f3">
     <meta name="mobile-web-app-capable" content="yes">
