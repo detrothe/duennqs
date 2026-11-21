@@ -50,13 +50,19 @@ export const { getLocale, setLocale } = configureLocalization({
     loadLocale: loadLocaleDecoded,
 });
 
-/** Sprache beim Start: gespeicherte Auswahl, sonst Browsersprache (falls übersetzt), sonst Englisch. */
+/**
+ * Sprache beim Start: gespeicherte Auswahl, sonst auf fea-apps.de Englisch, sonst Browsersprache
+ * (falls übersetzt), sonst Englisch.
+ */
 export function startSprache(): string {
     let gespeichert: string | null = null;
     try {
         gespeichert = window.localStorage.getItem(KEY_LOCALE);
     } catch { /* kein localStorage */ }
     if (gespeichert && (allLocales as readonly string[]).includes(gespeichert)) return gespeichert;
+
+    // Die englischsprachige Ausgabe auf fea-apps.de startet immer auf Englisch
+    if (/(^|\.)fea-apps\.de$/.test(window.location.hostname)) return 'en-GB';
 
     const sprache = navigator.language.split('-')[0];
     if (sprache === 'de') return 'de';
