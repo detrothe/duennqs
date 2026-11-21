@@ -126,10 +126,6 @@
   <source>Anzahl Elemente: </source>
   <target>Number of elements: </target>
 </trans-unit>
-<trans-unit id="s7d3b74e529b06937">
-  <source>Rechte Maustaste bzw. langes Drücken auf markierte Zellen öffnet das Kontextmenü. In der Spalte No fügt + oberhalb eine Zeile ein, der Papierkorb löscht die Zeile (beides mit Rückgängig/Wiederherstellen).</source>
-  <target>Right mouse button or long press on selected cells opens the context menu. In the No column, + inserts a row above, the bin deletes the row (both with undo/redo).</target>
-</trans-unit>
 <trans-unit id="sa30d77be7c7c7d59">
   <source>Ergebnisse als pdf-Datei speichern</source>
   <target>Save results as pdf file</target>
@@ -783,6 +779,10 @@
 <trans-unit id="s2ad271c4bf69a58d">
   <source>Selektion von Zellen mit Finger erlauben</source>
   <target>Allow selecting cells with a finger</target>
+</trans-unit>
+<trans-unit id="s3e252d5e6c270db9">
+  <source>Rechte Maustaste bzw. langes Drücken auf markierte Zellen öffnet das Kontextmenü. Bei den Elementen fügt + in der Spalte No oberhalb eine Zeile ein, der Papierkorb löscht die Zeile (beides mit Rückgängig/Wiederherstellen). Bei den Knoten geht das nicht, weil nod1 und nod2 auf die Knotennummern verweisen; die Anzahl der Knoten ändert man mit − und + (am Tabellenende).</source>
+  <target>Right mouse button or long press on selected cells opens the context menu. For the elements, + in the No column inserts a row above, the bin deletes the row (both with undo/redo). This is not possible for the nodes, because nod1 and nod2 refer to the node numbers; the number of nodes is changed with − and + (at the end of the table).</target>
 </trans-unit>
 </body>
 </file>

@@ -241,10 +241,10 @@ ${msg('Bearbeitet von: Melis Muster')}"></textarea>
             <dr-button-pm id="${KNOTEN_ZAEHLER}" txt="${msg('Anzahl Knoten: ')}" inputid="nknoten"
               .nel="${START_ANZAHL_KNOTEN}" .minValue="${MIN_KNOTEN}"></dr-button-pm>
           </div>
+          <!-- kein Einfügen/Löschen einzelner Zeilen: nod1/nod2 der Elemente verweisen auf die Knotennummern;
+               die Anzahl ändert man mit −/+ am Tabellenende -->
           <dr-tabelle
             id="${KNOTEN_TABELLE}"
-            allow_delete_row
-            allow_insert_row
             nzeilen="${START_ANZAHL_KNOTEN}"
             nspalten="2"
             columns='${knotenSpalten()}'
@@ -266,7 +266,7 @@ ${msg('Bearbeitet von: Melis Muster')}"></textarea>
             columns='${elementSpalten()}'
             colwidth='["3","4","2.5","2.5","2","2"]'
           ></dr-tabelle>
-          <p class="hinweis">${msg('Rechte Maustaste bzw. langes Drücken auf markierte Zellen öffnet das Kontextmenü. In der Spalte No fügt + oberhalb eine Zeile ein, der Papierkorb löscht die Zeile (beides mit Rückgängig/Wiederherstellen).')}</p>
+          <p class="hinweis">${msg('Rechte Maustaste bzw. langes Drücken auf markierte Zellen öffnet das Kontextmenü. Bei den Elementen fügt + in der Spalte No oberhalb eine Zeile ein, der Papierkorb löscht die Zeile (beides mit Rückgängig/Wiederherstellen). Bei den Knoten geht das nicht, weil nod1 und nod2 auf die Knotennummern verweisen; die Anzahl der Knoten ändert man mit − und + (am Tabellenende).')}</p>
           <p class="hinweis">${msg('Auf Touchscreens lassen sich Zellen mit dem Finger markieren, wenn das im Tab ꔷꔷꔷ eingeschaltet ist.')}</p>
         </sl-tab-panel>
 
