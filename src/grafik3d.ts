@@ -869,7 +869,7 @@ function baueDiagramm(): void {
         });
         const alle = kurven.flat().map(p => p.w);
         const maxAbs = Math.max(...alle.map(Math.abs));
-        const f = hoehe(maxAbs);
+        const f = hoehe(maxAbs) * 0.5;   // Verformung: halbe Grundhöhe der Spannungsbilder
         // mindestens 2 Nachkommastellen, bei kleinen Werten (Verwölbung) 3 gültige Ziffern
         const stellen = maxAbs > 0 ? Math.min(8, Math.max(2, 2 - Math.floor(Math.log10(maxAbs * lf)))) : 2;
         const text = (w: number) => zahl(w * lf, stellen);
