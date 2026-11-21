@@ -764,10 +764,6 @@
   <source>Es gibt eine neue Version. Jetzt neu laden? Die aktuelle Eingabe bleibt erhalten.</source>
   <target>Hay una nueva versión. ¿Recargar ahora? La entrada actual se conserva.</target>
 </trans-unit>
-<trans-unit id="s74b5f9fa24c3d8b3">
-  <source>Auf Touchscreens lassen sich Zellen mit dem Finger markieren, wenn das im Tab ꔷꔷꔷ eingeschaltet ist.</source>
-  <target>En pantallas táctiles, las celdas se pueden seleccionar con el dedo si se activa en la pestaña ꔷꔷꔷ.</target>
-</trans-unit>
 <trans-unit id="s0c6f4bc0ae2a0d3b">
   <source>Schriftgröße:</source>
   <target>Tamaño de letra:</target>
@@ -780,9 +776,13 @@
   <source>Selektion von Zellen mit Finger erlauben</source>
   <target>Permitir la selección de celdas con el dedo</target>
 </trans-unit>
-<trans-unit id="s3e252d5e6c270db9">
-  <source>Rechte Maustaste bzw. langes Drücken auf markierte Zellen öffnet das Kontextmenü. Bei den Elementen fügt + in der Spalte No oberhalb eine Zeile ein, der Papierkorb löscht die Zeile (beides mit Rückgängig/Wiederherstellen). Bei den Knoten geht das nicht, weil nod1 und nod2 auf die Knotennummern verweisen; die Anzahl der Knoten ändert man mit − und + (am Tabellenende).</source>
-  <target>El botón derecho del ratón o una pulsación larga sobre las celdas seleccionadas abre el menú contextual. En los elementos, + en la columna No inserta una fila encima y la papelera borra la fila (ambos con deshacer/rehacer). En los nudos no es posible, porque nod1 y nod2 hacen referencia a los números de nudo; el número de nudos se cambia con − y + (al final de la tabla).</target>
+<trans-unit id="s934d9c80077b24c9">
+  <source>Zellen markieren: mit gedrückter rechter Maustaste über die Zellen ziehen, auf Touchscreens mit dem Finger (im Tab ꔷꔷꔷ einschalten). Beim Loslassen öffnet sich das Kontextmenü zum Kopieren, Hochzählen und Einfügen.</source>
+  <target>Seleccionar celdas: arrastrar sobre las celdas manteniendo pulsado el botón derecho del ratón, en pantallas táctiles con el dedo (activar en la pestaña ꔷꔷꔷ). Al soltar se abre el menú contextual para copiar, incrementar y pegar.</target>
+</trans-unit>
+<trans-unit id="sb089b6a8306f1883">
+  <source>Bei den Elementen fügt + in der Spalte No oberhalb eine Zeile ein, der Papierkorb löscht die Zeile (beides mit Rückgängig/Wiederherstellen). Bei den Knoten geht das nicht, weil nod1 und nod2 auf die Knotennummern verweisen; die Anzahl der Knoten ändert man mit − und + (am Tabellenende).</source>
+  <target>En los elementos, + en la columna No inserta una fila encima y la papelera borra la fila (ambos con deshacer/rehacer). En los nudos no es posible, porque nod1 y nod2 hacen referencia a los números de nudo; el número de nudos se cambia con − y + (al final de la tabla).</target>
 </trans-unit>
 </body>
 </file>

@@ -237,6 +237,7 @@ ${msg('Bearbeitet von: Melis Muster')}"></textarea>
           </div>
 
           <h3>${msg('Knoten')}</h3>
+          <p class="hinweis">${msg('Zellen markieren: mit gedrückter rechter Maustaste über die Zellen ziehen, auf Touchscreens mit dem Finger (im Tab ꔷꔷꔷ einschalten). Beim Loslassen öffnet sich das Kontextmenü zum Kopieren, Hochzählen und Einfügen.')}</p>
           <div class="zeile">
             <dr-button-pm id="${KNOTEN_ZAEHLER}" txt="${msg('Anzahl Knoten: ')}" inputid="nknoten"
               .nel="${START_ANZAHL_KNOTEN}" .minValue="${MIN_KNOTEN}"></dr-button-pm>
@@ -264,10 +265,9 @@ ${msg('Bearbeitet von: Melis Muster')}"></textarea>
             nzeilen="${START_ANZAHL_ELEMENTE}"
             nspalten="5"
             columns='${elementSpalten()}'
-            colwidth='["3","4","2.5","2.5","2","2"]'
+            colwidth='["3","3.75","2.5","2.75","2","2"]'
           ></dr-tabelle>
-          <p class="hinweis">${msg('Rechte Maustaste bzw. langes Drücken auf markierte Zellen öffnet das Kontextmenü. Bei den Elementen fügt + in der Spalte No oberhalb eine Zeile ein, der Papierkorb löscht die Zeile (beides mit Rückgängig/Wiederherstellen). Bei den Knoten geht das nicht, weil nod1 und nod2 auf die Knotennummern verweisen; die Anzahl der Knoten ändert man mit − und + (am Tabellenende).')}</p>
-          <p class="hinweis">${msg('Auf Touchscreens lassen sich Zellen mit dem Finger markieren, wenn das im Tab ꔷꔷꔷ eingeschaltet ist.')}</p>
+          <p class="hinweis">${msg('Bei den Elementen fügt + in der Spalte No oberhalb eine Zeile ein, der Papierkorb löscht die Zeile (beides mit Rückgängig/Wiederherstellen). Bei den Knoten geht das nicht, weil nod1 und nod2 auf die Knotennummern verweisen; die Anzahl der Knoten ändert man mit − und + (am Tabellenende).')}</p>
         </sl-tab-panel>
 
         <!---------------------------------------------------------------------------------- Ergebnisse -->

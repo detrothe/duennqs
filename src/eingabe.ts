@@ -131,7 +131,7 @@ export function knotenSpalten(): string {
 }
 
 export function elementSpalten(): string {
-    return `["El No", "E<br>[${current_unit_stress}]", "&nu;", "${msg('Dicke')} t [${current_unit_length}]", "nod1", "nod2"]`;
+    return `["El No", "E<br>[${current_unit_stress}]", "&nu;", "${msg('Dicke')}<br>t&nbsp;[${current_unit_length}]", "nod1", "nod2"]`;
 }
 
 /** Überschriften an die eingestellte Einheit (und Sprache) anpassen. */
