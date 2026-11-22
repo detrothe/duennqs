@@ -51,7 +51,7 @@ const optionen = {
     anzeige: 'sigma' as Anzeige,
     querschnitt: 'flaechen' as QuerschnittArt,   // kleine negative Spannungen liegen sonst im Körper verborgen
     beschriftung: false,
-    sigmaDicke: true,     // σ über die Dicke (Eckwerte) statt über die Mittellinie
+    sigmaDicke: false,    // σ über die Dicke (Eckwerte) statt über die Mittellinie
     seiten: true,
     pfeile: true,
     skalierungPfeile: 1,
@@ -60,7 +60,7 @@ const optionen = {
     achsen: true,
     skalierung: 1,
     fangweite: 20,        // Pixel
-    cursorAbstand: 1,     // Faktor für den Versatz des Cursors über dem Finger (1 = 1/20 der Bilddiagonale)
+    cursorAbstand: 1.5,   // Faktor für den Versatz des Cursors über dem Finger (1 = 1/20 der Bilddiagonale)
     bildFaktor: 2,        // Bildexport: Vielfaches der Bildschirmgröße (CSS-Pixel)
     bildWeiss: true,      // Bildexport mit weißem statt grauem Hintergrund
 };
