@@ -335,7 +335,7 @@ class DrTabelle extends HTMLElement {
                const str = id_table + '-' + iZeile + '-' + iSpalte;
                el.id = str;
                //el.value = str;
-               //el.className = 'input_normal';
+               el.className = 'input_normal';   // weiß wie nach dem Aufheben einer Markierung (sonst CSS-Grau #f5f5f5)
                el.addEventListener('keydown', this.onKeyDown);
                el.addEventListener('input', this.onValueChanged);
                el.addEventListener('change', this.onValueChanged);   // für select / Browser-Autofill
@@ -1151,7 +1151,7 @@ class DrTabelle extends HTMLElement {
                   el.style.color = 'rgb(0,0,0)';
                   const str = id_table + '-' + iZeile + '-' + iSpalte;
                   el.id = str;
-                  //el.className = 'input_normal';
+                  el.className = 'input_normal';   // neue Zeilen beim Vergrößern ebenfalls weiß
                   el.addEventListener('keydown', this.onKeyDown);
                   el.addEventListener('input', this.onValueChanged);
                   el.addEventListener('change', this.onValueChanged);   // für select / Browser-Autofill
