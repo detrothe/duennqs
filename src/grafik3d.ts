@@ -91,6 +91,9 @@ let panAktualisieren: (() => void) | null = null;
 let modell: THREE.Group | null = null;
 let diagramm: THREE.Group | null = null;
 let seitenGruppe: THREE.Group | null = null;
+/** Beschriftung R/L (rechts/links anzeigen): Punkt auf der Wandseite und Richtung nach außen (Modell). */
+let seitenLabels: { obj: CSS2DObject; basis: THREE.Vector3; normale: THREE.Vector3 }[] = [];
+const SEITEN_ABSTAND_PX = 11;   // Abstand der Buchstaben R/L von der Wand in Bildschirmpixeln
 let pfeilGruppe: THREE.Group | null = null;
 let achsenGruppe: THREE.Group | null = null;
 let beschriftungGruppe: THREE.Group | null = null;
@@ -139,7 +142,21 @@ function toV(y: number, z: number, h = 0): THREE.Vector3 {
     return new THREE.Vector3(-(y - Gesamt_ys), -(z - Gesamt_zs), h);
 }
 
+/**
+ * R/L in festem Pixelabstand von der Wand halten: Ein Abstand in Modelleinheiten wäre am Desktop (großes Bild)
+ * viel weiter weg als auf dem Smartphone und bei eng beieinanderliegenden Elementen missverständlich.
+ */
+function seitenLabelsAusrichten(): void {
+    if (seitenLabels.length === 0 || host.clientHeight === 0) return;
+    const tanHalb = Math.tan(THREE.MathUtils.degToRad(camera.fov) / 2);
+    for (const { obj, basis, normale } of seitenLabels) {
+        const proPixel = 2 * camera.position.distanceTo(basis) * tanHalb / host.clientHeight;
+        obj.position.copy(basis).addScaledVector(normale, SEITEN_ABSTAND_PX * proPixel);
+    }
+}
+
 function render(): void {
+    seitenLabelsAusrichten();
     renderer.render(scene, camera);
     labelRenderer.render(scene, camera);
 }
@@ -667,15 +684,21 @@ function beschrifter(gruppe: THREE.Group) {
 function baueSeitenLR(): THREE.Group {
     const g = new THREE.Group();
     const dreiecke: THREE.Vector3[] = [];
+    seitenLabels = [];
     truss.forEach((_, i) => {
         const { ey, ez } = richtung(i);
         const a = groesse * 0.025;
         const m = mittelPunkt(i, 0);
-        dreiecke.push(...flachPfeil(m.y + ey * a * 1.2, m.z + ez * a * 1.2, ey, ez, 2 * a));
+        // Richtungspfeil in halber Breite (die volle Breite wirkte bei dünnen Wänden zu wuchtig)
+        dreiecke.push(...flachPfeil(m.y + ey * a * 1.2, m.z + ez * a * 1.2, ey, ez, 2 * a, 0.5));
         for (const seite of ['R', 'L'] as const) {
             const p = seitenPunkt(i, seite, 0.3);
             const n = seite === 'R' ? 1 : -1;   // nach außen: rechts (ez, −ey), links (−ez, ey)
-            g.add(label(seite, toV(p.y + n * ez * a, p.z - n * ey * a), 'label3d seite'));
+            const basis = toV(p.y, p.z);
+            const normale = toV(p.y + n * ez, p.z - n * ey).sub(basis).normalize();
+            const obj = label(seite, basis, 'label3d seite');
+            seitenLabels.push({ obj, basis, normale });
+            g.add(obj);
         }
     });
     g.add(flaeche(dreiecke, 0x333333, 1));
@@ -690,6 +713,7 @@ function baueDiagramm(): void {
             dispose(g);
         }
     }
+    seitenLabels = [];
     diagramm = new THREE.Group();
     seitenGruppe = new THREE.Group();
     pfeilGruppe = new THREE.Group();
