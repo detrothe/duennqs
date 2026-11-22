@@ -33,6 +33,8 @@ import { app } from './state';
  */
 
 type Anzeige = 'keine' | 'sigma' | 'tau' | 'sigmaV' | 'omega' | 'u';
+/** Darstellung des Querschnittskörpers: Flächen, Flächen transparent oder nur Kanten (Drahtmodell). */
+type QuerschnittArt = 'flaechen' | 'transparent' | 'draht';
 
 const FARBE_ZUG = 0x2020d0;       // σ > 0
 const FARBE_DRUCK = 0xd02020;     // σ < 0 (rot = Druck wie bisher)
@@ -47,6 +49,7 @@ const MAX_BILDPIXEL = 16_000_000; // Obergrenze für Canvas-Flächen in Safari/i
 
 const optionen = {
     anzeige: 'sigma' as Anzeige,
+    querschnitt: 'flaechen' as QuerschnittArt,   // kleine negative Spannungen liegen sonst im Körper verborgen
     beschriftung: false,
     sigmaDicke: true,     // σ über die Dicke (Eckwerte) statt über die Mittellinie
     seiten: true,
@@ -272,6 +275,15 @@ function initBedienfeld(): void {
     // fyRd gehört zur Vergleichsspannung und steht direkt unter der Auswahl
     nurBei.push([g.add(optionen, 'fyrd').name(msg('fyRd anzeigen')).onChange(neuAufbauen),
         () => a() === 'sigmaV']);
+
+    const arten: Record<string, QuerschnittArt> = {};
+    arten[msg('Flächen')] = 'flaechen';
+    arten[msg('Flächen transparent')] = 'transparent';
+    arten[msg('Drahtmodell')] = 'draht';
+    g.add(optionen, 'querschnitt', arten).name(msg('Querschnitt')).onChange(() => {
+        querschnittDarstellen();
+        render();
+    });
 
     g.add(optionen, 'beschriftung').name(msg('Beschriftung')).onChange(sichtbarkeit);
     g.add(optionen, 'skalierung', 0.1, 2, 0.1).name(msg('Skalierung')).onChange(neuAufbauen);
@@ -896,14 +908,7 @@ function baueDiagramm(): void {
         minmax = `min/max ${name} : ${text(Math.min(...alle))} / ${text(Math.max(...alle))}`;
     }
 
-    // bei ω und u den unverformten Querschnitt blass im Hintergrund
-    const blass = anzeige === 'omega' || anzeige === 'u';
-    for (const m of querschnittMaterialien) {
-        m.transparent = blass;
-        m.opacity = blass ? 0.2 : 1;
-        m.depthWrite = !blass;
-        m.needsUpdate = true;
-    }
+    querschnittDarstellen();
 
     if (optionen.seitenLR) diagramm.add(baueSeitenLR());
 
@@ -914,6 +919,26 @@ function baueDiagramm(): void {
     byId('v3d-minmax').innerHTML = minmax;
 
     sichtbarkeit();
+}
+
+/**
+ * Querschnittskörper als Flächen, transparente Flächen oder Drahtmodell (nur Kanten). Bei ω und u bleibt der
+ * unverformte Querschnitt immer blass im Hintergrund, weil dort die verformte Scheibe das Diagramm ist.
+ */
+function querschnittDarstellen(): void {
+    const [flaeche, kanten] = querschnittMaterialien;
+    if (!flaeche || !kanten) return;
+    const blass = optionen.anzeige === 'omega' || optionen.anzeige === 'u';
+    const art = optionen.querschnitt;
+    flaeche.visible = art !== 'draht';
+    const durchsichtig = blass || art === 'transparent';
+    flaeche.transparent = durchsichtig;
+    flaeche.opacity = blass ? 0.2 : art === 'transparent' ? 0.25 : 1;
+    flaeche.depthWrite = !durchsichtig;
+    kanten.transparent = blass;
+    kanten.opacity = blass ? 0.2 : 1;
+    kanten.depthWrite = !blass;
+    for (const m of querschnittMaterialien) m.needsUpdate = true;
 }
 
 function sichtbarkeit(): void {

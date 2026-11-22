@@ -780,6 +780,18 @@
   <source>Bei den Elementen fügt + in der Spalte No oberhalb eine Zeile ein, der Papierkorb löscht die Zeile (beides mit Rückgängig/Wiederherstellen). Bei den Knoten geht das nicht, weil nod1 und nod2 auf die Knotennummern verweisen; die Anzahl der Knoten ändert man mit − und + (am Tabellenende).</source>
   <target>Per gli elementi, + nella colonna No inserisce una riga sopra, il cestino elimina la riga (entrambi con annulla/ripeti). Per i nodi non è possibile, perché nod1 e nod2 si riferiscono ai numeri dei nodi; il numero di nodi si modifica con − e + (alla fine della tabella).</target>
 </trans-unit>
+<trans-unit id="s942a0cdee9d5d839">
+  <source>Flächen</source>
+  <target>Superfici</target>
+</trans-unit>
+<trans-unit id="se4a3af4c03c33fe7">
+  <source>Flächen transparent</source>
+  <target>Superfici trasparenti</target>
+</trans-unit>
+<trans-unit id="scdc9728895445bb1">
+  <source>Drahtmodell</source>
+  <target>Fil di ferro</target>
+</trans-unit>
 </body>
 </file>
 </xliff>

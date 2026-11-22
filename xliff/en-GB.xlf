@@ -780,6 +780,18 @@
   <source>Bei den Elementen fügt + in der Spalte No oberhalb eine Zeile ein, der Papierkorb löscht die Zeile (beides mit Rückgängig/Wiederherstellen). Bei den Knoten geht das nicht, weil nod1 und nod2 auf die Knotennummern verweisen; die Anzahl der Knoten ändert man mit − und + (am Tabellenende).</source>
   <target>For the elements, + in the No column inserts a row above, the bin deletes the row (both with undo/redo). This is not possible for the nodes, because nod1 and nod2 refer to the node numbers; the number of nodes is changed with − and + (at the end of the table).</target>
 </trans-unit>
+<trans-unit id="s942a0cdee9d5d839">
+  <source>Flächen</source>
+  <target>Surfaces</target>
+</trans-unit>
+<trans-unit id="se4a3af4c03c33fe7">
+  <source>Flächen transparent</source>
+  <target>Transparent surfaces</target>
+</trans-unit>
+<trans-unit id="scdc9728895445bb1">
+  <source>Drahtmodell</source>
+  <target>Wireframe</target>
+</trans-unit>
 </body>
 </file>
 </xliff>

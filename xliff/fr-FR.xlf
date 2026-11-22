@@ -780,6 +780,18 @@
   <source>Bei den Elementen fügt + in der Spalte No oberhalb eine Zeile ein, der Papierkorb löscht die Zeile (beides mit Rückgängig/Wiederherstellen). Bei den Knoten geht das nicht, weil nod1 und nod2 auf die Knotennummern verweisen; die Anzahl der Knoten ändert man mit − und + (am Tabellenende).</source>
   <target>Pour les éléments, + dans la colonne No insère une ligne au-dessus, la corbeille supprime la ligne (les deux avec annuler/rétablir). Ce n'est pas possible pour les nœuds, car nod1 et nod2 renvoient aux numéros de nœuds ; le nombre de nœuds se modifie avec − et + (en fin de tableau).</target>
 </trans-unit>
+<trans-unit id="s942a0cdee9d5d839">
+  <source>Flächen</source>
+  <target>Surfaces</target>
+</trans-unit>
+<trans-unit id="se4a3af4c03c33fe7">
+  <source>Flächen transparent</source>
+  <target>Surfaces transparentes</target>
+</trans-unit>
+<trans-unit id="scdc9728895445bb1">
+  <source>Drahtmodell</source>
+  <target>Fil de fer</target>
+</trans-unit>
 </body>
 </file>
 </xliff>
