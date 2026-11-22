@@ -644,7 +644,7 @@
 </trans-unit>
 <trans-unit id="sfaadd489dfa358bf">
   <source>Querschnitt</source>
-  <target>sección transversal</target>
+  <target>Sección transversal</target>
 </trans-unit>
 <trans-unit id="s255fc944b18ba548">
   <source>Wert der ersten Zelle kopieren</source>
@@ -791,6 +791,14 @@
 <trans-unit id="scdc9728895445bb1">
   <source>Drahtmodell</source>
   <target>Modelo alámbrico</target>
+</trans-unit>
+<trans-unit id="s9a78fe4658c3a5a8">
+  <source>Cursor und Achsen</source>
+  <target>Cursor y ejes</target>
+</trans-unit>
+<trans-unit id="sdb2bf550cc8db1c0">
+  <source>Abstand Cursor (Finger)</source>
+  <target>Distancia del cursor (dedo)</target>
 </trans-unit>
 </body>
 </file>

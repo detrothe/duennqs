@@ -60,6 +60,7 @@ const optionen = {
     achsen: true,
     skalierung: 1,
     fangweite: 20,        // Pixel
+    cursorAbstand: 1,     // Faktor für den Versatz des Cursors über dem Finger (1 = 1/20 der Bilddiagonale)
     bildFaktor: 2,        // Bildexport: Vielfaches der Bildschirmgröße (CSS-Pixel)
     bildWeiss: true,      // Bildexport mit weißem statt grauem Hintergrund
 };
@@ -168,6 +169,9 @@ function kameraZuruecksetzen(): void {
     }
     kameraNachholen = false;
     kameraGroesse = groesse;
+    // Seitenverhältnis selbst setzen: Beim ersten Öffnen läuft dies vor resize(), die Kamera hätte sonst noch
+    // das alte Seitenverhältnis und stünde im Hochformat zu nah (Querschnitt seitlich abgeschnitten)
+    camera.aspect = host.clientWidth / host.clientHeight;
 
     const radius = groesse * 0.6;
     const fovV = THREE.MathUtils.degToRad(camera.fov);
@@ -300,10 +304,15 @@ function initBedienfeld(): void {
         () => a() === 'sigma' || a() === 'tau']);
     optionenZeigen();
     g.add(optionen, 'seitenLR').name(msg('rechts/links anzeigen')).onChange(neuAufbauen);
-    g.add(optionen, 'achsen').name(msg('Achsen anzeigen')).onChange(sichtbarkeit);
-    g.add(optionen, 'fangweite', 5, 60, 1).name(msg('Fangweite [px]')).onChange(() => {
+
+    // Cursor (Fangkreuz) und Achsen in einem Untermenü wie „Bild speichern“
+    const cursor = g.addFolder(msg('Cursor und Achsen'));
+    cursor.add(optionen, 'cursorAbstand', 0.5, 2, 0.1).name(msg('Abstand Cursor (Finger)'));
+    cursor.add(optionen, 'fangweite', 5, 60, 1).name(msg('Fangweite [px]')).onChange(() => {
         if (letzterZeiger) fangen(letzterZeiger.x, letzterZeiger.y, letzterZeiger.springen);
     });
+    cursor.add(optionen, 'achsen').name(msg('Achsen anzeigen')).onChange(sichtbarkeit);
+    cursor.close();
 
     const bild = g.addFolder(msg('Bild speichern'));
     bild.add(optionen, 'bildFaktor', { '1×': 1, '2×': 2, '3×': 3, '4×': 4, '6×': 6, '8×': 8 })
@@ -989,7 +998,7 @@ function zeigerBewegt(ev: PointerEvent): void {
     const x = ev.offsetX;
     let y = ev.offsetY;
     // Finger: Cursor über dem Finger, damit man sieht, wo man ist (wie d2beam-gui)
-    if (ev.pointerType === 'touch') y -= Math.hypot(host.clientWidth, host.clientHeight) / 10;
+    if (ev.pointerType === 'touch') y -= optionen.cursorAbstand * Math.hypot(host.clientWidth, host.clientHeight) / 20;
     const springen = ev.pointerType !== 'mouse';
     letzterZeiger = { x, y, springen };
     fangen(x, y, springen);

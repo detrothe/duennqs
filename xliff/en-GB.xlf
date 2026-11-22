@@ -792,6 +792,14 @@
   <source>Drahtmodell</source>
   <target>Wireframe</target>
 </trans-unit>
+<trans-unit id="s9a78fe4658c3a5a8">
+  <source>Cursor und Achsen</source>
+  <target>Cursor and axes</target>
+</trans-unit>
+<trans-unit id="sdb2bf550cc8db1c0">
+  <source>Abstand Cursor (Finger)</source>
+  <target>Cursor offset (finger)</target>
+</trans-unit>
 </body>
 </file>
 </xliff>

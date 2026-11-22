@@ -792,6 +792,14 @@
   <source>Drahtmodell</source>
   <target>Fil di ferro</target>
 </trans-unit>
+<trans-unit id="s9a78fe4658c3a5a8">
+  <source>Cursor und Achsen</source>
+  <target>Cursore e assi</target>
+</trans-unit>
+<trans-unit id="sdb2bf550cc8db1c0">
+  <source>Abstand Cursor (Finger)</source>
+  <target>Distanza cursore (dito)</target>
+</trans-unit>
 </body>
 </file>
 </xliff>
