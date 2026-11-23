@@ -8,8 +8,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5">
     <!-- Content Security Policy: Skripte, Verbindungen und Worker nur von der eigenen Domain.
          Schützt die Besucher, falls je fremder Code in dist/ gerät (er könnte nichts nachladen und nichts wegschicken).
-         blob:/data: brauchen PDF-Ausgabe, Bilder, Datei-Download und Shoelace-Symbole (connect-src data:); 'unsafe-inline' bei Stilen braucht Lit/Shoelace. -->
-    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; font-src 'self' data:; connect-src 'self' data:; worker-src 'self'; manifest-src 'self'; frame-src 'self' blob:; object-src 'none'; base-uri 'self'; form-action 'none'">
+         blob:/data: brauchen PDF-Ausgabe, Bilder, Datei-Download und Shoelace-Symbole (connect-src data:); 'unsafe-inline' bei Stilen braucht Lit/Shoelace.
+         object-src blob: braucht Safari (iPad/iPhone), um die PDF mit seinem eingebauten Viewer anzuzeigen. -->
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; font-src 'self' data:; connect-src 'self' data:; worker-src 'self'; manifest-src 'self'; frame-src 'self' blob:; object-src blob:; base-uri 'self'; form-action 'none'">
     <!-- Titel, Beschreibung, lang und canonical setzt src/localization.ts (seitenMetaAktualisieren) je nach Sprache.
          Die Werte hier gelten für Dienste, die kein JavaScript ausführen (Linkvorschau in LinkedIn, Mail …). -->
     <meta name="description" content="Kostenlose Web-App: Schubmittelpunkt, Torsions- und Wölbwiderstand, Spannungen dünnwandiger Querschnitte (FEM) – Free web app: shear centre, torsion and warping constant, stresses of thin-walled cross sections">
