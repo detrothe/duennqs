@@ -1,12 +1,13 @@
 import styles from './dr-tabelle.css?raw';
 
-// quer_2: Abhängigkeiten aus d2beam-gui über tabelle_umgebung.ts (sonst unverändert aus d2beam-gui)
+// Quelle: ~/git-code/dr-tabelle, verteilt mit dr-tabelle-verteilen.sh – nicht im Projekt ändern.
+// Alles Projektspezifische kommt aus tabelle_umgebung.ts.
 import {
    nQuerschnittSets, get_querschnittRechteck_name, Detect,
    berechnungErforderlich, touch_support_table, write, msg, str, ConfirmDialog,
 } from './tabelle_umgebung';
 
-// Zeile oberhalb einfügen (allow_insert_row, ergänzt in quer_2)
+// Zeile oberhalb einfügen (allow_insert_row)
 const INSERT_SVG =
    '<svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true" fill="none" stroke="currentColor" ' +
    'stroke-width="2" stroke-linecap="round" stroke-linejoin="round">' +
@@ -221,7 +222,7 @@ class DrTabelle extends HTMLElement {
    // Attribut allow_delete_row: Löschen-Button in der No-Spalte jeder Zeile, mit lokalem Undo/Redo.
    // Muss beim Erstellen der Tabelle gesetzt sein.
    allowDeleteRow = false;
-   // Attribut allow_insert_row (ergänzt in quer_2): Button „+“ in der No-Spalte fügt oberhalb eine leere
+   // Attribut allow_insert_row: Button „+“ in der No-Spalte fügt oberhalb eine leere
    // Zeile ein; gleiches Undo/Redo wie beim Löschen. Muss ebenfalls beim Erstellen der Tabelle gesetzt sein.
    allowInsertRow = false;
    undoStack: string[][][] = [];   // Schnappschüsse aller Zellwerte (Zeile, Spalte) vor einer Änderung
