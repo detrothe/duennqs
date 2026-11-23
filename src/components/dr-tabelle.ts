@@ -22,6 +22,27 @@ const TRASH_SVG =
 // und wird von allen Tabellen gemeinsam benutzt)
 let current_table_id = '';
 
+const MIN_BREITE = 1.5;   // kleinste Spaltenbreite beim Ziehen in rem
+
+/**
+ * Vom Benutzer gezogene Spaltenbreiten aller <dr-tabelle> unter root, für die Projektdatei.
+ * Ergebnis: { tabellen-id: [breite je Spalte in rem oder null = Standard] }, undefined wenn nichts geändert.
+ */
+export function spaltenbreiten_lesen(root: ParentNode): Record<string, (number | null)[]> | undefined {
+   const daten: Record<string, (number | null)[]> = {};
+   root.querySelectorAll('dr-tabelle').forEach((el: any) => {
+      const b = el.get_spaltenbreiten?.();
+      if (b && el.id) daten[el.id] = b;
+   });
+   return Object.keys(daten).length > 0 ? daten : undefined;
+}
+
+/** Spaltenbreiten aus der Projektdatei setzen; Tabellen ohne Eintrag (oder daten undefined) bekommen die Standardbreiten. */
+export function spaltenbreiten_setzen(root: ParentNode, daten: unknown): void {
+   const liste = (daten && typeof daten === 'object') ? daten as Record<string, unknown> : {};
+   root.querySelectorAll('dr-tabelle').forEach((el: any) => el.set_spaltenbreiten?.(liste[el.id]));
+}
+
 /** Attributwert wie '["No", "x [m]", "z [m]"]' in seine Einträge zerlegen. */
 function parse_liste(wert: string): string[] {
    let s = wert.replace('[', '');
@@ -47,7 +68,8 @@ class DrTabelle extends HTMLElement {
 
    columns: any = [];
    typs: any = [];
-   colWidth: any = [];
+   colWidth: any = [];             // Standardbreiten aus dem Attribut colwidth (rem)
+   breite: (number | null)[] = [];  // vom Benutzer gezogene Breiten je Spalte (rem), null = Standard
    colText = '';
 
    nTabRow = 3; // immer 1 mehr, da Zeile, Spalte mit 0 beginnt
@@ -160,15 +182,25 @@ class DrTabelle extends HTMLElement {
    // Zellen erzeugen (beim Aufbau und in resize_Tabelle)
    //---------------------------------------------------------------------------------------------------------------
 
-   /** Breite einer Datenspalte aus dem Attribut colwidth; fehlende Spalten erben den letzten Wert. */
+   /**
+    * CSS-Breite der Zellen einer Spalte: gezogene Breite, sonst Attribut colwidth (fehlende Spalten
+    * erben den letzten Wert). Die No-Spalte hat ohne gezogene Breite keine feste Breite.
+    */
    private spaltenbreite(iSpalte: number): string {
+      const b = this.breite[iSpalte];
+      if (b != null) return b + 'rem';
+      if (iSpalte === 0) return '';
       if (this.colWidth.length === 0) return '6rem';
       return this.colWidth[Math.min(iSpalte, this.colWidth.length - 1)] + 'rem';
    }
 
    private create_header_cell(row: HTMLTableRowElement, iSpalte: number, text: string) {
       const th = document.createElement('th');
-      th.innerHTML = text;
+      const kopf = document.createElement('span');
+      kopf.className = 'kopf_text';
+      kopf.innerHTML = text;
+      th.appendChild(kopf);
+      th.appendChild(this.create_griff(iSpalte));
       th.style.padding = '5px';
       th.style.margin = '0px';
       th.style.textAlign = 'center';
@@ -178,6 +210,7 @@ class DrTabelle extends HTMLElement {
 
    private create_no_cell(row: HTMLTableRowElement, iZeile: number) {
       const cell = row.insertCell(-1);
+      cell.style.width = this.spaltenbreite(0);
       cell.style.textAlign = 'center';
       cell.style.padding = '0px';
       cell.style.margin = '0px';
@@ -231,6 +264,129 @@ class DrTabelle extends HTMLElement {
 
       if (iSpalte === this.col_visible.length) this.col_visible.push(true);
       if (this.col_visible[iSpalte] === false) cell.style.display = 'none';
+   }
+
+   //---------------------------------------------------------------------------------------------------------------
+   // Spaltenbreite durch Ziehen am rechten Rand der Überschrift (Doppelklick: an den Inhalt anpassen)
+   //---------------------------------------------------------------------------------------------------------------
+
+   private create_griff(iSpalte: number): HTMLElement {
+      const griff = document.createElement('span');
+      griff.className = 'spalten_griff';
+      griff.title = msg('Spaltenbreite ändern (Doppelklick: an Inhalt anpassen)');
+      griff.addEventListener('pointerdown', (ev) => this.griff_ziehen(ev, iSpalte));
+      griff.addEventListener('dblclick', (ev) => {
+         ev.preventDefault();
+         ev.stopPropagation();
+         this.breite_an_inhalt(iSpalte);
+      });
+      return griff;
+   }
+
+   private rem_px(): number {
+      return parseFloat(getComputedStyle(document.documentElement).fontSize) || 16;
+   }
+
+   private griff_ziehen(ev: PointerEvent, iSpalte: number) {
+      if (ev.button !== 0) return;
+      ev.preventDefault();
+      ev.stopPropagation();
+      this.toggleMenuOff();
+
+      const griff = ev.currentTarget as HTMLElement;
+      try { griff.setPointerCapture(ev.pointerId); } catch { /* Zeiger schon wieder weg */ }
+      griff.classList.add('aktiv');
+
+      // Ausgangsbreite aus der dargestellten Spaltenbreite (kann wegen der Überschrift größer als
+      // die eingestellte sein). Abzug: Rand der Zelle, bei Eingabefeldern zusätzlich deren Innenabstand.
+      const remPx = this.rem_px();
+      const th = griff.parentElement as HTMLElement;
+      const abzug = iSpalte === 0 ? 0 : (this.typs[iSpalte] === 'select' ? 2 : 12);
+      const start = (th.getBoundingClientRect().width - abzug) / remPx;
+      const startX = ev.clientX;
+      let geaendert = false;
+
+      const move = (e: PointerEvent) => {
+         const b = Math.max(MIN_BREITE, Math.round((start + (e.clientX - startX) / remPx) * 10) / 10);
+         if (b === this.breite[iSpalte]) return;
+         this.setze_breite(iSpalte, b);
+         geaendert = true;
+      };
+      const ende = () => {
+         griff.removeEventListener('pointermove', move);
+         griff.removeEventListener('pointerup', ende);
+         griff.removeEventListener('pointercancel', ende);
+         griff.classList.remove('aktiv');
+         if (geaendert) this.breite_geaendert(iSpalte);
+      };
+      griff.addEventListener('pointermove', move);
+      griff.addEventListener('pointerup', ende);
+      griff.addEventListener('pointercancel', ende);
+   }
+
+   /** Breite so wählen, dass der längste Eintrag der Spalte ganz zu sehen ist. */
+   private breite_an_inhalt(iSpalte: number) {
+      if (iSpalte === 0) {
+         this.setze_breite(0, null);   // No-Spalte: automatische Breite
+         this.breite_geaendert(0);
+         return;
+      }
+      const table = this.shadow.getElementById('mytable') as HTMLTableElement;
+      const ctx = document.createElement('canvas').getContext('2d');
+      if (!ctx) return;
+
+      let text = 0;
+      let istSelect = false;
+      for (let i = 1; i < table.rows.length; i++) {
+         const el = table.rows[i].cells[iSpalte]?.firstElementChild as HTMLInputElement | HTMLSelectElement | null;
+         if (!el) continue;
+         istSelect = el instanceof HTMLSelectElement;
+         const wert = istSelect ? ((el as HTMLSelectElement).selectedOptions[0]?.textContent ?? '') : el.value;
+         ctx.font = getComputedStyle(el).font;
+         text = Math.max(text, ctx.measureText(wert).width);
+      }
+      // Eingabefeld: Breite ohne Innenabstand (+ etwas Luft); Auswahlfeld: inkl. Innenabstand und Pfeil
+      const px = text + (istSelect ? 40 : 6);
+      this.setze_breite(iSpalte, Math.max(MIN_BREITE, Math.ceil(px / this.rem_px() * 10) / 10));
+      this.breite_geaendert(iSpalte);
+   }
+
+   /** Breite einer Spalte setzen (rem, null = Standard) und auf alle Zellen anwenden. */
+   private setze_breite(iSpalte: number, b: number | null) {
+      while (this.breite.length <= iSpalte) this.breite.push(null);
+      this.breite[iSpalte] = b;
+      const css = this.spaltenbreite(iSpalte);
+      const table = this.shadow.getElementById('mytable') as HTMLTableElement | null;
+      if (!table) return;
+      for (let i = 1; i < table.rows.length; i++) {
+         const cell = table.rows[i].cells[iSpalte];
+         if (cell) cell.style.width = css;
+      }
+   }
+
+   private breite_geaendert(iSpalte: number) {
+      this.dispatchEvent(new CustomEvent('spaltenbreite-geaendert', {
+         detail: { spalte: iSpalte, breite: this.breite[iSpalte] ?? null },
+         bubbles: true,
+         composed: true,
+      }));
+   }
+
+   /** Gezogene Breiten je Spalte (rem, null = Standard) für die Projektdatei; undefined, wenn keine. */
+   get_spaltenbreiten(): (number | null)[] | undefined {
+      const b = this.breite.slice();
+      while (b.length > 0 && b[b.length - 1] == null) b.pop();
+      return b.length > 0 ? b : undefined;
+   }
+
+   /** Breiten aus der Projektdatei übernehmen; ungültige Einträge und fehlende Spalten = Standard. */
+   set_spaltenbreiten(werte: unknown) {
+      const neu = Array.isArray(werte)
+         ? werte.map((v) => (typeof v === 'number' && Number.isFinite(v) && v > 0) ? Math.max(MIN_BREITE, v) : null)
+         : [];
+      const n = Math.max(neu.length, this.breite.length);
+      this.breite = [];
+      for (let i = 0; i < n; i++) this.setze_breite(i, neu[i] ?? null);
    }
 
    //---------------------------------------------------------------------------------------------------------------
@@ -333,6 +489,8 @@ class DrTabelle extends HTMLElement {
       //------------------------------------------------------------------------------------------------------------
       this.colText = lf;
       this.update_delete_texts();
+      this.shadow.querySelectorAll('.spalten_griff').forEach((g: HTMLElement) =>
+         g.title = msg('Spaltenbreite ändern (Doppelklick: an Inhalt anpassen)'));
    }
 
    //---------------------------------------------------------------------------------------------------------------
@@ -525,7 +683,8 @@ class DrTabelle extends HTMLElement {
       const kopf = table.rows.item(0);
       if (!kopf) return;
       for (let iSpalte = 0; iSpalte < kopf.cells.length; iSpalte++) {
-         kopf.cells[iSpalte].innerHTML = this.columns[iSpalte];
+         const text = kopf.cells[iSpalte].querySelector('.kopf_text');
+         if (text) text.innerHTML = this.columns[iSpalte];
       }
    }
 
@@ -676,6 +835,8 @@ class DrTabelle extends HTMLElement {
       if (nZeilen > nRowNew) {
          for (let i = 1; i <= nZeilen - nRowNew; i++) table.deleteRow(-1);
       }
+      // gezogene Breiten weggefallener Spalten verwerfen
+      if (this.breite.length > Number(nColNew) + 1) this.breite.length = Number(nColNew) + 1;
 
       if (nColNew > nSpalten) {
          // Spalten anhängen; neue Überschrift = coltext + Nummer (z.B. Lastfall-Spalten)

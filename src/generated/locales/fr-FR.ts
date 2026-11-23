@@ -125,6 +125,7 @@
 's8447d363e2d35512': `Recommencer quand même`,
 's8469617a8c3f2f8d': `Enregistrer l'image`,
 's854627b29e5663d3': `Les réglages choisis sont conservés après un redémarrage de l'application`,
+'s8808d1dc381aea7b': `Modifier la largeur de colonne (double-clic : ajuster au contenu)`,
 's8954946e6c414e39': `Unité de longueur :`,
 's8d3551f00a88687e': `Échelle`,
 's8f411426731b6d29': `Annuler`,

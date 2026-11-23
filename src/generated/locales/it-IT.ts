@@ -125,6 +125,7 @@
 's8447d363e2d35512': `Ricomincia comunque`,
 's8469617a8c3f2f8d': `Salva immagine`,
 's854627b29e5663d3': `Le impostazioni scelte restano valide anche dopo il riavvio dell'app`,
+'s8808d1dc381aea7b': `Modifica la larghezza della colonna (doppio clic: adatta al contenuto)`,
 's8954946e6c414e39': `Unità di lunghezza:`,
 's8d3551f00a88687e': `Scala`,
 's8f411426731b6d29': `Annulla`,

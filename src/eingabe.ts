@@ -12,6 +12,7 @@
 
 import { msg } from '@lit/localize';
 import { byId, berechnungErforderlich } from './state';
+import { spaltenbreiten_lesen, spaltenbreiten_setzen } from './components/dr-tabelle';
 import type { drButtonPM } from './components/dr-button-pm';
 import { current_unit_length, current_unit_stress, unit_length_factor, unit_stress_factor, set_current_unit_length } from './einstellungen';
 
@@ -279,6 +280,7 @@ export function leereEingabe(): void {
     for (const id of [KNOTEN_TABELLE, ELEMENT_TABELLE]) tabelle(id).setAttribute('clear', String(Date.now()));
     for (const id of SCHNITTGROESSEN) byId<HTMLInputElement>(id).value = '';
     byId<HTMLTextAreaElement>('freetext').value = '';
+    spaltenbreiten_setzen(document, undefined);
 }
 
 /** true, wenn Tabellen, Schnittgrößen und freier Text leer sind (dann gibt es nichts zu verlieren). */
@@ -306,6 +308,7 @@ interface EingabeDaten {
     freetext?: string;
     node: (string | number | null)[][];
     elem: (string | number | null)[][];
+    spaltenbreiten?: Record<string, (number | null)[]>;   // vom Benutzer gezogene Spaltenbreiten (rem)
 }
 
 export function eingabeAlsJSON(): string {
@@ -323,6 +326,7 @@ export function eingabeAlsJSON(): string {
         freetext: byId<HTMLTextAreaElement>('freetext').value,
         node: leseRoh(KNOTEN_TABELLE),
         elem: leseRoh(ELEMENT_TABELLE),
+        spaltenbreiten: spaltenbreiten_lesen(document),
     };
     return JSON.stringify(daten);
 }
@@ -356,6 +360,7 @@ export function eingabeEinlesen(text: string): boolean {
 
     setzeKnoten(daten.node);
     setzeElemente(daten.elem);
+    spaltenbreiten_setzen(document, daten.spaltenbreiten);
     spaltenAktualisieren();
     berechnungErforderlich();
     return true;

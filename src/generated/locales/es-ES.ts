@@ -125,6 +125,7 @@
 's8447d363e2d35512': `Empezar de todos modos`,
 's8469617a8c3f2f8d': `Guardar imagen`,
 's854627b29e5663d3': `Los ajustes seleccionados se conservan tras reiniciar la aplicación`,
+'s8808d1dc381aea7b': `Cambiar el ancho de columna (doble clic: ajustar al contenido)`,
 's8954946e6c414e39': `Unidad de longitud:`,
 's8d3551f00a88687e': `Escala`,
 's8f411426731b6d29': `Cancelar`,

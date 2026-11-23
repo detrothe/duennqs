@@ -800,6 +800,10 @@
   <source>Abstand Cursor (Finger)</source>
   <target>Décalage du curseur (doigt)</target>
 </trans-unit>
+<trans-unit id="s8808d1dc381aea7b">
+  <source>Spaltenbreite ändern (Doppelklick: an Inhalt anpassen)</source>
+  <target>Modifier la largeur de colonne (double-clic : ajuster au contenu)</target>
+</trans-unit>
 </body>
 </file>
 </xliff>

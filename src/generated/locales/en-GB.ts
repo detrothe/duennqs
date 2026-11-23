@@ -125,6 +125,7 @@
 's8447d363e2d35512': `Start anyway`,
 's8469617a8c3f2f8d': `Save image`,
 's854627b29e5663d3': `The selected settings are kept after restarting the app`,
+'s8808d1dc381aea7b': `Change column width (double-click: fit to content)`,
 's8954946e6c414e39': `Unit of length:`,
 's8d3551f00a88687e': `Scaling`,
 's8f411426731b6d29': `Cancel`,

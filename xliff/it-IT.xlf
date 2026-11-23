@@ -800,6 +800,10 @@
   <source>Abstand Cursor (Finger)</source>
   <target>Distanza cursore (dito)</target>
 </trans-unit>
+<trans-unit id="s8808d1dc381aea7b">
+  <source>Spaltenbreite ändern (Doppelklick: an Inhalt anpassen)</source>
+  <target>Modifica la larghezza della colonna (doppio clic: adatta al contenuto)</target>
+</trans-unit>
 </body>
 </file>
 </xliff>
