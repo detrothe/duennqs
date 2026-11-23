@@ -123,9 +123,15 @@ th {
   background: linear-gradient(to right, transparent 4px, rgba(0, 0, 0, 0.18) 4px, rgba(0, 0, 0, 0.18) 6px, transparent 6px);
 }
 
-.spalten_griff:hover,
 .spalten_griff.aktiv {
   background: linear-gradient(to right, transparent 3px, rgba(0, 0, 0, 0.45) 3px, rgba(0, 0, 0, 0.45) 7px, transparent 7px);
+}
+
+/* nur bei echter Maus/Trackpad: auf Touch-Geräten bliebe :hover nach dem Antippen hängen */
+@media (hover: hover) and (pointer: fine) {
+  .spalten_griff:hover {
+    background: linear-gradient(to right, transparent 3px, rgba(0, 0, 0, 0.45) 3px, rgba(0, 0, 0, 0.45) 7px, transparent 7px);
+  }
 }
 
 /* Finger: breiterer Griff */
