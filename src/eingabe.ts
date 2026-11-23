@@ -296,7 +296,15 @@ export function eingabeLeer(): boolean {
 //----------------------------------------------------------------------------------------------------------------------
 // Datei- und Sicherungsformat (kompatibel zu den bisherigen duennqs-Dateien)
 
+/**
+ * Version des Dateiformats (.duennqs und automatische Sicherung). Bei jeder Änderung am Format hochzählen.
+ * 1 (Dateien ohne Angabe): bis App-Version 2.2.1
+ * 2: mit spaltenbreiten (gezogene Spaltenbreiten der Tabellen)
+ */
+const DATEIVERSION = 2;
+
 interface EingabeDaten {
+    version?: number;
     unit_length?: string;
     nnodes: number;
     nelem: number;
@@ -314,6 +322,7 @@ interface EingabeDaten {
 export function eingabeAlsJSON(): string {
     const feld = (id: string) => byId<HTMLInputElement>(id).value;
     const daten: EingabeDaten = {
+        version: DATEIVERSION,
         unit_length: current_unit_length,
         nnodes: anzahlKnoten(),
         nelem: anzahlElemente(),
