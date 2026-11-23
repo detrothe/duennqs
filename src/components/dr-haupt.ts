@@ -74,7 +74,7 @@ const DOKUMENTATION: Record<string, string> = {
     'it-IT': 'Kurzdokumentation_italian.html',
 };
 
-const FARBEN = '#cfd915;#b3ae00;#ffffff;#f5f5f5;#d8d8d8;#828282;#404040;#000000;#0284c7;#2e7d32;#c62828;#ef6c00';
+const FARBEN = '#099bea;#002234;#bae6fd;#cfd915;#ffffff;#f5f5f5;#d8d8d8;#828282;#404040;#000000;#0284c7;#2e7d32;#c62828;#ef6c00';
 
 @customElement('dr-haupt')
 export class DrHaupt extends LitElement {
@@ -386,12 +386,12 @@ ${msg('Bearbeitet von: Melis Muster')}"></textarea>
             </tr>
             <tr>
               <td>${msg('Hintergrundfarbe Tabellen:')}</td>
-              <td><sl-color-picker id="id_color_table_out" value="#cfd915" format="hex" hoist
+              <td><sl-color-picker id="id_color_table_out" value="#099bea" format="hex" hoist
                 swatches="${FARBEN}" label="${msg('Hintergrundfarbe Tabellen')}"></sl-color-picker></td>
             </tr>
             <tr>
               <td>${msg('Textfarbe Tabellen:')}</td>
-              <td><sl-color-picker id="id_color_table_text" value="#000000" format="hex" hoist
+              <td><sl-color-picker id="id_color_table_text" value="#002234" format="hex" hoist
                 swatches="${FARBEN}" label="${msg('Textfarbe Tabellen')}"
                 title="${msg('Wird beim Ändern der Hintergrundfarbe automatisch hell oder dunkel gesetzt')}"></sl-color-picker></td>
             </tr>

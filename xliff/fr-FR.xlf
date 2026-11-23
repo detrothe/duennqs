@@ -804,6 +804,166 @@
   <source>Spaltenbreite ändern (Doppelklick: an Inhalt anpassen)</source>
   <target>Modifier la largeur de colonne (double-clic : ajuster au contenu)</target>
 </trans-unit>
+<trans-unit id="sa307d84f7d4ff299">
+  <source>I-Profil</source>
+  <target>Profilé en I</target>
+</trans-unit>
+<trans-unit id="se3cf167b47259882">
+  <source>Rechteck-Hohlprofil</source>
+  <target>Profil creux rectangulaire</target>
+</trans-unit>
+<trans-unit id="s4a415261af02bd4d">
+  <source>U-Profil</source>
+  <target>Profilé en U</target>
+</trans-unit>
+<trans-unit id="s4b4a42f7e6231a9d">
+  <source>Kreis-Hohlprofil</source>
+  <target>Profil creux circulaire</target>
+</trans-unit>
+<trans-unit id="sd8ba06e86a112e07">
+  <source>Flanschbreite oben</source>
+  <target>Largeur de la semelle supérieure</target>
+</trans-unit>
+<trans-unit id="s1f8da984a1c6c5fc">
+  <source>Flanschdicke oben</source>
+  <target>Épaisseur de la semelle supérieure</target>
+</trans-unit>
+<trans-unit id="s25c0993956b36819">
+  <source>Flanschbreite unten</source>
+  <target>Largeur de la semelle inférieure</target>
+</trans-unit>
+<trans-unit id="sd7183bfacb7d91e4">
+  <source>Flanschdicke unten</source>
+  <target>Épaisseur de la semelle inférieure</target>
+</trans-unit>
+<trans-unit id="s51671a8e80691ba3">
+  <source>Steghöhe (Abstand der Flanschmittellinien)</source>
+  <target>Hauteur de l’âme (distance entre lignes moyennes des semelles)</target>
+</trans-unit>
+<trans-unit id="s0682b3b418e4bcd2">
+  <source>Stegdicke</source>
+  <target>Épaisseur de l’âme</target>
+</trans-unit>
+<trans-unit id="s48f3e5e6baeac248">
+  <source>Breite</source>
+  <target>Largeur</target>
+</trans-unit>
+<trans-unit id="sf5d6b9da80fbb0cc">
+  <source>Höhe</source>
+  <target>Hauteur</target>
+</trans-unit>
+<trans-unit id="s6f8f697faa739622">
+  <source>Wandstärke</source>
+  <target>Épaisseur de paroi</target>
+</trans-unit>
+<trans-unit id="sd1c86c8695c82e68">
+  <source>Höhe (Abstand der Flanschmittellinien)</source>
+  <target>Hauteur (distance entre lignes moyennes des semelles)</target>
+</trans-unit>
+<trans-unit id="sb19b21dc781a65fa">
+  <source>Breite (bis Stegmittellinie)</source>
+  <target>Largeur (jusqu’à la ligne moyenne de l’âme)</target>
+</trans-unit>
+<trans-unit id="s9fdab6f6639dc506">
+  <source>Flanschdicke (beide Flansche)</source>
+  <target>Épaisseur des semelles (les deux)</target>
+</trans-unit>
+<trans-unit id="s5c8d537b9c8aa213">
+  <source>Durchmesser (Mittellinie)</source>
+  <target>Diamètre (ligne moyenne)</target>
+</trans-unit>
+<trans-unit id="s6c0d86f3d7faeb3e">
+  <source>Teilung (Anzahl Elemente, mindestens 3)</source>
+  <target>Division (nombre d’éléments, au moins 3)</target>
+</trans-unit>
+<trans-unit id="s372cac21e925ef82">
+  <source>Querschnittsform</source>
+  <target>Forme de la section</target>
+</trans-unit>
+<trans-unit id="s71a704db2619fbd3">
+  <source>Bitte alle Abmessungen als positive Zahlen eingeben (Teilung: ganze Zahl von 3 bis 360).</source>
+  <target>Veuillez saisir toutes les dimensions sous forme de nombres positifs (division : entier de 3 à 360).</target>
+</trans-unit>
+<trans-unit id="sc1d4d51e8347380d">
+  <source>Übernehmen</source>
+  <target>Appliquer</target>
+</trans-unit>
+<trans-unit id="sec197c99326ea236">
+  <source>Abmessungen bezogen auf die Profilmittellinien. Koordinatenursprung im Kreismittelpunkt, Knoten und Elemente werden berechnet und in die Tabellen eingetragen.</source>
+  <target>Dimensions rapportées aux lignes moyennes du profil. Origine des coordonnées au centre du cercle ; les nœuds et éléments sont calculés et inscrits dans les tableaux.</target>
+</trans-unit>
+<trans-unit id="s1adb4c13570cf2c2">
+  <source>Abmessungen bezogen auf die Profilmittellinien. Koordinatenursprung rechts oben, Knoten und Elemente werden berechnet und in die Tabellen eingetragen.</source>
+  <target>Dimensions rapportées aux lignes moyennes du profil. Origine des coordonnées en haut à droite ; les nœuds et éléments sont calculés et inscrits dans les tableaux.</target>
+</trans-unit>
+<trans-unit id="sd1ec39fb80fb87b5">
+  <source>Knoten und Elemente werden direkt in die Tabellen eingegeben. Die Tabellen werden geleert.</source>
+  <target>Les nœuds et éléments sont saisis directement dans les tableaux. Les tableaux sont vidés.</target>
+</trans-unit>
+<trans-unit id="s3cc7b06a90904a01">
+  <source>Allgemeine Eingabe</source>
+  <target>Saisie générale</target>
+</trans-unit>
+<trans-unit id="scc0c47bfb88f4780">
+  <source>Flansch oben</source>
+  <target>Semelle supérieure</target>
+</trans-unit>
+<trans-unit id="s22af8e4e14cddb60">
+  <source>Flansch unten</source>
+  <target>Semelle inférieure</target>
+</trans-unit>
+<trans-unit id="sd9993c251f126086">
+  <source>Steg</source>
+  <target>Âme</target>
+</trans-unit>
+<trans-unit id="s60ef61b743b692e5">
+  <source>h = Abstand der Flanschmittellinien</source>
+  <target>h = distance entre les lignes moyennes des semelles</target>
+</trans-unit>
+<trans-unit id="s1a63219fafb6d4cd">
+  <source>Abmessungen</source>
+  <target>Dimensions</target>
+</trans-unit>
+<trans-unit id="s890b98022d945ddf">
+  <source>Wand</source>
+  <target>Paroi</target>
+</trans-unit>
+<trans-unit id="sf222bd0e69a7761b">
+  <source>h = Abstand der Flanschmittellinien, b bis zur Stegmittellinie</source>
+  <target>h = distance entre les lignes moyennes des semelles, b jusqu’à la ligne moyenne de l’âme</target>
+</trans-unit>
+<trans-unit id="sec1ddfdc649a1777">
+  <source>Dicken</source>
+  <target>Épaisseurs</target>
+</trans-unit>
+<trans-unit id="scdb11ac9cef3186d">
+  <source>Die Flanschdicke gilt für beide Flansche.</source>
+  <target>L’épaisseur s’applique aux deux semelles.</target>
+</trans-unit>
+<trans-unit id="sca8df62bef601840">
+  <source>Rohr</source>
+  <target>Tube</target>
+</trans-unit>
+<trans-unit id="see1a443f2a3c6ce8">
+  <source>d = Durchmesser der Mittellinie</source>
+  <target>d = diamètre de la ligne moyenne</target>
+</trans-unit>
+<trans-unit id="sc030695cc87e434d">
+  <source>Teilung</source>
+  <target>Division</target>
+</trans-unit>
+<trans-unit id="s75e2286a3e68eeec">
+  <source>Anzahl der Elemente auf dem Umfang (3 bis 360)</source>
+  <target>Nombre d’éléments sur la circonférence (3 à 360)</target>
+</trans-unit>
+<trans-unit id="s674712bdbf65b117">
+  <source>Neue Eingabe</source>
+  <target>Nouvelle saisie</target>
+</trans-unit>
+<trans-unit id="s88cc80f2449611e3">
+  <source>Welche Querschnittsform? Knoten und Elemente werden daraus berechnet.</source>
+  <target>Quelle forme de section ? Les nœuds et éléments en sont calculés.</target>
+</trans-unit>
 </body>
 </file>
 </xliff>

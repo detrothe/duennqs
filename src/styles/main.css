@@ -123,8 +123,9 @@ sl-tab-group::part(nav) {
 
 @media (prefers-color-scheme: dark) {
     sl-tab::part(base) {
-        color: yellow;
+        color: var(--sl-color-neutral-700);   /* hellgrau (Shoelace kehrt die Grautöne im dunklen Design um) */
         font-size: 1rem;
+        font-weight: 600;
     }
 
     sl-tab[active]::part(base) {
@@ -675,8 +676,8 @@ sl-color-picker::part(trigger) {
     --slider-input-min-width: 2.4rem;
     --folder-indent: 0.4rem;
     /* Titelleiste in der im Tab ꔷꔷꔷ gewählten Tabellenfarbe (Text hell/dunkel passend dazu) */
-    --title-background-color: var(--table_bg, #cfd915);
-    --title-text-color: var(--table_fg, #000000);
+    --title-background-color: var(--table_bg, #099bea);
+    --title-text-color: var(--table_fg, #002234);
 }
 
 /* rechts unten, damit es auf dem Smartphone nicht mit dem Bedienfeld überlappt */
@@ -794,5 +795,401 @@ sl-color-picker::part(trigger) {
 
     .schnittgroessen .input_tab {
         width: 4rem;
+    }
+}
+
+/* Dialog „neue Eingabe“ mit Auswahl der Querschnittsform (components/profil_dialog.ts),
+   gestaltet wie der Willkommensdialog von d2beam-gui */
+dialog.pd {
+    box-sizing: border-box;
+    width: min(760px, calc(100vw - 32px));
+    max-width: none;
+    max-height: calc(100dvh - 32px);
+    padding: 0;
+    border: 0;
+    margin: max(16px, 4vh) auto auto;   /* oben fest, damit der Dialog beim Wechsel der Form nicht springt */
+    border-radius: 14px;
+    background: transparent;
+    overflow: auto;
+
+    &::backdrop {
+        background: hsl(201 50% 40% / 0.5);
+    }
+}
+
+.pd-karte {
+    --pd-acc: var(--sl-color-primary-600, #0b5fa5);
+    --pd-text: #1a1a1a;
+    --pd-muted: #555555;
+    --pd-border: #d5d5d5;
+    --pd-bg: #ffffff;
+    --pd-tile: #fafafa;
+    --pd-line: #ececec;
+    --pd-field: #ffffff;
+    position: relative;
+    box-sizing: border-box;
+    padding: 36px 40px 24px;
+    background: var(--pd-bg);
+    border-radius: 14px;
+    font-family: Inter, system-ui, sans-serif;
+    color: var(--pd-text);
+    display: flex;
+    flex-direction: column;
+    gap: 22px;
+
+    *, *::before, *::after {
+        box-sizing: border-box;
+    }
+
+    h2 {
+        margin: 0;
+        padding-right: 40px;
+        font-size: 26px;
+        font-weight: 700;
+    }
+
+    p {
+        margin: 0;
+    }
+
+    button:focus-visible, input:focus-visible {
+        outline: 3px solid #f2a33a;
+        outline-offset: 2px;
+    }
+}
+
+.sl-theme-dark .pd-karte {
+    --pd-text: #e8e8ec;
+    --pd-muted: #b6b6be;
+    --pd-border: #43434a;
+    --pd-bg: #1f1f23;
+    --pd-tile: #26262b;
+    --pd-line: #34343a;
+    --pd-field: #2c2c32;
+}
+
+/* im dunklen Design ist die Akzentfarbe hell: dunkle Schrift darauf (wie d2beam-gui) */
+.sl-theme-dark .pd-kachel.pd-gewaehlt,
+.sl-theme-dark .pd-knopf.pd-primaer {
+    color: #0d1520;
+}
+
+.pd-unterzeile {
+    margin-top: 6px !important;
+    font-size: 15px;
+    color: var(--pd-muted);
+}
+
+.pd-schliessen {
+    position: absolute;
+    top: 14px;
+    right: 14px;
+    width: 40px;
+    height: 40px;
+    border: 0;
+    border-radius: 8px;
+    background: transparent;
+    color: var(--pd-muted);
+    font-size: 26px;
+    line-height: 1;
+    cursor: pointer;
+
+    &:hover {
+        color: var(--pd-text);
+    }
+}
+
+.pd-kacheln {
+    display: grid;
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+    gap: 12px;
+}
+
+.pd-kachel {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 14px 6px;
+    border-radius: 12px;
+    border: 1px solid var(--pd-border);
+    background: var(--pd-tile);
+    color: var(--pd-text);
+    font: inherit;
+    font-size: 15px;
+    font-weight: 700;
+    text-align: center;
+    overflow-wrap: anywhere;
+    hyphens: auto;
+    cursor: pointer;
+
+    svg {
+        width: 34px;
+        height: 34px;
+        stroke: var(--pd-acc);
+    }
+
+    &:hover {
+        border-color: var(--pd-acc);
+    }
+
+    &.pd-gewaehlt {
+        border: 1px solid var(--pd-acc);
+        background: var(--pd-acc);
+        color: #ffffff;
+
+        svg {
+            stroke: currentColor;
+        }
+    }
+}
+
+.pd-inhalt {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-start;
+    gap: 20px 28px;
+}
+
+.pd-skizze {
+    flex: 0 0 230px;
+    padding: 8px;
+    border: 1px solid var(--pd-line);
+    border-radius: 12px;
+    background: var(--pd-tile);
+
+    svg {
+        display: block;
+        width: 100%;
+        height: auto;
+    }
+}
+
+.pd-linie {
+    fill: none;
+    stroke: var(--pd-text);
+    stroke-width: 5;
+    stroke-linejoin: round;
+}
+
+.pd-knoten {
+    fill: var(--pd-acc);
+}
+
+.pd-mass {
+    fill: none;
+    stroke: var(--pd-muted);
+    stroke-width: 1;
+}
+
+.pd-strich {
+    stroke: var(--pd-muted);
+    stroke-width: 1.5;
+}
+
+.pd-mt {
+    font: italic 18px serif;
+    fill: var(--pd-text);
+}
+
+.pd-achse {
+    stroke: #c0392b;
+    stroke-width: 1.6;
+}
+
+.pd-ursprung {
+    fill: #c0392b;
+}
+
+.pd-at {
+    font: italic 18px serif;
+    fill: #c0392b;
+}
+
+.pd-gruppen {
+    flex: 1 1 280px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.pd-text {
+    font-size: 15px;
+    line-height: 1.5;
+    color: var(--pd-muted);
+}
+
+.pd-gruppentitel {
+    margin-bottom: 6px;
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: var(--pd-muted);
+}
+
+.pd-felder {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.pd-gruppenhinweis {
+    margin-top: 5px;
+    font-size: 12px;
+    color: var(--pd-muted);
+}
+
+.pd-feld {
+    display: flex;
+    align-items: center;
+    width: 150px;
+    border: 1px solid var(--pd-border);
+    border-radius: 8px;
+    background: var(--pd-field);
+    overflow: hidden;
+    cursor: text;
+
+    b {
+        min-width: 32px;
+        padding-left: 10px;
+        font: italic 18px serif;
+        color: var(--pd-text);
+    }
+
+    input {
+        width: 100%;
+        min-width: 0;
+        padding: 7px 4px;
+        border: 0;
+        outline: none;
+        background: transparent;
+        color: var(--pd-text);
+        font: inherit;
+        font-size: 16px;
+    }
+
+    span {
+        padding: 0 10px 0 2px;
+        font-size: 13px;
+        color: var(--pd-muted);
+    }
+
+    &:focus-within {
+        border-color: var(--pd-acc);
+        box-shadow: 0 0 0 2px color-mix(in srgb, var(--pd-acc) 30%, transparent);
+    }
+
+    &.pd-ungueltig {
+        border-color: #c0392b;
+        background: color-mix(in srgb, salmon 35%, var(--pd-field));
+    }
+}
+
+.pd-hinweis {
+    font-size: 13px;
+    line-height: 1.5;
+    color: var(--pd-muted);
+}
+
+.pd-hinweis:empty {
+    display: none;
+}
+
+.pd-fehler {
+    color: #c0392b;
+    font-weight: 600;
+}
+
+.pd-fehler[hidden] {
+    display: none;
+}
+
+.pd-fuss {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    position: sticky;   /* Buttons bleiben sichtbar, wenn der Dialog auf kleinen Bildschirmen scrollt */
+    bottom: 0;
+    margin-bottom: -24px;
+    padding: 16px 0 24px;
+    border-top: 1px solid var(--pd-line);
+    background: var(--pd-bg);
+}
+
+.pd-knopf {
+    padding: 10px 20px;
+    border: 1px solid var(--pd-border);
+    border-radius: 8px;
+    background: var(--pd-tile);
+    color: var(--pd-text);
+    font: inherit;
+    font-size: 15px;
+    cursor: pointer;
+
+    &.pd-primaer {
+        border-color: var(--pd-acc);
+        background: var(--pd-acc);
+        color: #ffffff;
+        font-weight: 600;
+    }
+
+    &:hover {
+        filter: brightness(1.08);
+    }
+}
+
+/* Smartphone / schmales Fenster */
+@media (max-width: 600px) {
+    dialog.pd {
+        width: calc(100vw - 16px);
+        max-height: calc(100dvh - 16px);
+    }
+
+    .pd-karte {
+        padding: 20px 16px;
+        gap: 16px;
+
+        h2 {
+            font-size: 22px;
+        }
+    }
+
+    .pd-kacheln {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 8px;
+    }
+
+    .pd-kachel {
+        padding: 10px 4px;
+        gap: 4px;
+        font-size: 13px;
+
+        svg {
+            width: 26px;
+            height: 26px;
+        }
+    }
+
+    .pd-skizze {
+        flex: 0 0 auto;
+        width: 210px;
+        margin: 0 auto;
+    }
+
+    .pd-feld {
+        flex: 1 1 120px;
+        width: auto;
+    }
+
+    .pd-knopf {
+        min-height: 44px;
+    }
+
+    .pd-fuss {
+        bottom: 0;
+        margin-bottom: -20px;
+        padding-bottom: 20px;
     }
 }

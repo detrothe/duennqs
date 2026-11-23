@@ -34,7 +34,8 @@ const EINHEITEN: Record<string, { laenge: number; spannung: number; name: string
     m: { laenge: 0.01, spannung: 10, name: 'MN/m²' },
 };
 
-const STANDARD_TABELLE = '#cfd915';   // wie d2beam-gui
+const STANDARD_TABELLE = '#099bea';   // Blau passend zur Akzentfarbe (bis 2.3.0: Gelbgrün #cfd915 wie d2beam-gui)
+const STANDARD_TEXT = '#002234';      // Dunkelblau, Kontrast 5,4 : 1 auf STANDARD_TABELLE
 const STANDARD_AKZENT = '#0284c7';    // Shoelace sky-600
 
 // eigener Präfix: lokal laufen mehrere Apps auf localhost und teilen sich sonst den Speicher
@@ -85,6 +86,11 @@ function kontrastfarbe(hex: string): string {
     };
     const L = 0.2126 * lin((n >> 16) & 255) + 0.7152 * lin((n >> 8) & 255) + 0.0722 * lin(n & 255);
     return (L + 0.05) / 0.05 >= 1.05 / (L + 0.05) ? '#000000' : '#ffffff';
+}
+
+/** Textfarbe zu einer Tabellenfarbe: beim Standardblau das Dunkelblau, sonst schwarz oder weiß. */
+function textfarbe(hintergrund: string): string {
+    return hintergrund.toLowerCase() === STANDARD_TABELLE ? STANDARD_TEXT : kontrastfarbe(hintergrund);
 }
 
 function tabellenfarben(hintergrund: string, text: string): void {
@@ -146,9 +152,9 @@ function loeschen(): void {
         for (const key of [KEY_EINHEIT, KEY_LOCALE, KEY_TABELLE, KEY_TEXT, KEY_AKZENT, KEY_SCHRIFT, KEY_TOUCH]) window.localStorage.removeItem(key);
     } catch { /* nichts zu tun */ }
     picker('id_color_table_out').value = STANDARD_TABELLE;
-    picker('id_color_table_text').value = kontrastfarbe(STANDARD_TABELLE);
+    picker('id_color_table_text').value = STANDARD_TEXT;
     picker('id_accent_color').value = STANDARD_AKZENT;
-    tabellenfarben(STANDARD_TABELLE, kontrastfarbe(STANDARD_TABELLE));
+    tabellenfarben(STANDARD_TABELLE, STANDARD_TEXT);
     akzentfarbe(null);
     byId<HTMLSelectElement>('id_fontsize').value = STANDARD_SCHRIFT;
     schriftgroesse(STANDARD_SCHRIFT);
@@ -162,7 +168,7 @@ export function initEinstellungen(): void {
     set_current_unit_length(lesen(KEY_EINHEIT) ?? 'cm');
 
     const tabelle = lesen(KEY_TABELLE) ?? STANDARD_TABELLE;
-    const text = lesen(KEY_TEXT) ?? kontrastfarbe(tabelle);
+    const text = lesen(KEY_TEXT) ?? textfarbe(tabelle);
     const akzent = lesen(KEY_AKZENT);
 
     picker('id_color_table_out').value = tabelle;
@@ -190,7 +196,7 @@ export function initEinstellungen(): void {
     // neue Hintergrundfarbe → Textfarbe automatisch hell oder dunkel
     byId('id_color_table_out').addEventListener('sl-input', () => {
         const bg = picker('id_color_table_out').value;
-        const fg = kontrastfarbe(bg);
+        const fg = textfarbe(bg);
         picker('id_color_table_text').value = fg;
         tabellenfarben(bg, fg);
         geaendert(true);

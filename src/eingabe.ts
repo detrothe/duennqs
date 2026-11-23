@@ -14,6 +14,7 @@ import { msg } from '@lit/localize';
 import { byId, berechnungErforderlich } from './state';
 import { spaltenbreiten_lesen, spaltenbreiten_setzen } from './components/dr-tabelle';
 import type { drButtonPM } from './components/dr-button-pm';
+import type { ProfilGeometrie } from './profile';
 import { current_unit_length, current_unit_stress, unit_length_factor, unit_stress_factor, set_current_unit_length } from './einstellungen';
 
 export const KNOTEN_TABELLE = 'id_knoten_tabelle';
@@ -281,6 +282,20 @@ export function leereEingabe(): void {
     for (const id of SCHNITTGROESSEN) byId<HTMLInputElement>(id).value = '';
     byId<HTMLTextAreaElement>('freetext').value = '';
     spaltenbreiten_setzen(document, undefined);
+}
+
+/**
+ * Neue Eingabe mit einem Standardquerschnitt: Knoten und Elemente eintragen (Werte schon in der
+ * eingestellten Längeneinheit), E-Modul und ν aus den Bezugswerten, Schnittgrößen und Text leeren.
+ */
+export function setzeProfil(geo: ProfilGeometrie): void {
+    const E = byId<HTMLInputElement>('EMod_ref').value, mue = byId<HTMLInputElement>('mue_ref').value;
+    setzeKnoten(geo.y.map((y, i) => [zahlText(y), zahlText(geo.z[i])]));
+    setzeElemente(geo.elemente.map(e => [E, mue, zahlText(e.t), e.nod1, e.nod2]));
+    for (const id of SCHNITTGROESSEN) byId<HTMLInputElement>(id).value = '';
+    byId<HTMLTextAreaElement>('freetext').value = '';
+    spaltenbreiten_setzen(document, undefined);
+    berechnungErforderlich();
 }
 
 /** true, wenn Tabellen, Schnittgrößen und freier Text leer sind (dann gibt es nichts zu verlieren). */
