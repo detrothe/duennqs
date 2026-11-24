@@ -389,8 +389,18 @@ export function duennQ(zeigeErgebnisse = true) {
     I11 = cc + cr;
     I22 = cc - cr;
 
-    if ((Math.abs(Gesamt_Iyz) < 1.e-10) && (Math.abs(bb) < 1.e-10)) phi0 = 0.0;        // zum Beispiel ein Quadrat
-    else phi0 = 0.5 * Math.atan2(-Gesamt_Iyz, bb);
+    // alt (bis 2.5.0):
+    // if ((Math.abs(Gesamt_Iyz) < 1.e-10) && (Math.abs(bb) < 1.e-10)) phi0 = 0.0;        // zum Beispiel ein Quadrat
+    // else phi0 = 0.5 * Math.atan2(-Gesamt_Iyz, bb);
+    // Bei I_yz ≈ 0 und I_zz > I_yy hing das Vorzeichen von φ (±90°) am Rechenrauschen von I_yz (±1e-12):
+    // gleiche Achsen, aber Achse 1 einmal in die eine, einmal in die andere Richtung, und damit wechselte das
+    // Vorzeichen von r_1, r_2. Jetzt: I_yz, das gegenüber I_yy + I_zz praktisch 0 ist, gilt als 0 → φ = 0° oder −90°.
+    if (Math.abs(Gesamt_Iyz) <= 1e-12 * (Math.abs(Gesamt_Iyy) + Math.abs(Gesamt_Izz))) {
+        phi0 = bb >= 0.0 ? 0.0 : -0.5 * Math.PI;    // (auch Quadrat/Kreis: bb ≈ 0 → φ = 0)
+        if (Math.abs(bb) <= 1e-12 * (Math.abs(Gesamt_Iyy) + Math.abs(Gesamt_Izz))) phi0 = 0.0;
+    } else {
+        phi0 = 0.5 * Math.atan2(-Gesamt_Iyz, bb);
+    }
 
     console.log("I11", I11);
     console.log("I22", I22);
@@ -571,6 +581,10 @@ export function duennQ(zeigeErgebnisse = true) {
     ry = 0;
     rz = 0;
     rOmega = 0;
+    // Wagner-Koeffizienten im Hauptachsensystem (y_h, z_h bezogen auf den Schwerpunkt, ω normiert, ideelle Werte):
+    //   r_1 = ∫ y·(y² + z²) dA / I22 − 2·yMh,  r_2 = ∫ z·(y² + z²) dA / I11 − 2·zMh,  r_ω = ∫ ω·(y² + z²) dA / I_ω
+    // Je Element exakt für lineare y, z, ω (Mittelwerte y_m, z_m, ω_m und Differenzen dy, dz, dω).
+    // Kontrolle 11/2026 mit unabhängiger Rechnung (Wölbfunktion über Spannbaum und Bredt-Zellen, Python).
     for (k = 0; k < nelem; k++) {
         y_m = (truss[k].y1 + truss[k].y2) / 2;
         z_m = (truss[k].z1 + truss[k].z2) / 2;
@@ -578,10 +592,21 @@ export function duennQ(zeigeErgebnisse = true) {
         dy = truss[k].y2 - truss[k].y1;
         dz = truss[k].z2 - truss[k].z1;
         dOmega = truss[k].omega[1] - truss[k].omega[0];
-        ry = ry + (y_m * y_m * y_m + y_m * dy * dy / 4 + y_m * z_m * z_m + (y_m * dz * dz + 2 * z_m * dy * dz) / 12) * truss[k].Flaeche;
-        rz = rz + (z_m * z_m * z_m + z_m * dz * dz / 4 + z_m * y_m * y_m + (z_m * dy * dy + 2 * y_m * dz * dy) / 12) * truss[k].Flaeche;
-        rOmega = rOmega + (yMh * yMh * omega_m + (omega_m * dy * dy + 2 * y_m * dy * dOmega) / 12) * truss[k].Flaeche;
-        rOmega = rOmega + (zMh * zMh * omega_m + (omega_m * dz * dz + 2 * z_m * dz * dOmega) / 12) * truss[k].Flaeche;
+        // alt (bis 2.5.0), zwei Fehler:
+        //  - Integrale mit der geometrischen Fläche, geteilt wird aber durch die ideellen I22, I11, I_omega
+        //    → bei unterschiedlichem E-Modul falsch (bei gleichem Material ohne Auswirkung)
+        //  - in ∫ω·(y² + z²) dA stand yMh² bzw. zMh² statt y_m² bzw. z_m² → r_ω falsch bei unsymmetrischen
+        //    Querschnitten (bei einfach symmetrischen ist r_ω ohnehin 0)
+        // ry = ry + (y_m * y_m * y_m + y_m * dy * dy / 4 + y_m * z_m * z_m + (y_m * dz * dz + 2 * z_m * dy * dz) / 12) * truss[k].Flaeche;
+        // rz = rz + (z_m * z_m * z_m + z_m * dz * dz / 4 + z_m * y_m * y_m + (z_m * dy * dy + 2 * y_m * dz * dy) / 12) * truss[k].Flaeche;
+        // rOmega = rOmega + (yMh * yMh * omega_m + (omega_m * dy * dy + 2 * y_m * dy * dOmega) / 12) * truss[k].Flaeche;
+        // rOmega = rOmega + (zMh * zMh * omega_m + (omega_m * dz * dz + 2 * z_m * dz * dOmega) / 12) * truss[k].Flaeche;
+        // neu: ideelle Fläche (ni = E/E_ref) und y_m², z_m²; Kontrolle siehe Kommentar über der Schleife
+        const dA = truss[k].ni * truss[k].Flaeche;
+        ry = ry + (y_m * y_m * y_m + y_m * dy * dy / 4 + y_m * z_m * z_m + (y_m * dz * dz + 2 * z_m * dy * dz) / 12) * dA;
+        rz = rz + (z_m * z_m * z_m + z_m * dz * dz / 4 + z_m * y_m * y_m + (z_m * dy * dy + 2 * y_m * dz * dy) / 12) * dA;
+        rOmega = rOmega + (y_m * y_m * omega_m + (omega_m * dy * dy + 2 * y_m * dy * dOmega) / 12) * dA;
+        rOmega = rOmega + (z_m * z_m * omega_m + (omega_m * dz * dz + 2 * z_m * dz * dOmega) / 12) * dA;
     }
 
     ry = ry / I22 - 2 * yMh;

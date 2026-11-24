@@ -1004,6 +1004,14 @@
   <source>Einheit für Fläche, Trägheitsmomente, Wölbwiderstand und Radien (auch in der pdf-Ausgabe)</source>
   <target>Unit for area, second moments of area, warping constant and radii (also in the pdf output)</target>
 </trans-unit>
+<trans-unit id="sa615434b0cbf789b">
+  <source>r_y, r_z, r_ω: Wagner-Koeffizienten bezogen auf die Hauptachsen (y ≙ 1, z ≙ 2), z.B. für das Biegedrillknicken.</source>
+  <target>r_y, r_z, r_ω: Wagner coefficients referred to the principal axes (y ≙ 1, z ≙ 2), e.g. for lateral-torsional buckling.</target>
+</trans-unit>
+<trans-unit id="s370df1a33020b78b">
+  <source>r_y, r_z, r_ω: bezogen auf die Hauptachsen (y ≙ 1, z ≙ 2)</source>
+  <target>r_y, r_z, r_ω: referred to the principal axes (y ≙ 1, z ≙ 2)</target>
+</trans-unit>
 </body>
 </file>
 </xliff>

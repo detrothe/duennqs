@@ -392,15 +392,16 @@ export async function my_jspdf() {
 
   htmlText("I<sub>zz,s</sub> = ", links, yy)
   doc.text(tabQWerte.Izz + ' ' + qwEinheitText(4), links + xsp1, yy)
-  htmlText("r<sub>1</sub> = ", links + xsp, yy)
-  doc.text(tabQWerte.r1 + ' ' + qwEinheitText(1), links + xsp + xsp1, yy)
+  // Wagner-Koeffizienten wie bei Kindmann: r_y gehört zu I_y = I11 (∫z…), r_z zu I_z = I22 (∫y…), Hauptachsen
+  htmlText("r<sub>y</sub> = ", links + xsp, yy)
+  doc.text(tabQWerte.r2 + ' ' + qwEinheitText(1), links + xsp + xsp1, yy)
 
   yy = neueZeile(yy, fs1)
 
   htmlText("I<sub>yz,s</sub> = ", links, yy)
   doc.text(tabQWerte.Iyz + ' ' + qwEinheitText(4), links + xsp1, yy)
-  htmlText("r<sub>2</sub> = ", links + xsp, yy)
-  doc.text(tabQWerte.r2 + ' ' + qwEinheitText(1), links + xsp + xsp1, yy)
+  htmlText("r<sub>z</sub> = ", links + xsp, yy)
+  doc.text(tabQWerte.r1 + ' ' + qwEinheitText(1), links + xsp + xsp1, yy)
 
   yy = neueZeile(yy, fs1)
 
@@ -427,6 +428,10 @@ export async function my_jspdf() {
 
   htmlText("A<sub>geom</sub> = ", links, yy)
   doc.text(tabQWerte.area_geom + ' ' + qwEinheitText(2), links + xsp1, yy)
+  yy = neueZeile(yy, fs, 1.5)
+  doc.setFontSize(fs - 1)
+  doc.text(msg('r_y, r_z, r_ω: bezogen auf die Hauptachsen (y ≙ 1, z ≙ 2)'), links, yy)
+  doc.setFontSize(fs)
 
   //-----------------
   yy = neueZeile(yy, fs, 2)

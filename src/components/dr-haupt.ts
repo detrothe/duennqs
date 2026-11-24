@@ -54,8 +54,10 @@ const WERTE: [string, unknown, unknown][] = [
     ['zM', html`z<sub>M</sub>`, html`<span class="unit_laenge">cm</span>`],
     ['I_t', html`I<sub>t</sub>`, qw(4)],
     ['I_omega', html`I<sub>&omega;</sub>`, qw(6)],
-    ['r_1', html`r<sub>1</sub>`, qw(1)],
-    ['r_2', html`r<sub>2</sub>`, qw(1)],
+    // Wagner-Koeffizienten wie bei Kindmann in Hauptachsen (y ≙ 1, z ≙ 2): r_y gehört zu I_y = I11 und
+    // enthält ∫z…, r_z gehört zu I_z = I22 und enthält ∫y…; intern (duennQ.ts) heißen sie rz (id r_2) und ry (id r_1)
+    ['r_2', html`r<sub>y</sub>`, qw(1)],
+    ['r_1', html`r<sub>z</sub>`, qw(1)],
     ['r_omega', html`r<sub>&omega;</sub>`, '-'],
     ['i_M2', html`i<sub>M</sub><sup>2</sup>`, qw(2)],
     ['i_p2', html`i<sub>p</sub><sup>2</sup>`, qw(2)],
@@ -302,6 +304,7 @@ ${msg('Bearbeitet von: Melis Muster')}"></textarea>
               ${WERTE.map(([id, name, einheit]) => html`
                 <tr><td>${name} =</td><td class="zahl" id="${id}"></td><td>${einheit}</td></tr>`)}
             </table>
+            <p class="hinweis">${msg('r_y, r_z, r_ω: Wagner-Koeffizienten bezogen auf die Hauptachsen (y ≙ 1, z ≙ 2), z.B. für das Biegedrillknicken.')}</p>
 
             <div id="schubkorrektur"></div>
             <div id="spannung_mxp"></div>

@@ -1004,6 +1004,14 @@
   <source>Einheit für Fläche, Trägheitsmomente, Wölbwiderstand und Radien (auch in der pdf-Ausgabe)</source>
   <target>Unità per area, momenti d’inerzia, costante di ingobbamento e raggi (anche nell’output pdf)</target>
 </trans-unit>
+<trans-unit id="sa615434b0cbf789b">
+  <source>r_y, r_z, r_ω: Wagner-Koeffizienten bezogen auf die Hauptachsen (y ≙ 1, z ≙ 2), z.B. für das Biegedrillknicken.</source>
+  <target>r_y, r_z, r_ω: coefficienti di Wagner riferiti agli assi principali (y ≙ 1, z ≙ 2), p. es. per lo svergolamento.</target>
+</trans-unit>
+<trans-unit id="s370df1a33020b78b">
+  <source>r_y, r_z, r_ω: bezogen auf die Hauptachsen (y ≙ 1, z ≙ 2)</source>
+  <target>r_y, r_z, r_ω: riferiti agli assi principali (y ≙ 1, z ≙ 2)</target>
+</trans-unit>
 </body>
 </file>
 </xliff>
