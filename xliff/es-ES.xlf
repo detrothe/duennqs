@@ -976,10 +976,6 @@
   <source>r = Radius der Mittellinie (0 = ohne Rundung), n = Elemente je Bogen (1 bis 90)</source>
   <target>r = radio de la línea media (0 = sin redondeo), n = elementos por arco (1 a 90)</target>
 </trans-unit>
-<trans-unit id="s6e85736702f2676c">
-  <source>Bitte b, h und t als positive Zahlen eingeben. Der Radius r geht von 0 bis zur Hälfte der kleineren Seite, die Teilung n des Bogens ist eine ganze Zahl von 1 bis 90.</source>
-  <target>Introduzca b, h y t como números positivos. El radio r va de 0 a la mitad del lado menor; la división n del arco es un entero de 1 a 90.</target>
-</trans-unit>
 <trans-unit id="s6cb19614fbd64f7d">
   <source>Bitte alle Abmessungen als positive Zahlen eingeben.</source>
   <target>Introduzca todas las dimensiones como números positivos.</target>
@@ -1011,6 +1007,10 @@
 <trans-unit id="s370df1a33020b78b">
   <source>r_y, r_z, r_ω: bezogen auf die Hauptachsen (y ≙ 1, z ≙ 2)</source>
   <target>r_y, r_z, r_ω: referidos a los ejes principales (y ≙ 1, z ≙ 2)</target>
+</trans-unit>
+<trans-unit id="s1da68b1b80db1c14">
+  <source>Bitte h, b und t als positive Zahlen eingeben. Der Radius r geht von 0 bis zur Hälfte der kleineren Seite, die Teilung n des Bogens ist eine ganze Zahl von 1 bis 90.</source>
+  <target>Introduzca h, b y t como números positivos. El radio r va de 0 a la mitad del lado menor; la división n del arco es un entero de 1 a 90.</target>
 </trans-unit>
 </body>
 </file>

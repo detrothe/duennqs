@@ -22,7 +22,7 @@ const SCHLUESSEL = 'DUENNQS_profil_dialog';   // zuletzt gewählte Form und Abme
 /** Startwerte in cm. */
 const STANDARD: Record<ProfilArt, Record<string, number>> = {
     I: { bo: 20, to: 1.5, bu: 20, tu: 1.5, h: 40, ts: 1 },
-    RHP: { b: 20, h: 30, t: 1, r: 0, nr: 4 },
+    RHP: { h: 30, b: 20, t: 1, r: 0, nr: 4 },
     U: { h: 30, b: 10, tf: 1.2, ts: 0.8 },
     KHP: { d: 30, t: 1, n: 24 },
 };
@@ -112,7 +112,7 @@ function gruppen(art: ProfilArt): { titel: string; felder: string[]; hinweis?: s
             { titel: msg('Steg'), felder: ['h', 'ts'], hinweis: msg('h = Abstand der Flanschmittellinien') },
         ];
         case 'RHP': return [
-            { titel: msg('Abmessungen'), felder: ['b', 'h'] },
+            { titel: msg('Abmessungen'), felder: ['h', 'b'] },
             { titel: msg('Wand'), felder: ['t'] },
             { titel: msg('Runde Ecken'), felder: ['r', 'nr'], hinweis: msg('r = Radius der Mittellinie (0 = ohne Rundung), n = Elemente je Bogen (1 bis 90)') },
         ];
@@ -130,7 +130,7 @@ function gruppen(art: ProfilArt): { titel: string; felder: string[]; hinweis?: s
 function fehlertext(art: ProfilArt): string {
     switch (art) {
         case 'KHP': return msg('Bitte alle Abmessungen als positive Zahlen eingeben (Teilung: ganze Zahl von 3 bis 360).');
-        case 'RHP': return msg('Bitte b, h und t als positive Zahlen eingeben. Der Radius r geht von 0 bis zur Hälfte der kleineren Seite, die Teilung n des Bogens ist eine ganze Zahl von 1 bis 90.');
+        case 'RHP': return msg('Bitte h, b und t als positive Zahlen eingeben. Der Radius r geht von 0 bis zur Hälfte der kleineren Seite, die Teilung n des Bogens ist eine ganze Zahl von 1 bis 90.');
         default: return msg('Bitte alle Abmessungen als positive Zahlen eingeben.');
     }
 }

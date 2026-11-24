@@ -976,10 +976,6 @@
   <source>r = Radius der Mittellinie (0 = ohne Rundung), n = Elemente je Bogen (1 bis 90)</source>
   <target>r = centre line radius (0 = no rounding), n = elements per arc (1 to 90)</target>
 </trans-unit>
-<trans-unit id="s6e85736702f2676c">
-  <source>Bitte b, h und t als positive Zahlen eingeben. Der Radius r geht von 0 bis zur Hälfte der kleineren Seite, die Teilung n des Bogens ist eine ganze Zahl von 1 bis 90.</source>
-  <target>Please enter b, h and t as positive numbers. The radius r ranges from 0 to half the shorter side; the arc division n is an integer from 1 to 90.</target>
-</trans-unit>
 <trans-unit id="s6cb19614fbd64f7d">
   <source>Bitte alle Abmessungen als positive Zahlen eingeben.</source>
   <target>Please enter all dimensions as positive numbers.</target>
@@ -1011,6 +1007,10 @@
 <trans-unit id="s370df1a33020b78b">
   <source>r_y, r_z, r_ω: bezogen auf die Hauptachsen (y ≙ 1, z ≙ 2)</source>
   <target>r_y, r_z, r_ω: referred to the principal axes (y ≙ 1, z ≙ 2)</target>
+</trans-unit>
+<trans-unit id="s1da68b1b80db1c14">
+  <source>Bitte h, b und t als positive Zahlen eingeben. Der Radius r geht von 0 bis zur Hälfte der kleineren Seite, die Teilung n des Bogens ist eine ganze Zahl von 1 bis 90.</source>
+  <target>Please enter h, b and t as positive numbers. The radius r ranges from 0 to half the shorter side; the arc division n is an integer from 1 to 90.</target>
 </trans-unit>
 </body>
 </file>

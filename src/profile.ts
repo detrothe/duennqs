@@ -17,7 +17,7 @@ export const OHNE_EINHEIT: readonly string[] = ['n', 'nr'];
 /** Abmessungen je Profilart (Schlüssel der Eingabefelder im Dialog). */
 export const PROFIL_FELDER: Record<ProfilArt, readonly string[]> = {
     I: ['bo', 'to', 'bu', 'tu', 'h', 'ts'],
-    RHP: ['b', 'h', 't', 'r', 'nr'],   // r = Eckradius (0 = scharfe Ecken), nr = Elemente je Bogen
+    RHP: ['h', 'b', 't', 'r', 'nr'],   // r = Eckradius (0 = scharfe Ecken), nr = Elemente je Bogen
     U: ['h', 'b', 'tf', 'ts'],
     KHP: ['d', 't', 'n'],
 };
