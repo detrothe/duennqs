@@ -35,27 +35,30 @@ const ICON_SPEICHERN = html`<svg width="1.4rem" height="1.4rem" viewBox="0 0 24 
 const ICON_PDF = html`<svg width="1.4rem" height="1.4rem" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
   <path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5"/><path d="M8 13h8M8 17h5"/></svg>`;
 
-/** Querschnittswerte im Tab Ergebnisse: id, Formelzeichen, Einheit (Längen in der gewählten Einheit). */
+/** Einheit der umschaltbaren Querschnittswerte (Text setzt einstellungen.ts, Start: cm). */
+const qw = (potenz: number) => html`<span class="qw_einheit" data-potenz="${potenz}">cm${['', '', '²', '', '⁴', '', '⁶'][potenz]}</span>`;
+
+/** Querschnittswerte im Tab Ergebnisse: id, Formelzeichen, Einheit (Lagen in der Längeneinheit, sonst umschaltbar). */
 const WERTE: [string, unknown, unknown][] = [
     ['ys', html`y&#772;<sub>s</sub>`, html`<span class="unit_laenge">cm</span>`],
     ['zs', html`z&#772;<sub>s</sub>`, html`<span class="unit_laenge">cm</span>`],
-    ['area', 'A', 'cm²'],
-    ['area_geom', html`A<sub>geom</sub>`, 'cm²'],
-    ['Iys', html`I<sub>y,s</sub>`, 'cm⁴'],
-    ['Izs', html`I<sub>z,s</sub>`, 'cm⁴'],
-    ['Iyzs', html`I<sub>yz,s</sub>`, 'cm⁴'],
-    ['I11', html`I<sub>11</sub>`, 'cm⁴'],
-    ['I22', html`I<sub>22</sub>`, 'cm⁴'],
+    ['area', 'A', qw(2)],
+    ['area_geom', html`A<sub>geom</sub>`, qw(2)],
+    ['Iys', html`I<sub>y,s</sub>`, qw(4)],
+    ['Izs', html`I<sub>z,s</sub>`, qw(4)],
+    ['Iyzs', html`I<sub>yz,s</sub>`, qw(4)],
+    ['I11', html`I<sub>11</sub>`, qw(4)],
+    ['I22', html`I<sub>22</sub>`, qw(4)],
     ['phi_h', html`&phi;<sub>h</sub>`, '°'],
     ['yM', html`y<sub>M</sub>`, html`<span class="unit_laenge">cm</span>`],
     ['zM', html`z<sub>M</sub>`, html`<span class="unit_laenge">cm</span>`],
-    ['I_t', html`I<sub>t</sub>`, 'cm⁴'],
-    ['I_omega', html`I<sub>&omega;</sub>`, 'cm⁶'],
-    ['r_1', html`r<sub>1</sub>`, 'cm'],
-    ['r_2', html`r<sub>2</sub>`, 'cm'],
+    ['I_t', html`I<sub>t</sub>`, qw(4)],
+    ['I_omega', html`I<sub>&omega;</sub>`, qw(6)],
+    ['r_1', html`r<sub>1</sub>`, qw(1)],
+    ['r_2', html`r<sub>2</sub>`, qw(1)],
     ['r_omega', html`r<sub>&omega;</sub>`, '-'],
-    ['i_M2', html`i<sub>M</sub><sup>2</sup>`, 'cm²'],
-    ['i_p2', html`i<sub>p</sub><sup>2</sup>`, 'cm²'],
+    ['i_M2', html`i<sub>M</sub><sup>2</sup>`, qw(2)],
+    ['i_p2', html`i<sub>p</sub><sup>2</sup>`, qw(2)],
 ];
 
 /** Schriftgröße (Wert für die Grundschrift = 1rem, angezeigt in px) wie in d2beam-gui */
@@ -288,7 +291,13 @@ ${msg('Bearbeitet von: Melis Muster')}"></textarea>
           <p class="hinweis" id="id_hinweis_rechnen">${msg('Noch nicht gerechnet – im Tab Eingabe auf Rechnen drücken.')}</p>
 
           <div id="ergebnisse">
-            <h3>${msg('ideelle Querschnittswerte')}</h3>
+            <div class="qw_kopf">
+              <h3>${msg('ideelle Querschnittswerte')}</h3>
+              <div class="qw_umschalter" role="group" aria-label="${msg('Einheit der Querschnittswerte')}"
+                title="${msg('Einheit für Fläche, Trägheitsmomente, Wölbwiderstand und Radien (auch in der pdf-Ausgabe)')}">
+                <button type="button" data-einheit="cm" aria-pressed="true">cm</button><button type="button" data-einheit="mm" aria-pressed="false">mm</button><button type="button" data-einheit="m" aria-pressed="false">m</button>
+              </div>
+            </div>
             <table id="querschnittwerte_table" class="werte">
               ${WERTE.map(([id, name, einheit]) => html`
                 <tr><td>${name} =</td><td class="zahl" id="${id}"></td><td>${einheit}</td></tr>`)}
@@ -365,6 +374,8 @@ ${msg('Bearbeitet von: Melis Muster')}"></textarea>
                   <option value="cm" selected>cm (kN/cm²)</option>
                   <option value="m">m (MN/m²)</option>
                 </select>
+                <div class="einheit_hinweis">${msg('Eingabewerte werden umgerechnet, vorhandene Ergebnisse gleich neu berechnet.')}</div>
+                <div class="einheit_hinweis warnung" id="id_einheit_hinweis" hidden>${msg('Die Eingabe wurde seit dem letzten Rechnen geändert: Für die Ausgabe in der neuen Einheit bitte neu rechnen.')}</div>
               </td>
             </tr>
             <tr>

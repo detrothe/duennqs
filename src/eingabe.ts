@@ -14,7 +14,7 @@ import { msg } from '@lit/localize';
 import { byId, berechnungErforderlich } from './state';
 import { spaltenbreiten_lesen, spaltenbreiten_setzen } from './components/dr-tabelle';
 import type { drButtonPM } from './components/dr-button-pm';
-import type { ProfilGeometrie } from './profile';
+import { PROFIL_FELDER, type ProfilArt, type ProfilGeometrie } from './profile';
 import { current_unit_length, current_unit_stress, unit_length_factor, unit_stress_factor, set_current_unit_length } from './einstellungen';
 
 export const KNOTEN_TABELLE = 'id_knoten_tabelle';
@@ -260,6 +260,28 @@ export function einheitenUmrechnen(fLaenge: number, fSpannung: number): void {
     }
 }
 
+/**
+ * Maße des Standardquerschnitts, mit dem die aktuelle Eingabe im Dialog „neue Eingabe“ erzeugt wurde
+ * (Längen in cm, Teilungen als Anzahl). Wird in der Projektdatei und der automatischen Sicherung mitgespeichert,
+ * damit der Dialog sie wieder vorschlägt. Werden die Tabellen danach von Hand geändert, bleiben die Maße stehen;
+ * sie beschreiben dann nur noch, womit die Eingabe ursprünglich erzeugt wurde.
+ */
+export interface ProfilParameter { art: ProfilArt; werte: Record<string, number> }
+let profilParameter: ProfilParameter | null = null;
+export const aktuellesProfil = (): ProfilParameter | null => profilParameter;
+
+/** Profilangabe aus einer Datei prüfen (unbekannte Form oder fehlende Zahlen → keine Angabe). */
+function gueltigesProfil(p: unknown): ProfilParameter | null {
+    const q = p as Partial<ProfilParameter> | null | undefined;
+    if (!q || typeof q.art !== 'string' || !(q.art in PROFIL_FELDER) || typeof q.werte !== 'object' || q.werte === null) return null;
+    const werte: Record<string, number> = {};
+    for (const k of PROFIL_FELDER[q.art]) {
+        const w = Number(q.werte[k]);
+        if (Number.isFinite(w)) werte[k] = w;
+    }
+    return { art: q.art, werte };
+}
+
 /** Startbeispiel in der eingestellten Einheit. */
 export function setzeBeispiel(): void {
     const lf = unit_length_factor, sf = unit_stress_factor;
@@ -274,6 +296,7 @@ export function setzeBeispiel(): void {
     byId<HTMLInputElement>('material_equal').checked = false;
     byId<HTMLTextAreaElement>('freetext').value = '';
     materialSpalten();
+    profilParameter = null;
 }
 
 /** Neue, leere Eingabe (Zeilenzahl bleibt, Bezugswerte bleiben). */
@@ -282,13 +305,15 @@ export function leereEingabe(): void {
     for (const id of SCHNITTGROESSEN) byId<HTMLInputElement>(id).value = '';
     byId<HTMLTextAreaElement>('freetext').value = '';
     spaltenbreiten_setzen(document, undefined);
+    profilParameter = null;
 }
 
 /**
  * Neue Eingabe mit einem Standardquerschnitt: Knoten und Elemente eintragen (Werte schon in der
  * eingestellten Längeneinheit), E-Modul und ν aus den Bezugswerten, Schnittgrößen und Text leeren.
  */
-export function setzeProfil(geo: ProfilGeometrie): void {
+export function setzeProfil(geo: ProfilGeometrie, parameter: ProfilParameter): void {
+    profilParameter = { art: parameter.art, werte: { ...parameter.werte } };
     const E = byId<HTMLInputElement>('EMod_ref').value, mue = byId<HTMLInputElement>('mue_ref').value;
     setzeKnoten(geo.y.map((y, i) => [zahlText(y), zahlText(geo.z[i])]));
     setzeElemente(geo.elemente.map(e => [E, mue, zahlText(e.t), e.nod1, e.nod2]));
@@ -315,8 +340,9 @@ export function eingabeLeer(): boolean {
  * Version des Dateiformats (.duennqs und automatische Sicherung). Bei jeder Änderung am Format hochzählen.
  * 1 (Dateien ohne Angabe): bis App-Version 2.2.1
  * 2: mit spaltenbreiten (gezogene Spaltenbreiten der Tabellen)
+ * 3: mit profil (Maße des Standardquerschnitts aus dem Dialog „neue Eingabe“, Längen in cm)
  */
-const DATEIVERSION = 2;
+const DATEIVERSION = 3;
 
 interface EingabeDaten {
     version?: number;
@@ -332,6 +358,7 @@ interface EingabeDaten {
     node: (string | number | null)[][];
     elem: (string | number | null)[][];
     spaltenbreiten?: Record<string, (number | null)[]>;   // vom Benutzer gezogene Spaltenbreiten (rem)
+    profil?: ProfilParameter | null;                     // Standardquerschnitt aus „neue Eingabe“ (cm), sonst null
 }
 
 export function eingabeAlsJSON(): string {
@@ -351,6 +378,7 @@ export function eingabeAlsJSON(): string {
         node: leseRoh(KNOTEN_TABELLE),
         elem: leseRoh(ELEMENT_TABELLE),
         spaltenbreiten: spaltenbreiten_lesen(document),
+        profil: profilParameter,
     };
     return JSON.stringify(daten);
 }
@@ -385,6 +413,7 @@ export function eingabeEinlesen(text: string): boolean {
     setzeKnoten(daten.node);
     setzeElemente(daten.elem);
     spaltenbreiten_setzen(document, daten.spaltenbreiten);
+    profilParameter = gueltigesProfil(daten.profil);
     spaltenAktualisieren();
     berechnungErforderlich();
     return true;

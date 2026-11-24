@@ -519,6 +519,65 @@ sl-color-picker::part(trigger) {
     font-weight: 600;
 }
 
+/* Tab Ergebnisse: Überschrift der Querschnittswerte mit Umschalter der Einheit cm | mm | m */
+.qw_kopf {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.25rem 1rem;
+
+    h3 {
+        margin-right: 0.25rem;
+    }
+}
+
+.qw_umschalter {
+    display: inline-flex;
+    border: 1px solid var(--sl-color-neutral-400);
+    border-radius: 6px;
+    overflow: hidden;
+
+    button {
+        min-width: 2.75rem;
+        min-height: 2rem;
+        padding: 0.2rem 0.6rem;
+        border: 0;
+        border-left: 1px solid var(--sl-color-neutral-400);
+        background: var(--sl-color-neutral-0);
+        color: var(--sl-color-neutral-700);
+        font: inherit;
+        font-size: 0.875rem;
+        cursor: pointer;
+    }
+
+    button:first-child {
+        border-left: 0;
+    }
+
+    button[aria-pressed="true"] {
+        background: var(--sl-color-primary-600);
+        color: var(--sl-color-neutral-0);
+        font-weight: 600;
+    }
+}
+
+/* Hinweise unter der Auswahl der Längeneinheit (Tab ꔷꔷꔷ) */
+.einheit_hinweis {
+    max-width: 22rem;
+    margin-top: 0.25rem;
+    font-size: 0.8125rem;
+    color: var(--sl-color-neutral-600);
+}
+
+.einheit_hinweis.warnung {
+    color: var(--sl-color-warning-700);
+    font-weight: 600;
+}
+
+.einheit_hinweis[hidden] {
+    display: none;
+}
+
 /*----------------------------------------------------------------------------------------- Dialoge */
 
 /* Hinweis- und Bestätigungsfenster (components/confirm_dialog.ts), unverändert aus d2beam-gui global.css */

@@ -17,7 +17,8 @@
 
 import '@shoelace-style/shoelace/dist/components/color-picker/color-picker.js';
 import { msg } from '@lit/localize';
-import { byId, berechnungErforderlich } from './state';
+import { app, byId, berechnungErforderlich } from './state';
+import { duennQ, zeigeQuerschnittswerte } from './duennQ';
 import { alertdialog } from './components/confirm_dialog';
 import { einheitenUmrechnen, spaltenAktualisieren } from './eingabe';
 import { setLocale, KEY_LOCALE } from './localization';
@@ -27,6 +28,19 @@ export let current_unit_length = 'cm';
 export let current_unit_stress = 'kN/cm²';
 export let unit_length_factor = 1;   // Multiplikator von cm nach gewählter Einheit
 export let unit_stress_factor = 1;   // Multiplikator von kN/cm² nach gewählter Einheit
+
+/**
+ * Einheit der Querschnittswerte (A, I, Iω, r, i²) im Tab Ergebnisse und in der pdf-Ausgabe, unabhängig
+ * von der Längeneinheit: cm wie in den deutschen Tabellenwerken, mm, oder m für große (Brücken-)Querschnitte.
+ * Die Wahl wird sofort im Browser gemerkt.
+ */
+export type QwEinheit = 'cm' | 'mm' | 'm';
+export let qw_einheit: QwEinheit = 'cm';
+const QW_FAKTOR: Record<QwEinheit, number> = { cm: 1, mm: 10, m: 0.01 };
+export const qw_faktor = () => QW_FAKTOR[qw_einheit];
+const HOCH: Record<number, string> = { 1: '', 2: '²', 4: '⁴', 6: '⁶' };
+/** Einheit mit Potenz, z.B. qwEinheitText(4) = "cm⁴". */
+export const qwEinheitText = (potenz: number) => qw_einheit + HOCH[potenz];
 
 const EINHEITEN: Record<string, { laenge: number; spannung: number; name: string }> = {
     mm: { laenge: 10, spannung: 10, name: 'N/mm²' },
@@ -45,6 +59,7 @@ const KEY_TEXT = 'DUENNQS_color_table_text';
 const KEY_AKZENT = 'DUENNQS_accent_color';
 const KEY_SCHRIFT = 'DUENNQS_fontsize';
 const KEY_TOUCH = 'DUENNQS_touch_support_tables';
+const KEY_QW = 'DUENNQS_einheit_querschnittswerte';
 
 const STANDARD_SCHRIFT = '1rem';
 
@@ -67,12 +82,17 @@ export function set_current_unit_length(einheit: string): void {
 
 /** Einheit im Tab ꔷꔷꔷ geändert: Eingabewerte umrechnen. */
 function einheitGeaendert(): void {
+    // passten die Ergebnisse zur Eingabe, gleich in der neuen Einheit neu rechnen (ohne Tabwechsel);
+    // sonst Hinweis, dass für die Ausgabe neu gerechnet werden muss
+    const aktuell = app.gerechnet && !app.berechnungErforderlich;
     const neu = byId<HTMLSelectElement>('unitLength').value;
     const alt = EINHEITEN[current_unit_length];
     einheitenUmrechnen(EINHEITEN[neu].laenge / alt.laenge, EINHEITEN[neu].spannung / alt.spannung);
     set_current_unit_length(neu);
     berechnungErforderlich();
     geaendert(true);
+    if (aktuell) duennQ(false);
+    byId('id_einheit_hinweis').hidden = aktuell || !app.gerechnet;
 }
 
 /** schwarz oder weiß, je nachdem was auf der Hintergrundfarbe besser lesbar ist (WCAG-Luminanz, aus d2beam-gui) */
@@ -149,7 +169,7 @@ function speichern(): void {
 
 function loeschen(): void {
     try {
-        for (const key of [KEY_EINHEIT, KEY_LOCALE, KEY_TABELLE, KEY_TEXT, KEY_AKZENT, KEY_SCHRIFT, KEY_TOUCH]) window.localStorage.removeItem(key);
+        for (const key of [KEY_EINHEIT, KEY_LOCALE, KEY_TABELLE, KEY_TEXT, KEY_AKZENT, KEY_SCHRIFT, KEY_TOUCH, KEY_QW]) window.localStorage.removeItem(key);
     } catch { /* nichts zu tun */ }
     picker('id_color_table_out').value = STANDARD_TABELLE;
     picker('id_color_table_text').value = STANDARD_TEXT;
@@ -160,7 +180,18 @@ function loeschen(): void {
     schriftgroesse(STANDARD_SCHRIFT);
     byId<HTMLInputElement>('id_touch_support_tables').checked = false;
     set_touch_support_table(false);
+    setzeQwEinheit('cm');
     geaendert(false);
+}
+
+/** Einheit der Querschnittswerte setzen: Umschalter, Einheitenspalte und vorhandene Ergebnisse. */
+function setzeQwEinheit(einheit: string): void {
+    qw_einheit = einheit === 'mm' || einheit === 'm' ? einheit : 'cm';
+    for (const b of document.querySelectorAll<HTMLButtonElement>('.qw_umschalter button')) {
+        b.setAttribute('aria-pressed', String(b.dataset.einheit === qw_einheit));
+    }
+    for (const el of document.querySelectorAll<HTMLElement>('.qw_einheit')) el.textContent = qwEinheitText(Number(el.dataset.potenz));
+    if (app.gerechnet) zeigeQuerschnittswerte();
 }
 
 /** Gespeicherte Einstellungen anwenden und die Bedienelemente im Tab ꔷꔷꔷ verdrahten. */
@@ -189,6 +220,16 @@ export function initEinstellungen(): void {
     geaendert(false);
 
     byId('unitLength').addEventListener('change', einheitGeaendert);
+    setzeQwEinheit(lesen(KEY_QW) ?? 'cm');
+    for (const b of document.querySelectorAll<HTMLButtonElement>('.qw_umschalter button')) {
+        b.addEventListener('click', () => {
+            setzeQwEinheit(b.dataset.einheit ?? 'cm');
+            try {
+                window.localStorage.setItem(KEY_QW, qw_einheit);
+            } catch { /* localStorage nicht verfügbar */ }
+        });
+    }
+    document.addEventListener('berechnet', () => { byId('id_einheit_hinweis').hidden = true; });
     byId('id_locale').addEventListener('change', () => {
         void setLocale(byId<HTMLSelectElement>('id_locale').value);
         geaendert(true);

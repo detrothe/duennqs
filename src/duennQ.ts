@@ -2,7 +2,7 @@ import { msg, str } from '@lit/localize';
 import { byId, app, berechnungErforderlich } from './state';
 import { gauss } from "./gauss";
 import { testeZahl, myFormat } from './utility';
-import { current_unit_length, current_unit_stress, unit_length_factor, unit_stress_factor } from "./einstellungen";
+import { current_unit_length, current_unit_stress, unit_length_factor, unit_stress_factor, qw_faktor, qw_einheit } from "./einstellungen";
 import { leseTabellen, materialGleich } from './eingabe';
 import { alertdialog } from './components/confirm_dialog';
 
@@ -53,6 +53,33 @@ class TBezugswerte {
 }
 
 export const tabQWerte = new TTabQWerte;
+
+/**
+ * Querschnittswerte, deren Einheit im Tab Ergebnisse umschaltbar ist (cm, mm, m): Werte intern in cm-Potenzen.
+ * Schlüssel: id der Tabellenzelle → [Feld in tabQWerte, Wert in cm^potenz, Potenz, min./max. Nachkommastellen bei cm].
+ */
+const qwRoh = new Map<string, [keyof TTabQWerte, number, number, number, number]>();
+
+/** Zahl für die Querschnittswerte: in cm wie bisher, in mm und m mit etwa 4 gültigen Stellen. */
+function qwText(wert_cm: number, potenz: number, minD: number, maxD: number): string {
+    if (qw_einheit === 'cm' || potenz === 0) return myFormat(wert_cm, minD, maxD);
+    // Rechenrauschen (z.B. Iyz = 1,8·10⁻¹² cm⁴ bei symmetrischen Querschnitten): was in cm als 0 erscheint, ist 0
+    if (Math.abs(wert_cm) < 0.5 * Math.pow(10, -maxD)) return '0';
+    const x = wert_cm * Math.pow(qw_faktor(), potenz), a = Math.abs(x);
+    if (a >= 1000) return myFormat(x, 0, 0);
+    const d = Math.min(12, Math.max(0, 3 - Math.floor(Math.log10(a))));
+    return myFormat(x, d, d);
+}
+
+/** Querschnittswerte (A, I, Iω, r, i²) in der gewählten Einheit anzeigen; auch nach dem Umschalten. */
+export function zeigeQuerschnittswerte(): void {
+    for (const [id, [feld, wert, potenz, minD, maxD]] of qwRoh) {
+        const text = Number.isNaN(wert) ? '-' : qwText(wert, potenz, minD, maxD);
+        tabQWerte[feld] = text;
+        const zelle = document.getElementById(id);
+        if (zelle) zelle.innerText = text;
+    }
+}
 export const schnittgroesse = new TSchnittgroessen;
 export const bezugswerte = new TBezugswerte
 
@@ -754,29 +781,27 @@ export function duennQ(zeigeErgebnisse = true) {
 
     tabQWerte.ys = byId("ys").innerText = myFormat(Gesamt_ys * unit_length_factor, 2, 2)   // Gesamt_ys.toFixed(2);
     tabQWerte.zs = byId("zs").innerText = myFormat(Gesamt_zs * unit_length_factor, 2, 2);
-    tabQWerte.area = byId("area").innerText = myFormat(Gesamtflaeche, 2, 2);
-    tabQWerte.area_geom = byId("area_geom").innerText = myFormat(area_geom, 2, 2);
-    tabQWerte.Iyy = byId("Iys").innerText = myFormat(Gesamt_Iyy, 2, 2);
-    tabQWerte.Izz = byId("Izs").innerText = myFormat(Gesamt_Izz, 2, 2);
-    tabQWerte.Iyz = byId("Iyzs").innerText = myFormat(Gesamt_Iyz, 2, 2);
-    tabQWerte.I11 = byId("I11").innerText = myFormat(I11, 1, 2);
-    tabQWerte.I22 = byId("I22").innerText = myFormat(I22, 1, 2);
+    qwRoh.clear();
+    qwRoh.set('area', ['area', Gesamtflaeche, 2, 2, 2]);
+    qwRoh.set('area_geom', ['area_geom', area_geom, 2, 2, 2]);
+    qwRoh.set('Iys', ['Iyy', Gesamt_Iyy, 4, 2, 2]);
+    qwRoh.set('Izs', ['Izz', Gesamt_Izz, 4, 2, 2]);
+    qwRoh.set('Iyzs', ['Iyz', Gesamt_Iyz, 4, 2, 2]);
+    qwRoh.set('I11', ['I11', I11, 4, 1, 2]);
+    qwRoh.set('I22', ['I22', I22, 4, 1, 2]);
     tabQWerte.phi_h = byId("phi_h").innerText = myFormat((phi0 * 180.0 / Math.PI), 2, 2);
 
     tabQWerte.yM = byId("yM").innerText = myFormat(yM * unit_length_factor, 2, 2);
     tabQWerte.zM = byId("zM").innerText = myFormat(zM * unit_length_factor, 2, 2);
-    tabQWerte.It = byId("I_t").innerText = myFormat(Gesamt_It, 1, 2);
-    tabQWerte.Iomega = byId("I_omega").innerText = myFormat(I_omega, 1, 2);
-
-    tabQWerte.r1 = byId("r_1").innerText = myFormat(ry, 2, 2);
-    tabQWerte.r2 = byId("r_2").innerText = myFormat(rz, 2, 2);
-    if (I_omega > 0.0000000000001) {
-        tabQWerte.r_omega = byId("r_omega").innerText = myFormat(rOmega, 2, 2);
-    } else {
-        tabQWerte.r_omega = byId("r_omega").innerText = "-";
-    }
-    tabQWerte.i_M2 = byId("i_M2").innerText = myFormat(iM2, 2, 2);
-    tabQWerte.i_p2 = byId("i_p2").innerText = myFormat(iP2, 2, 2);
+    qwRoh.set('I_t', ['It', Gesamt_It, 4, 1, 2]);
+    qwRoh.set('I_omega', ['Iomega', I_omega, 6, 1, 2]);
+    qwRoh.set('r_1', ['r1', ry, 1, 2, 2]);
+    qwRoh.set('r_2', ['r2', rz, 1, 2, 2]);
+    // r_ω ist dimensionslos (Potenz 0)
+    qwRoh.set('r_omega', ['r_omega', I_omega > 0.0000000000001 ? rOmega : NaN, 0, 2, 2]);
+    qwRoh.set('i_M2', ['i_M2', iM2, 2, 2, 2]);
+    qwRoh.set('i_p2', ['i_p2', iP2, 2, 2, 2]);
+    zeigeQuerschnittswerte();
 
     const collection = document.getElementsByClassName('unit_laenge');
 

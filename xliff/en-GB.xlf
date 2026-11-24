@@ -896,10 +896,6 @@
   <source>Abmessungen bezogen auf die Profilmittellinien. Koordinatenursprung rechts oben, Knoten und Elemente werden berechnet und in die Tabellen eingetragen.</source>
   <target>Dimensions refer to the centre lines of the section. Coordinate origin at the top right; nodes and elements are calculated and entered into the tables.</target>
 </trans-unit>
-<trans-unit id="sd1ec39fb80fb87b5">
-  <source>Knoten und Elemente werden direkt in die Tabellen eingegeben. Die Tabellen werden geleert.</source>
-  <target>Nodes and elements are entered directly into the tables. The tables are cleared.</target>
-</trans-unit>
 <trans-unit id="s3cc7b06a90904a01">
   <source>Allgemeine Eingabe</source>
   <target>General input</target>
@@ -963,6 +959,50 @@
 <trans-unit id="s88cc80f2449611e3">
   <source>Welche Querschnittsform? Knoten und Elemente werden daraus berechnet.</source>
   <target>Which cross-section shape? Nodes and elements are calculated from it.</target>
+</trans-unit>
+<trans-unit id="se2a4e409648443ef">
+  <source>Radius der Ecken (Mittellinie), 0 = ohne Rundung</source>
+  <target>Corner radius (centre line), 0 = no rounding</target>
+</trans-unit>
+<trans-unit id="s3bf094a9e2c6a469">
+  <source>Teilung je Bogen (Anzahl Elemente)</source>
+  <target>Division per arc (number of elements)</target>
+</trans-unit>
+<trans-unit id="s08f74b02e672f04f">
+  <source>Runde Ecken</source>
+  <target>Rounded corners</target>
+</trans-unit>
+<trans-unit id="s194df417d24ec713">
+  <source>r = Radius der Mittellinie (0 = ohne Rundung), n = Elemente je Bogen (1 bis 90)</source>
+  <target>r = centre line radius (0 = no rounding), n = elements per arc (1 to 90)</target>
+</trans-unit>
+<trans-unit id="s6e85736702f2676c">
+  <source>Bitte b, h und t als positive Zahlen eingeben. Der Radius r geht von 0 bis zur Hälfte der kleineren Seite, die Teilung n des Bogens ist eine ganze Zahl von 1 bis 90.</source>
+  <target>Please enter b, h and t as positive numbers. The radius r ranges from 0 to half the shorter side; the arc division n is an integer from 1 to 90.</target>
+</trans-unit>
+<trans-unit id="s6cb19614fbd64f7d">
+  <source>Bitte alle Abmessungen als positive Zahlen eingeben.</source>
+  <target>Please enter all dimensions as positive numbers.</target>
+</trans-unit>
+<trans-unit id="s687af8dd28d454e0">
+  <source>Du trägst die Knoten und Elemente selbst in die Tabellen ein. Sie werden vorher geleert.</source>
+  <target>You enter the nodes and elements in the tables yourself. The tables are cleared first.</target>
+</trans-unit>
+<trans-unit id="s672840908d904d74">
+  <source>Eingabewerte werden umgerechnet, vorhandene Ergebnisse gleich neu berechnet.</source>
+  <target>Input values are converted; existing results are recalculated immediately.</target>
+</trans-unit>
+<trans-unit id="s97176b44f6f77388">
+  <source>Die Eingabe wurde seit dem letzten Rechnen geändert: Für die Ausgabe in der neuen Einheit bitte neu rechnen.</source>
+  <target>The input has changed since the last calculation: please recalculate to get the output in the new unit.</target>
+</trans-unit>
+<trans-unit id="sb38a7e0f3306e414">
+  <source>Einheit der Querschnittswerte</source>
+  <target>Unit of the section properties</target>
+</trans-unit>
+<trans-unit id="s2202aa1b1aa7b053">
+  <source>Einheit für Fläche, Trägheitsmomente, Wölbwiderstand und Radien (auch in der pdf-Ausgabe)</source>
+  <target>Unit for area, second moments of area, warping constant and radii (also in the pdf output)</target>
 </trans-unit>
 </body>
 </file>

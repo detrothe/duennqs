@@ -14,7 +14,7 @@ import { tabQWerte, schnittgroesse, bezugswerte } from "./duennQ"
 import { truss, node, nnodes, nelem } from "./duennQ"
 import { myFormat } from './utility.js';
 import { app } from './state';
-import { current_unit_stress, unit_stress_factor, unit_length_factor, current_unit_length } from "./einstellungen"
+import { current_unit_stress, unit_stress_factor, unit_length_factor, current_unit_length, qwEinheitText } from "./einstellungen"
 
 const zeilenAbstand = 1.15
 let Seite = 'Seite'
@@ -377,56 +377,56 @@ export async function my_jspdf() {
   yy = neueZeile(yy, fs1)
 
   htmlText("A = ", links, yy)
-  doc.text(tabQWerte.area + ' cm²', links + xsp1, yy)
+  doc.text(tabQWerte.area + ' ' + qwEinheitText(2), links + xsp1, yy)
   htmlText("I<sub>t</sub> = ", links + xsp, yy)
-  doc.text(tabQWerte.It + ' cm⁴', links + xsp + xsp1, yy)
+  doc.text(tabQWerte.It + ' ' + qwEinheitText(4), links + xsp + xsp1, yy)
 
   yy = neueZeile(yy, fs1)
 
   htmlText("I<sub>yy,s</sub> = ", links, yy)
-  doc.text(tabQWerte.Iyy + ' cm⁴', links + xsp1, yy)
+  doc.text(tabQWerte.Iyy + ' ' + qwEinheitText(4), links + xsp1, yy)
   htmlText("I<sub>ω</sub> = ", links + xsp, yy)
-  doc.text(tabQWerte.Iomega + ' cm⁶', links + xsp + xsp1, yy)
+  doc.text(tabQWerte.Iomega + ' ' + qwEinheitText(6), links + xsp + xsp1, yy)
 
   yy = neueZeile(yy, fs1)
 
   htmlText("I<sub>zz,s</sub> = ", links, yy)
-  doc.text(tabQWerte.Izz + ' cm⁴', links + xsp1, yy)
+  doc.text(tabQWerte.Izz + ' ' + qwEinheitText(4), links + xsp1, yy)
   htmlText("r<sub>1</sub> = ", links + xsp, yy)
-  doc.text(tabQWerte.r1 + ' cm', links + xsp + xsp1, yy)
+  doc.text(tabQWerte.r1 + ' ' + qwEinheitText(1), links + xsp + xsp1, yy)
 
   yy = neueZeile(yy, fs1)
 
   htmlText("I<sub>yz,s</sub> = ", links, yy)
-  doc.text(tabQWerte.Iyz + ' cm⁴', links + xsp1, yy)
+  doc.text(tabQWerte.Iyz + ' ' + qwEinheitText(4), links + xsp1, yy)
   htmlText("r<sub>2</sub> = ", links + xsp, yy)
-  doc.text(tabQWerte.r2 + ' cm', links + xsp + xsp1, yy)
+  doc.text(tabQWerte.r2 + ' ' + qwEinheitText(1), links + xsp + xsp1, yy)
 
   yy = neueZeile(yy, fs1)
 
   htmlText("I<sub>11</sub> = ", links, yy)
-  doc.text(tabQWerte.I11 + ' cm⁴', links + xsp1, yy)
+  doc.text(tabQWerte.I11 + ' ' + qwEinheitText(4), links + xsp1, yy)
   htmlText("r<sub>ω</sub> = ", links + xsp, yy)
   doc.text(tabQWerte.r_omega + ' -', links + xsp + xsp1, yy)
 
   yy = neueZeile(yy, fs1)
 
   htmlText("I<sub>22</sub> = ", links, yy)
-  doc.text(tabQWerte.I22 + ' cm⁴', links + xsp1, yy)
+  doc.text(tabQWerte.I22 + ' ' + qwEinheitText(4), links + xsp1, yy)
   htmlText("i<sub>M</sub><sup>2</sup> = ", links + xsp, yy)
-  doc.text(tabQWerte.i_M2 + ' cm²', links + xsp + xsp1, yy)
+  doc.text(tabQWerte.i_M2 + ' ' + qwEinheitText(2), links + xsp + xsp1, yy)
 
   yy = neueZeile(yy, fs1)
 
   htmlText("φ<sub>h</sub> = ", links, yy)
   doc.text(tabQWerte.phi_h + ' °', links + xsp1, yy)
   htmlText("i<sub>p</sub><sup>2</sup> = ", links + xsp, yy)
-  doc.text(tabQWerte.i_p2 + ' cm²', links + xsp + xsp1, yy)
+  doc.text(tabQWerte.i_p2 + ' ' + qwEinheitText(2), links + xsp + xsp1, yy)
 
   yy = neueZeile(yy, fs1)
 
   htmlText("A<sub>geom</sub> = ", links, yy)
-  doc.text(tabQWerte.area_geom + ' cm²', links + xsp1, yy)
+  doc.text(tabQWerte.area_geom + ' ' + qwEinheitText(2), links + xsp1, yy)
 
   //-----------------
   yy = neueZeile(yy, fs, 2)

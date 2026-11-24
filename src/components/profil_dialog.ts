@@ -9,20 +9,20 @@
 import { msg } from '@lit/localize';
 import { current_unit_length, unit_length_factor } from '../einstellungen';
 import { zahlText } from '../eingabe';
-import { PROFIL_FELDER, profilFehler, type ProfilArt } from '../profile';
+import { OHNE_EINHEIT, PROFIL_FELDER, profilFehler, type ProfilArt } from '../profile';
 
 type Form = ProfilArt | 'allgemein';
 
 export type NeueEingabe =
     | { art: 'allgemein' }
-    | { art: ProfilArt; werte: Record<string, number> };
+    | { art: ProfilArt; werte: Record<string, number>; werteCm: Record<string, number> };   // werte in der Längeneinheit
 
 const SCHLUESSEL = 'DUENNQS_profil_dialog';   // zuletzt gewählte Form und Abmessungen (in cm)
 
 /** Startwerte in cm. */
 const STANDARD: Record<ProfilArt, Record<string, number>> = {
     I: { bo: 20, to: 1.5, bu: 20, tu: 1.5, h: 40, ts: 1 },
-    RHP: { b: 20, h: 30, t: 1 },
+    RHP: { b: 20, h: 30, t: 1, r: 0, nr: 4 },
     U: { h: 30, b: 10, tf: 1.2, ts: 0.8 },
     KHP: { d: 30, t: 1, n: 24 },
 };
@@ -85,6 +85,8 @@ function feldText(art: ProfilArt, k: string): [string, string] {
             b: ['b', msg('Breite')],
             h: ['h', msg('Höhe')],
             t: ['t', msg('Wandstärke')],
+            r: ['r', msg('Radius der Ecken (Mittellinie), 0 = ohne Rundung')],
+            nr: ['n', msg('Teilung je Bogen (Anzahl Elemente)')],
         },
         U: {
             h: ['h', msg('Höhe (Abstand der Flanschmittellinien)')],
@@ -112,6 +114,7 @@ function gruppen(art: ProfilArt): { titel: string; felder: string[]; hinweis?: s
         case 'RHP': return [
             { titel: msg('Abmessungen'), felder: ['b', 'h'] },
             { titel: msg('Wand'), felder: ['t'] },
+            { titel: msg('Runde Ecken'), felder: ['r', 'nr'], hinweis: msg('r = Radius der Mittellinie (0 = ohne Rundung), n = Elemente je Bogen (1 bis 90)') },
         ];
         case 'U': return [
             { titel: msg('Abmessungen'), felder: ['h', 'b'], hinweis: msg('h = Abstand der Flanschmittellinien, b bis zur Stegmittellinie') },
@@ -121,6 +124,14 @@ function gruppen(art: ProfilArt): { titel: string; felder: string[]; hinweis?: s
             { titel: msg('Rohr'), felder: ['d', 't'], hinweis: msg('d = Durchmesser der Mittellinie') },
             { titel: msg('Teilung'), felder: ['n'], hinweis: msg('Anzahl der Elemente auf dem Umfang (3 bis 360)') },
         ];
+    }
+}
+
+function fehlertext(art: ProfilArt): string {
+    switch (art) {
+        case 'KHP': return msg('Bitte alle Abmessungen als positive Zahlen eingeben (Teilung: ganze Zahl von 3 bis 360).');
+        case 'RHP': return msg('Bitte b, h und t als positive Zahlen eingeben. Der Radius r geht von 0 bis zur Hälfte der kleineren Seite, die Teilung n des Bogens ist eine ganze Zahl von 1 bis 90.');
+        default: return msg('Bitte alle Abmessungen als positive Zahlen eingeben.');
     }
 }
 
@@ -145,7 +156,7 @@ function achsen(x: number, y: number): string {
         ${txt(x - 40, y - 6, 'y&#772;', 'pd-at')} ${txt(x + 10, y + 42, 'z&#772;', 'pd-at')}`;
 }
 
-function skizze(art: Form): string {
+function skizze(art: Form, rund = false): string {
     let inhalt = '';
     switch (art) {
         case 'I':
@@ -158,8 +169,13 @@ function skizze(art: Form): string {
                 ${txt(128, 120, sub('t', 's'), 'pd-mt', 'start')} ${achsen(190, 50)}`;
             break;
         case 'RHP':
-            inhalt = `<path class="pd-linie" d="M60 50H180V185H60Z"/>
-                ${knoten([[60, 50], [180, 50], [180, 185], [60, 185]])}
+            inhalt = rund
+                ? `<path class="pd-linie" d="M84 50H156A24 24 0 0 1 180 74V161A24 24 0 0 1 156 185H84A24 24 0 0 1 60 161V74A24 24 0 0 1 84 50Z"/>
+                ${knoten([[84, 50], [156, 50], [173, 57], [180, 74], [180, 161], [173, 178], [156, 185], [84, 185], [67, 178], [60, 161], [60, 74], [67, 57]])}
+                <path class="pd-mass" d="M84 161L68.5 176.5" marker-end="url(#pd-strich)"/> ${txt(90, 160, 'r', 'pd-mt', 'start')}`
+                : `<path class="pd-linie" d="M60 50H180V185H60Z"/>
+                ${knoten([[60, 50], [180, 50], [180, 185], [60, 185]])}`;
+            inhalt += `
                 ${mass('M60 22H180')} ${hilfslinie('M60 16V42M180 16V42')} ${txt(110, 16, 'b')}
                 ${mass('M30 50V185')} ${hilfslinie('M23 50H52M23 185H52')} ${txt(21, 122, 'h', 'pd-mt', 'end')}
                 ${txt(72, 122, 't', 'pd-mt', 'start')} ${achsen(180, 50)}`;
@@ -201,8 +217,13 @@ function skizze(art: Form): string {
 //----------------------------------------------------------------------------------------------------------------------
 
 /** Dialog anzeigen; null bei Abbrechen. */
-export function profilDialog(): Promise<NeueEingabe | null> {
+export function profilDialog(vorschlag: { art: ProfilArt; werte: Record<string, number> } | null = null): Promise<NeueEingabe | null> {
     const g = gemerkt();
+    // Maße des aktuellen Querschnitts (aus der Projektdatei bzw. Sicherung, in cm) haben Vorrang vor den gemerkten
+    if (vorschlag) {
+        g.art = vorschlag.art;
+        Object.assign(g.werte[vorschlag.art], vorschlag.werte);
+    }
     let gewaehlt: Form = g.art;
 
     const dialog = document.createElement('dialog');
@@ -225,7 +246,7 @@ export function profilDialog(): Promise<NeueEingabe | null> {
                 <div class="pd-gruppen"></div>
             </div>
             <p class="pd-hinweis"></p>
-            <p class="pd-fehler" hidden>${msg('Bitte alle Abmessungen als positive Zahlen eingeben (Teilung: ganze Zahl von 3 bis 360).')}</p>
+            <p class="pd-fehler" hidden></p>
             <div class="pd-fuss">
                 <button type="button" class="pd-knopf" value="abbrechen">${msg('Abbrechen')}</button>
                 <button type="button" class="pd-knopf pd-primaer" value="ok">${msg('Übernehmen')}</button>
@@ -250,8 +271,9 @@ export function profilDialog(): Promise<NeueEingabe | null> {
     const formMerken = (a: Form) => {
         if (a === 'allgemein') return;
         const w = leseWerte(a);
+        const fehler = profilFehler(a, w);
         for (const k of PROFIL_FELDER[a]) {
-            if (Number.isFinite(w[k]) && w[k] > 0) g.werte[a][k] = k === 'n' ? w[k] : w[k] / unit_length_factor;
+            if (Number.isFinite(w[k]) && !fehler.includes(k)) g.werte[a][k] = OHNE_EINHEIT.includes(k) ? w[k] : w[k] / unit_length_factor;
         }
     };
 
@@ -262,12 +284,12 @@ export function profilDialog(): Promise<NeueEingabe | null> {
             k.classList.toggle('pd-gewaehlt', an);
             k.setAttribute('aria-pressed', String(an));
         }
-        q<HTMLElement>('.pd-skizze').innerHTML = skizze(a);
+        q<HTMLElement>('.pd-skizze').innerHTML = skizze(a, a === 'RHP' && g.werte.RHP.r > 0);
         q<HTMLElement>('.pd-fehler').hidden = true;
         const box = q<HTMLElement>('.pd-gruppen');
         const hinweis = q<HTMLElement>('.pd-hinweis');
         if (a === 'allgemein') {
-            box.innerHTML = `<p class="pd-text">${msg('Knoten und Elemente werden direkt in die Tabellen eingegeben. Die Tabellen werden geleert.')}</p>`;
+            box.innerHTML = `<p class="pd-text">${msg('Du trägst die Knoten und Elemente selbst in die Tabellen ein. Sie werden vorher geleert.')}</p>`;
             hinweis.textContent = '';
             return;
         }
@@ -275,16 +297,23 @@ export function profilDialog(): Promise<NeueEingabe | null> {
                 <div class="pd-gruppentitel">${gr.titel}</div>
                 <div class="pd-felder">${gr.felder.map(k => {
                     const [symbol, text] = feldText(a, k);
-                    const wert = k === 'n' ? g.werte[a][k] : g.werte[a][k] * unit_length_factor;
+                    const ohne = OHNE_EINHEIT.includes(k);
+                    const wert = ohne ? g.werte[a][k] : g.werte[a][k] * unit_length_factor;
                     return `<label class="pd-feld" title="${text}"><b>${symbol}</b>
-                        <input name="${k}" type="text" inputmode="${k === 'n' ? 'numeric' : 'decimal'}" value="${zahlText(wert)}" aria-label="${text}">
-                        <span>${k === 'n' ? '' : current_unit_length}</span></label>`;
+                        <input name="${k}" type="text" inputmode="${ohne ? 'numeric' : 'decimal'}" value="${zahlText(wert)}" aria-label="${text}">
+                        <span>${ohne ? '' : current_unit_length}</span></label>`;
                 }).join('')}</div>
                 ${gr.hinweis ? `<div class="pd-gruppenhinweis">${gr.hinweis}</div>` : ''}
             </div>`).join('');
         hinweis.textContent = a === 'KHP'
             ? msg('Abmessungen bezogen auf die Profilmittellinien. Koordinatenursprung im Kreismittelpunkt, Knoten und Elemente werden berechnet und in die Tabellen eingetragen.')
             : msg('Abmessungen bezogen auf die Profilmittellinien. Koordinatenursprung rechts oben, Knoten und Elemente werden berechnet und in die Tabellen eingetragen.');
+        // Rechteck: Skizze mit runden Ecken, sobald ein Radius > 0 eingegeben ist
+        const radius = dialog.querySelector<HTMLInputElement>('.pd-gruppen input[name="r"]');
+        radius?.addEventListener('input', () => {
+            const r = Number(radius.value.trim().replace(/,/g, '.'));
+            q<HTMLElement>('.pd-skizze').innerHTML = skizze('RHP', Number.isFinite(r) && r > 0);
+        });
     };
 
     zeigeForm();
@@ -309,10 +338,12 @@ export function profilDialog(): Promise<NeueEingabe | null> {
                 for (const input of eingaben()) {
                     input.closest('.pd-feld')?.classList.toggle('pd-ungueltig', fehler.includes(input.name));
                 }
-                q<HTMLElement>('.pd-fehler').hidden = fehler.length === 0;
+                const meldung = q<HTMLElement>('.pd-fehler');
+                meldung.textContent = fehlertext(a);
+                meldung.hidden = fehler.length === 0;
                 if (fehler.length > 0) return;
-                ergebnis = { art: a, werte: w };
                 formMerken(a);
+                ergebnis = { art: a, werte: w, werteCm: { ...g.werte[a] } };
             }
             g.art = a;
             merken(g);

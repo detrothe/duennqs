@@ -896,10 +896,6 @@
   <source>Abmessungen bezogen auf die Profilmittellinien. Koordinatenursprung rechts oben, Knoten und Elemente werden berechnet und in die Tabellen eingetragen.</source>
   <target>Dimensiones referidas a las líneas medias del perfil. Origen de coordenadas arriba a la derecha; los nudos y elementos se calculan y se introducen en las tablas.</target>
 </trans-unit>
-<trans-unit id="sd1ec39fb80fb87b5">
-  <source>Knoten und Elemente werden direkt in die Tabellen eingegeben. Die Tabellen werden geleert.</source>
-  <target>Los nudos y elementos se introducen directamente en las tablas. Las tablas se vacían.</target>
-</trans-unit>
 <trans-unit id="s3cc7b06a90904a01">
   <source>Allgemeine Eingabe</source>
   <target>Entrada general</target>
@@ -963,6 +959,50 @@
 <trans-unit id="s88cc80f2449611e3">
   <source>Welche Querschnittsform? Knoten und Elemente werden daraus berechnet.</source>
   <target>¿Qué forma de sección? Los nudos y elementos se calculan a partir de ella.</target>
+</trans-unit>
+<trans-unit id="se2a4e409648443ef">
+  <source>Radius der Ecken (Mittellinie), 0 = ohne Rundung</source>
+  <target>Radio de las esquinas (línea media), 0 = sin redondeo</target>
+</trans-unit>
+<trans-unit id="s3bf094a9e2c6a469">
+  <source>Teilung je Bogen (Anzahl Elemente)</source>
+  <target>División por arco (número de elementos)</target>
+</trans-unit>
+<trans-unit id="s08f74b02e672f04f">
+  <source>Runde Ecken</source>
+  <target>Esquinas redondeadas</target>
+</trans-unit>
+<trans-unit id="s194df417d24ec713">
+  <source>r = Radius der Mittellinie (0 = ohne Rundung), n = Elemente je Bogen (1 bis 90)</source>
+  <target>r = radio de la línea media (0 = sin redondeo), n = elementos por arco (1 a 90)</target>
+</trans-unit>
+<trans-unit id="s6e85736702f2676c">
+  <source>Bitte b, h und t als positive Zahlen eingeben. Der Radius r geht von 0 bis zur Hälfte der kleineren Seite, die Teilung n des Bogens ist eine ganze Zahl von 1 bis 90.</source>
+  <target>Introduzca b, h y t como números positivos. El radio r va de 0 a la mitad del lado menor; la división n del arco es un entero de 1 a 90.</target>
+</trans-unit>
+<trans-unit id="s6cb19614fbd64f7d">
+  <source>Bitte alle Abmessungen als positive Zahlen eingeben.</source>
+  <target>Introduzca todas las dimensiones como números positivos.</target>
+</trans-unit>
+<trans-unit id="s687af8dd28d454e0">
+  <source>Du trägst die Knoten und Elemente selbst in die Tabellen ein. Sie werden vorher geleert.</source>
+  <target>Los nudos y elementos se introducen a mano en las tablas, que antes se vacían.</target>
+</trans-unit>
+<trans-unit id="s672840908d904d74">
+  <source>Eingabewerte werden umgerechnet, vorhandene Ergebnisse gleich neu berechnet.</source>
+  <target>Los valores de entrada se convierten; los resultados existentes se recalculan de inmediato.</target>
+</trans-unit>
+<trans-unit id="s97176b44f6f77388">
+  <source>Die Eingabe wurde seit dem letzten Rechnen geändert: Für die Ausgabe in der neuen Einheit bitte neu rechnen.</source>
+  <target>La entrada ha cambiado desde el último cálculo: vuelva a calcular para obtener los resultados en la nueva unidad.</target>
+</trans-unit>
+<trans-unit id="sb38a7e0f3306e414">
+  <source>Einheit der Querschnittswerte</source>
+  <target>Unidad de las propiedades de la sección</target>
+</trans-unit>
+<trans-unit id="s2202aa1b1aa7b053">
+  <source>Einheit für Fläche, Trägheitsmomente, Wölbwiderstand und Radien (auch in der pdf-Ausgabe)</source>
+  <target>Unidad para área, momentos de inercia, módulo de alabeo y radios (también en la salida pdf)</target>
 </trans-unit>
 </body>
 </file>

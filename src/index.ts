@@ -8,7 +8,7 @@ import { msg } from '@lit/localize';
 import './components/dr-haupt';
 import { app, byId, Detect } from './state';
 import { duennQ } from './duennQ';
-import { initTabellen, setzeBeispiel, leereEingabe, setzeProfil, spaltenAktualisieren } from './eingabe';
+import { initTabellen, setzeBeispiel, leereEingabe, setzeProfil, spaltenAktualisieren, aktuellesProfil } from './eingabe';
 import { profilDialog } from './components/profil_dialog';
 import { profilGeometrie } from './profile';
 import { initEinstellungen } from './einstellungen';
@@ -40,14 +40,14 @@ function geraeteInfo(): void {
 
 async function neueEingabe(): Promise<void> {
     // Querschnittsform wählen (Standardprofil oder allgemeine Eingabe wie bisher)
-    const wahl = await profilDialog();
+    const wahl = await profilDialog(aktuellesProfil());
     if (wahl === null) return;
     // wie d2beam-gui: Rückfrage nur, wenn Änderungen noch nicht in einer Datei gespeichert sind
     if (!await verwerfenBestaetigt(true)) return;
     if (wahl.art === 'allgemein') {
         leereEingabe();
     } else {
-        setzeProfil(profilGeometrie(wahl.art, wahl.werte));
+        setzeProfil(profilGeometrie(wahl.art, wahl.werte), { art: wahl.art, werte: wahl.werteCm });
     }
     setzeDateiname('');
 }

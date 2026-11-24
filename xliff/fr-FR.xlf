@@ -896,10 +896,6 @@
   <source>Abmessungen bezogen auf die Profilmittellinien. Koordinatenursprung rechts oben, Knoten und Elemente werden berechnet und in die Tabellen eingetragen.</source>
   <target>Dimensions rapportées aux lignes moyennes du profil. Origine des coordonnées en haut à droite ; les nœuds et éléments sont calculés et inscrits dans les tableaux.</target>
 </trans-unit>
-<trans-unit id="sd1ec39fb80fb87b5">
-  <source>Knoten und Elemente werden direkt in die Tabellen eingegeben. Die Tabellen werden geleert.</source>
-  <target>Les nœuds et éléments sont saisis directement dans les tableaux. Les tableaux sont vidés.</target>
-</trans-unit>
 <trans-unit id="s3cc7b06a90904a01">
   <source>Allgemeine Eingabe</source>
   <target>Saisie générale</target>
@@ -963,6 +959,50 @@
 <trans-unit id="s88cc80f2449611e3">
   <source>Welche Querschnittsform? Knoten und Elemente werden daraus berechnet.</source>
   <target>Quelle forme de section ? Les nœuds et éléments en sont calculés.</target>
+</trans-unit>
+<trans-unit id="se2a4e409648443ef">
+  <source>Radius der Ecken (Mittellinie), 0 = ohne Rundung</source>
+  <target>Rayon des angles (ligne moyenne), 0 = sans arrondi</target>
+</trans-unit>
+<trans-unit id="s3bf094a9e2c6a469">
+  <source>Teilung je Bogen (Anzahl Elemente)</source>
+  <target>Division par arc (nombre d’éléments)</target>
+</trans-unit>
+<trans-unit id="s08f74b02e672f04f">
+  <source>Runde Ecken</source>
+  <target>Angles arrondis</target>
+</trans-unit>
+<trans-unit id="s194df417d24ec713">
+  <source>r = Radius der Mittellinie (0 = ohne Rundung), n = Elemente je Bogen (1 bis 90)</source>
+  <target>r = rayon de la ligne moyenne (0 = sans arrondi), n = éléments par arc (1 à 90)</target>
+</trans-unit>
+<trans-unit id="s6e85736702f2676c">
+  <source>Bitte b, h und t als positive Zahlen eingeben. Der Radius r geht von 0 bis zur Hälfte der kleineren Seite, die Teilung n des Bogens ist eine ganze Zahl von 1 bis 90.</source>
+  <target>Veuillez saisir b, h et t sous forme de nombres positifs. Le rayon r va de 0 à la moitié du plus petit côté ; la division n de l’arc est un entier de 1 à 90.</target>
+</trans-unit>
+<trans-unit id="s6cb19614fbd64f7d">
+  <source>Bitte alle Abmessungen als positive Zahlen eingeben.</source>
+  <target>Veuillez saisir toutes les dimensions sous forme de nombres positifs.</target>
+</trans-unit>
+<trans-unit id="s687af8dd28d454e0">
+  <source>Du trägst die Knoten und Elemente selbst in die Tabellen ein. Sie werden vorher geleert.</source>
+  <target>Les nœuds et éléments sont saisis à la main dans les tableaux, qui sont vidés auparavant.</target>
+</trans-unit>
+<trans-unit id="s672840908d904d74">
+  <source>Eingabewerte werden umgerechnet, vorhandene Ergebnisse gleich neu berechnet.</source>
+  <target>Les valeurs saisies sont converties ; les résultats existants sont recalculés immédiatement.</target>
+</trans-unit>
+<trans-unit id="s97176b44f6f77388">
+  <source>Die Eingabe wurde seit dem letzten Rechnen geändert: Für die Ausgabe in der neuen Einheit bitte neu rechnen.</source>
+  <target>La saisie a changé depuis le dernier calcul : veuillez recalculer pour obtenir les résultats dans la nouvelle unité.</target>
+</trans-unit>
+<trans-unit id="sb38a7e0f3306e414">
+  <source>Einheit der Querschnittswerte</source>
+  <target>Unité des caractéristiques de section</target>
+</trans-unit>
+<trans-unit id="s2202aa1b1aa7b053">
+  <source>Einheit für Fläche, Trägheitsmomente, Wölbwiderstand und Radien (auch in der pdf-Ausgabe)</source>
+  <target>Unité pour l’aire, les moments d’inertie, l’inertie de gauchissement et les rayons (aussi dans la sortie pdf)</target>
 </trans-unit>
 </body>
 </file>

@@ -45,6 +45,7 @@ const FARBE_FYRD = 0xc00000;
 const FARBE_QUERSCHNITT = 0x8a8a9a;
 const TEILUNG = 20;               // Stützstellen je Element für die Kurven
 const KREISTEILUNG = 10;          // Segmente im Umfang von Pfeilschaft und Pfeilspitze
+const PFEILE_DIAGONALE = 10;      // σ-Pfeile: Abstand etwa Diagonale des umschließenden Rechtecks / 10
 const MAX_BILDPIXEL = 16_000_000; // Obergrenze für Canvas-Flächen in Safari/iOS (ca. 16,7 Mio. Pixel)
 
 const optionen = {
@@ -107,6 +108,7 @@ interface Fangpunkt {
 
 let fangpunkte: Fangpunkt[] = [];
 let groesse = 1;          // charakteristische Abmessung des Querschnitts
+let diagonale = 1;        // Diagonale des umschließenden Rechtecks (Abstand der σ-Pfeile)
 let kameraGroesse = 0;    // Größe, für die die Kamera zuletzt eingestellt wurde
 let kameraNachholen = false;
 
@@ -795,9 +797,16 @@ function baueDiagramm(): void {
             } else {
                 for (const p of [punkte[0], punkte[TEILUNG]]) beschrifte(spannung(p.w), toV(p.y, p.z, p.w * f));
             }
-            for (const t of [0, 0.25, 0.5, 0.75, 1]) {
-                const m = mittelPunkt(i, t);
-                pfeilPunkte.push({ ...m, w: el.sigma_x[0] + t * (el.sigma_x[2] - el.sigma_x[0]) });
+            // Pfeile je nach Elementlänge: mindestens Anfang und Ende, dazwischen im Abstand von etwa
+            // Diagonale / PFEILE_DIAGONALE. An gemeinsamen Knoten nur ein Pfeil, wenn σ dort gleich ist;
+            // bei unterschiedlichem Material springt σ, dann zeigen beide Pfeile den Sprung.
+            const abschnitte = Math.max(1, Math.round(el.sl / (diagonale / PFEILE_DIAGONALE)));
+            for (let k = 0; k <= abschnitte; k++) {
+                const t = k / abschnitte, m = mittelPunkt(i, t);
+                const w = el.sigma_x[0] + t * (el.sigma_x[2] - el.sigma_x[0]);
+                if (pfeilPunkte.some(p => Math.hypot(p.y - m.y, p.z - m.z) < 1e-6 * diagonale
+                    && Math.abs(p.w - w) <= 1e-6 * maxAbs)) continue;
+                pfeilPunkte.push({ ...m, w });
             }
         });
         pfeilGruppe.add(senkrechtePfeile(pfeilPunkte, f, maxAbs, farbe));
@@ -1217,6 +1226,7 @@ export function zeige3D(): void {
             }
         }
         groesse = Math.max(ymax - ymin, zmax - zmin) || 1;
+        diagonale = Math.hypot(ymax - ymin, zmax - zmin) || 1;
 
         modell = new THREE.Group();
         modell.add(baueQuerschnitt());
