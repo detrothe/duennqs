@@ -8,7 +8,8 @@ import { msg } from '@lit/localize';
 import './components/dr-haupt';
 import { app, byId, Detect } from './state';
 import { duennQ } from './duennQ';
-import { initTabellen, setzeBeispiel, leereEingabe, setzeProfil, spaltenAktualisieren, aktuellesProfil } from './eingabe';
+import { initTabellen, setzeBeispiel, leereEingabe, setzeProfil, spaltenAktualisieren, aktuellesProfil, eingabeEinlesen } from './eingabe';
+import { textDialog } from './components/text_dialog';
 import { profilDialog } from './components/profil_dialog';
 import { profilGeometrie } from './profile';
 import { initEinstellungen } from './einstellungen';
@@ -52,6 +53,21 @@ async function neueEingabe(): Promise<void> {
     setzeDateiname('');
 }
 
+/**
+ * Querschnitt als Text übernehmen (z.B. von einer KI aus einer Zeichnung), gleich rechnen und den Querschnitt
+ * zeigen, damit man ihn mit der Zeichnung vergleichen kann (die Grafik im Tab System braucht ein Ergebnis;
+ * Fehler wie nicht verbundene Elemente meldet duennQ sofort).
+ */
+async function textEingabe(haupt: HTMLElementTagNameMap['dr-haupt']): Promise<void> {
+    const daten = await textDialog();
+    if (daten === null) return;
+    if (!await verwerfenBestaetigt(true)) return;
+    if (!eingabeEinlesen(JSON.stringify(daten))) return;
+    setzeDateiname('');
+    duennQ(false);
+    haupt.zeigeTab('system');
+}
+
 let dreiDGeladen = false;   // three.js erst laden, wenn der Tab 3D geöffnet wurde
 
 /** Sprache geändert: alles, was nicht von Lit gezeichnet wird, neu aufbauen. */
@@ -87,6 +103,7 @@ async function start(): Promise<void> {
 
     byId('rechnen').addEventListener('click', () => duennQ());
     byId('neueEingabe').addEventListener('click', () => void neueEingabe());
+    byId('textEingabe').addEventListener('click', () => void textEingabe(haupt));
     byId('id_pdf').addEventListener('click', () => {
         // PDF-Ausgabe (jspdf, Schriften ca. 1,5 MB) erst bei Bedarf nachladen, wie die 3D-Ansicht
         if (app.gerechnet) void import('./mypdf').then(m => m.my_jspdf());

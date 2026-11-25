@@ -69,6 +69,15 @@
 		li {
 			margin-bottom: 0.3em;
 		}
+
+		pre {
+			padding: 0.6em 0.8em;
+			background: #f2f2f6;
+			border-radius: 6px;
+			overflow-x: auto;
+			font-size: 0.9em;
+			line-height: 135%;
+		}
 	</style>
 	</head>
 	<body>
@@ -88,6 +97,8 @@
 			<a href="#tabellen">Tabelle e menu contestuale</a>
 			<br>
 			<a href="#dateien">File, PDF e salvataggio automatico</a>
+			<br>
+			<a href="#text_ki">Input come testo e con l’IA</a>
 			<br>
 			<a href="#darstellung_2D">Rappresentazione 2D (scheda Sistema)</a>
 			<br>
@@ -286,6 +297,77 @@
 			attuale viene mantenuto.
 		</p>
 
+		<h2 id="text_ki">
+			<a href="#">Input come testo e con l’IA</a>
+		</h2>
+		<p>
+			Con il pulsante <i>Sezione come testo</i> (terza icona sopra l’input) incolli nodi, elementi e
+			altri dati come testo. Così un’IA come Claude o ChatGPT può leggere una sezione da un disegno,
+			una foto o un file PDF e preparare l’input:
+		</p>
+		<ol>
+			<li>Nella finestra di dialogo tocca <i>Copia prompt per IA</i>. Il prompt spiega all’IA il modello
+				a linea media e il formato di testo.</li>
+			<li>Invia il prompt insieme al disegno all’IA.</li>
+			<li>Incolla il blocco di codice della risposta nel campo di testo e scegli <i>Applica</i>. L’app
+				mostra poi la sezione nella scheda <i>Sistema</i>.</li>
+		</ol>
+		<p>
+			<b>Da controllare:</b> un’IA può leggere male le quote o confondere quote esterne e quote d’asse.
+			Confronta la sezione nella scheda <i>Sistema</i> con il disegno e leggi le ipotesi nella risposta
+			dell’IA.
+		</p>
+		<p>Il formato di testo con un HEB 300 come esempio (modello a linea media, senza raccordi):</p>
+		<pre># HEB 300: h = 300, b = 300, tf = 19, tw = 11 (mm) → distanza tra le linee medie delle ali 281
+unit mm
+y_right
+E 210000
+nu 0.3
+fyRd 235
+My 120
+text HEB 300
+
+nodes
+1  -150    0
+2     0    0
+3   150    0
+4  -150  281
+5     0  281
+6   150  281
+
+elements
+1  1  2  19
+2  2  3  19
+3  2  5  11
+4  4  5  19
+5  5  6  19</pre>
+		<ul>
+			<li>Un dato per riga. I numeri sono separati da spazi, tabulazioni o punti e virgola. Il
+				separatore decimale è il punto; è ammessa anche la virgola. Tutto ciò che segue # è un commento.</li>
+			<li><b>unit</b> mm, cm o m vale per tutte le lunghezze; E e f<sub>y,Rd</sub> vanno allora in
+				N/mm², kN/cm² o MN/m². Senza questa riga vale l’unità impostata nell’app.</li>
+			<li><b>y_right</b>: le coordinate orizzontali sono positive verso destra, come nel disegno. Poiché
+				nell’app ȳ punta a sinistra, essa usa ȳ = −valore. Senza questa riga i valori vengono presi
+				direttamente come ȳ. z̄ punta sempre verso il basso.</li>
+			<li><b>E</b>, <b>nu</b>, <b>fyRd</b>: valori di riferimento. Se mancano, restano quelli precedenti.</li>
+			<li><b>N</b>, <b>Vy</b>, <b>Vz</b> (kN), <b>My</b>, <b>Mz</b>, <b>Mxp</b>, <b>Mxs</b> (kNm),
+				<b>Mw</b> (kNm²): sollecitazioni, una per riga. Quelle mancanti restano vuote.</li>
+			<li><b>text</b>: testo libero per l’output PDF, più righe possibili.</li>
+			<li><b>nodes</b>: poi una riga <i>n. ȳ z̄</i> per nodo. Il numero può mancare; altrimenti
+				consecutivo da 1.</li>
+			<li><b>elements</b>: poi una riga <i>n. nod1 nod2 t</i> per elemento, facoltativamente seguita da
+				<i>E ν</i> per un elemento di materiale diverso. Se un elemento ha valori di materiale propri,
+				<i>tutti gli elementi hanno lo stesso materiale</i> viene disattivato.</li>
+			<li>Funzionano anche le parole chiave tedesche (einheit, y_rechts, knoten, elemente). Le righe con
+				``` (blocco di codice di una risposta dell’IA) vengono saltate.</li>
+		</ul>
+		<p>
+			Con <i>input attuale come testo</i> la finestra mostra l’input attuale in questo formato, ad es.
+			come modello o per darlo a un’IA da modificare. Un file di testo in questo formato si può anche
+			aprire come un file di input o trascinare nella finestra. Il salvataggio crea sempre un file
+			<i>.duennqs</i>.
+		</p>
+
 		<h2 id="darstellung_2D">
 			<a href="#">Rappresentazione 2D (scheda Sistema)</a>
 		</h2>
@@ -372,6 +454,16 @@
 		</p>
 		<p>
 			A<sub>geom</sub> = area geometrica della sezione, senza tenere conto dei dati del materiale.
+		</p>
+		<p>
+			Assi: ȳ, z̄ = sistema di coordinate ausiliario dell’input; y, z = assi paralleli passanti
+			per il baricentro (a essi si riferiscono le sollecitazioni); 1, 2 = assi principali con
+			I<sub>11</sub> e I<sub>22</sub>. Attenzione: in [2] gli assi principali si chiamano y e z.
+			<br>
+			r<sub>1</sub>, r<sub>2</sub>, r<sub>ω</sub> = coefficienti di Wagner riferiti agli assi
+			principali, ad es. per lo svergolamento. r<sub>1</sub> è associato a I<sub>22</sub>,
+			r<sub>2</sub> a I<sub>11</sub>. In [2] il valore associato a I<sub>y</sub> si chiama r<sub>y</sub>
+			e quello associato a I<sub>z</sub> si chiama r<sub>z</sub>.
 		</p>
 		<p>
 			Tensioni tangenziali dovute alla torsione primaria M<sub>xp</sub>:

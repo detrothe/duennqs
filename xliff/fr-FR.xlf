@@ -1000,17 +1000,241 @@
   <source>Einheit für Fläche, Trägheitsmomente, Wölbwiderstand und Radien (auch in der pdf-Ausgabe)</source>
   <target>Unité pour l’aire, les moments d’inertie, l’inertie de gauchissement et les rayons (aussi dans la sortie pdf)</target>
 </trans-unit>
-<trans-unit id="sa615434b0cbf789b">
-  <source>r_y, r_z, r_ω: Wagner-Koeffizienten bezogen auf die Hauptachsen (y ≙ 1, z ≙ 2), z.B. für das Biegedrillknicken.</source>
-  <target>r_y, r_z, r_ω : coefficients de Wagner rapportés aux axes principaux (y ≙ 1, z ≙ 2), p. ex. pour le déversement.</target>
-</trans-unit>
-<trans-unit id="s370df1a33020b78b">
-  <source>r_y, r_z, r_ω: bezogen auf die Hauptachsen (y ≙ 1, z ≙ 2)</source>
-  <target>r_y, r_z, r_ω : rapportés aux axes principaux (y ≙ 1, z ≙ 2)</target>
-</trans-unit>
 <trans-unit id="s1da68b1b80db1c14">
   <source>Bitte h, b und t als positive Zahlen eingeben. Der Radius r geht von 0 bis zur Hälfte der kleineren Seite, die Teilung n des Bogens ist eine ganze Zahl von 1 bis 90.</source>
   <target>Veuillez saisir h, b et t sous forme de nombres positifs. Le rayon r va de 0 à la moitié du plus petit côté ; la division n de l’arc est un entier de 1 à 90.</target>
+</trans-unit>
+<trans-unit id="s57f1e3461e586101">
+  <source>Querschnitt als Text einfügen, z. B. von einer KI aus einer Zeichnung</source>
+  <target>Coller la section sous forme de texte, p. ex. d’une IA à partir d’un dessin</target>
+</trans-unit>
+<trans-unit id="s92fd44df63e65ae4">
+  <source>Querschnitt als Text</source>
+  <target>Section sous forme de texte</target>
+</trans-unit>
+<trans-unit id="s40378cd3b5b29f33">
+  <source>Knoten und Elemente als Text einfügen, zum Beispiel von einer KI, die den Querschnitt aus einer Zeichnung abgelesen hat.</source>
+  <target>Collez les nœuds et les éléments sous forme de texte, par exemple d’une IA qui a relevé la section sur un dessin.</target>
+</trans-unit>
+<trans-unit id="sab67d8e0ce53cedf">
+  <source>Prompt kopieren und zusammen mit der Zeichnung (Bild oder PDF) an eine KI wie Claude oder ChatGPT schicken.</source>
+  <target>Copiez le prompt et envoyez-le avec le dessin (image ou PDF) à une IA comme Claude ou ChatGPT.</target>
+</trans-unit>
+<trans-unit id="sbcc95dba4d66060b">
+  <source>KI-Prompt kopieren</source>
+  <target>Copier le prompt IA</target>
+</trans-unit>
+<trans-unit id="se115abaaddcd32e9">
+  <source>Den Codeblock aus der Antwort hier einfügen. Die Annahmen der KI bitte prüfen.</source>
+  <target>Collez ici le bloc de code de la réponse. Vérifiez les hypothèses de l’IA.</target>
+</trans-unit>
+<trans-unit id="sa30efcc5538d2bb7">
+  <source>Eingabe als Text</source>
+  <target>Saisie sous forme de texte</target>
+</trans-unit>
+<trans-unit id="s226c93b303a138b4">
+  <source>Text hier einfügen …</source>
+  <target>Collez le texte ici …</target>
+</trans-unit>
+<trans-unit id="s35775655d79c2c6a">
+  <source>Beispiel</source>
+  <target>Exemple</target>
+</trans-unit>
+<trans-unit id="s5e28c4229623449e">
+  <source>Die aktuelle Eingabe im Textformat anzeigen, z. B. als Vorlage oder um sie einer KI zu geben</source>
+  <target>Afficher la saisie actuelle au format texte, p. ex. comme modèle ou pour la donner à une IA</target>
+</trans-unit>
+<trans-unit id="s03e1f625cf9b3f3e">
+  <source>aktuelle Eingabe als Text</source>
+  <target>saisie actuelle en texte</target>
+</trans-unit>
+<trans-unit id="s2c678c9953662792">
+  <source>leeren</source>
+  <target>effacer</target>
+</trans-unit>
+<trans-unit id="se7d35180510d398c">
+  <source>Format: Zeilen „einheit mm“, „E 210000“, „nu 0.3“, dann „knoten“ mit je einer Zeile „nr y z“ und „elemente“ mit „nr nod1 nod2 t“. Mehr dazu im Tab Info unter „Eingabe als Text und mit KI“.</source>
+  <target>Format : lignes « unit mm », « E 210000 », « nu 0.3 », puis « nodes » avec une ligne « n° y z » chacune et « elements » avec « n° nod1 nod2 t ». Plus de détails dans l’onglet Info, section « Saisie sous forme de texte et avec l’IA ».</target>
+</trans-unit>
+<trans-unit id="se2913e7ac9d29833">
+  <source>… und <x id="0" equiv-text="${fehler.length - 12}"/> weitere</source>
+  <target>… et <x id="0" equiv-text="${fehler.length - 12}"/> autres</target>
+</trans-unit>
+<trans-unit id="s9b2905fa94c20c86">
+  <source>erkannt: <x id="0" equiv-text="${e.knoten}"/> Knoten, <x id="1" equiv-text="${e.elemente}"/> Elemente</source>
+  <target>reconnus : <x id="0" equiv-text="${e.knoten}"/> nœuds, <x id="1" equiv-text="${e.elemente}"/> éléments</target>
+</trans-unit>
+<trans-unit id="s64a30a31d804c81d">
+  <source><x id="0" equiv-text="${e.fehler.length}"/> Fehler</source>
+  <target><x id="0" equiv-text="${e.fehler.length}"/> erreurs</target>
+</trans-unit>
+<trans-unit id="sed6630ee990c6d4c">
+  <source>kopiert ✓</source>
+  <target>copié ✓</target>
+</trans-unit>
+<trans-unit id="s95bd7382bd138a8f">
+  <source>Der Text beginnt mit „{“, ist aber keine gültige duennqs-Datei.</source>
+  <target>Le texte commence par « { » mais n’est pas un fichier duennqs valide.</target>
+</trans-unit>
+<trans-unit id="s0d30202fbcc1b9d8">
+  <source>Zeile <x id="0" equiv-text="${nr}"/>: Einheit muss mm, cm oder m sein.</source>
+  <target>Ligne <x id="0" equiv-text="${nr}"/> : l’unité doit être mm, cm ou m.</target>
+</trans-unit>
+<trans-unit id="s75e15e030023d22e">
+  <source>Zeile <x id="0" equiv-text="${nr}"/>: Nach „<x id="1" equiv-text="${tokens[0]}"/>“ wird genau eine Zahl erwartet.</source>
+  <target>Ligne <x id="0" equiv-text="${nr}"/> : un seul nombre est attendu après « <x id="1" equiv-text="${tokens[0]}"/> ».</target>
+</trans-unit>
+<trans-unit id="s9d2c1d1824b546cd">
+  <source>Zeile <x id="0" equiv-text="${nr}"/>: Die Zeile enthält etwas, das keine Zahl ist.</source>
+  <target>Ligne <x id="0" equiv-text="${nr}"/> : la ligne contient quelque chose qui n’est pas un nombre.</target>
+</trans-unit>
+<trans-unit id="s138a05cdd21b01af">
+  <source>Zeile <x id="0" equiv-text="${nr}"/>: Unbekanntes Schlüsselwort „<x id="1" equiv-text="${tokens[0]}"/>“.</source>
+  <target>Ligne <x id="0" equiv-text="${nr}"/> : mot-clé inconnu « <x id="1" equiv-text="${tokens[0]}"/> ».</target>
+</trans-unit>
+<trans-unit id="s21c4d22e6e7fd101">
+  <source>Zeile <x id="0" equiv-text="${nr}"/>: Ein Knoten braucht y und z (davor optional die Nummer).</source>
+  <target>Ligne <x id="0" equiv-text="${nr}"/> : un nœud nécessite y et z (éventuellement précédés du numéro).</target>
+</trans-unit>
+<trans-unit id="sb08869e5aa678bb6">
+  <source>Zeile <x id="0" equiv-text="${nr}"/>: Knotennummer <x id="1" equiv-text="${werte[0]}"/> erwartet <x id="2" equiv-text="${knoten.length + 1}"/> (fortlaufend ab 1).</source>
+  <target>Ligne <x id="0" equiv-text="${nr}"/> : numéro de nœud <x id="1" equiv-text="${werte[0]}"/>, attendu <x id="2" equiv-text="${knoten.length + 1}"/> (consécutif à partir de 1).</target>
+</trans-unit>
+<trans-unit id="s7f8ef2350957cc0c">
+  <source>Zeile <x id="0" equiv-text="${nr}"/>: Ein Element braucht nod1, nod2 und t (davor optional die Nummer, dahinter optional E und ν).</source>
+  <target>Ligne <x id="0" equiv-text="${nr}"/> : un élément nécessite nod1, nod2 et t (éventuellement précédés du numéro et suivis de E et ν).</target>
+</trans-unit>
+<trans-unit id="s35256e9941e7b049">
+  <source>Zeile <x id="0" equiv-text="${nr}"/>: Elementnummer <x id="1" equiv-text="${werte[0]}"/> erwartet <x id="2" equiv-text="${elemente.length + 1}"/> (fortlaufend ab 1).</source>
+  <target>Ligne <x id="0" equiv-text="${nr}"/> : numéro d’élément <x id="1" equiv-text="${werte[0]}"/>, attendu <x id="2" equiv-text="${elemente.length + 1}"/> (consécutif à partir de 1).</target>
+</trans-unit>
+<trans-unit id="s3e02b7f7e6ae6340">
+  <source>Zeile <x id="0" equiv-text="${nr}"/>: Zahlen vor „knoten“ bzw. „elemente“ – zu welchem Abschnitt gehören sie?</source>
+  <target>Ligne <x id="0" equiv-text="${nr}"/> : nombres avant « nodes » ou « elements » – à quelle section appartiennent-ils ?</target>
+</trans-unit>
+<trans-unit id="sa6f9bd15832a2538">
+  <source>Es werden mindestens 2 Knoten gebraucht.</source>
+  <target>Il faut au moins 2 nœuds.</target>
+</trans-unit>
+<trans-unit id="s921f4c8b53b52b9f">
+  <source>Es wird mindestens 1 Element gebraucht.</source>
+  <target>Il faut au moins 1 élément.</target>
+</trans-unit>
+<trans-unit id="sc264269d7bc46dd1">
+  <source>Zeile <x id="0" equiv-text="${el.zeile}"/>: Knoten <x id="1" equiv-text="${k}"/> gibt es nicht (1 bis <x id="2" equiv-text="${knoten.length}"/>).</source>
+  <target>Ligne <x id="0" equiv-text="${el.zeile}"/> : le nœud <x id="1" equiv-text="${k}"/> n’existe pas (1 à <x id="2" equiv-text="${knoten.length}"/>).</target>
+</trans-unit>
+<trans-unit id="s6ac40cc05b3fa12e">
+  <source>Zeile <x id="0" equiv-text="${el.zeile}"/>: Anfangs- und Endknoten sind gleich.</source>
+  <target>Ligne <x id="0" equiv-text="${el.zeile}"/> : les nœuds de début et de fin sont identiques.</target>
+</trans-unit>
+<trans-unit id="s47a42d8cbc352520">
+  <source>Zeile <x id="0" equiv-text="${el.zeile}"/>: Die Dicke t muss größer 0 sein.</source>
+  <target>Ligne <x id="0" equiv-text="${el.zeile}"/> : l’épaisseur t doit être supérieure à 0.</target>
+</trans-unit>
+<trans-unit id="s6a1c1cd318dae66e">
+  <source>Zeile <x id="0" equiv-text="${el.zeile}"/>: Der E-Modul muss größer 0 sein.</source>
+  <target>Ligne <x id="0" equiv-text="${el.zeile}"/> : le module E doit être supérieur à 0.</target>
+</trans-unit>
+<trans-unit id="s3a52a34a11944f46">
+  <source>Abstand der Flanschmittellinien</source>
+  <target>distance entre les lignes moyennes des semelles</target>
+</trans-unit>
+<trans-unit id="s3045e9c645e2aa5f">
+  <source>Ich hänge die Zeichnung eines dünnwandigen Querschnitts an. Erzeuge daraus eine Eingabe für die Web-App duennQs (Querschnittswerte und Spannungen dünnwandiger Querschnitte, Mittellinienmodell) im unten beschriebenen Textformat.</source>
+  <target>Je joins le dessin d’une section à parois minces. Crée à partir de celui-ci une saisie pour l’application web duennQs (caractéristiques et contraintes des sections à parois minces, modèle de ligne moyenne) au format texte décrit ci-dessous.</target>
+</trans-unit>
+<trans-unit id="s9312e489a0e6b728">
+  <source>Modell:</source>
+  <target>Modèle :</target>
+</trans-unit>
+<trans-unit id="sd45fd41c2f9e5d4a">
+  <source>Der Querschnitt besteht aus geraden Elementen zwischen Knoten auf der Profilmittellinie. Jedes Element hat eine konstante Dicke t.</source>
+  <target>La section se compose d’éléments droits entre des nœuds situés sur la ligne moyenne du profil. Chaque élément a une épaisseur constante t.</target>
+</trans-unit>
+<trans-unit id="sf976ca7efe2d69f9">
+  <source>Maße, die sich auf Außenkanten beziehen, auf die Mittellinien umrechnen (jeweils die halbe Blechdicke abziehen oder addieren). Sag dazu, welche Maße du als Außenmaß und welche als Achsmaß gelesen hast.</source>
+  <target>Convertis les cotes rapportées aux bords extérieurs en cotes sur lignes moyennes (soustraire ou ajouter la moitié de l’épaisseur de tôle). Indique quelles cotes tu as lues comme cotes extérieures et lesquelles comme cotes d’axe.</target>
+</trans-unit>
+<trans-unit id="s96d2f5b0294835af">
+  <source>Ausrundungen, Walzradien und Schweißnähte weglassen. Gekrümmte Teile (Rohre, runde Ecken) durch mehrere gerade Elemente annähern, z. B. 24 Elemente für einen Kreis.</source>
+  <target>Ignore les congés, rayons de laminage et soudures. Approche les parties courbes (tubes, coins arrondis) par plusieurs éléments droits, p. ex. 24 éléments pour un cercle.</target>
+</trans-unit>
+<trans-unit id="sc31d3bfeed9faa53">
+  <source>Alle Elemente müssen zusammenhängen. Wo Bleche sich treffen oder abzweigen, liegt ein gemeinsamer Knoten; ein Blech, an das ein anderes anschließt, wird dort in zwei Elemente geteilt.</source>
+  <target>Tous les éléments doivent être reliés. Là où des tôles se rencontrent ou bifurquent se trouve un nœud commun ; une tôle à laquelle une autre se raccorde y est divisée en deux éléments.</target>
+</trans-unit>
+<trans-unit id="sa1b8657a4216d993">
+  <source>Koordinaten: z nach unten positiv. Die horizontale Koordinate wie in der Zeichnung nach rechts positiv angeben und die Zeile „<x id="0" equiv-text="${w.y_rechts}"/>“ schreiben (die y-Achse der App zeigt nach links, sie spiegelt dann selbst). Der Ursprung ist beliebig.</source>
+  <target>Coordonnées : z positif vers le bas. Donne la coordonnée horizontale positive vers la droite comme sur le dessin et écris la ligne « <x id="0" equiv-text="${w.y_rechts}"/> » (l’axe y de l’application pointe vers la gauche ; elle effectue alors elle-même la symétrie). L’origine est quelconque.</target>
+</trans-unit>
+<trans-unit id="s246ce1cf199907f8">
+  <source>Format (eine Angabe je Zeile, Zahlen mit Dezimalpunkt und durch Leerzeichen getrennt, Kommentare mit #):</source>
+  <target>Format (une donnée par ligne, nombres avec point décimal et séparés par des espaces, commentaires avec #) :</target>
+</trans-unit>
+<trans-unit id="sfbcc483b46933f29">
+  <source>mm, cm oder m für alle Längen; E und fyRd dann in N/mm², kN/cm² bzw. MN/m²</source>
+  <target>mm, cm ou m pour toutes les longueurs ; E et fyRd alors en N/mm², kN/cm² ou MN/m²</target>
+</trans-unit>
+<trans-unit id="s2622cc163c6150c0">
+  <source>Querdehnzahl</source>
+  <target>Coefficient de Poisson</target>
+</trans-unit>
+<trans-unit id="s2bd7f86315fc6085">
+  <source>optional: Bemessungswert der Streckgrenze</source>
+  <target>facultatif : limite d’élasticité de calcul</target>
+</trans-unit>
+<trans-unit id="s91af4803521a7779">
+  <source>optional, je Zeile eine Schnittgröße: N, Vy, Vz (kN), My, Mz, Mxp, Mxs (kNm), Mw (kNm²)</source>
+  <target>facultatif, un effort par ligne : N, Vy, Vz (kN), My, Mz, Mxp, Mxs (kNm), Mw (kNm²)</target>
+</trans-unit>
+<trans-unit id="s9a84a59e804854c0">
+  <source>optional: Bezeichnung für die PDF-Ausgabe</source>
+  <target>facultatif : titre pour la sortie PDF</target>
+</trans-unit>
+<trans-unit id="scac78b112ba5aeef">
+  <source>fortlaufend ab 1</source>
+  <target>consécutif à partir de 1</target>
+</trans-unit>
+<trans-unit id="s23323bf3ef4c4855">
+  <source>Anfangsknoten, Endknoten, Dicke; nur bei abweichendem Material dahinter noch E und nu</source>
+  <target>nœud de début, nœud de fin, épaisseur ; seulement pour un matériau différent, ajouter E et nu</target>
+</trans-unit>
+<trans-unit id="s75f403dd5e5f4bf0">
+  <source>Beispiel:</source>
+  <target>Exemple :</target>
+</trans-unit>
+<trans-unit id="sd226f820bfed62d8">
+  <source>Antwort:</source>
+  <target>Réponse :</target>
+</trans-unit>
+<trans-unit id="s9c56a56a29caed99">
+  <source>Liste kurz die abgelesenen Maße und alle Annahmen auf, besonders was unklar oder unleserlich war.</source>
+  <target>Liste brièvement les cotes relevées et toutes les hypothèses, en particulier ce qui était peu clair ou illisible.</target>
+</trans-unit>
+<trans-unit id="se363e9f0c8124616">
+  <source>Gib dann die Eingabe als einen einzigen Codeblock aus, ohne weiteren Text darin.</source>
+  <target>Puis donne la saisie dans un seul bloc de code, sans autre texte à l’intérieur.</target>
+</trans-unit>
+<trans-unit id="s3322352c0963431f">
+  <source>Kopieren nicht möglich – der Prompt steht im Textfeld, bitte von dort kopieren.</source>
+  <target>Copie impossible – le prompt se trouve dans le champ de texte, copie-le à partir de là.</target>
+</trans-unit>
+<trans-unit id="s0ba7bfecd4a16e77">
+  <source>Material und Schnittgrößen nur aus der Zeichnung oder meinen Angaben übernehmen, nicht aus dem Beispiel. Ohne Materialangabe Stahl annehmen (E = 210000 N/mm², nu = 0.3) und das als Annahme nennen.</source>
+  <target>Ne reprends le matériau et les efforts que du dessin ou de mes indications, pas de l’exemple. Sans indication de matériau, suppose de l’acier (E = 210000 N/mm², nu = 0.3) et signale-le comme hypothèse.</target>
+</trans-unit>
+<trans-unit id="s0f7cf136a6719be5">
+  <source>Nicht bemaßte Lagen und Längen aus dem Maßstab der Zeichnung abschätzen (bekannte Maße als Bezug nehmen) und in der Liste der Annahmen ausdrücklich als „geschätzt“ kennzeichnen. Nur nachfragen, wenn sich ein Maß gar nicht ermitteln lässt.</source>
+  <target>Estime les positions et longueurs non cotées à partir de l’échelle du dessin (en prenant les cotes connues comme référence) et signale-les expressément comme « estimées » dans la liste des hypothèses. Ne demande que si une cote ne peut pas du tout être déterminée.</target>
+</trans-unit>
+<trans-unit id="sbe2108de7691d5f4">
+  <source>r_1, r_2, r_ω: Wagner-Koeffizienten bezogen auf die Hauptachsen 1 und 2, z.B. für das Biegedrillknicken. r_1 gehört zu I_22, r_2 zu I_11. Bei Kindmann/Kraus, wo y und z die Hauptachsen sind, heißt der Wert zu I_y dort r_y und der zu I_z dort r_z.</source>
+  <target>r_1, r_2, r_ω : coefficients de Wagner rapportés aux axes principaux 1 et 2, p. ex. pour le déversement. r_1 est associé à I_22, r_2 à I_11. Chez Kindmann/Kraus, où y et z sont les axes principaux, la valeur associée à I_y s’appelle r_y et celle associée à I_z s’appelle r_z.</target>
+</trans-unit>
+<trans-unit id="sec6a131a858e7772">
+  <source>r_1, r_2, r_ω: bezogen auf die Hauptachsen 1 und 2; r_1 gehört zu I_22, r_2 zu I_11</source>
+  <target>r_1, r_2, r_ω : rapportés aux axes principaux 1 et 2 ; r_1 est associé à I_22, r_2 à I_11</target>
 </trans-unit>
 </body>
 </file>

@@ -69,6 +69,15 @@
 		li {
 			margin-bottom: 0.3em;
 		}
+
+		pre {
+			padding: 0.6em 0.8em;
+			background: #f2f2f6;
+			border-radius: 6px;
+			overflow-x: auto;
+			font-size: 0.9em;
+			line-height: 135%;
+		}
 	</style>
 	</head>
 	<body>
@@ -88,6 +97,8 @@
 			<a href="#tabellen">Tablas y menú contextual</a>
 			<br>
 			<a href="#dateien">Archivos, PDF y copia de seguridad automática</a>
+			<br>
+			<a href="#text_ki">Entrada como texto y con IA</a>
 			<br>
 			<a href="#darstellung_2D">Representación 2D (pestaña Sistema)</a>
 			<br>
@@ -286,6 +297,77 @@
 			se conserva.
 		</p>
 
+		<h2 id="text_ki">
+			<a href="#">Entrada como texto y con IA</a>
+		</h2>
+		<p>
+			Con el botón <i>Sección como texto</i> (tercer icono encima de la entrada) pegas nudos, elementos
+			y otros datos como texto. Así una IA como Claude o ChatGPT puede leer una sección en un dibujo,
+			una foto o un archivo PDF y preparar la entrada:
+		</p>
+		<ol>
+			<li>En el diálogo, pulsa <i>Copiar prompt para IA</i>. El prompt explica a la IA el modelo de línea
+				media y el formato de texto.</li>
+			<li>Envía el prompt junto con el dibujo a la IA.</li>
+			<li>Pega el bloque de código de la respuesta en el campo de texto y elige <i>Aplicar</i>. La
+				aplicación muestra luego la sección en la pestaña <i>Sistema</i>.</li>
+		</ol>
+		<p>
+			<b>Compruébalo:</b> una IA puede leer mal las cotas o confundir cotas exteriores y cotas a ejes.
+			Compara la sección en la pestaña <i>Sistema</i> con el dibujo y lee las suposiciones en la
+			respuesta de la IA.
+		</p>
+		<p>El formato de texto con un HEB 300 como ejemplo (modelo de línea media, sin acuerdos):</p>
+		<pre># HEB 300: h = 300, b = 300, tf = 19, tw = 11 (mm) → distancia entre las líneas medias de las alas 281
+unit mm
+y_right
+E 210000
+nu 0.3
+fyRd 235
+My 120
+text HEB 300
+
+nodes
+1  -150    0
+2     0    0
+3   150    0
+4  -150  281
+5     0  281
+6   150  281
+
+elements
+1  1  2  19
+2  2  3  19
+3  2  5  11
+4  4  5  19
+5  5  6  19</pre>
+		<ul>
+			<li>Un dato por línea. Los números se separan con espacios, tabuladores o punto y coma. El
+				separador decimal es el punto; también se admite la coma. Todo lo que sigue a # es comentario.</li>
+			<li><b>unit</b> mm, cm o m vale para todas las longitudes; E y f<sub>y,Rd</sub> se indican entonces
+				en N/mm², kN/cm² o MN/m². Sin esta línea vale la unidad ajustada en la aplicación.</li>
+			<li><b>y_right</b>: las coordenadas horizontales son positivas hacia la derecha, como en el dibujo.
+				Como ȳ apunta a la izquierda en la aplicación, esta usa ȳ = −valor. Sin esta línea los valores
+				se toman directamente como ȳ. z̄ apunta siempre hacia abajo.</li>
+			<li><b>E</b>, <b>nu</b>, <b>fyRd</b>: valores de referencia. Si faltan, se mantienen los anteriores.</li>
+			<li><b>N</b>, <b>Vy</b>, <b>Vz</b> (kN), <b>My</b>, <b>Mz</b>, <b>Mxp</b>, <b>Mxs</b> (kNm),
+				<b>Mw</b> (kNm²): esfuerzos, uno por línea. Los que faltan quedan vacíos.</li>
+			<li><b>text</b>: texto libre para la salida PDF, se admiten varias líneas.</li>
+			<li><b>nodes</b>: a continuación una línea <i>nº ȳ z̄</i> por nudo. El número puede omitirse; si
+				no, consecutivo desde 1.</li>
+			<li><b>elements</b>: a continuación una línea <i>nº nod1 nod2 t</i> por elemento, opcionalmente
+				seguida de <i>E ν</i> para un elemento con otro material. Si un elemento tiene valores de
+				material propios, se desactiva <i>todos los elementos tienen el mismo material</i>.</li>
+			<li>También valen las palabras clave alemanas (einheit, y_rechts, knoten, elemente). Las líneas
+				con ``` (bloque de código de una respuesta de IA) se ignoran.</li>
+		</ul>
+		<p>
+			Con <i>entrada actual como texto</i> el diálogo muestra la entrada actual en este formato, p. ej.
+			como plantilla o para dársela a una IA para modificarla. Un archivo de texto en este formato
+			también se puede abrir como un archivo de entrada o arrastrar a la ventana. Al guardar se crea
+			siempre un archivo <i>.duennqs</i>.
+		</p>
+
 		<h2 id="darstellung_2D">
 			<a href="#">Representación 2D (pestaña Sistema)</a>
 		</h2>
@@ -374,6 +456,16 @@
 		</p>
 		<p>
 			A<sub>geom</sub> = área geométrica de la sección, sin tener en cuenta los datos del material.
+		</p>
+		<p>
+			Ejes: ȳ, z̄ = sistema de coordenadas auxiliar de la entrada; y, z = ejes paralelos por el
+			centro de gravedad (a ellos se refieren los esfuerzos); 1, 2 = ejes principales con
+			I<sub>11</sub> e I<sub>22</sub>. Atención: en [2] los ejes principales se llaman y y z.
+			<br>
+			r<sub>1</sub>, r<sub>2</sub>, r<sub>ω</sub> = coeficientes de Wagner referidos a los ejes
+			principales, p. ej. para el pandeo lateral. r<sub>1</sub> corresponde a I<sub>22</sub>,
+			r<sub>2</sub> a I<sub>11</sub>. En [2] el valor correspondiente a I<sub>y</sub> se llama
+			r<sub>y</sub> y el correspondiente a I<sub>z</sub>, r<sub>z</sub>.
 		</p>
 		<p>
 			Tensiones tangenciales por torsión primaria M<sub>xp</sub>:

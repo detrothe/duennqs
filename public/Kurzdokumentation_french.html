@@ -69,6 +69,15 @@
 		li {
 			margin-bottom: 0.3em;
 		}
+
+		pre {
+			padding: 0.6em 0.8em;
+			background: #f2f2f6;
+			border-radius: 6px;
+			overflow-x: auto;
+			font-size: 0.9em;
+			line-height: 135%;
+		}
 	</style>
 	</head>
 	<body>
@@ -88,6 +97,8 @@
 			<a href="#tabellen">Tableaux et menu contextuel</a>
 			<br>
 			<a href="#dateien">Fichiers, PDF et sauvegarde automatique</a>
+			<br>
+			<a href="#text_ki">Saisie sous forme de texte et avec l’IA</a>
 			<br>
 			<a href="#darstellung_2D">Représentation 2D (onglet Système)</a>
 			<br>
@@ -291,6 +302,79 @@
 			rechargée. La saisie actuelle est conservée.
 		</p>
 
+		<h2 id="text_ki">
+			<a href="#">Saisie sous forme de texte et avec l’IA</a>
+		</h2>
+		<p>
+			Le bouton <i>Section sous forme de texte</i> (troisième icône au-dessus de la saisie) permet de
+			coller nœuds, éléments et autres données sous forme de texte. Une IA comme Claude ou ChatGPT peut
+			ainsi relever une section sur un dessin, une photo ou un fichier PDF et préparer la saisie :
+		</p>
+		<ol>
+			<li>Dans la boîte de dialogue, appuie sur <i>Copier le prompt IA</i>. Le prompt explique à l’IA le
+				modèle de ligne moyenne et le format texte.</li>
+			<li>Envoie le prompt avec le dessin à l’IA.</li>
+			<li>Colle le bloc de code de la réponse dans le champ de texte et choisis <i>Appliquer</i>.
+				L’application affiche ensuite la section dans l’onglet <i>Système</i>.</li>
+		</ol>
+		<p>
+			<b>À vérifier :</b> une IA peut mal lire des cotes ou confondre cotes extérieures et cotes d’axe.
+			Compare la section dans l’onglet <i>Système</i> avec le dessin et lis les hypothèses dans la
+			réponse de l’IA.
+		</p>
+		<p>Le format texte, avec un HEB 300 comme exemple (modèle de ligne moyenne, sans congés) :</p>
+		<pre># HEB 300: h = 300, b = 300, tf = 19, tw = 11 (mm) → distance entre les lignes moyennes des semelles 281
+unit mm
+y_right
+E 210000
+nu 0.3
+fyRd 235
+My 120
+text HEB 300
+
+nodes
+1  -150    0
+2     0    0
+3   150    0
+4  -150  281
+5     0  281
+6   150  281
+
+elements
+1  1  2  19
+2  2  3  19
+3  2  5  11
+4  4  5  19
+5  5  6  19</pre>
+		<ul>
+			<li>Une donnée par ligne. Les nombres sont séparés par des espaces, des tabulations ou des
+				points-virgules. Le séparateur décimal est le point ; la virgule est aussi admise. Tout ce qui
+				suit # est un commentaire.</li>
+			<li><b>unit</b> mm, cm ou m s’applique à toutes les longueurs ; E et f<sub>y,Rd</sub> sont alors
+				en N/mm², kN/cm² ou MN/m². Sans cette ligne, l’unité réglée dans l’application s’applique.</li>
+			<li><b>y_right</b> : les coordonnées horizontales sont positives vers la droite, comme sur le
+				dessin. Comme ȳ pointe vers la gauche dans l’application, celle-ci utilise ȳ = −valeur. Sans
+				cette ligne, les valeurs sont reprises directement comme ȳ. z̄ pointe toujours vers le bas.</li>
+			<li><b>E</b>, <b>nu</b>, <b>fyRd</b> : valeurs de référence. Si elles manquent, les valeurs
+				précédentes sont conservées.</li>
+			<li><b>N</b>, <b>Vy</b>, <b>Vz</b> (kN), <b>My</b>, <b>Mz</b>, <b>Mxp</b>, <b>Mxs</b> (kNm),
+				<b>Mw</b> (kNm²) : efforts, un par ligne. Ceux qui manquent restent vides.</li>
+			<li><b>text</b> : texte libre pour la sortie PDF, plusieurs lignes possibles.</li>
+			<li><b>nodes</b> : ensuite une ligne <i>n° ȳ z̄</i> par nœud. Le numéro peut être omis ; sinon
+				consécutif à partir de 1.</li>
+			<li><b>elements</b> : ensuite une ligne <i>n° nod1 nod2 t</i> par élément, éventuellement suivie
+				de <i>E ν</i> pour un élément d’un autre matériau. Si un élément a ses propres valeurs de
+				matériau, <i>tous les éléments ont les mêmes données de matériau</i> est désactivé.</li>
+			<li>Les mots-clés allemands (einheit, y_rechts, knoten, elemente) fonctionnent aussi. Les lignes
+				avec ``` (bloc de code d’une réponse d’IA) sont ignorées.</li>
+		</ul>
+		<p>
+			Avec <i>saisie actuelle en texte</i>, la boîte de dialogue affiche la saisie actuelle dans ce
+			format, p. ex. comme modèle ou pour la donner à une IA afin de la modifier. Un fichier texte dans
+			ce format peut aussi être ouvert comme un fichier de saisie ou glissé dans la fenêtre.
+			L’enregistrement crée toujours un fichier <i>.duennqs</i>.
+		</p>
+
 		<h2 id="darstellung_2D">
 			<a href="#">Représentation 2D (onglet Système)</a>
 		</h2>
@@ -381,6 +465,16 @@
 		</p>
 		<p>
 			A<sub>geom</sub> = aire géométrique de la section, sans tenir compte des données de matériau.
+		</p>
+		<p>
+			Axes : ȳ, z̄ = repère auxiliaire de la saisie ; y, z = axes parallèles passant par le centre
+			de gravité (les efforts s’y rapportent) ; 1, 2 = axes principaux avec I<sub>11</sub> et
+			I<sub>22</sub>. Attention : dans [2], les axes principaux s’appellent y et z.
+			<br>
+			r<sub>1</sub>, r<sub>2</sub>, r<sub>ω</sub> = coefficients de Wagner rapportés aux axes
+			principaux, p. ex. pour le déversement. r<sub>1</sub> est associé à I<sub>22</sub>,
+			r<sub>2</sub> à I<sub>11</sub>. Dans [2], la valeur associée à I<sub>y</sub> s’appelle
+			r<sub>y</sub> et celle associée à I<sub>z</sub> s’appelle r<sub>z</sub>.
 		</p>
 		<p>
 			Contraintes de cisaillement dues à la torsion primaire M<sub>xp</sub> :

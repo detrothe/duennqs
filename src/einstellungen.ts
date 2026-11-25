@@ -42,7 +42,7 @@ const HOCH: Record<number, string> = { 1: '', 2: '²', 4: '⁴', 6: '⁶' };
 /** Einheit mit Potenz, z.B. qwEinheitText(4) = "cm⁴". */
 export const qwEinheitText = (potenz: number) => qw_einheit + HOCH[potenz];
 
-const EINHEITEN: Record<string, { laenge: number; spannung: number; name: string }> = {
+export const EINHEITEN: Record<string, { laenge: number; spannung: number; name: string }> = {
     mm: { laenge: 10, spannung: 10, name: 'N/mm²' },
     cm: { laenge: 1, spannung: 1, name: 'kN/cm²' },
     m: { laenge: 0.01, spannung: 10, name: 'MN/m²' },

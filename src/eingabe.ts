@@ -344,7 +344,7 @@ export function eingabeLeer(): boolean {
  */
 const DATEIVERSION = 3;
 
-interface EingabeDaten {
+export interface EingabeDaten {
     version?: number;
     unit_length?: string;
     nnodes: number;

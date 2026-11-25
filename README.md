@@ -23,6 +23,9 @@ installieren (PWA) und funktioniert danach auch offline. Bedienung mit Maus, Sti
   `.txt`-Dateien lassen sich weiter einlesen), Öffnen auch per Drag & Drop; Rückfrage nur bei noch
   nicht gespeicherten Änderungen. Die letzte Eingabe wird im Browser gesichert und beim nächsten
   Start wiederhergestellt
+- Querschnitt als Text einfügen, z. B. von einer KI (Claude, ChatGPT …), die ihn aus einer Zeichnung abgelesen
+  hat: Der Dialog kopiert einen fertigen Prompt mit Formatbeschreibung, prüft den eingefügten Text und meldet
+  Fehler mit Zeilennummer. Textdateien in diesem Format lassen sich auch direkt öffnen
 - Längeneinheit mm, cm oder m; Farben der Tabellen und Akzentfarbe einstellbar, helles und dunkles Design
 - Sprachen: Deutsch, Englisch, Spanisch, Französisch, Italienisch
 

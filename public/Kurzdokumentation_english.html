@@ -69,6 +69,15 @@
 		li {
 			margin-bottom: 0.3em;
 		}
+
+		pre {
+			padding: 0.6em 0.8em;
+			background: #f2f2f6;
+			border-radius: 6px;
+			overflow-x: auto;
+			font-size: 0.9em;
+			line-height: 135%;
+		}
 	</style>
 	</head>
 	<body>
@@ -88,6 +97,8 @@
 			<a href="#tabellen">Tables and context menu</a>
 			<br>
 			<a href="#dateien">Files, PDF and automatic backup</a>
+			<br>
+			<a href="#text_ki">Input as text and with AI</a>
 			<br>
 			<a href="#darstellung_2D">2D view (System tab)</a>
 			<br>
@@ -283,6 +294,76 @@
 			current input is kept.
 		</p>
 
+		<h2 id="text_ki">
+			<a href="#">Input as text and with AI</a>
+		</h2>
+		<p>
+			With the button <i>Cross-section as text</i> (third icon above the input) you paste nodes,
+			elements and further data as text. This lets an AI such as Claude or ChatGPT read a cross-section
+			from a drawing, a photo or a PDF file and prepare the input:
+		</p>
+		<ol>
+			<li>In the dialog, tap <i>Copy AI prompt</i>. The prompt explains the centre-line model and the
+				text format to the AI.</li>
+			<li>Send the prompt together with the drawing to the AI.</li>
+			<li>Paste the code block from the answer into the text field and choose <i>Apply</i>. The app
+				then shows the cross-section in the <i>System</i> tab.</li>
+		</ol>
+		<p>
+			<b>Please check:</b> an AI may misread dimensions or confuse outer and centre-line dimensions.
+			Compare the cross-section in the <i>System</i> tab with the drawing and read the assumptions in
+			the AI's answer.
+		</p>
+		<p>The text format, using an HEB 300 as an example (centre-line model, without fillets):</p>
+		<pre># HEB 300: h = 300, b = 300, tf = 19, tw = 11 (mm) → distance between flange centre lines 281
+unit mm
+y_right
+E 210000
+nu 0.3
+fyRd 235
+My 120
+text HEB 300
+
+nodes
+1  -150    0
+2     0    0
+3   150    0
+4  -150  281
+5     0  281
+6   150  281
+
+elements
+1  1  2  19
+2  2  3  19
+3  2  5  11
+4  4  5  19
+5  5  6  19</pre>
+		<ul>
+			<li>One entry per line. Numbers are separated by spaces, tabs or semicolons. The decimal
+				separator is the point; a comma is also allowed. Everything after # is a comment.</li>
+			<li><b>unit</b> mm, cm or m applies to all lengths; E and f<sub>y,Rd</sub> are then given in
+				N/mm², kN/cm² or MN/m². Without it, the unit set in the app applies.</li>
+			<li><b>y_right</b>: the horizontal coordinates are positive to the right, as in the drawing.
+				Because ȳ points to the left in the app, it uses ȳ = −value. Without this line the values are
+				taken directly as ȳ. z̄ always points downwards.</li>
+			<li><b>E</b>, <b>nu</b>, <b>fyRd</b>: reference values. If missing, the previous values are kept.</li>
+			<li><b>N</b>, <b>Vy</b>, <b>Vz</b> (kN), <b>My</b>, <b>Mz</b>, <b>Mxp</b>, <b>Mxs</b> (kNm),
+				<b>Mw</b> (kNm²): internal forces, one per line. Missing ones stay empty.</li>
+			<li><b>text</b>: free text for the PDF output, several lines possible.</li>
+			<li><b>nodes</b>: then one line <i>no ȳ z̄</i> each. The number may be omitted; otherwise
+				consecutive from 1.</li>
+			<li><b>elements</b>: then one line <i>no nod1 nod2 t</i> each, optionally followed by <i>E ν</i>
+				for an element with a different material. If an element has its own material values,
+				<i>all elements have the same material data</i> is switched off.</li>
+			<li>The German keywords (einheit, y_rechts, knoten, elemente) work as well. Lines with ```
+				(code block of an AI answer) are skipped.</li>
+		</ul>
+		<p>
+			With <i>current input as text</i> the dialog shows the current input in this format, e.g. as a
+			template or to give it to an AI for changes. A text file in this format can also be opened like
+			an input file or dragged into the window. Saving always creates a <i>.duennqs</i> file.
+		</p>
+
 		<h2 id="darstellung_2D">
 			<a href="#">2D view (System tab)</a>
 		</h2>
@@ -370,6 +451,16 @@
 		<p>
 			A<sub>geom</sub> = geometric cross-section area, without taking the material data into
 			account.
+		</p>
+		<p>
+			Axes: ȳ, z̄ = auxiliary coordinate system of the input; y, z = parallel axes through the
+			centroid (the internal forces refer to them); 1, 2 = principal axes with I<sub>11</sub> and
+			I<sub>22</sub>. Note: in [2] the principal axes are called y and z.
+			<br>
+			r<sub>1</sub>, r<sub>2</sub>, r<sub>ω</sub> = Wagner coefficients referred to the principal axes,
+			e.g. for lateral-torsional buckling. r<sub>1</sub> belongs to I<sub>22</sub>,
+			r<sub>2</sub> to I<sub>11</sub>. In [2] the value belonging to I<sub>y</sub> is called r<sub>y</sub>
+			and the one belonging to I<sub>z</sub> is called r<sub>z</sub>.
 		</p>
 		<p>
 			Shear stresses due to primary torsion M<sub>xp</sub>:

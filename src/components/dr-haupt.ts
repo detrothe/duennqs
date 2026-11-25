@@ -30,6 +30,8 @@ const ICON_NEU = html`<svg width="1.4rem" height="1.4rem" viewBox="0 0 24 24" fi
   <path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5"/><path d="M12 11v6M9 14h6"/></svg>`;
 const ICON_EINLESEN = html`<svg width="1.4rem" height="1.4rem" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
   <path d="M6 14l1.5-2.9A2 2 0 0 1 9.24 10H20a2 2 0 0 1 1.94 2.5l-1.54 6a2 2 0 0 1-1.95 1.5H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h3.9a2 2 0 0 1 1.69.9l.81 1.2a2 2 0 0 0 1.67.9H18a2 2 0 0 1 2 2v2"/></svg>`;
+const ICON_TEXT = html`<svg width="1.4rem" height="1.4rem" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+  <rect x="5" y="4" width="14" height="17" rx="2"/><rect x="9" y="2" width="6" height="4" rx="1"/><path d="M8.5 10h7M12 10v7"/></svg>`;
 const ICON_SPEICHERN = html`<svg width="1.4rem" height="1.4rem" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
   <path d="M5 3h11l5 5v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2z"/><path d="M7 3v5h8V3"/><rect x="7" y="13" width="10" height="8" rx="1"/></svg>`;
 const ICON_PDF = html`<svg width="1.4rem" height="1.4rem" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
@@ -54,10 +56,14 @@ const WERTE: [string, unknown, unknown][] = [
     ['zM', html`z<sub>M</sub>`, html`<span class="unit_laenge">cm</span>`],
     ['I_t', html`I<sub>t</sub>`, qw(4)],
     ['I_omega', html`I<sub>&omega;</sub>`, qw(6)],
-    // Wagner-Koeffizienten wie bei Kindmann in Hauptachsen (y ≙ 1, z ≙ 2): r_y gehört zu I_y = I11 und
-    // enthält ∫z…, r_z gehört zu I_z = I22 und enthält ∫y…; intern (duennQ.ts) heißen sie rz (id r_2) und ry (id r_1)
-    ['r_2', html`r<sub>y</sub>`, qw(1)],
-    ['r_1', html`r<sub>z</sub>`, qw(1)],
+    // Wagner-Koeffizienten im Hauptachsensystem 1, 2 (wie I11, I22; y, z sind in duennQs die zu ȳ, z̄ parallelen
+    // Schwerpunktachsen, nicht die Hauptachsen): r_1 = ∫η·(η²+ζ²) dA / I22 − 2·η_M (intern ry),
+    // r_2 = ∫ζ·(η²+ζ²) dA / I11 − 2·ζ_M (intern rz); η, ζ Koordinaten in Richtung 1, 2.
+    // r_1 gehört also zu I22, r_2 zu I11. Bei Kindmann/Kraus (y, z = Hauptachsen) heißt der Wert zu I_y r_y und der zu
+    // I_z r_z (so in 2.5.1 angezeigt). Feste Zuordnung r_1 ↔ r_z gibt es nicht: Achse 1 ist bei uns immer die mit dem
+    // größeren I, bei Kindmann ist y meist die horizontale Achse (z. B. Brückenquerschnitt Bild 7.34: Achse 1 vertikal).
+    ['r_1', html`r<sub>1</sub>`, qw(1)],
+    ['r_2', html`r<sub>2</sub>`, qw(1)],
     ['r_omega', html`r<sub>&omega;</sub>`, '-'],
     ['i_M2', html`i<sub>M</sub><sup>2</sup>`, qw(2)],
     ['i_p2', html`i<sub>p</sub><sup>2</sup>`, qw(2)],
@@ -194,6 +200,7 @@ export class DrHaupt extends LitElement {
           <div class="file_toolbar" id="id_file_toolbar">
             <button type="button" id="neueEingabe" class="btn_file" title="${msg('neue Eingabe beginnen')}" aria-label="${msg('neue Eingabe beginnen')}">${ICON_NEU}</button>
             <button type="button" id="readFile" class="btn_file" title="${msg('Eingabe einlesen')}" aria-label="${msg('Eingabe einlesen')}">${ICON_EINLESEN}</button>
+            <button type="button" id="textEingabe" class="btn_file" title="${msg('Querschnitt als Text einfügen, z. B. von einer KI aus einer Zeichnung')}" aria-label="${msg('Querschnitt als Text einfügen, z. B. von einer KI aus einer Zeichnung')}">${ICON_TEXT}</button>
             <button type="button" id="saveFile" class="btn_file" title="${msg('Eingabe speichern')}" aria-label="${msg('Eingabe speichern')}">${ICON_SPEICHERN}</button>
             <button type="button" id="rechnen" class="btn_rechnen"
               title="${msg('Querschnittswerte und Spannungen berechnen (farbig hinterlegt, wenn die Eingabe geändert wurde)')}">${msg('Rechnen')}</button>
@@ -304,7 +311,7 @@ ${msg('Bearbeitet von: Melis Muster')}"></textarea>
               ${WERTE.map(([id, name, einheit]) => html`
                 <tr><td>${name} =</td><td class="zahl" id="${id}"></td><td>${einheit}</td></tr>`)}
             </table>
-            <p class="hinweis">${msg('r_y, r_z, r_ω: Wagner-Koeffizienten bezogen auf die Hauptachsen (y ≙ 1, z ≙ 2), z.B. für das Biegedrillknicken.')}</p>
+            <p class="hinweis">${msg('r_1, r_2, r_ω: Wagner-Koeffizienten bezogen auf die Hauptachsen 1 und 2, z.B. für das Biegedrillknicken. r_1 gehört zu I_22, r_2 zu I_11. Bei Kindmann/Kraus, wo y und z die Hauptachsen sind, heißt der Wert zu I_y dort r_y und der zu I_z dort r_z.')}</p>
 
             <div id="schubkorrektur"></div>
             <div id="spannung_mxp"></div>

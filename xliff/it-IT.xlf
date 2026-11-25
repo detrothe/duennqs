@@ -1000,17 +1000,241 @@
   <source>Einheit für Fläche, Trägheitsmomente, Wölbwiderstand und Radien (auch in der pdf-Ausgabe)</source>
   <target>Unità per area, momenti d’inerzia, costante di ingobbamento e raggi (anche nell’output pdf)</target>
 </trans-unit>
-<trans-unit id="sa615434b0cbf789b">
-  <source>r_y, r_z, r_ω: Wagner-Koeffizienten bezogen auf die Hauptachsen (y ≙ 1, z ≙ 2), z.B. für das Biegedrillknicken.</source>
-  <target>r_y, r_z, r_ω: coefficienti di Wagner riferiti agli assi principali (y ≙ 1, z ≙ 2), p. es. per lo svergolamento.</target>
-</trans-unit>
-<trans-unit id="s370df1a33020b78b">
-  <source>r_y, r_z, r_ω: bezogen auf die Hauptachsen (y ≙ 1, z ≙ 2)</source>
-  <target>r_y, r_z, r_ω: riferiti agli assi principali (y ≙ 1, z ≙ 2)</target>
-</trans-unit>
 <trans-unit id="s1da68b1b80db1c14">
   <source>Bitte h, b und t als positive Zahlen eingeben. Der Radius r geht von 0 bis zur Hälfte der kleineren Seite, die Teilung n des Bogens ist eine ganze Zahl von 1 bis 90.</source>
   <target>Inserire h, b e t come numeri positivi. Il raggio r va da 0 alla metà del lato minore; la suddivisione n dell’arco è un intero da 1 a 90.</target>
+</trans-unit>
+<trans-unit id="s57f1e3461e586101">
+  <source>Querschnitt als Text einfügen, z. B. von einer KI aus einer Zeichnung</source>
+  <target>Incolla la sezione come testo, ad es. da un’IA a partire da un disegno</target>
+</trans-unit>
+<trans-unit id="s92fd44df63e65ae4">
+  <source>Querschnitt als Text</source>
+  <target>Sezione come testo</target>
+</trans-unit>
+<trans-unit id="s40378cd3b5b29f33">
+  <source>Knoten und Elemente als Text einfügen, zum Beispiel von einer KI, die den Querschnitt aus einer Zeichnung abgelesen hat.</source>
+  <target>Incolla nodi ed elementi come testo, ad esempio da un’IA che ha letto la sezione da un disegno.</target>
+</trans-unit>
+<trans-unit id="sab67d8e0ce53cedf">
+  <source>Prompt kopieren und zusammen mit der Zeichnung (Bild oder PDF) an eine KI wie Claude oder ChatGPT schicken.</source>
+  <target>Copia il prompt e invialo insieme al disegno (immagine o PDF) a un’IA come Claude o ChatGPT.</target>
+</trans-unit>
+<trans-unit id="sbcc95dba4d66060b">
+  <source>KI-Prompt kopieren</source>
+  <target>Copia prompt per IA</target>
+</trans-unit>
+<trans-unit id="se115abaaddcd32e9">
+  <source>Den Codeblock aus der Antwort hier einfügen. Die Annahmen der KI bitte prüfen.</source>
+  <target>Incolla qui il blocco di codice della risposta. Controlla le ipotesi dell’IA.</target>
+</trans-unit>
+<trans-unit id="sa30efcc5538d2bb7">
+  <source>Eingabe als Text</source>
+  <target>Input come testo</target>
+</trans-unit>
+<trans-unit id="s226c93b303a138b4">
+  <source>Text hier einfügen …</source>
+  <target>Incolla il testo qui …</target>
+</trans-unit>
+<trans-unit id="s35775655d79c2c6a">
+  <source>Beispiel</source>
+  <target>Esempio</target>
+</trans-unit>
+<trans-unit id="s5e28c4229623449e">
+  <source>Die aktuelle Eingabe im Textformat anzeigen, z. B. als Vorlage oder um sie einer KI zu geben</source>
+  <target>Mostra l’input attuale in formato testo, ad es. come modello o per darlo a un’IA</target>
+</trans-unit>
+<trans-unit id="s03e1f625cf9b3f3e">
+  <source>aktuelle Eingabe als Text</source>
+  <target>input attuale come testo</target>
+</trans-unit>
+<trans-unit id="s2c678c9953662792">
+  <source>leeren</source>
+  <target>svuota</target>
+</trans-unit>
+<trans-unit id="se7d35180510d398c">
+  <source>Format: Zeilen „einheit mm“, „E 210000“, „nu 0.3“, dann „knoten“ mit je einer Zeile „nr y z“ und „elemente“ mit „nr nod1 nod2 t“. Mehr dazu im Tab Info unter „Eingabe als Text und mit KI“.</source>
+  <target>Formato: righe «unit mm», «E 210000», «nu 0.3», poi «nodes» con una riga «n. y z» ciascuna e «elements» con «n. nod1 nod2 t». Maggiori dettagli nella scheda Info, sezione «Input come testo e con l’IA».</target>
+</trans-unit>
+<trans-unit id="se2913e7ac9d29833">
+  <source>… und <x id="0" equiv-text="${fehler.length - 12}"/> weitere</source>
+  <target>… e altri <x id="0" equiv-text="${fehler.length - 12}"/></target>
+</trans-unit>
+<trans-unit id="s9b2905fa94c20c86">
+  <source>erkannt: <x id="0" equiv-text="${e.knoten}"/> Knoten, <x id="1" equiv-text="${e.elemente}"/> Elemente</source>
+  <target>riconosciuti: <x id="0" equiv-text="${e.knoten}"/> nodi, <x id="1" equiv-text="${e.elemente}"/> elementi</target>
+</trans-unit>
+<trans-unit id="s64a30a31d804c81d">
+  <source><x id="0" equiv-text="${e.fehler.length}"/> Fehler</source>
+  <target><x id="0" equiv-text="${e.fehler.length}"/> errori</target>
+</trans-unit>
+<trans-unit id="sed6630ee990c6d4c">
+  <source>kopiert ✓</source>
+  <target>copiato ✓</target>
+</trans-unit>
+<trans-unit id="s95bd7382bd138a8f">
+  <source>Der Text beginnt mit „{“, ist aber keine gültige duennqs-Datei.</source>
+  <target>Il testo inizia con «{» ma non è un file duennqs valido.</target>
+</trans-unit>
+<trans-unit id="s0d30202fbcc1b9d8">
+  <source>Zeile <x id="0" equiv-text="${nr}"/>: Einheit muss mm, cm oder m sein.</source>
+  <target>Riga <x id="0" equiv-text="${nr}"/>: l’unità deve essere mm, cm o m.</target>
+</trans-unit>
+<trans-unit id="s75e15e030023d22e">
+  <source>Zeile <x id="0" equiv-text="${nr}"/>: Nach „<x id="1" equiv-text="${tokens[0]}"/>“ wird genau eine Zahl erwartet.</source>
+  <target>Riga <x id="0" equiv-text="${nr}"/>: dopo «<x id="1" equiv-text="${tokens[0]}"/>» è atteso esattamente un numero.</target>
+</trans-unit>
+<trans-unit id="s9d2c1d1824b546cd">
+  <source>Zeile <x id="0" equiv-text="${nr}"/>: Die Zeile enthält etwas, das keine Zahl ist.</source>
+  <target>Riga <x id="0" equiv-text="${nr}"/>: la riga contiene qualcosa che non è un numero.</target>
+</trans-unit>
+<trans-unit id="s138a05cdd21b01af">
+  <source>Zeile <x id="0" equiv-text="${nr}"/>: Unbekanntes Schlüsselwort „<x id="1" equiv-text="${tokens[0]}"/>“.</source>
+  <target>Riga <x id="0" equiv-text="${nr}"/>: parola chiave sconosciuta «<x id="1" equiv-text="${tokens[0]}"/>».</target>
+</trans-unit>
+<trans-unit id="s21c4d22e6e7fd101">
+  <source>Zeile <x id="0" equiv-text="${nr}"/>: Ein Knoten braucht y und z (davor optional die Nummer).</source>
+  <target>Riga <x id="0" equiv-text="${nr}"/>: un nodo richiede y e z (facoltativamente preceduti dal numero).</target>
+</trans-unit>
+<trans-unit id="sb08869e5aa678bb6">
+  <source>Zeile <x id="0" equiv-text="${nr}"/>: Knotennummer <x id="1" equiv-text="${werte[0]}"/> erwartet <x id="2" equiv-text="${knoten.length + 1}"/> (fortlaufend ab 1).</source>
+  <target>Riga <x id="0" equiv-text="${nr}"/>: numero di nodo <x id="1" equiv-text="${werte[0]}"/>, atteso <x id="2" equiv-text="${knoten.length + 1}"/> (consecutivo da 1).</target>
+</trans-unit>
+<trans-unit id="s7f8ef2350957cc0c">
+  <source>Zeile <x id="0" equiv-text="${nr}"/>: Ein Element braucht nod1, nod2 und t (davor optional die Nummer, dahinter optional E und ν).</source>
+  <target>Riga <x id="0" equiv-text="${nr}"/>: un elemento richiede nod1, nod2 e t (facoltativamente preceduti dal numero e seguiti da E e ν).</target>
+</trans-unit>
+<trans-unit id="s35256e9941e7b049">
+  <source>Zeile <x id="0" equiv-text="${nr}"/>: Elementnummer <x id="1" equiv-text="${werte[0]}"/> erwartet <x id="2" equiv-text="${elemente.length + 1}"/> (fortlaufend ab 1).</source>
+  <target>Riga <x id="0" equiv-text="${nr}"/>: numero di elemento <x id="1" equiv-text="${werte[0]}"/>, atteso <x id="2" equiv-text="${elemente.length + 1}"/> (consecutivo da 1).</target>
+</trans-unit>
+<trans-unit id="s3e02b7f7e6ae6340">
+  <source>Zeile <x id="0" equiv-text="${nr}"/>: Zahlen vor „knoten“ bzw. „elemente“ – zu welchem Abschnitt gehören sie?</source>
+  <target>Riga <x id="0" equiv-text="${nr}"/>: numeri prima di «nodes» o «elements»: a quale sezione appartengono?</target>
+</trans-unit>
+<trans-unit id="sa6f9bd15832a2538">
+  <source>Es werden mindestens 2 Knoten gebraucht.</source>
+  <target>Servono almeno 2 nodi.</target>
+</trans-unit>
+<trans-unit id="s921f4c8b53b52b9f">
+  <source>Es wird mindestens 1 Element gebraucht.</source>
+  <target>Serve almeno 1 elemento.</target>
+</trans-unit>
+<trans-unit id="sc264269d7bc46dd1">
+  <source>Zeile <x id="0" equiv-text="${el.zeile}"/>: Knoten <x id="1" equiv-text="${k}"/> gibt es nicht (1 bis <x id="2" equiv-text="${knoten.length}"/>).</source>
+  <target>Riga <x id="0" equiv-text="${el.zeile}"/>: il nodo <x id="1" equiv-text="${k}"/> non esiste (da 1 a <x id="2" equiv-text="${knoten.length}"/>).</target>
+</trans-unit>
+<trans-unit id="s6ac40cc05b3fa12e">
+  <source>Zeile <x id="0" equiv-text="${el.zeile}"/>: Anfangs- und Endknoten sind gleich.</source>
+  <target>Riga <x id="0" equiv-text="${el.zeile}"/>: nodo iniziale e finale coincidono.</target>
+</trans-unit>
+<trans-unit id="s47a42d8cbc352520">
+  <source>Zeile <x id="0" equiv-text="${el.zeile}"/>: Die Dicke t muss größer 0 sein.</source>
+  <target>Riga <x id="0" equiv-text="${el.zeile}"/>: lo spessore t deve essere maggiore di 0.</target>
+</trans-unit>
+<trans-unit id="s6a1c1cd318dae66e">
+  <source>Zeile <x id="0" equiv-text="${el.zeile}"/>: Der E-Modul muss größer 0 sein.</source>
+  <target>Riga <x id="0" equiv-text="${el.zeile}"/>: il modulo E deve essere maggiore di 0.</target>
+</trans-unit>
+<trans-unit id="s3a52a34a11944f46">
+  <source>Abstand der Flanschmittellinien</source>
+  <target>distanza tra le linee medie delle ali</target>
+</trans-unit>
+<trans-unit id="s3045e9c645e2aa5f">
+  <source>Ich hänge die Zeichnung eines dünnwandigen Querschnitts an. Erzeuge daraus eine Eingabe für die Web-App duennQs (Querschnittswerte und Spannungen dünnwandiger Querschnitte, Mittellinienmodell) im unten beschriebenen Textformat.</source>
+  <target>Allego il disegno di una sezione in parete sottile. Crea da esso un input per la web app duennQs (caratteristiche e tensioni di sezioni in parete sottile, modello a linea media) nel formato di testo descritto sotto.</target>
+</trans-unit>
+<trans-unit id="s9312e489a0e6b728">
+  <source>Modell:</source>
+  <target>Modello:</target>
+</trans-unit>
+<trans-unit id="sd45fd41c2f9e5d4a">
+  <source>Der Querschnitt besteht aus geraden Elementen zwischen Knoten auf der Profilmittellinie. Jedes Element hat eine konstante Dicke t.</source>
+  <target>La sezione è composta da elementi rettilinei tra nodi posti sulla linea media del profilo. Ogni elemento ha uno spessore costante t.</target>
+</trans-unit>
+<trans-unit id="sf976ca7efe2d69f9">
+  <source>Maße, die sich auf Außenkanten beziehen, auf die Mittellinien umrechnen (jeweils die halbe Blechdicke abziehen oder addieren). Sag dazu, welche Maße du als Außenmaß und welche als Achsmaß gelesen hast.</source>
+  <target>Converti le quote riferite ai bordi esterni alle linee medie (sottraendo o aggiungendo metà dello spessore della lamiera). Indica quali quote hai letto come esterne e quali come quote d’asse.</target>
+</trans-unit>
+<trans-unit id="s96d2f5b0294835af">
+  <source>Ausrundungen, Walzradien und Schweißnähte weglassen. Gekrümmte Teile (Rohre, runde Ecken) durch mehrere gerade Elemente annähern, z. B. 24 Elemente für einen Kreis.</source>
+  <target>Ometti raccordi, raggi di laminazione e saldature. Approssima le parti curve (tubi, spigoli arrotondati) con più elementi rettilinei, ad es. 24 elementi per un cerchio.</target>
+</trans-unit>
+<trans-unit id="sc31d3bfeed9faa53">
+  <source>Alle Elemente müssen zusammenhängen. Wo Bleche sich treffen oder abzweigen, liegt ein gemeinsamer Knoten; ein Blech, an das ein anderes anschließt, wird dort in zwei Elemente geteilt.</source>
+  <target>Tutti gli elementi devono essere collegati. Dove le lamiere si incontrano o si diramano c’è un nodo comune; una lamiera a cui se ne collega un’altra viene divisa lì in due elementi.</target>
+</trans-unit>
+<trans-unit id="sa1b8657a4216d993">
+  <source>Koordinaten: z nach unten positiv. Die horizontale Koordinate wie in der Zeichnung nach rechts positiv angeben und die Zeile „<x id="0" equiv-text="${w.y_rechts}"/>“ schreiben (die y-Achse der App zeigt nach links, sie spiegelt dann selbst). Der Ursprung ist beliebig.</source>
+  <target>Coordinate: z positiva verso il basso. Indica la coordinata orizzontale positiva verso destra come nel disegno e scrivi la riga «<x id="0" equiv-text="${w.y_rechts}"/>» (l’asse y dell’app punta a sinistra; l’app esegue poi da sé la specchiatura). L’origine è arbitraria.</target>
+</trans-unit>
+<trans-unit id="s246ce1cf199907f8">
+  <source>Format (eine Angabe je Zeile, Zahlen mit Dezimalpunkt und durch Leerzeichen getrennt, Kommentare mit #):</source>
+  <target>Formato (un dato per riga, numeri con punto decimale e separati da spazi, commenti con #):</target>
+</trans-unit>
+<trans-unit id="sfbcc483b46933f29">
+  <source>mm, cm oder m für alle Längen; E und fyRd dann in N/mm², kN/cm² bzw. MN/m²</source>
+  <target>mm, cm o m per tutte le lunghezze; E e fyRd allora in N/mm², kN/cm² o MN/m²</target>
+</trans-unit>
+<trans-unit id="s2622cc163c6150c0">
+  <source>Querdehnzahl</source>
+  <target>Coefficiente di Poisson</target>
+</trans-unit>
+<trans-unit id="s2bd7f86315fc6085">
+  <source>optional: Bemessungswert der Streckgrenze</source>
+  <target>facoltativo: valore di progetto della tensione di snervamento</target>
+</trans-unit>
+<trans-unit id="s91af4803521a7779">
+  <source>optional, je Zeile eine Schnittgröße: N, Vy, Vz (kN), My, Mz, Mxp, Mxs (kNm), Mw (kNm²)</source>
+  <target>facoltativo, una sollecitazione per riga: N, Vy, Vz (kN), My, Mz, Mxp, Mxs (kNm), Mw (kNm²)</target>
+</trans-unit>
+<trans-unit id="s9a84a59e804854c0">
+  <source>optional: Bezeichnung für die PDF-Ausgabe</source>
+  <target>facoltativo: titolo per l’output PDF</target>
+</trans-unit>
+<trans-unit id="scac78b112ba5aeef">
+  <source>fortlaufend ab 1</source>
+  <target>consecutivo da 1</target>
+</trans-unit>
+<trans-unit id="s23323bf3ef4c4855">
+  <source>Anfangsknoten, Endknoten, Dicke; nur bei abweichendem Material dahinter noch E und nu</source>
+  <target>nodo iniziale, nodo finale, spessore; solo per materiale diverso aggiungere E e nu</target>
+</trans-unit>
+<trans-unit id="s75f403dd5e5f4bf0">
+  <source>Beispiel:</source>
+  <target>Esempio:</target>
+</trans-unit>
+<trans-unit id="sd226f820bfed62d8">
+  <source>Antwort:</source>
+  <target>Risposta:</target>
+</trans-unit>
+<trans-unit id="s9c56a56a29caed99">
+  <source>Liste kurz die abgelesenen Maße und alle Annahmen auf, besonders was unklar oder unleserlich war.</source>
+  <target>Elenca brevemente le quote lette e tutte le ipotesi, soprattutto ciò che era poco chiaro o illeggibile.</target>
+</trans-unit>
+<trans-unit id="se363e9f0c8124616">
+  <source>Gib dann die Eingabe als einen einzigen Codeblock aus, ohne weiteren Text darin.</source>
+  <target>Poi restituisci l’input come un unico blocco di codice, senza altro testo al suo interno.</target>
+</trans-unit>
+<trans-unit id="s3322352c0963431f">
+  <source>Kopieren nicht möglich – der Prompt steht im Textfeld, bitte von dort kopieren.</source>
+  <target>Copia non possibile: il prompt è nel campo di testo, copialo da lì.</target>
+</trans-unit>
+<trans-unit id="s0ba7bfecd4a16e77">
+  <source>Material und Schnittgrößen nur aus der Zeichnung oder meinen Angaben übernehmen, nicht aus dem Beispiel. Ohne Materialangabe Stahl annehmen (E = 210000 N/mm², nu = 0.3) und das als Annahme nennen.</source>
+  <target>Prendi materiale e sollecitazioni solo dal disegno o dalle mie indicazioni, non dall’esempio. Se il materiale non è indicato, assumi acciaio (E = 210000 N/mm², nu = 0.3) e segnalalo come ipotesi.</target>
+</trans-unit>
+<trans-unit id="s0f7cf136a6719be5">
+  <source>Nicht bemaßte Lagen und Längen aus dem Maßstab der Zeichnung abschätzen (bekannte Maße als Bezug nehmen) und in der Liste der Annahmen ausdrücklich als „geschätzt“ kennzeichnen. Nur nachfragen, wenn sich ein Maß gar nicht ermitteln lässt.</source>
+  <target>Stima posizioni e lunghezze non quotate dalla scala del disegno (prendendo come riferimento le quote note) e segnalale espressamente come «stimate» nell’elenco delle ipotesi. Chiedi solo se una quota non si può determinare in alcun modo.</target>
+</trans-unit>
+<trans-unit id="sbe2108de7691d5f4">
+  <source>r_1, r_2, r_ω: Wagner-Koeffizienten bezogen auf die Hauptachsen 1 und 2, z.B. für das Biegedrillknicken. r_1 gehört zu I_22, r_2 zu I_11. Bei Kindmann/Kraus, wo y und z die Hauptachsen sind, heißt der Wert zu I_y dort r_y und der zu I_z dort r_z.</source>
+  <target>r_1, r_2, r_ω: coefficienti di Wagner riferiti agli assi principali 1 e 2, ad es. per lo svergolamento. r_1 è associato a I_22, r_2 a I_11. In Kindmann/Kraus, dove y e z sono gli assi principali, il valore associato a I_y si chiama r_y e quello associato a I_z si chiama r_z.</target>
+</trans-unit>
+<trans-unit id="sec6a131a858e7772">
+  <source>r_1, r_2, r_ω: bezogen auf die Hauptachsen 1 und 2; r_1 gehört zu I_22, r_2 zu I_11</source>
+  <target>r_1, r_2, r_ω: riferiti agli assi principali 1 e 2; r_1 è associato a I_22, r_2 a I_11</target>
 </trans-unit>
 </body>
 </file>

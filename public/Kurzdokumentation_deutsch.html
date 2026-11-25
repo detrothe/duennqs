@@ -69,6 +69,15 @@
 		li {
 			margin-bottom: 0.3em;
 		}
+
+		pre {
+			padding: 0.6em 0.8em;
+			background: #f2f2f6;
+			border-radius: 6px;
+			overflow-x: auto;
+			font-size: 0.9em;
+			line-height: 135%;
+		}
 	</style>
 	</head>
 	<body>
@@ -88,6 +97,8 @@
 			<a href="#tabellen">Tabellen und Kontextmenü</a>
 			<br>
 			<a href="#dateien">Dateien, PDF und automatische Sicherung</a>
+			<br>
+			<a href="#text_ki">Eingabe als Text und mit KI</a>
 			<br>
 			<a href="#darstellung_2D">Darstellung 2D (Tab System)</a>
 			<br>
@@ -289,6 +300,76 @@
 			aktuelle Eingabe bleibt dabei erhalten.
 		</p>
 
+		<h2 id="text_ki">
+			<a href="#">Eingabe als Text und mit KI</a>
+		</h2>
+		<p>
+			Mit dem Button <i>Querschnitt als Text</i> (drittes Symbol über der Eingabe) fügst du Knoten,
+			Elemente und weitere Angaben als Text ein. So kann eine KI wie Claude oder ChatGPT einen
+			Querschnitt aus einer Zeichnung, einem Foto oder einer PDF-Datei ablesen und die Eingabe vorbereiten:
+		</p>
+		<ol>
+			<li>Im Dialog auf <i>KI-Prompt kopieren</i> tippen. Der Prompt erklärt der KI das Mittellinienmodell
+				und das Textformat.</li>
+			<li>Den Prompt zusammen mit der Zeichnung an die KI schicken.</li>
+			<li>Den Codeblock aus der Antwort in das Textfeld einfügen und <i>Übernehmen</i> wählen. Die App
+				zeigt den Querschnitt danach im Tab <i>System</i>.</li>
+		</ol>
+		<p>
+			<b>Bitte prüfen:</b> Eine KI kann Maße falsch ablesen oder Außen- und Achsmaße verwechseln.
+			Vergleiche den Querschnitt im Tab <i>System</i> mit der Zeichnung und lies die Annahmen in der
+			Antwort der KI.
+		</p>
+		<p>Das Textformat am Beispiel eines HEB 300 (Mittellinienmodell, ohne Ausrundungen):</p>
+		<pre># HEB 300: h = 300, b = 300, tf = 19, tw = 11 (mm) → Abstand der Flanschmittellinien 281
+einheit mm
+y_rechts
+E 210000
+nu 0.3
+fyRd 235
+My 120
+text HEB 300
+
+knoten
+1  -150    0
+2     0    0
+3   150    0
+4  -150  281
+5     0  281
+6   150  281
+
+elemente
+1  1  2  19
+2  2  3  19
+3  2  5  11
+4  4  5  19
+5  5  6  19</pre>
+		<ul>
+			<li>Eine Angabe je Zeile. Zahlen werden durch Leerzeichen, Tabulator oder Semikolon getrennt.
+				Dezimaltrennzeichen ist der Punkt, ein Komma ist auch erlaubt. Alles hinter # ist Kommentar.</li>
+			<li><b>einheit</b> mm, cm oder m gilt für alle Längen; E und f<sub>y,Rd</sub> sind dann in N/mm²,
+				kN/cm² bzw. MN/m² anzugeben. Ohne Angabe gilt die eingestellte Einheit.</li>
+			<li><b>y_rechts</b>: Die horizontalen Koordinaten sind wie in der Zeichnung nach rechts positiv.
+				Weil ȳ in der App nach links zeigt, rechnet sie ȳ = −Wert. Ohne diese Zeile werden die Werte
+				direkt als ȳ übernommen. z̄ zeigt immer nach unten.</li>
+			<li><b>E</b>, <b>nu</b>, <b>fyRd</b>: Bezugswerte. Fehlen sie, bleiben die bisherigen Werte.</li>
+			<li><b>N</b>, <b>Vy</b>, <b>Vz</b> (kN), <b>My</b>, <b>Mz</b>, <b>Mxp</b>, <b>Mxs</b> (kNm),
+				<b>Mw</b> (kNm²): Schnittgrößen, je Zeile eine. Fehlende bleiben leer.</li>
+			<li><b>text</b>: freier Text für die PDF-Ausgabe, mehrere Zeilen möglich.</li>
+			<li><b>knoten</b>: danach je Zeile <i>Nr ȳ z̄</i>. Die Nummer darf fehlen, sonst fortlaufend ab 1.</li>
+			<li><b>elemente</b>: danach je Zeile <i>Nr nod1 nod2 t</i>, optional dahinter <i>E ν</i> für ein
+				Element mit anderem Material. Hat ein Element eigene Materialwerte, wird <i>alle Elemente haben
+				gleiche Materialdaten</i> ausgeschaltet.</li>
+			<li>Die Schlüsselwörter gehen auch englisch (unit, y_right, nodes, elements). Zeilen mit ```
+				(Codeblock einer KI-Antwort) werden übersprungen.</li>
+		</ul>
+		<p>
+			Mit <i>aktuelle Eingabe als Text</i> zeigt der Dialog die aktuelle Eingabe in diesem Format,
+			zum Beispiel als Vorlage oder um sie einer KI zum Ändern zu geben. Eine Textdatei in diesem
+			Format kannst du auch wie eine Eingabedatei öffnen oder in das Fenster ziehen. Gespeichert wird
+			immer als <i>.duennqs</i>-Datei.
+		</p>
+
 		<h2 id="darstellung_2D">
 			<a href="#">Darstellung 2D (Tab System)</a>
 		</h2>
@@ -374,6 +455,16 @@
 		</p>
 		<p>
 			A<sub>geom</sub> = geometrische Querschnittsfläche, ohne Berücksichtigung der Materialdaten.
+		</p>
+		<p>
+			Achsen: ȳ, z̄ = Hilfskoordinatensystem der Eingabe; y, z = dazu parallele Achsen durch den
+			Schwerpunkt (auf sie beziehen sich die Schnittgrößen); 1, 2 = Hauptachsen mit I<sub>11</sub>
+			und I<sub>22</sub>. Achtung: In [2] heißen die Hauptachsen y und z.
+			<br>
+			r<sub>1</sub>, r<sub>2</sub>, r<sub>ω</sub> = Wagner-Koeffizienten bezogen auf die Hauptachsen,
+			z. B. für das Biegedrillknicken. r<sub>1</sub> gehört zu I<sub>22</sub>,
+			r<sub>2</sub> zu I<sub>11</sub>. In [2] heißt der Wert zu I<sub>y</sub> dort r<sub>y</sub> und der
+			zu I<sub>z</sub> dort r<sub>z</sub>.
 		</p>
 		<p>
 			Schubspannungen aus primärer Torsion M<sub>xp</sub>:

@@ -141,8 +141,8 @@ class TElement {
     omega = [0.0, 0.0, 0.0, 0.0]
     u = [0.0, 0.0, 0.0, 0.0]
     u34 = [0.0, 0.0]                            // Vertforungen innere Knoten
-    ry: number = 0                                 // Querschnittswerte für Biegedrillknicken
-    rz: number = 0
+    r1: number = 0                                 // Querschnittswerte für Biegedrillknicken
+    r2: number = 0
     rOmega: number = 0
     tau_p0R = [0.0, 0.0, 0.0]
     tau_p0L = [0.0, 0.0, 0.0]
@@ -172,7 +172,7 @@ export function duennQ(zeigeErgebnisse = true) {
         iP2: number, iM2: number,
         fact: number, A_omegaQ: number, A_yOmegaQ: number, A_zOmegaQ: number, rOmega: number, dOmega: number,
         It_geschlossen: number, omega_m: number, area: number,
-        rt: number, ry: number, rz: number, y_m: number, z_m: number;
+        rt: number, r1: number, r2: number, y_m: number, z_m: number;
 
     let Gesamtflaeche: number, I11: number, I22: number, area_geom: number,
         Gesamt_Iyy: number, Gesamt_Izz: number, Gesamt_Iyz: number, Gesamt_It: number, It_offen: number,
@@ -578,11 +578,14 @@ export function duennQ(zeigeErgebnisse = true) {
     console.log("I_omega", I_omega);
     console.log("It_gesamt", Gesamt_It);
 
-    ry = 0;
-    rz = 0;
+    r1 = 0;
+    r2 = 0;
     rOmega = 0;
-    // Wagner-Koeffizienten im Hauptachsensystem (y_h, z_h bezogen auf den Schwerpunkt, ω normiert, ideelle Werte):
+    // Wagner-Koeffizienten im Hauptachsensystem (ω normiert, ideelle Werte). In dieser Schleife sind y, z (truss.y1 …)
+    // die Koordinaten in Richtung der Hauptachsen 1, 2 bezogen auf den Schwerpunkt – nicht die zu ȳ, z̄ parallelen
+    // Achsen y, z der Ausgabe; die Variablen r1, r2 sind die angezeigten r_1, r_2 (ids r_1, r_2):
     //   r_1 = ∫ y·(y² + z²) dA / I22 − 2·yMh,  r_2 = ∫ z·(y² + z²) dA / I11 − 2·zMh,  r_ω = ∫ ω·(y² + z²) dA / I_ω
+    // r_1 gehört also zu I22, r_2 zu I11 (bei Kindmann/Kraus heißt der Wert zu I_y dort r_y, der zu I_z dort r_z).
     // Je Element exakt für lineare y, z, ω (Mittelwerte y_m, z_m, ω_m und Differenzen dy, dz, dω).
     // Kontrolle 11/2026 mit unabhängiger Rechnung (Wölbfunktion über Spannbaum und Bredt-Zellen, Python).
     for (k = 0; k < nelem; k++) {
@@ -592,6 +595,8 @@ export function duennQ(zeigeErgebnisse = true) {
         dy = truss[k].y2 - truss[k].y1;
         dz = truss[k].z2 - truss[k].z1;
         dOmega = truss[k].omega[1] - truss[k].omega[0];
+        // HINWEIS: Die folgenden kommentierten Formeln NICHT ändern – sie müssen noch mit der Excel-Datei und dem
+        // FEM-Programm kontrolliert werden. In diesen alten Formeln heißen r1, r2 noch ry, rz.
         // alt (bis 2.5.0), zwei Fehler:
         //  - Integrale mit der geometrischen Fläche, geteilt wird aber durch die ideellen I22, I11, I_omega
         //    → bei unterschiedlichem E-Modul falsch (bei gleichem Material ohne Auswirkung)
@@ -603,17 +608,17 @@ export function duennQ(zeigeErgebnisse = true) {
         // rOmega = rOmega + (zMh * zMh * omega_m + (omega_m * dz * dz + 2 * z_m * dz * dOmega) / 12) * truss[k].Flaeche;
         // neu: ideelle Fläche (ni = E/E_ref) und y_m², z_m²; Kontrolle siehe Kommentar über der Schleife
         const dA = truss[k].ni * truss[k].Flaeche;
-        ry = ry + (y_m * y_m * y_m + y_m * dy * dy / 4 + y_m * z_m * z_m + (y_m * dz * dz + 2 * z_m * dy * dz) / 12) * dA;
-        rz = rz + (z_m * z_m * z_m + z_m * dz * dz / 4 + z_m * y_m * y_m + (z_m * dy * dy + 2 * y_m * dz * dy) / 12) * dA;
+        r1 = r1 + (y_m * y_m * y_m + y_m * dy * dy / 4 + y_m * z_m * z_m + (y_m * dz * dz + 2 * z_m * dy * dz) / 12) * dA;
+        r2 = r2 + (z_m * z_m * z_m + z_m * dz * dz / 4 + z_m * y_m * y_m + (z_m * dy * dy + 2 * y_m * dz * dy) / 12) * dA;
         rOmega = rOmega + (y_m * y_m * omega_m + (omega_m * dy * dy + 2 * y_m * dy * dOmega) / 12) * dA;
         rOmega = rOmega + (z_m * z_m * omega_m + (omega_m * dz * dz + 2 * z_m * dz * dOmega) / 12) * dA;
     }
 
-    ry = ry / I22 - 2 * yMh;
-    rz = rz / I11 - 2 * zMh;
+    r1 = r1 / I22 - 2 * yMh;
+    r2 = r2 / I11 - 2 * zMh;
     if (I_omega > 0.0000000000001) rOmega = rOmega / I_omega;
-    console.log("ry", ry);
-    console.log("rz", rz);
+    console.log("r1", r1);
+    console.log("r2", r2);
     console.log("rOmega", rOmega);
     iP2 = (I11 + I22) / Gesamtflaeche;
     iM2 = iP2 + yMh * yMh + zMh * zMh;
@@ -820,8 +825,8 @@ export function duennQ(zeigeErgebnisse = true) {
     tabQWerte.zM = byId("zM").innerText = myFormat(zM * unit_length_factor, 2, 2);
     qwRoh.set('I_t', ['It', Gesamt_It, 4, 1, 2]);
     qwRoh.set('I_omega', ['Iomega', I_omega, 6, 1, 2]);
-    qwRoh.set('r_1', ['r1', ry, 1, 2, 2]);
-    qwRoh.set('r_2', ['r2', rz, 1, 2, 2]);
+    qwRoh.set('r_1', ['r1', r1, 1, 2, 2]);
+    qwRoh.set('r_2', ['r2', r2, 1, 2, 2]);
     // r_ω ist dimensionslos (Potenz 0)
     qwRoh.set('r_omega', ['r_omega', I_omega > 0.0000000000001 ? rOmega : NaN, 0, 2, 2]);
     qwRoh.set('i_M2', ['i_M2', iM2, 2, 2, 2]);

@@ -12,6 +12,7 @@ import { msg } from '@lit/localize';
 import { app, byId } from './state';
 import { eingabeAlsJSON, eingabeEinlesen, eingabeLeer } from './eingabe';
 import { alertdialog, confirmdialog } from './components/confirm_dialog';
+import { leseText } from './textformat';
 
 const ENDUNG = '.duennqs';
 const GESPEICHERT_KEY = 'DUENNQS_gespeicherter_stand';
@@ -108,11 +109,19 @@ export async function verwerfenBestaetigt(neueEingabe = false): Promise<boolean>
 function dateiEinlesen(f: File): void {
     const reader = new FileReader();
     reader.onload = () => {
-        if (eingabeEinlesen(String(reader.result))) {   // ungültige Dateien werden abgelehnt, bevor etwas geändert wird
+        // .duennqs (JSON) oder Textformat (textformat.ts, z.B. von einer KI erzeugt);
+        // ungültige Dateien werden abgelehnt, bevor etwas geändert wird
+        const inhalt = String(reader.result);
+        const text = inhalt.trim().startsWith('{') ? null : leseText(inhalt);
+        if (text ? text.ok && eingabeEinlesen(JSON.stringify(text.daten)) : eingabeEinlesen(inhalt)) {
             setzeDateiname(f.name);
             alsGespeichertMerken();
         } else {
-            void alertdialog('ok', msg('Die Datei enthält keine gültige duennqs-Eingabe.'));
+            // Textformat mit erkennbaren Knoten/Elementen: die ersten Fehler nennen
+            const html = (s: string) => s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+            const details = text && !text.ok && /\n\s*(knoten|nodes?|elemente?|elements)\s*(\n|$)/i.test(inhalt)
+                ? '<br><br>' + text.fehler.slice(0, 5).map(html).join('<br>') : '';
+            void alertdialog('ok', msg('Die Datei enthält keine gültige duennqs-Eingabe.') + details);
         }
     };
     reader.onerror = () => {

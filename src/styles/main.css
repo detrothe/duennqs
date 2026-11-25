@@ -1252,3 +1252,76 @@ dialog.pd {
         padding-bottom: 20px;
     }
 }
+
+/* Dialog „Querschnitt als Text“ (components/text_dialog.ts), sonst wie .pd-… */
+.td-schritte {
+    margin: 0;
+    padding-left: 1.4em;
+    font-size: 15px;
+    line-height: 1.5;
+    color: var(--pd-muted);
+
+    li {
+        margin-bottom: 6px;
+    }
+}
+
+.pd-knopf.td-klein {
+    padding: 5px 12px;
+    font-size: 14px;
+}
+
+.td-schritte .td-klein {
+    margin-left: 6px;
+}
+
+.td-meldung {
+    margin-left: 8px;
+    font-weight: 600;
+    color: var(--pd-acc);
+}
+
+.td-text {
+    box-sizing: border-box;
+    width: 100%;
+    min-height: 16rem;
+    padding: 10px 12px;
+    border: 1px solid var(--pd-border);
+    border-radius: 8px;
+    background: var(--pd-field);
+    color: var(--pd-text);
+    font: 14px/1.45 ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+    resize: vertical;
+    tab-size: 8;
+
+    &:focus-visible {
+        outline: none;
+        border-color: var(--pd-acc);
+        box-shadow: 0 0 0 2px color-mix(in srgb, var(--pd-acc) 30%, transparent);
+    }
+}
+
+.td-leiste {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 8px;
+    margin-top: -12px;
+}
+
+.td-status {
+    margin-left: auto;
+    font-size: 14px;
+    font-weight: 600;
+    color: #2e7d32;
+
+    &.td-schlecht {
+        color: #c0392b;
+    }
+}
+
+.td-fehler {
+    margin: 0;
+    padding-left: 1.2em;
+    font-size: 14px;
+}
